@@ -171,6 +171,98 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- Passy -->
+		<dependency>
+			<groupId>org.passay</groupId>
+			<artifactId>passay</artifactId>
+			<version>1.6.0</version>
+		</dependency>
+
+		<!-- greenmail -->
+		<dependency>
+			<groupId>com.icegreen</groupId>
+			<artifactId>greenmail</artifactId>
+			<version>1.4.1</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>4.1.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.tika</groupId>
+			<artifactId>tika-core</artifactId>
+			<version>1.23</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tika</groupId>
+			<artifactId>tika-parsers</artifactId>
+			<version>1.23</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.hibernate.search</groupId>
+			<artifactId>hibernate-search-mapper-orm</artifactId>
+			<version>6.0.0.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate.search</groupId>
+			<artifactId>hibernate-search-backend-lucene</artifactId>
+			<version>6.0.0.Final</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-core</artifactId>
+			<version>8.7.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-analyzers-kuromoji</artifactId>
+			<version>8.7.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-highlighter</artifactId>
+			<version>8.7.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.orangesignal</groupId>
+			<artifactId>orangesignal-csv</artifactId>
+			<version>2.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.terasoluna.gfw.codepoints</groupId>
+			<artifactId>terasoluna-gfw-codepoints-jisx0201</artifactId>
+			<version>5.6.1.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.terasoluna.gfw.codepoints</groupId>
+			<artifactId>terasoluna-gfw-codepoints-jisx0208</artifactId>
+			<version>5.6.1.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.terasoluna.gfw.codepoints</groupId>
+			<artifactId>terasoluna-gfw-codepoints-jisx0208kanji</artifactId>
+			<version>5.6.1.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-text</artifactId>
+			<version>1.9</version>
+		</dependency>
+		<dependency>
+			<groupId>org.terasoluna.gfw</groupId>
+			<artifactId>terasoluna-gfw-jodatime</artifactId>
+			<version>5.7.0-SNAPSHOT</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
