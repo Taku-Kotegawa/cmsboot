@@ -1,0 +1,1 @@
+package jp.co.stnet.cms.common.exception;
