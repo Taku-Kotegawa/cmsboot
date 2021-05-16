@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozermapper.github.io/schema/bean-mapping"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://dozermapper.github.io/schema/bean-mapping http://dozermapper.github.io/schema/bean-mapping.xsd">
+
+    <configuration>
+        <!-- Collection型のフィールドを追記から上書きに変更-->
+        <relationship-type>non-cumulative</relationship-type>
+
+
+
+    </configuration>
+
+</mappings>
