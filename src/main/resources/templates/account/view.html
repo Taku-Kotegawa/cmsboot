@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/template :: layout(~{::title},~{::body/content()})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Account Information</title>
+</head>
+<body>
+<section class="content-header">
+    <div class="container">
+        <div class="row mb-2">
+            <div class="col-18">
+                <!-- ページタイトルを記入 -->
+                <h3>アカウト情報</h3>
+            </div>
+            <div class="col-18">
+                <!-- ページタイトル右の余白 -->
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container">
+        <div th:replace="~{fragments/message-panel :: message-panel}"></div>
+        <!-- ここより下にメインコンテンツを記入 -->
+        <div class="row">
+            <div class="col-5 text-center">
+                <img height="100" th:src="@{/account/image}" width="100"/>
+            </div>
+            <div class="col-31">
+                <table th:object="${account}">
+                    <tr>
+                        <th>ユーザ名</th>
+                        <td th:text="*{username}"></td>
+                    </tr>
+                    <tr>
+                        <th>氏名(名)</th>
+                        <td th:text="*{firstName}"></td>
+                    </tr>
+                    <tr>
+                        <th>氏名(性)</th>
+                        <td th:text="*{lastName}"></td>
+                    </tr>
+                    <tr>
+                        <th>E-Mail</th>
+                        <td th:text="*{email}"></td>
+                    </tr>
+                    <tr>
+                        <th>URL</th>
+                        <td th:text="*{url}"></td>
+                    </tr>
+                    <tr>
+                        <th>プロフィール</th>
+                        <td th:text="*{profile}"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <br>
+        <div class="row form-group">
+            <a class="btn-button" href="${f:h(pageContext.request.contextPath)}/">ホーム</a>
+
+            <a class="btn-button ml-2" id="changePassword" th:href="@{/password?form}">パスワード変更</a>
+        </div>
+
+        <!-- ここより上にメインコンテンツを記入 -->
+    </div>
+</section>
+<script>
+  $(function () {
+
+    var options = {
+    message: 'test message',
+    title: 'Header title',
+    size: 'lg',
+    subtitle: 'smaller text header',
+                    buttons: [
+                    { text: '閉じる', close: true, style: 'danger' },
+                    { text: 'New content', close: false, style: 'success' }
+                    ],
+    };
+    eModal.alert(options);
+
+    eModal.ajax('http://localhost:8080/myscaffold-web/common/dialog/test', 'Jobs - Form apply')
+      .then(ajaxOnLoadCallback);
+
+  });
+
+
+</script>
+</body>
+</html>

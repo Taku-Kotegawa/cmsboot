@@ -1,6 +1,7 @@
 package jp.co.stnet.cms.base.domain.model.workflow;
 
-import jp.co.stnet.cms.domain.model.AbstractEntity;
+
+import jp.co.stnet.cms.base.domain.model.AbstractEntity;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -16,7 +17,7 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 @EntityListeners(AuditingEntityListener.class)
 @Table(indexes = {@Index(columnList = "entityType, entityId, stepNo, employeeId", unique = true)})
-public class workflow extends AbstractEntity<Long> implements Serializable {
+public class Workflow extends AbstractEntity<Long> implements Serializable {
     @Override
     public Long getId() {
         return this.id;

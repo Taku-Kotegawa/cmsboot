@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="message-panel" th:remove="tag">
+
+    <div id="expiredMessage" th:class="|callout callout-${resultMessages.type}|"
+         th:if="${resultMessages} != null">
+        <ul>
+            <li th:each="message : ${resultMessages}"
+                th:utext="${#messages.msgWithParams(message.code, message.args)}"></li>
+        </ul>
+    </div>
+
+</div>
+</body>
+</html>

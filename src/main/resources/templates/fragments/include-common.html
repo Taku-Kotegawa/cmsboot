@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div th:fragment="include-common" th:remove="tag">
+
+    <!-- JQuery ----------------------------------------------------------------------------------------------------------->
+    <script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+
+    <!-- JavaScriptでPOST ------------------------------------------------------------------------------------------------->
+    <script th:src="@{/app/js/execPost.js}"></script>
+
+    <!-- ダブルクリック防止 ------------------------------------------------------------------------------------------------->
+    <script th:src="@{/app/js/blockdoubleclick.js}"></script>
+
+    <!-- マネージドファイル ------------------------------------------------------------------------------------------------->
+    <script th:src="@{/app/js/filemanaged.js}"></script>
+
+    <!-- Bootstrap 4 (include popper) ------------------------------------------------------------------------------------>
+    <script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+    <!-- moment ----------------------------------------------------------------------------------------------------------->
+    <script th:src="@{/plugins/moment/moment.min.js}"></script>
+    <script th:src="@{/plugins/moment/locale/ja.js}"></script>
+
+    <!-- eModal ----------------------------------------------------------------------------------------------------------->
+    <script th:src="@{/plugins/eModal/dist/eModal.min.js}"></script>
+
+    <!-- Select2 ---------------------------------------------------------------------------------------------------------->
+    <link rel="stylesheet" th:href="@{/plugins/select2/css/select2.min.css}">
+    <link rel="stylesheet" th:href="@{/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css}">
+    <script th:src="@{/plugins/select2/js/select2.full.min.js}"></script>
+
+    <!-- Tempusdominus Bootstrap 4 --------------------------------------------------------------------------------------->
+    <link rel="stylesheet"
+          th:href="@{/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css}">
+    <script th:src="@{/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js}"></script>
+    <script th:src="@{/app/js/datetimepicker-default.js}"></script>
+
+    <!-- Font Awesome Icons ----------------------------------------------------------------------------------------------->
+    <link rel="stylesheet" th:href="@{/plugins/fontawesome-free/css/all.min.css}">
+    <link rel="stylesheet" th:href="@{/plugins/fontawesome-free/css/v4-shims.min.css}">
+
+    <!-- DataTables CSS スタイルシートの適用順番の関係でCSSはここで読み込む。JSは必要なときのみインクルード -------------------------->
+    <link rel="stylesheet" th:href="@{/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css}">
+    <!-- <link rel="stylesheet" th:href="@{/plugins/datatables-responsive/css/responsive.bootstrap4.min.css}"> -->
+    <link rel="stylesheet" th:href="@{/plugins/datatables-buttons/css/buttons.bootstrap4.min.css}">
+    <!-- <link rel="stylesheet" th:href="@{/plugins/datatables-fixedheader/css/fixedHeader.bootstrap4.min.css}"> -->
+    <link rel="stylesheet" th:href="@{/plugins/datatables-colreorder/css/colReorder.bootstrap4.min.css}">
+    <link rel="stylesheet" th:href="@{/plugins/datatables-fixedcolumns/css/fixedColumns.bootstrap4.min.css}">
+    <link rel="stylesheet" th:href="@{/plugins/datatables-select/css/select.bootstrap4.min.css}">
+    <link rel="stylesheet" th:href="@{/plugins/jquery-datatables-checkboxes/css/dataTables.checkboxes.css}">
+
+    <!-- Admin LTE & Custom Style ----------------------------------------------------------------------------------------->
+    <!-- (一番最後) -->
+    <link rel="stylesheet" th:href="@{/AdminLTE/dist/css/adminlte.min.css}">
+    <script th:src="@{/AdminLTE/dist/js/adminlte.min.js}"></script>
+    <!-- <script th:src="@{/AdminLTE/dist/js/demo.js}"></script> -->
+
+
+</div>
+</body>
+</html>

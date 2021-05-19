@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout/template :: layout(~{::title},~{::body/content()})}"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <title>初期データ登録</title>
+</head>
+<body>
+<section class="content-header">
+    <div class="container">
+        <div class="row mb-2">
+            <div class="col-18">
+                <!-- ページタイトルを記入 -->
+                <h3>初期データを登録しました。</h3>
+            </div>
+            <div class="col-18">
+                <!-- ページタイトル右の余白 -->
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container">
+        <div th:replace="~{fragments/message-panel :: message-panel}"></div>
+        <!-- ここより下にメインコンテンツを記入 -->
+        <!-- ここより上にメインコンテンツを記入 -->
+    </div>
+</section>
+<script>
+  $(function () {
+
+  });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+
+<div th:fragment="macro(id, label, fieldBody)" class="field is-horizontal">
+
+  <!-- ラベル -->
+  <th:block th:if="${fieldState.text03__input || fieldState.text03__view}">
+    <label path="text03" class="label" th:text="${label}">*label*</label>
+  </th:block>
+
+  <th:block th:if test="${fieldState.text03__view}">
+    <div class="form-control form-control__view">
+      ${f:h(simpleEntity.text03)}
+    </div>
+  </th:block>
+
+
+
+
+
+
+
+
+</div>
+
+
+</body>
+</html>

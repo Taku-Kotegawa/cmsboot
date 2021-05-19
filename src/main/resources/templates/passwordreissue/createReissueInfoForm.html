@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html th:replace="~{/layout/template :: layout(~{::title},~{::body/content()})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>パスワード再発行</title>
+</head>
+<body>
+<section class="content-header">
+    <div class="container">
+        <div class="row mb-2">
+            <div class="col-18">
+                <!-- ページタイトルを記入 -->
+                <h3>パスワード再発行</h3>
+            </div>
+            <div class="col-18">
+                <!-- ページタイトル右の余白 -->
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container">
+        <div th:replace="~{fragments/message-panel :: message-panel}"></div>
+        <!-- ここより下にメインコンテンツを記入 -->
+        <form method="POST" th:action="@{/reissue/create}" th:object="${createReissueInfoForm}">
+
+            <div class="form-group row">
+                <div class="col-10">
+                    <label class="col-form-label" for="username">ユーザ名 *</label>
+                    <input id="username" class="form-control" th:errorclass="is-invalid" th:field="*{username}"/>
+                    <span class="invalid-feedback" th:errors="*{username}"></span>
+                </div>
+            </div>
+            <br>
+            <input class="btn-button" id="submit" type="submit" value="再発行"/>
+
+        </form>
+        <!-- ここより上にメインコンテンツを記入 -->
+    </div>
+</section>
+</body>
+</html>

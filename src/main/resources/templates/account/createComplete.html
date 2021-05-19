@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout/template :: layout(~{::title},~{::body/content()})}"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <title>アカウント登録</title>
+</head>
+<body>
+<section class="content-header">
+    <div class="container">
+        <div class="row mb-2">
+            <div class="col-18">
+                <!-- ページタイトルを記入 -->
+                <h3>アカウント登録</h3>
+            </div>
+            <div class="col-18">
+                <!-- ページタイトル右の余白 -->
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container">
+        <div th:replace="~{fragments/message-panel :: message-panel}"></div>
+        <!-- ここより下にメインコンテンツを記入 -->
+        <div>
+            あたなの初期パスワードは「<span id=password th:text="${password}"></span>」です。
+            初回ログイン時に変更してください。</div>
+        <br>
+        <a th:href="@{/login}" class="btn-button">ログイン画面へ</a>
+
+        <!-- ここより上にメインコンテンツを記入 -->
+    </div>
+</section>
+<script>
+  $(function () {
+
+  });
+
+</script>
+</body>
+</html>

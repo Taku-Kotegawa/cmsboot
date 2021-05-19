@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div th:fragment="include-debug" th:remove="tag">
+
+    <!--/* デバッグ用コード  */-->
+    <br>
+    <br>
+    <br>
+    <details>
+        <summary>Session</summary>
+        <table>
+            <tbody>
+            <tr th:each="result : ${#session.getAttributeNames()}">
+                <td th:text="${result}"></td>
+                <td th:text="${#session.getAttribute(result)}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </details>
+    <details>
+        <summary>Request</summary>
+        <table>
+            <tbody>
+            <tr th:each="result : ${#request.getAttributeNames()}">
+                <td th:text="${result}"></td>
+                <td th:text="${#request.getAttribute(result)}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </details>
+    <details>
+        <summary>response</summary>
+        <table>
+            <tbody>
+            <tr th:each="result : ${#response.getAttributeNames()}">
+                <td th:text="${result}"></td>
+                <td th:text="${#response.getAttribute(result)}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </details>
+    <details>
+        <summary>Application</summary>
+        <table>
+            <tbody>
+            <tr th:each="result : ${#servletContext.getAttributeNames()}">
+                <td th:text="${result}"></td>
+                <td th:text="${#servletContext.getAttribute(result)}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </details>
+
+    <details>
+        <summary>コンテキストオブジェクト</summary>
+        <table>
+            <tbody>
+            <tr th:each="result : ${#ctx.getAttributeNames()}">
+                <td th:text="${result}"></td>
+                <td th:text="${#ctx.getAttribute(result)}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </details>
+
+    <details>
+        <summary>コンテキスト変数</summary>
+        <table>
+            <tbody>
+            <tr th:each="result : ${#vars.getAttributeNames()}">
+                <td th:text="${result}"></td>
+                <td th:text="${#vars.getAttribute(result)}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </details>
+
+</div>
+</body>
+</html>
+

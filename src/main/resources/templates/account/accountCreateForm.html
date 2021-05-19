@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity"
+      th:replace="~{layout/template :: layout(~{::title},~{::body/content()})}"
+      >
+<head>
+    <title>Create Account</title>
+</head>
+<body>
+<section class="content-header">
+    <div class="container">
+        <div class="row mb-2">
+            <div class="col-18">
+                <!-- ページタイトルを記入 -->
+                <h3>アカウト情報</h3>
+            </div>
+            <div class="col-18">
+                <!-- ページタイトル右の余白 -->
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container">
+        <div th:replace="~{fragments/message-panel :: message-panel}"></div>
+        <!-- ここより下にメインコンテンツを記入 -->
+        <form th:action="@{/account/create}"
+              method="POST" th:object="${accountCreateForm}" enctype="multipart/form-data" autocomplete="off">
+
+            <div class="form-group row">
+                <label th:for="username" class="col-4 col-form-label">ユーザ名 *</label>
+                <input th:field="*{username}" class="form-control col-10" th:errorclass="is-invalid"/>
+                <span th:errors="*{username}" id="username-errors" class="col-10 invalid-feedback"></span>
+            </div>
+
+            <div class="form-group row">
+                <label th:for="firstName" class="col-4 col-form-label">名 *</label>
+                <input th:field="*{firstName}" class="form-control col-10" th:errorclass="is-invalid" />
+                <span th:errors="*{firstName}" id="firstName-errors" class="col-10 invalid-feedback"></span>
+            </div>
+
+            <div class="form-group row">
+                <label th:for="lastName" class="col-4 col-form-label">姓 *</label>
+                <input th:field="*{lastName}" class="form-control col-10" th:errorclass="is-invalid" />
+                <span th:errors="*{lastName}" id="lastName-errors" class="col-10 invalid-feedback"></span>
+            </div>
+
+            <div class="form-group row">
+                <label th:for="email" class="col-4 col-form-label">E-mail *</label>
+                <input th:field="*{email}" class="form-control col-10" th:errorclass="is-invalid" />
+                <span th:errors="*{email}" id="email-errors" class="col-10 invalid-feedback"></span>
+            </div>
+
+            <div class="form-group row">
+                <label th:for="confirmEmail" class="col-4 col-form-label">E-mail(確認) *</label>
+                <input th:field="*{confirmEmail}" class="form-control col-10" th:errorclass="is-invalid" />
+                <span th:errors="*{confirmEmail}" id="confirmEmail-errors" class="col-10 invalid-feedback"></span>
+            </div>
+
+            <div class="form-group row">
+                <label th:for="url" class="col-4 col-form-label">URL</label>
+                <input th:field="*{url}" class="form-control col-10" th:errorclass="is-invalid" />
+                <span th:errors="*{url}" id="url-errors" class="col-10 invalid-feedback"></span>
+            </div>
+
+            <div class="form-group row">
+                <label th:for="file" class="col-4 col-form-label">画像ファイル *</label>
+                <input type="file" th:field="*{image}" class="form-control-file col-10" th:errorclass="is-invalid" />
+                <span th:errors="*{image}" id="image-errors" class="col-10 invalid-feedback"></span>
+            </div>
+
+            <div class="form-group row">
+                <label th:for="profile" class="col-4 col-form-label">プロフィール</label>
+                <textarea th:field="*{profile}" class="col-10 form-control" th:errorclass="is-invalid"
+                          placeholder="よろしければ、あなたのプロフィールを書いて下さい。"></textarea>
+                <span th:errors="*{profile}" id="profile-errors" class="col-10 invalid-feedback"></span>
+            </div>
+            <br>
+            <div class="form-group row">
+                <div class="col-7 pt-2">
+                    <a th:href="@{/login}" class="btn-button">ログイン画面に戻る</a>
+                </div>
+                <div class="col-7 text-right">
+                    <input type="submit" id="confirm" name="confirm" value="確認へ進む" class="btn-button"/>
+                </div>
+            </div>
+        </form>
+        <!-- ここより上にメインコンテンツを記入 -->
+    </div>
+</section>
+</body>
+</html>

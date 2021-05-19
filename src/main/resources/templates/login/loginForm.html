@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+
+    <!-- JQuery ------------------------------------------------------------------------------------------------------->
+    <script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+    <!-- Bootstrap 4 (include popper) --------------------------------------------------------------------------------->
+    <script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <!-- Font Awesome Icons ------------------------------------------------------------------------------------------->
+    <link rel="stylesheet" th:href="@{/plugins/fontawesome-free/css/all.min.css}">
+    <link rel="stylesheet" th:href="@{/plugins/fontawesome-free/css/v4-shims.min.css}">
+    <!-- Admin LTE & Custom Style ------------------------------------------------------------------------------------->
+    <link rel="stylesheet" th:href="@{/AdminLTE/dist/css/adminlte.min.css}">
+
+    <title>Login</title>
+
+</head>
+
+<body class="login-page">
+<div class="login-box">
+    <div class="login-logo">
+        <a href="#"><b>My scaffold</b></a>
+    </div>
+    <!-- /.login-logo -->
+    <div class="card">
+        <div class="card-body">
+            <p class="login-box-msg">Sign in to start your session</p>
+
+            <div th:if="${param.keySet().contains('error')}"
+                 th:with="exception=${#request.getAttribute('SPRING_SECURITY_LAST_EXCEPTION')} ?: ${session[SPRING_SECURITY_LAST_EXCEPTION]}">
+                <div class="alert alert-error" th:if="${exception != null}">
+                    <span th:text="${exception.message}"></span>
+                </div>
+            </div>
+
+            <form autocomplete="off" th:action="@{/login}" method="post">
+                <div class="input-group mb-3">
+                    <input class="form-control" id="username" name="username"
+                           placeholder="ユーザ名"
+                           type="text">
+                </div>
+                <div class="input-group mb-3">
+                    <input class="form-control" id="password" name="password"
+                           placeholder="パスワード"
+                           type="password">
+                </div>
+                <div class="row">
+                    <br>
+                    <div class="col-12">
+                        <input class="btn btn-primary btn-block" id="login" name="submit"
+                               type="submit"
+                               value="login"/>
+                    </div>
+                </div>
+                <br>
+                <div class="form-check-inline">
+                    <input class="ml-0 mr-1" id="loginAsAdministrator" name="loginAsAdministrator" type="checkbox"
+                           value="true"/>
+                    <label for="loginAsAdministrator">login as Administrator</label>
+                </div>
+            </form>
+            <p class="mb-1">
+                <a id="create" th:href="@{/account/create?form}">Create new account</a>
+            </p>
+            <p class="mb-0">
+                <a id="forgotten" th:href="@{/reissue/create?form}">I've forgotten my password</a>
+            </p>
+
+        </div>
+        <!-- /.login-card-body -->
+    </div>
+</div>
+<!-- /.login-box -->
+</body>
+
+</html>
+

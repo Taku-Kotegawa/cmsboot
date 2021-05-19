@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div th:fragment="include-upload" th:remove="tag">
+
+    <form autocomplete="off" enctype="multipart/form-data" modelAttribute="uploadForm">
+
+        <!-- EnterキーによるPOSTを無効化 -->
+        <input disabled style="display:none" type="submit"/>
+
+        <hidden path="jobName"/>
+
+        <div>
+            <div class="row mb-3">
+                <div class="col-12">
+                    <!-- ラベル -->
+                    <label path="uploadFileUuid">インポートファイル*</label>
+                    <!-- 入力 -->
+                    <input class="form-control form-control-file file-managed" data-file-type="uploadFile"
+                           id="uploadFile"
+                           th:disabled="${uploadForm.uploadFileUuid != null}" type="file"/>
+
+                    <span class="invalid-feedback" id="field001-errors" th:errors="*{uploadFileUuid}"></span>
+
+                    <div class="input-group" id="uploadFile__attached-block"
+                         th:if="${uploadForm.uploadFileManaged != null}">
+                    <span>
+                      <i class="far fa-file ml-2"></i>
+                      <a class="link-attached"
+                         href="@{__${op.getDownloadUrl(uploadForm.uploadFileUuid)__}"
+                         target="_blank">[[${uploadForm.uploadFileManaged.originalFilename}]]</a>
+                      <i class="far fa-trash-alt" onclick="file_detach('uploadFile')" style="color: brown;"/>
+                      <input path="uploadFileUuid" type="hidden"/>
+                    </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-12">
+                    <!-- ラベル -->
+                    <label path="fileType">ファイル形式*</label>
+                    <!-- 入力 -->
+
+                    <select class="form-control" th:field="*{fileType}">
+                        <option label="CSV(カンマ区切り, ダブルクォーテーション括り)" value="CSV"/>
+                        <option label="TSV(タブ区切り)" value="TSV"/>
+                    </select>
+                    <span class="invalid-feedback" id="fileType" th:errors="*{fileType}"></span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-12">
+                    <!-- ラベル -->
+                    <label path="encoding">文字コード*</label>
+                    <!-- 入力 -->
+                    <select class="form-control" th:field="*{encoding}">
+                        <option label="UTF-8" value="UTF-8"/>
+                        <option label="SJIS" value="MS932"/>
+                    </select>
+                    <span class="invalid-feedback" id="encoding" th:errors="*{encoding}"></span>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="row mb-3">
+                <div class="col-36">
+                    <a class="btn btn-button" href="${referer}">キャンセル</a>
+                    <button class="btn btn-button" name="confirm" type="submit" value="confirm">アップロード</button>
+                </div>
+            </div>
+
+        </div>
+
+    </form>
+
+    <br>
+    <br>
+
+</div>
+</body>
+</html>
+

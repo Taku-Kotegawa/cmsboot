@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html th:replace="~{/layout/template :: layout(~{::title},~{::body/content()})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>パスワード変更</title>
+</head>
+<body>
+<section class="content-header">
+    <div class="container">
+        <div class="row mb-2">
+            <div class="col-18">
+                <!-- ページタイトルを記入 -->
+            </div>
+            <div class="col-18">
+                <!-- ページタイトル右の余白 -->
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container">
+        <div th:replace="~{fragments/message-panel :: message-panel}"></div>
+        <!-- ここより下にメインコンテンツを記入 -->
+        <div class="alert alert-info outline">
+            パスワードを変更しました。<br><a th:href="@{/}">ホーム画面に戻る</a>
+        </div>
+        <!-- ここより上にメインコンテンツを記入 -->
+    </div>
+</section>
+</body>
+</html>

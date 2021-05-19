@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div th:fragment="datatables-libraries" th:remove="tag">
+
+    <!-- DataTables 本体 -->
+    <link rel="stylesheet" th:href="@{/AdminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css}">
+    <!-- <link rel="stylesheet" th:href="@{/AdminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.min.css}"> -->
+    <script th:src="@{/AdminLTE/plugins/datatables/jquery.dataTables.min.js}"></script>
+    <script th:src="@{/AdminLTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js}"></script>
+
+    <!-- Checkboxes-->
+    <script th:src="@{/plugins/jquery-datatables-checkboxes/js/dataTables.checkboxes.min.js}"></script>
+
+    <!-- Extention Buttons -->
+    <link rel="stylesheet" th:href="@{/AdminLTE/plugins/datatables-buttons/css/buttons.bootstrap4.min.css}">
+    <script th:src="@{/AdminLTE/plugins/datatables-buttons/js/dataTables.buttons.min.js}"></script>
+    <script th:src="@{/AdminLTE/plugins/datatables-buttons/js/buttons.colVis.min.js}"></script>
+    <!-- <script th:src="@{/AdminLTE/plugins/datatables-buttons/js/buttons.html5.min.js}"></script> -->
+    <script th:src="@{/AdminLTE/plugins/datatables-buttons/js/buttons.bootstrap4.min.js}"></script>
+
+    <!-- fiexed Hader -->
+    <!-- <link rel="stylesheet" th:href="@{/AdminLTE/plugins/datatables-fixedheader/css/fixedHeader.bootstrap4.min.css}"> -->
+    <!-- <script th:src="@{/AdminLTE/plugins/datatables-fixedheader/js/dataTables.fixedHeader.min.js}"></script> -->
+    <!-- <script th:src="@{/AdminLTE/plugins/datatables-fixedheader/js/fixedHeader.bootstrap4.min.js}"></script> -->
+
+    <!-- ColReorder -->
+    <link rel="stylesheet" th:href="@{/AdminLTE/plugins/datatables-colreorder/css/colReorder.bootstrap4.min.css}">
+    <script th:src="@{/AdminLTE/plugins/datatables-colreorder/js/dataTables.colReorder.min.js}"></script>
+    <script th:src="@{/AdminLTE/plugins/datatables-colreorder/js/colReorder.bootstrap4.min.js}"></script>
+
+    <script th:src="@{/js/datatables-default.js}"></script>
+
+    <style>
+/* DataTablesの行下線が消える障害の解消 */
+table.dataTable {
+  border-collapse: collapse !important
+}
+
+/* フィールドフィルター */
+tr.filter th {
+  padding: 4px 8px;
+}
+
+</style>
+
+
+</div>
+</body>
+</html>

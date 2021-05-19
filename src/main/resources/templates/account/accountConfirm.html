@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html th:replace="~{/layout/template :: layout(~{::title},~{::body/content()})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>アカウント登録確認</title>
+</head>
+<body>
+<section class="content-header">
+    <div class="container">
+        <div class="row mb-2">
+            <div class="col-18">
+                <!-- ページタイトルを記入 -->
+                <h3>アカウント登録確認</h3>
+            </div>
+            <div class="col-18">
+                <!-- ページタイトル右の余白 -->
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container">
+        <div th:replace="~{fragments/message-panel :: message-panel}"></div>
+        <!-- ここより下にメインコンテンツを記入 -->
+
+        <form autocomplete="off" method="POST" th:action="@{/account/create}" th:object="${accountCreateForm}">
+
+            <div class="form-group row">
+                <label class="col-4 col-form-label" for="username">ユーザ名*</label>
+                <div class="col-10 form-control form-control__view">
+                    <p th:text="*{username}"></p>
+                    <input th:field="*{username}" type="hidden"/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-4 col-form-label" for="firstName">姓*</label>
+                <div class="col-10 form-control form-control__view">
+                    <p th:text="*{firstName}"></p>
+                    <input th:field="*{firstName}" type="hidden"/>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-4 col-form-label" for="lastName">名*</label>
+                <div class="col-10 form-control form-control__view">
+                    <p th:text="*{lastName}"></p>
+                    <input th:field="*{lastName}" type="hidden"/>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-4 col-form-label" for="email">E-mail*</label>
+                <div class="col-10 form-control form-control__view">
+                    <p th:text="*{email}"></p>
+                    <input th:field="*{email}" type="hidden"/>
+                    <input th:field="*{confirmEmail}" type="hidden"/>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-4 col-form-label" for="url">URL</label>
+                <div class="col-10 form-control form-control__view">
+                    <p th:text="*{url}"></p>
+                    <input th:field="*{url}" type="hidden"/>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-4 col-form-label" for="image">画像ファイル*</label>
+                <div class="col-10 form-control form-control__view">
+                    <p th:text="*{image.originalFilename}"></p>
+                    <input th:field="*{imageId}" type="hidden"/>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-4 col-form-label" for="profile">プロフィール</label>
+                <div class="col-10 form-control form-control__view">
+                    <p th:text="*{profile}"></p>
+                    <input th:field="*{profile}" type="hidden"/>
+                </div>
+            </div>
+            <br>
+            <div class="form-group row">
+                <div class="col-7 pt-2">
+                    <input id="redo" name="redo" type="submit" value="戻る" class="btn-button"/>
+                </div>
+                <div class="col-7 text-right">
+                    <input id="create" type="submit" value="新規登録" class="btn-button"/>
+                </div>
+            </div>
+        </form>
+
+        <!-- ここより上にメインコンテンツを記入 -->
+    </div>
+</section>
+<script>
+  $(function () {
+
+  });
+</script>
+</body>
+</html>
