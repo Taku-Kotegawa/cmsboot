@@ -1,6 +1,5 @@
 package jp.co.stnet.cms.config;
 
-
 import jp.co.stnet.cms.common.validation.rule.EncodedPasswordHistoryRule;
 import org.passay.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +41,16 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/login").permitAll()
+                .antMatchers("/account/create").permitAll()
+                .antMatchers("/api/receivedmail").permitAll()
                 .antMatchers("/reissue/**").permitAll()
+                .antMatchers("/app/**").permitAll()
+                .antMatchers("/AdminLTE/**").permitAll()
+                .antMatchers("/plugins/**").permitAll()
+
+                .antMatchers("/unlock/**").hasAnyRole("ADMIN")
+                .antMatchers("/admin/account/impersonate/**").hasAnyRole("ADMIN")
+
                 .anyRequest()
                 .authenticated();
 
