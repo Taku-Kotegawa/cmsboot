@@ -5,6 +5,11 @@
  *   License: Open source - MIT <https://opensource.org/licenses/MIT>
  */
 
+
+// Add Custom Variables
+@import 'custom/variables';
+@import "~bootstrap/scss/vendor/rfs";
+
 // Bootstrap
 // ---------------------------------------------------
 @import "~bootstrap/scss/functions";
@@ -23,3 +28,8 @@
 @import "parts/pages";
 @import "parts/plugins";
 @import "parts/miscellaneous";
+
+
+// Add Custom Component Style
+// ---------------------------------------------------
+@import 'custom/extra';

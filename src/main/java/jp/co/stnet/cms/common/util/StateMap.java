@@ -1,8 +1,6 @@
 package jp.co.stnet.cms.common.util;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 画面表示におけるフィールド単位のアクセス制御を支援するユーティリティ。
@@ -23,6 +21,7 @@ import java.util.Map;
  * <li>__disabled: input要素のdisabled属性を有効にする/しない</li>
  * <li>__readonly: input要素のreadonly属性を有効にする/しない</li>
  * <li>__hidden: input要素をhiddenにする</li>
+ * <li>__label: ラベルを表示する</li>
  * </ul>
  */
 public class StateMap {
@@ -34,7 +33,8 @@ public class StateMap {
     private final String HIDDEN = "hidden";
     private final String INPUT = "input";
     private final String VIEW = "view";
-    private final String[] attributes = {DISABLED, READONLY, HIDDEN, VIEW, INPUT};
+    private final String LABEL = "label";
+    private final String[] attributes = {DISABLED, READONLY, HIDDEN, VIEW, INPUT, LABEL};
 
     /**
      * 初期化
@@ -46,13 +46,13 @@ public class StateMap {
      */
     public StateMap(Class<?> clazz, List<String> includeKeys, List<String> excludeKeys) {
 
-        if(clazz == null ) {
+        if (clazz == null) {
             throw new IllegalArgumentException("clazz must not be null.");
         }
-        if( includeKeys == null ) {
+        if (includeKeys == null) {
             throw new IllegalArgumentException("includeKeys must not be null.");
         }
-        if(excludeKeys == null) {
+        if (excludeKeys == null) {
             throw new IllegalArgumentException("excludeKeys must not be null.");
         }
 
@@ -66,30 +66,32 @@ public class StateMap {
      * fieldName__input → true
      *
      * @param fieldName フィールド名
-     * @throws IllegalArgumentException 指定したフィールド名が存在しない
      * @return StateMap
+     * @throws IllegalArgumentException 指定したフィールド名が存在しない
      */
     public StateMap setInputTrue(String fieldName) {
-        return setAttribute(fieldName, INPUT, true);
+        setAttribute(fieldName, INPUT, true);
+        return setLabelFromInputAndView(fieldName);
     }
 
     /**
      * fieldName__input → false
      *
      * @param fieldName フィールド名
-     * @throws IllegalArgumentException 指定したフィールド名が存在しない
      * @return StateMap
+     * @throws IllegalArgumentException 指定したフィールド名が存在しない
      */
     public StateMap setInputFalse(String fieldName) {
-        return setAttribute(fieldName, INPUT, false);
+        setAttribute(fieldName, INPUT, false);
+        return setLabelFromInputAndView(fieldName);
     }
 
     /**
      * fieldName__disabled → true
      *
      * @param fieldName フィールド名
-     * @throws IllegalArgumentException 指定したフィールド名が存在しない
      * @return StateMap
+     * @throws IllegalArgumentException 指定したフィールド名が存在しない
      */
     public StateMap setDisabledTrue(String fieldName) {
         return setAttribute(fieldName, DISABLED, true);
@@ -99,8 +101,8 @@ public class StateMap {
      * fieldName__disabled → false
      *
      * @param fieldName フィールド名
-     * @throws IllegalArgumentException 指定したフィールド名が存在しない
      * @return StateMap
+     * @throws IllegalArgumentException 指定したフィールド名が存在しない
      */
     public StateMap setDisabledFalse(String fieldName) {
         return setAttribute(fieldName, DISABLED, false);
@@ -110,8 +112,8 @@ public class StateMap {
      * fieldName__readonly → true
      *
      * @param fieldName フィールド名
-     * @throws IllegalArgumentException 指定したフィールド名が存在しない
      * @return StateMap
+     * @throws IllegalArgumentException 指定したフィールド名が存在しない
      */
     public StateMap setReadOnlyTrue(String fieldName) {
         return setAttribute(fieldName, READONLY, true);
@@ -121,8 +123,8 @@ public class StateMap {
      * fieldName__readonly → false
      *
      * @param fieldName フィールド名
-     * @throws IllegalArgumentException 指定したフィールド名が存在しない
      * @return StateMap
+     * @throws IllegalArgumentException 指定したフィールド名が存在しない
      */
     public StateMap setReadOnlyFalse(String fieldName) {
         return setAttribute(fieldName, READONLY, false);
@@ -132,8 +134,8 @@ public class StateMap {
      * fieldName__hidden → true
      *
      * @param fieldName フィールド名
-     * @throws IllegalArgumentException 指定したフィールド名が存在しない
      * @return StateMap
+     * @throws IllegalArgumentException 指定したフィールド名が存在しない
      */
     public StateMap setHiddenTrue(String fieldName) {
         return setAttribute(fieldName, HIDDEN, true);
@@ -143,8 +145,8 @@ public class StateMap {
      * fieldName__hidden → false
      *
      * @param fieldName フィールド名
-     * @throws IllegalArgumentException 指定したフィールド名が存在しない
      * @return StateMap
+     * @throws IllegalArgumentException 指定したフィールド名が存在しない
      */
     public StateMap setHiddenFalse(String fieldName) {
         return setAttribute(fieldName, HIDDEN, false);
@@ -154,22 +156,25 @@ public class StateMap {
      * fieldName__view → true
      *
      * @param fieldName フィールド名
-     * @throws IllegalArgumentException 指定したフィールド名が存在しない
      * @return StateMap
+     * @throws IllegalArgumentException 指定したフィールド名が存在しない
      */
     public StateMap setViewTrue(String fieldName) {
-        return setAttribute(fieldName, VIEW, true);
+        setAttribute(fieldName, VIEW, true);
+        return setLabelFromInputAndView(fieldName);
+
     }
 
     /**
      * fieldName__view → false
      *
      * @param fieldName フィールド名
-     * @throws IllegalArgumentException 指定したフィールド名が存在しない
      * @return StateMap
+     * @throws IllegalArgumentException 指定したフィールド名が存在しない
      */
     public StateMap setViewFalse(String fieldName) {
-        return setAttribute(fieldName, VIEW, false);
+        setAttribute(fieldName, VIEW, false);
+        return setLabelFromInputAndView(fieldName);
     }
 
     /**
@@ -275,12 +280,66 @@ public class StateMap {
         return this;
     }
 
-    private StateMap setAttributeAll(String attribute, Boolean status) {
+    private Set<String> getFieldSet() {
+        Set<String> fieldSet = new LinkedHashSet<>();
+        // フィールドの一覧を取得するため、__INPUTをループ
         for (Map.Entry<String, Boolean> entry : authMap.entrySet()) {
-            if (entry.getKey().endsWith(attribute)) {
-                entry.setValue(status);
+            if (entry.getKey().endsWith(INPUT)) {
+                //フィールド名のみを取り出す
+                fieldSet.add(entry.getKey().replace("__" + INPUT, ""));
             }
         }
+        return fieldSet;
+    }
+
+    private StateMap setAttributeAll(String attribute, Boolean status) {
+
+        for (String fieldName : getFieldSet()) {
+            switch (attribute) {
+                case INPUT:
+                    if (status) {
+                        setInputTrue(fieldName);
+                    } else {
+                        setInputFalse(fieldName);
+                    }
+                    break;
+
+                case DISABLED:
+                    if (status) {
+                        setDisabledTrue(fieldName);
+                    } else {
+                        setDisabledFalse(fieldName);
+                    }
+                    break;
+
+                case READONLY:
+                    if (status) {
+                        setReadOnlyTrue(fieldName);
+                    } else {
+                        setReadOnlyFalse(fieldName);
+                    }
+                    break;
+
+                case HIDDEN:
+                    if (status) {
+                        setHiddenTrue(fieldName);
+                    } else {
+                        setHiddenFalse(fieldName);
+                    }
+                    break;
+
+                case VIEW:
+                    if (status) {
+                        setViewTrue(fieldName);
+                    } else {
+                        setViewFalse(fieldName);
+                    }
+                    break;
+
+                    // LABELは、INPUT,VIEWに連動
+            }
+        }
+
         return this;
     }
 
@@ -288,12 +347,20 @@ public class StateMap {
         String key = fieldName + "__" + attribute;
         if (authMap.get(key) != null) {
             authMap.put(key, status);
+            return this;
         } else {
             throw new IllegalArgumentException(key + " not found");
         }
-        return this;
     }
 
+    private boolean getStatus(String fieldName, String attribute) {
+        String key = fieldName + "__" + attribute;
+        if (authMap.get(key) != null) {
+            return authMap.get(key);
+        } else {
+            throw new IllegalArgumentException(key + " not found");
+        }
+    }
 
     private void init(List<String> fieldNames) {
         for (String fieldName : fieldNames) {
@@ -340,7 +407,29 @@ public class StateMap {
 //    }
 
 
+    /**
+     * ハッシュマップを取得する
+     *
+     * @return authMap
+     */
     public Map<String, Boolean> asMap() {
         return authMap;
     }
+
+
+    /**
+     * __input, __viewの状態から、field__label を設定する。
+
+     * @param fieldName フィールド名
+     * @return StateMap
+     */
+    private StateMap setLabelFromInputAndView(String fieldName) {
+        if (getStatus(fieldName, INPUT) || getStatus(fieldName, VIEW)) {
+            setAttribute(fieldName, LABEL, true);
+        } else {
+            setAttribute(fieldName, LABEL, false);
+        }
+        return this;
+    }
+
 }

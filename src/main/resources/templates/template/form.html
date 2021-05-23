@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html th:replace="~{/layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- ページタイトルを記入 -->
+    <title>Page Title</title>
+</head>
+<body>
+
+<section class="content-header">
+    <div class="container-fluid"> <!-- -fluidを外すと横幅が狭くなる-->
+        <div class="row pl-5 mb-2">
+            <div class="col-18">
+                <!-- ページタイトルを記入 -->
+                <h4>Page Title</h4>
+            </div>
+            <div class="col-18 text-right">
+                <!-- ページタイトル右の余白 -->
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div th:replace="~{/fragments/message-panel :: message-panel}"></div>
+        <!-- ここより下にメインコンテンツを記入 -->
+        <form modelAttribute="**formBeanを指定**" enctype="multipart/form-data" autocomplete="off">
+            <!-- EnterキーによるPOSTを無効化 -->
+            <input type="submit" disabled style="display:none" />
+
+
+
+
+        </form>
+        <!-- ここより上にメインコンテンツを記入 -->
+    </div>
+</section>
+
+</body>
+</html>

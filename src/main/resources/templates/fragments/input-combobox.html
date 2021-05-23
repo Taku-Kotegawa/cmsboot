@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>入力フィールドの部品(input-combobox)</title>
+</head>
+<body>
+
+<th:block th:fragment="m(field_id, label, value, placeholder, items)">
+
+    <!--/* 入力(combobox) */-->
+    <th:block th:if="${fieldState.__${field_id}____input}">
+
+        <div class="dropdown input-group">
+            <input th:field="*{__${field_id}__}" class="form-control" th:errorclass="is-invalid"
+                   th:placeholder="${placeholder}" />
+            <div class="input-group-append" data-toggle="dropdown">
+                <div class="input-group-text"><i class="fas fa-angle-down"></i></div>
+            </div>
+            <ul class="dropdown-menu dropdown-menu-right combobox" aria-labelledby="dropdownMenuButton">
+                <input class="form-control" id="myInput" type="text" placeholder="Filter..">
+                <th:block th:each="item, stat : ${__${items}__}" th:object="${item}">
+                    <li class="autocomplete" th:data-autocomplete="*{value}" th:data-target="__${field_id}__">[[*{value}]]</li>
+                </th:block>
+            </ul>
+            <span th:errors="*{__${field_id}__}" th:id="__${field_id}__-error" class="invalid-feedback"></span>
+        </div>
+    </th:block>
+
+</th:block>
+</body>
+</html>

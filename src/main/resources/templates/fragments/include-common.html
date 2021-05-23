@@ -5,6 +5,10 @@
 <body>
 <div th:fragment="include-common" th:remove="tag">
 
+    <script>
+        let contextPath = "";
+    </script>
+
     <!-- JQuery ----------------------------------------------------------------------------------------------------------->
     <script th:src="@{/plugins/jquery/jquery.min.js}"></script>
 
@@ -57,6 +61,9 @@
     <link rel="stylesheet" th:href="@{/AdminLTE/dist/css/adminlte.min.css}">
     <script th:src="@{/AdminLTE/dist/js/adminlte.min.js}"></script>
     <!-- <script th:src="@{/AdminLTE/dist/js/demo.js}"></script> -->
+
+    <!-- フォームUI部品の起動 -------------------------------------------------------------------------------------------->
+    <script th:src="@{/app/js/form-onload-default.js}"></script>
 
 
 </div>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>入力フィールドの部品(input)</title>
+</head>
+<body>
+
+<th:block th:fragment="m(field_id, field_uuid, field_managed, placeholder, data_file_type, entity)">
+
+    <!--/* 入力 */-->
+    <th:block th:if="${fieldState.__${field_uuid}____input}">
+        <input class="form-control form-control-file file-managed"
+               th:disabled="${fieldState.__${field_uuid}____disabled}"
+               th:id="${field_id}"
+               th:readonly="${fieldState.__${field_uuid}____readonly}"
+               th:data-file-type="${data_file_type}"
+               th:style="*{__${field_uuid}__ != null} ? 'display:none' : 'display:block'" type="file" />
+        <span class="invalid-feedback" th:errors="*{__${field_uuid}__}" th:id="__${field_id}__-error"></span>
+
+        <th:block th:if="*{__${field_managed}__ != null}">
+            <div class="input-group" th:id="|__${field_id}____attached-block|">
+                  <span>
+                    <i class="far fa-file ml-2"></i>
+                    <a class="link-attached"
+                       target="_blank"
+                       th:href="${op.getDownloadUrl('uuid')}">[[*{attachedFile01Managed.originalFilename}]]</a>
+                      <i class="far fa-trash-alt" th:onclick="file_detach(${field_id})" style="color: brown;"></i>
+                    <input th:field="*{__${field_uuid}__" type="hidden"/>
+                  </span>
+            </div>
+        </th:block>
+
+        aaa
+    </th:block>
+
+</th:block>
+</body>
+</html>

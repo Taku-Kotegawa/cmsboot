@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>入力フィールドの部品(label)</title>
+</head>
+<body>
+
+<th:block th:fragment="m(field_id, label)">
+
+    <!--/* ラベル */-->
+    <th:block th:if="${fieldState.__${field_id}____label}">
+        <label class="mt-3" th:for="${field_id}">[[${label}]]</label>
+    </th:block>
+
+</th:block>
+</body>
+</html>

@@ -10,9 +10,9 @@
       tags: true,
     });
 
-    $('.datetime').datetimepicker({
-      format: '',
-    });
+//    $('.datetime').datetimepicker({
+//      format: '',
+//    });
 
     $(".dropdown-menu-input").on("keyup", function () {
       var value = $(this).val().toLowerCase();

@@ -1,0 +1,76 @@
+.dt-buttons {
+
+  .btn-secondary {
+    @extend .btn-button;
+  }
+
+  .dropdown-toggle::after {
+    content: unset;
+  }
+}
+
+div.dataTables_wrapper div.dataTables_filter {
+  text-align: unset;
+}
+
+table.dataTable.fixedHeader-floating {
+  top: 45px !important;
+}
+
+table.dataTable th {
+  white-space: nowrap;
+}
+
+table.dataTable > thead > tr.filter > th {
+  padding-right: 5px;
+  padding-left: 5px;  
+  border-bottom-width: 0;
+}
+table.dataTable.table-sm > thead > tr.filter > th {
+  padding-right: 5px;
+  padding-left: 5px;  
+}
+
+table.dataTable > tbody > tr > td {
+  border-bottom: 1px solid #e6e4df;
+}
+
+.DTFC_LeftWrapper, 
+.DTFC_RightWrapper {
+  min-width: min-content;
+} 
+
+.DTFC_LeftBodyLiner,
+.DTFC_RightBodyLiner {
+  overflow-y: auto !important;
+  width: unset !important;
+}
+
+.DTFC_LeftBodyLiner>table>thead>tr,
+.DTFC_RightBodyLiner>table>thead>tr {
+  height: 0 !important;
+}
+
+.dataTable .dropdown-menu {
+  min-width: fit-content !important;
+}
+
+table.dataTable tbody tr.selected, table.dataTable tbody th.selected, table.dataTable tbody td.selected {
+  color: inherit;
+}
+
+table.dataTable tbody>tr.selected, table.dataTable tbody>tr>.selected {
+  background-color: transparent;
+}
+
+table.dataTable tbody>tr:nth-of-type(even).selected, table.dataTable tbody>tr:nth-of-type(even)>.selected {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+table.dataTable tbody tr.selected a, table.dataTable tbody th.selected a, table.dataTable tbody td.selected a {
+  color: inherit;
+}
+
+table.DTFC_Cloned tr {
+  background-color: unset;
+}

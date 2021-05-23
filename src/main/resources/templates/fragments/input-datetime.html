@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>入力フィールドの部品(input-datetime)</title>
+</head>
+<body>
+
+<th:block th:fragment="m(field_id, label, value, placeholder)">
+
+    <!--/* 入力(DateTime) */-->
+    <th:block th:if="${fieldState.__${field_id}____input}">
+        <div class="input-group" data-target-input="nearest" th:id="|${field_id}-input-group|">
+            <input class="form-control datetimepicker-input" th:data-target="|#${field_id}-input-group|"
+                   th:disabled="${fieldState.__${field_id}____disabled}" th:errorclass="is-invalid"
+                   th:field="*{__${field_id}__}" th:placeholder="${placeholder}"
+                   th:readonly="${fieldState.__${field_id}____readonly}"/>
+            <div class="input-group-append" data-toggle="datetimepicker" th:data-target="|#${field_id}-input-group|">
+                <div class="input-group-text"><i class="fa fa-calendar fa-fw"></i></div>
+            </div>
+        </div>
+        <span class="invalid-feedback" th:errors="*{__${field_id}__}" th:id="|${field_id}-error|"></span>
+        <script type="text/javascript">
+            $(function () {
+                $('[[|#${field_id}-input-group|]]').datetimepicker({
+                    format: '',
+                });
+            });
+        </script>
+    </th:block>
+
+</th:block>
+</body>
+</html>

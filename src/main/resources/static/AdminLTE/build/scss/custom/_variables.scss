@@ -1,0 +1,29 @@
+
+// $spacer
+$spacer: .5rem;
+
+// 36分割
+$grid-columns: 36 !default;
+$grid-gutter-width: 5px !default;
+
+// フォントサイズ 13pxを標準
+$font-size-base: .8125rem !default;
+
+// 丸みを取る
+$border-radius: 0rem !default;
+$border-radius-lg: 0rem !default;
+$border-radius-sm: 0rem !default;
+
+// フォームのパディングを狭くする
+$input-btn-padding-y: .153rem;
+$input-btn-padding-x: .3rem;
+$form-group-margin-bottom: .5rem;
+$label-margin-bottom: 0;
+
+// custom-select
+$custom-select-padding-y: $input-btn-padding-y !default;
+$custom-select-padding-x: $input-btn-padding-x !default;
+
+// フォントサイズ
+$small-font-size:             90% !default;
+$form-feedback-margin-top:          0 !default;

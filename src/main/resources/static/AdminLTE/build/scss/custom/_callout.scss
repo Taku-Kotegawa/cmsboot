@@ -1,0 +1,25 @@
+.callout-success {
+  color: #325e1c;
+  background-color: #f3faef;
+}
+.callout-warning {
+  color: #734c00;
+  background-color: #fdf8ed;
+}
+.callout-danger {
+  color: #a51b00;
+  background-color: #fcf4f2;
+}
+
+.callout-info {
+  background-color: #eff4fa;
+}
+
+.callout-error {
+  @extend .callout-danger;
+}
+
+.callout ul {
+  margin-bottom: 0;
+  padding-inline-start: 20px;
+}
