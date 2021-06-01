@@ -2,16 +2,16 @@
 <html th:replace="~{/layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
 <head>
     <!-- ページタイトルを記入 -->
-    <title>Page Title</title>
+    <title>ロック解除</title>
 </head>
 <body>
 
 <section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-18">
+    <div class="container">
+        <div class="row">
+            <div class="col-18 mb-3">
                 <!-- ページタイトルを記入 -->
-                <h4>Page Title</h4>
+                <h4>ロック解除</h4>
             </div>
             <div class="col-18">
                 <!-- ページタイトル右の余白 -->
@@ -21,10 +21,11 @@
 </section>
 <section class="content">
     <div class="container">
-        <div th:replace="~{/fragments/message-panel} :: message-panel"></div>
+        <div th:replace="~{/fragments/message-panel :: message-panel}"></div>
         <!-- ここより下にメインコンテンツを記入 -->
-        <h4 th:text="|${username} のロックを解除しました。|"></h4>
-        <a th:href="@{/}">ホームペ戻る</a>
+        <h5 th:text="|${username} のロックを解除しました。|"></h5>
+        <br>
+        <a class="btn-button" th:href="@{/}">ホーム画面</a>
         <!-- ここより上にメインコンテンツを記入 -->
     </div>
 </section>

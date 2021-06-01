@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html th:replace="~{/layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- ページタイトルを記入 -->
+    <title>Page Title</title>
+</head>
+<body>
+<div th:replace="~{/fragments/include-datatables :: include-datatables}"></div>
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row px-5">
+            <div class="col-18 mb-3">
+                <!-- ページタイトルを記入 -->
+                <h4>Page Title</h4>
+            </div>
+            <div class="col-18 text-right">
+                <!-- ページタイトル右の余白 -->
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid"><!-- -fluidを外すと横幅が狭くなる-->
+        <div th:replace="~{/fragments/message-panel :: message-panel}"></div>
+        <!-- ここより下にメインコンテンツを記入 -->
+
+
+        <!-- ここより上にメインコンテンツを記入 -->
+    </div>
+</section>
+
+</body>
+</html>

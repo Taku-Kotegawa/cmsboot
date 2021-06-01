@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html th:replace="~{/layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- ページタイトルを記入 -->
+    <title>Access Counter</title>
+</head>
+<body>
+<div th:replace="~{/fragments/include-datatables :: include-datatables}"></div>
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row px-5">
+            <div class="col-18 mb-3">
+                <!-- ページタイトルを記入 -->
+                <h4>Access Counter</h4>
+            </div>
+            <div class="col-18 text-right">
+                <!-- ページタイトル右の余白 -->
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid"><!-- -fluidを外すと横幅が狭くなる-->
+        <div th:replace="~{/fragments/message-panel :: message-panel}"></div>
+        <!-- ここより下にメインコンテンツを記入 -->
+
+        <table class="table-sm table-striped" id="list">
+            <thead>
+            <tr class="filter">
+                <th class="text-center px-1" data-filter="disable"></th>
+                <th data-filter="disable"></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr class="title">
+                <th class="text-center px-0"></th>
+                <th class="text-center">操作</th>
+                <th class="text-center">ID</th>
+                <th class="text-center">ステータス</th>
+                <th class="text-center">URL</th>
+                <th class="text-center">アクセス数</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <form id="bulk-operation-form" method="post" th:action></form>
+
+        <!-- ここより上にメインコンテンツを記入 -->
+    </div>
+</section>
+
+<!-- Page script -->
+<script>
+  $(document)
+    .ready(
+      function () {
+
+        // 項目単位フィルタ用のInputフィールドを追加する。
+        // TODO 開始列番号を指定
+        var startcolnum = 0;
+        $('tr.filter th').each(function () {
+          var idx = $(this).index();
+          if (startcolnum <= idx && $(this).data("filter") != 'disable') {
+            $(this).html('<input type="text" id="col_filter_' + idx + '" data-column="' + idx +
+              '" class="dataTables_column_filter form-control" />');
+          }
+        });
+
+        var table = $('#list').DataTable({
+
+          'ajax': {
+            'url': 'list/json',
+            'data': myflatten
+          },
+
+          // 一覧に表示する項目とJSONの項目にマッピング
+          'columns': [{
+              data: 'id',
+              className: 'text-center',
+              orderable: false,
+              searchable: false,
+              checkboxes: {
+                selectRow: true
+              },
+            },
+            {
+              data: 'operations',
+              orderable: false,
+              searchable: false,
+            },
+            {
+              data: 'id',
+              render: $.fn.dataTable.render.text(),
+            },
+            {
+              data: 'statusLabel',
+              render: $.fn.dataTable.render.text(),
+            },
+            {
+              data: 'url',
+              render: $.fn.dataTable.render.text(),
+            },
+            {
+              data: 'count',
+              render: $.fn.dataTable.render.text(),
+            },
+          ],
+
+          // 初期ソート
+          'order': [
+            [2, 'asc']
+          ],
+
+          // ボタンの表示
+          'buttons': ['bulkdelete', 'bulkinvalid', 'bulkvalid','colvis', 'stateClear', 'csvdownload', 'tsvdownload', 'exceldownload', 'upload', 'createnew'],
+
+          // データロード後処理
+          'initComplete': function (settings, json) {
+            // グローバルフィルターのEnterキーでサーバに送信
+            fnGlobalFilterOnReturn(table);
+          },
+        });
+
+        // ページネーション後に画面トップに戻る
+        table.on('page.dt', function () {
+          $('html, body').animate({
+            scrollTop: 0
+          }, 300);
+        });
+
+        // 項目単位フィルタの追加
+        // addFieldFilter(table)
+
+        // 項目単位フィルタを追加(列の並び順対応版)
+        addFieldFilter2(table)
+
+
+        $('#draft').change().on('change', function (e, s) {
+          localStorage.dataTables_Draft = e.target.checked;
+          table.draw();
+          fnColumns(table);
+        });
+
+        if (localStorage.dataTables_Draft == 'false') {
+          $('#draft')[0].checked = false;
+          table.draw();
+        }
+
+      });
+
+  function myflatten(params, settings) {
+    params = flatten(params, settings);
+    params.draft = true;
+    return params;
+  }
+
+</script>
+
+</body>
+</html>

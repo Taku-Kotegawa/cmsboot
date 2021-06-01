@@ -127,7 +127,9 @@ public class JobController {
             // 管理者は全ジョブを参照可能
             instances = jobExplorer.getJobInstances(targetjob, 0, 20);
             for (JobInstance i : instances) {
-                executions.addAll(jobExplorer.getJobExecutions(i));
+                ArrayList<JobExecution> list = (ArrayList<JobExecution>) jobExplorer.getJobExecutions(i);
+
+                executions.addAll(list);
             }
 
         } else {

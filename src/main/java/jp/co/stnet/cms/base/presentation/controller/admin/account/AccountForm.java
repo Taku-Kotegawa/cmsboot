@@ -1,6 +1,7 @@
 package jp.co.stnet.cms.base.presentation.controller.admin.account;
 
 
+import jp.co.stnet.cms.base.domain.model.filemanage.FileManaged;
 import jp.co.stnet.cms.common.validation.NotContainControlChars;
 import jp.co.stnet.cms.common.validation.NotContainControlCharsExceptNewlines;
 import lombok.Data;
@@ -45,6 +46,8 @@ public class AccountForm {
     private String image;
 
     private String imageUuid;
+
+    private FileManaged imageManaged;
 
     @NotContainControlCharsExceptNewlines
     private String profile;

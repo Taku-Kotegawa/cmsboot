@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>入力フィールドの部品(view-datetime)</title>
+</head>
+<body>
+
+<th:block th:fragment="m(field_id, label, value, placeholder)">
+
+    <!--/* 参照用 */-->
+    <th:block th:if="${fieldState.__${field_id}____view}">
+        <div class="form-control form-control__view" th:text="${#temporals.format(__${value}__, 'yyyy/MM/dd HH:mm')}"></div>
+    </th:block>
+
+</th:block>
+</body>
+</html>

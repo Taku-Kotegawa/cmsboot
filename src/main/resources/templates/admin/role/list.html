@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html th:replace="~{/layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- ページタイトルを記入 -->
+    <title>Role</title>
+</head>
+<body>
+
+<section class="content-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-18 mb-3">
+                <!-- ページタイトルを記入 -->
+                <h4>Role</h4>
+            </div>
+            <div class="col-18 text-right nav-tabs-wrapper">
+                <!-- ページタイトル右の余白 -->
+                <ul class="nav nav-tabs justify-content-end">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/admin/account/list}">アカウント</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/admin/account/active-list}">ログイン中</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">ロール</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/admin/permission/list}">パーミッション</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container">
+        <div th:replace="~{/fragments/message-panel :: message-panel}"></div>
+        <!-- ここより下にメインコンテンツを記入 -->
+        <p>ロールとパーミッションを用いてセキュリティの細かな調整を行えます。ロールは特定のパーミッションの組み合わせを定義するために使われます。<br>
+            <a th:href="@{/admin/permission/list}">パーミッション</a>ページで、ロートとパーミッションの組み合わせを設定できます。
+        </p>
+        <p>なお、ロール自体の追加はこの画面からできません。ロールEnum(Role)を編集してください。</p>
+
+        <table class="table-sm table-striped table-hover">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>ID</th>
+                <th>ロール</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr th:each="obj,status : ${roleList}">
+                    <td>
+                        [[${status.count}]]
+                    </td>
+                    <td>
+                        [[${obj.codeValue}]]
+                    </td>
+                    <td>
+                        [[${obj.codeLabel}]]
+                    </td>
+                    <td><a href="#">編集(未実装)</a></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- ここより上にメインコンテンツを記入 -->
+    </div>
+</section>
+
+</body>
+</html>

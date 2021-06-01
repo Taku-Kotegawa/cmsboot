@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html th:replace="~{/layout/template :: layout(~{::title}, ~{::body})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- ページタイトルを記入 -->
+    <title>Admin Menu</title>
+</head>
+<body>
+
+<section class="content-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-18 mb-3">
+                <!-- ページタイトルを記入 -->
+                <h4>Admin Menu</h4>
+            </div>
+            <div class="col-18 text-right">
+                <!-- ページタイトル右の余白 -->
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container"><!-- -fluidを外すと横幅が狭くなる-->
+        <div th:replace="~{/fragments/message-panel :: message-panel}"></div>
+        <!-- ここより下にメインコンテンツを記入 -->
+        <div class="row">
+
+            <!-- 左側 -->
+            <div class="col-18 pr-3">
+                <div class="admin-panel">
+                    <h5>アカウント</h5>
+                    <hr>
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-2">
+                            <i class="fas fa-angle-right"></i>
+                            <a th:href="@{/admin/account/list}">アカウント一覧</a>
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-angle-right"></i>
+                            <a th:href="@{/admin/account/active-list}">ログイン中ユーザ一覧</a>
+                        </li>
+
+                        <li class="mb-2">
+                            <i class="fas fa-angle-right"></i>
+                            <a id="unlock" th:href="@{/unlock?form}">ロック解除</a>
+                        </li>
+
+                        <li class="mb-2">
+                            <i class="fas fa-angle-right"></i>
+                            <a id="permission" th:href="@{/admin/permission/list}">パーミッション</a>
+                        </li>
+
+                        <li class="mb-2">
+                            <i class="fas fa-angle-right"></i>
+                            <a id="role" th:href="@{/admin/role/list}">ロール</a>
+                        </li>
+
+                        <li class="mb-2">
+                            <i class="fas fa-angle-right"></i>
+                            <a id="accesscounter" th:href="@{/admin/accesscounter/list}">アクセスカウンタ</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="admin-panel">
+                    <h5>ジョブ</h5>
+                    <hr>
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-2">
+                            <i class="fas fa-angle-right"></i>
+                            <a th:href="@{/job/summary}">ジョブサマリ(最終実行結果)</a>
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-angle-right"></i>
+                            <a th:href="@{/job/result}">ジョブ処理結果</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="admin-panel">
+                    <h5>マスタ</h5>
+                    <hr>
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-2">
+                            <i class="fas fa-angle-right"></i>
+                            <a th:href="@{/admin/variable/list}">バリアブル</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- 右側 -->
+            <div class="col-18 pr-3">
+
+                <div class="admin-panel">
+                    <h5>Hibernate Search</h5>
+                    <hr>
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-2">
+                            <i class="fas fa-angle-right"></i>
+                            <a th:href="@{/admin/index/manage}">索引再作成</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="admin-panel">
+                    <h5>帳票管理</h5>
+                    <hr>
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-2">
+                            <i class="fas fa-angle-right"></i>
+                            <a th:href="@{/admin/shop/list}">店所マスタ</a>
+                        </li>
+                    </ul>
+
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-2">
+                            <i class="fas fa-angle-right"></i>
+                            <a th:href="@{/admin/document/list}">ドキュメント管理</a>
+                        </li>
+                    </ul>
+
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-2">
+                            <i class="fas fa-angle-right"></i>
+                            <a th:href="@{/admin/pageidx/list}">ページ番号管理</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- ここより上にメインコンテンツを記入 -->
+    </div>
+</section>
+
+</body>
+</html>

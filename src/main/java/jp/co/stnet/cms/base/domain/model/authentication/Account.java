@@ -2,7 +2,10 @@ package jp.co.stnet.cms.base.domain.model.authentication;
 
 import jp.co.stnet.cms.base.domain.model.AbstractEntity;
 import jp.co.stnet.cms.base.domain.model.StatusInterface;
+import jp.co.stnet.cms.base.domain.model.filemanage.FileManaged;
 import lombok.*;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -62,8 +65,7 @@ public class Account extends AbstractEntity<String> implements Serializable, Sta
     /**
      * ロール
      */
-//    @ElementCollection(fetch = FetchType.EAGER)
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles;
 
     /**
@@ -75,6 +77,15 @@ public class Account extends AbstractEntity<String> implements Serializable, Sta
      * 画像UUID
      */
     private String imageUuid;
+
+    /**
+     * 画像(FileManaged)
+     */
+    @ManyToOne
+    @NotFound(action = NotFoundAction.IGNORE)
+    @JoinColumn(name = "imageUuid", referencedColumnName = "uuid", unique = true, insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
+    private FileManaged imageManaged;
+
 
     /**
      * API KEY

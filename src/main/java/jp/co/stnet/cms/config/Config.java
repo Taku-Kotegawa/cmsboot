@@ -19,8 +19,6 @@ import java.util.LinkedHashMap;
 @Configuration
 public class Config {
 
-
-
     @Value("${app.security.prohibitedChars}")
     private char[] prohibitedChars;
 

@@ -7,9 +7,9 @@
 <body>
 
 <section class="content-header">
-    <div class="container-fluid"> <!-- -fluidを外すと横幅が狭くなる-->
-        <div class="row pl-5 mb-2">
-            <div class="col-18">
+    <div class="container"> <!-- -fluidを外すと横幅が狭くなる-->
+        <div class="row">
+            <div class="col-18 mb-3">
                 <!-- ページタイトルを記入 -->
                 <h4>Page Title</h4>
             </div>
@@ -20,15 +20,44 @@
     </div>
 </section>
 <section class="content">
-    <div class="container-fluid">
+    <div class="container">
         <div th:replace="~{/fragments/message-panel :: message-panel}"></div>
         <!-- ここより下にメインコンテンツを記入 -->
-        <form modelAttribute="**formBeanを指定**" enctype="multipart/form-data" autocomplete="off">
+        <form autocomplete="off" enctype="multipart/form-data" method="post" th:action
+              th:object="${***FormBean***}" th:with="id= ${***参照用Bean*** != null} ? ${***参照用Bean***.id} : 0">
+
             <!-- EnterキーによるPOSTを無効化 -->
-            <input type="submit" disabled style="display:none" />
+            <input disabled style="display:none" type="submit"/>
+
+            <!-- 隠しフィールド -->
+            <input th:field="*{id}" type="hidden"/>
+            <input th:field="*{version}" type="hidden"/>
 
 
+            <!-- button -->
+            <div th:replace="~{/fragments/button-area :: m(${id})}"></div>
+            <hr>
 
+            <!-- Input -->
+            <div class="row">
+                <div class="col-6">
+                    <!-- TODO 式を含むフォールドの表示方法の部品化-->
+                    <div th:replace="~{/fragments/label::m('status', 'ステータス')}"></div>
+                    <div class="form-control form-control__view" th:if="${fieldState.status__view}">
+                        [[${simpleEntity != null} ? ${@CL_STATUS.asMap()[simpleEntity.status]}]]
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                </div>
+            </div>
+
+            <!-- button -->
+            <br>
+            <hr>
+            <div th:replace="~{/fragments/button-area :: m(${id})}"></div>
 
         </form>
         <!-- ここより上にメインコンテンツを記入 -->

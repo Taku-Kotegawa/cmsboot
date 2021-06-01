@@ -76,7 +76,7 @@ public final class AdminAccountController {
     Mapper beanMapper;
 
     @Autowired
-    private SessionRegistry sessionRegistry;
+    SessionRegistry sessionRegistry;
 
     @PersistenceContext
     EntityManager entityManager;
@@ -165,7 +165,8 @@ public final class AdminAccountController {
         link.append("<li><a class=\"dropdown-item\" href=\"" + op.getViewUrl(id) + "\">" + op.getLABEL_VIEW() + "</a></li>");
         link.append("<li><a class=\"dropdown-item\" href=\"" + op.getCopyUrl(id) + "\">" + op.getLABEL_COPY() + "</a></li>");
         link.append("<li><a class=\"dropdown-item\" href=\"" + op.getInvalidUrl(id) + "\">" + op.getLABEL_INVALID() + "</a></li>");
-        link.append("<li><a class=\"dropdown-item\" href=\"" + op.getSwitchUserUrl(id) + "\">" + op.getLABEL_SWITCH_USER() + "</a></li>");
+//        link.append("<li><a class=\"dropdown-item\" href=\"" + op.getSwitchUserUrl(id) + "\">" + op.getLABEL_SWITCH_USER() + "</a></li>");
+//        link.append("<li><form method=\"post\" action=\"" + op.getSwitchUserUrl(id) + "\"><button class=\"dropdown-item\">" + op.getLABEL_SWITCH_USER() + "</button></form></li>");
         link.append("</ul>");
         link.append("</div>");
 
@@ -194,13 +195,9 @@ public final class AdminAccountController {
             form.setPassword(null);
         }
 
-        // ボタンの状態を設定
-        StateMap buttonState = getButtonStateMap(Constants.OPERATION.CREATE, null, form);
-        model.addAttribute("buttonState", buttonState.asMap());
-
-        // フィールドの状態を設定
-        StateMap filedState = getFiledStateMap(Constants.OPERATION.CREATE, null);
-        model.addAttribute("fieldState", filedState.asMap());
+        model.addAttribute("buttonState", getButtonStateMap(Constants.OPERATION.CREATE, null, form).asMap());
+        model.addAttribute("fieldState", getFiledStateMap(Constants.OPERATION.CREATE, null).asMap());
+        model.addAttribute("op", op());
 
         return JSP_FORM;
     }
@@ -268,13 +265,9 @@ public final class AdminAccountController {
         FileManaged fileManaged = fileManagedSharedService.findByUuid(account.getImageUuid());
         model.addAttribute("imageFileManaged", fileManaged);
 
-        // ボタンの状態を設定
-        StateMap buttonState = getButtonStateMap(Constants.OPERATION.SAVE, account, form);
-        model.addAttribute("buttonState", buttonState.asMap());
-
-        // フィールドの状態を設定
-        StateMap filedState = getFiledStateMap(Constants.OPERATION.SAVE, account);
-        model.addAttribute("fieldState", filedState.asMap());
+        model.addAttribute("buttonState", getButtonStateMap(Constants.OPERATION.SAVE, account, form).asMap());
+        model.addAttribute("fieldState", getFiledStateMap(Constants.OPERATION.SAVE, account).asMap());
+        model.addAttribute("op", op());
 
         return JSP_FORM;
     }
@@ -424,13 +417,9 @@ public final class AdminAccountController {
         FileManaged fileManaged = fileManagedSharedService.findByUuid(account.getImageUuid());
         model.addAttribute("imageFileManaged", fileManaged);
 
-        // ボタンの状態を設定
-        StateMap buttonState = getButtonStateMap(Constants.OPERATION.VIEW, account, null);
-        model.addAttribute("buttonState", buttonState.asMap());
-
-        // フィールドの状態を設定
-        StateMap filedState = getFiledStateMap(Constants.OPERATION.VIEW, account);
-        model.addAttribute("fieldState", filedState.asMap());
+        model.addAttribute("buttonState", getButtonStateMap(Constants.OPERATION.VIEW, account, null).asMap());
+        model.addAttribute("fieldState", getFiledStateMap(Constants.OPERATION.VIEW, account).asMap());
+        model.addAttribute("op", op());
 
         return JSP_FORM;
     }
@@ -503,6 +492,14 @@ public final class AdminAccountController {
 
     // ---------------- 共通(private) -----------------------------------------------
 
+    private OperationsUtil op() {
+        return new OperationsUtil(BASE_PATH);
+    }
+
+    private OperationsUtil op(String param) {
+        return new OperationsUtil(param);
+    }
+
     /**
      * @param operation
      * @param record
@@ -525,6 +522,7 @@ public final class AdminAccountController {
         includeKeys.add(Constants.BUTTON.UNLOCK);
         includeKeys.add(Constants.BUTTON.SET_APIKEY);
         includeKeys.add(Constants.BUTTON.UNSET_APIKEY);
+        includeKeys.add(Constants.BUTTON.SWITCH_USER);
 
         StateMap buttonState = new StateMap(Default.class, includeKeys, new ArrayList<>());
 
@@ -539,13 +537,18 @@ public final class AdminAccountController {
         // 編集
         if (Constants.OPERATION.SAVE.equals(operation)) {
 
+            buttonState.setViewTrue(Constants.BUTTON.UNLOCK);
+            buttonState.setViewTrue(Constants.BUTTON.VIEW);
+            buttonState.setViewTrue(Constants.BUTTON.SWITCH_USER);
+
             if (Status.VALID.getCodeValue().equals(record.getStatus())) {
                 buttonState.setViewTrue(Constants.BUTTON.SAVE);
-                buttonState.setViewTrue(Constants.BUTTON.VIEW);
+                buttonState.setViewTrue(Constants.BUTTON.INVALID);
+                buttonState.setViewTrue(Constants.BUTTON.UNLOCK);
             }
 
             if (Status.INVALID.getCodeValue().equals(record.getStatus())) {
-                buttonState.setViewTrue(Constants.BUTTON.VIEW);
+                buttonState.setViewTrue(Constants.BUTTON.VALID);
                 buttonState.setViewTrue(Constants.BUTTON.DELETE);
             }
 
@@ -560,18 +563,13 @@ public final class AdminAccountController {
         // 参照
         if (Constants.OPERATION.VIEW.equals(operation)) {
 
+            buttonState.setViewTrue(Constants.BUTTON.SWITCH_USER);
+
             // スタータスが公開時
             if (Status.VALID.getCodeValue().equals(record.getStatus())) {
                 buttonState.setViewTrue(Constants.BUTTON.GOTOUPDATE);
-                buttonState.setViewTrue(Constants.BUTTON.INVALID);
-                buttonState.setViewTrue(Constants.BUTTON.DELETE);
-                buttonState.setViewTrue(Constants.BUTTON.UNLOCK);
             }
 
-            // スタータスが無効
-            if (Status.INVALID.getCodeValue().equals(record.getStatus())) {
-                buttonState.setViewTrue(Constants.BUTTON.DELETE);
-            }
         }
 
         return buttonState;
@@ -614,4 +612,12 @@ public final class AdminAccountController {
 
         return fieldState;
     }
+
+//    @PostMapping("impersonate")
+//    public String impersonate(Model model, @AuthenticationPrincipal LoggedInUser loggedInUser){
+//        // SwitchUserFilterが動く
+//        return "dummy";
+//    }
+
+
 }

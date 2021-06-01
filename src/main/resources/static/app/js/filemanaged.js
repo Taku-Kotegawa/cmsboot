@@ -50,7 +50,7 @@ console.log(element.dataset);
 
     $.ajax({
       type: "POST",
-      url: contextPath + "/api/file?filetype=" + $file_type,
+      url: contextPath + "/file?filetype=" + $file_type,
       data: formData,
       enctype: 'multipart/form-data',
       dataType: "json",

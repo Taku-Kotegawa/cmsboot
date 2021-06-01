@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html th:replace="~{/layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- ページタイトルを記入 -->
+    <title>Change E-mail</title>
+</head>
+<body>
+
+<section class="content-header">
+    <div class="container"> <!-- -fluidを外すと横幅が狭くなる-->
+        <div class="row">
+            <div class="col-18 mb-3">
+                <!-- ページタイトルを記入 -->
+                <h4>Change E-mail</h4>
+            </div>
+            <div class="col-18 text-right">
+                <!-- ページタイトル右の余白 -->
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container">
+        <div th:replace="~{/fragments/message-panel :: message-panel}"></div>
+        <!-- ここより下にメインコンテンツを記入 -->
+        <form autocomplete="off" enctype="multipart/form-data" method="post" th:action="@{/emailchange}"
+              th:object="${emailChangeForm}" >
+
+            <!-- EnterキーによるPOSTを無効化 -->
+            <input disabled style="display:none" type="submit"/>
+
+            <!-- Input -->
+            <div class="row">
+                <div class="col-12">
+                    <label th:for="*{newEmail}" class="form-label">新しいメールアドレス</label>
+                    <input th:field="*{newEmail}" class="form-control" th:errorclass="is-invalid" />
+                    <span class="invalid-feedback" th:errors="*{newEmail}" th:id="newEmail-error"></span>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-36">
+                    <input id="submit" type="submit" value="新しいメールアドレスに暗証番号を送信" class="btn btn-button" />
+                </div>
+            </div>
+
+
+        </form>
+        <!-- ここより上にメインコンテンツを記入 -->
+    </div>
+</section>
+
+</body>
+</html>

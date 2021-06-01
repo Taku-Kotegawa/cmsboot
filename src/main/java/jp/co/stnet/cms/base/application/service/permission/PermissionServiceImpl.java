@@ -50,13 +50,15 @@ public class PermissionServiceImpl implements PermissionService {
 
     private List<PermissionRole> mapToList(Map<String, Map<String, Boolean>> map) {
         List<PermissionRole> list = new ArrayList<>();
-        for (Map.Entry<String, Map<String, Boolean>> permissionMap : map.entrySet()) {
-            for (Map.Entry<String, Boolean> roleMap : permissionMap.getValue().entrySet()) {
-                if (roleMap.getValue()) {
-                    PermissionRole item = new PermissionRole();
-                    item.setPermission(Permission.valueOf(permissionMap.getKey()));
-                    item.setRole(Role.valueOf(roleMap.getKey()));
-                    list.add(item);
+        if (map != null) {
+            for (Map.Entry<String, Map<String, Boolean>> permissionMap : map.entrySet()) {
+                for (Map.Entry<String, Boolean> roleMap : permissionMap.getValue().entrySet()) {
+                    if (roleMap.getValue()) {
+                        PermissionRole item = new PermissionRole();
+                        item.setPermission(Permission.valueOf(permissionMap.getKey()));
+                        item.setRole(Role.valueOf(roleMap.getKey()));
+                        list.add(item);
+                    }
                 }
             }
         }

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>入力フィールドの部品(view)</title>
+</head>
+<body>
+
+<th:block th:fragment="m(field_id, label, value, placeholder)">
+
+    <!-- TODO この場所で本当に良いのか？   -->
+
+    <!--/* 参照用 */-->
+    <th:block th:if="${fieldState.__${field_id}____view}">
+        <div class="form-control form-control__view">
+            <th:block th:if="${__${value}__}">
+                <th:block th:each="str, stat : ${__${value}__.split('\r\n|\r|\n', -1)}">
+                    <th:block th:text="${str}"/>
+                    <br th:if="${!stat.last}"/>
+                </th:block>
+            </th:block>
+        </div>
+    </th:block>
+
+</th:block>
+</body>
+</html>

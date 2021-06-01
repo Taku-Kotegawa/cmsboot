@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html th:replace="~{/layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- ページタイトルを記入 -->
+    <title>Permission</title>
+</head>
+<body>
+
+<section class="content-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-18 mb-3">
+                <!-- ページタイトルを記入 -->
+                <h4>Permission</h4>
+            </div>
+            <div class="col-18 text-right nav-tabs-wrapper">
+                <!-- ページタイトル右の余白 -->
+                <ul class="nav nav-tabs justify-content-end">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/admin/account/list}">アカウント</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/admin/account/active-list}">ログイン中</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/admin/role/list}">ロール</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">パーミッション</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container">
+        <div th:replace="~{/fragments/message-panel :: message-panel}"></div>
+        <!-- ここより下にメインコンテンツを記入 -->
+        <p>
+            ロールとパーミッションの組み合わせを設定します。<br>
+            パーミッション自身の登録はこの画面から行えません。パーミッションEnum(Permission)を編集してください。
+        </p>
+
+        <form method="post" autocomplete="off" th:action th:object="${permissionForm}">
+            <!-- EnterキーによるPOSTを無効化 -->
+            <input disabled style="display:none" type="submit"/>
+
+            <div class="row mb-2">
+                <div class="col-36 text-right">
+                    <input class="btn-button" type="submit" value="保存"/>
+                </div>
+            </div>
+
+            <table class="table-sm table-hover table-striped">
+                <thead>
+                <th>カテゴリ</th>
+                <th>パーミッション(コード)</th>
+                <th:block th:each="role : ${roleList}">
+                    <th class="text-center">[[${role.label}]]<br>([[${role.codeValue}]])</th>
+                </th:block>
+                </thead>
+                <tbody>
+                <th:block th:each="obj : ${permissionList}">
+                    <tr>
+                        <td>[[${obj.category}]]</td>
+                        <td>[[|${obj.codeLabel}(${obj.codeValue})|]]</td>
+                        <th:block th:each="role : ${roleList}">
+                            <td class="text-center align-middle">
+                                <!-- TODO -->
+                                <input class="align-middle"
+                                       th:name="|permissionRoles[${obj.codeValue}][${role.codeValue}]|"
+                                       value="true"
+                                       th:checked="${permissionForm.permissionRoles[obj.codeValue][role.codeValue]}"
+                                       type="checkbox" />
+                                <input th:name="|_permissionRoles[${obj.codeValue}][${role.codeValue}]|" type="hidden" value="on" />
+                                <span th:if="${permissionForm.permissionRoles[obj.codeValue][role.codeValue]}">[✓]</span>
+                                <span th:if="${!permissionForm.permissionRoles[obj.codeValue][role.codeValue]}">[　]</span>
+                            </td>
+                        </th:block>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+
+            <div class="row">
+                <div class="col-36 text-right">
+                    <input class="btn-button" type="submit" value="保存"/>
+                </div>
+            </div>
+
+        </form>
+
+        <!-- ここより上にメインコンテンツを記入 -->
+    </div>
+</section>
+
+</body>
+</html>

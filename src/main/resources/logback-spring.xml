@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
+<configuration>
+
+    <!-- https://tomokazu-kozuma.com/setting-loggers-using-logback-spring-xml-in-spring-boot/ -->
+
+    <!-- デフォルト設定読み込み -->
+    <include resource="org/springframework/boot/logging/logback/base.xml" />
+
+
+    <appender name="Job"
+              class="ch.qos.logback.classic.sift.SiftingAppender">
+        <discriminator>
+            <key>jobName_jobExecutionId</key>
+            <defaultValue>unknown</defaultValue>
+        </discriminator>
+        <sift>
+            <appender name="FILE-${jobName_jobExecutionId}" class="ch.qos.logback.core.FileAppender">
+                <file>/home/taku/Job_${jobName_jobExecutionId}.log</file>
+                <append>true</append>
+                <layout class="ch.qos.logback.classic.PatternLayout">
+                    <pattern>%date %level %logger{10} [%X{jobName_jobExecutionId}] %msg %n</pattern>
+                </layout>
+            </appender>
+        </sift>
+    </appender>
+
+    <logger name="JobLogger" level="info" additivity="false">
+        <appender-ref ref="Job" />
+    </logger>
+
+</configuration>

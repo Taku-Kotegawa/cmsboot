@@ -2,15 +2,15 @@
 <html th:replace="~{layout/template :: layout(~{::title},~{::body/content()})}"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Account Information</title>
+    <title>My Account</title>
 </head>
 <body>
 <section class="content-header">
     <div class="container">
-        <div class="row mb-2">
-            <div class="col-18">
+        <div class="row">
+            <div class="col-18 mb-3">
                 <!-- ページタイトルを記入 -->
-                <h3>アカウト情報</h3>
+                <h4>My Account</h4>
             </div>
             <div class="col-18">
                 <!-- ページタイトル右の余白 -->
@@ -58,34 +58,15 @@
 
         <br>
         <div class="row form-group">
-            <a class="btn-button" href="${f:h(pageContext.request.contextPath)}/">ホーム</a>
-
+            <a class="btn-button" th:href="@{/}">ホーム</a>
             <a class="btn-button ml-2" id="changePassword" th:href="@{/password?form}">パスワード変更</a>
+            <a class="btn-button ml-2" id="changeEmail" th:href="@{/emailchange?form}">メールアドレス変更</a>
         </div>
 
         <!-- ここより上にメインコンテンツを記入 -->
     </div>
 </section>
 <script>
-  $(function () {
-
-    var options = {
-    message: 'test message',
-    title: 'Header title',
-    size: 'lg',
-    subtitle: 'smaller text header',
-                    buttons: [
-                    { text: '閉じる', close: true, style: 'danger' },
-                    { text: 'New content', close: false, style: 'success' }
-                    ],
-    };
-    eModal.alert(options);
-
-    eModal.ajax('http://localhost:8080/myscaffold-web/common/dialog/test', 'Jobs - Form apply')
-      .then(ajaxOnLoadCallback);
-
-  });
-
 
 </script>
 </body>

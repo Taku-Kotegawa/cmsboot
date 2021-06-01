@@ -9,79 +9,99 @@
 <th:block th:fragment="m(id)">
 
     <!-- 一覧に戻る -->
-    <a class="btn btn-button mr-2"
-       id="gotoList"
-       th:disabled="${buttonState.gotoList__disabled}"
-       th:href="@{${op.getListUrl()}}"
-       th:if="${buttonState.gotoList__view}">[[${op.getLABEL_LIST()}]]</a>
+    <th:block th:if="${#maps.containsKey(buttonState, 'gotoList__view')}">
+        <a class="btn btn-button mr-2"
+           id="gotoList"
+           th:disabled="${buttonState.gotoList__disabled}"
+           th:href="@{${op.getListUrl()}}"
+           th:if="${buttonState.gotoList__view}">[[${op.getLABEL_LIST()}]]</a>
+    </th:block>
 
     <!-- 参照 -->
-    <a class="btn btn-button mr-2"
-       id="view"
-       th:disabled="${buttonState.view__disabled}"
-       th:href="@{${op.getViewUrl(__${id}__)}}"
-       th:if="${buttonState.view__view}">[[${op.getLABEL_VIEW()}]]</a>
+    <th:block th:if="${#maps.containsKey(buttonState, 'view__view')}">
+        <a class="btn btn-button mr-2"
+           id="view"
+           th:disabled="${buttonState.view__disabled}"
+           th:href="@{${op.getViewUrl('__${id}__')}}"
+           th:if="${buttonState.view__view}">[[${op.getLABEL_VIEW()}]]</a>
+    </th:block>
 
     <!-- 編集 -->
-    <a class="btn btn-button mr-2"
-       id="gotoUpdate"
-       th:disabled="${buttonState.gotoUpdate__disabled}"
-       th:href="@{${op.getEditUrl(id)}}"
-       th:if="${buttonState.gotoUpdate__view}">[[${op.getLABEL_EDIT()}]]</a>
+    <th:block th:if="${#maps.containsKey(buttonState, 'gotoUpdate__view')}">
+        <a class="btn btn-button mr-2"
+           id="gotoUpdate"
+           th:disabled="${buttonState.gotoUpdate__disabled}"
+           th:href="@{${op.getEditUrl('__${id}__')}}"
+           th:if="${buttonState.gotoUpdate__view}">[[${op.getLABEL_EDIT()}]]</a>
+    </th:block>
 
     <!-- 下書き保存 -->
-    <button class="btn btn-button mr-2"
-            id="saveDraft"
-            name="saveDraft"
-            th:disabled="${buttonState.saveDraft__disabled}"
-            th:if="${buttonState.saveDraft__view}"
-            type="submit"
-            value="true">[[${op.getLABEL_SAVE_DRAFT()}]]
-    </button>
+    <th:block th:if="${#maps.containsKey(buttonState, 'saveDraft__view')}">
+        <button class="btn btn-button mr-2"
+                id="saveDraft"
+                name="saveDraft"
+                th:disabled="${buttonState.saveDraft__disabled}"
+                th:if="${buttonState.saveDraft__view}"
+                type="submit"
+                value="true">[[${op.getLABEL_SAVE_DRAFT()}]]
+        </button>
+    </th:block>
 
     <!-- 下書き取消 -->
-    <a class="btn btn-button mr-2"
-       id="cancelDraft"
-       th:disabled="${buttonState.cancelDraft__disabled}"
-       th:href="@{${op.getCancelDraftUrl(id)}}"
-       th:if="${buttonState.cancelDraft__view}">[[${op.getLABEL_CANCEL_DRAFT()}]]</a>
+    <th:block th:if="${#maps.containsKey(buttonState, 'cancelDraft__view')}">
+        <a class="btn btn-button mr-2"
+           id="cancelDraft"
+           th:disabled="${buttonState.cancelDraft__disabled}"
+           th:href="@{${op.getCancelDraftUrl('__${id}__')}}"
+           th:if="${buttonState.cancelDraft__view}">[[${op.getLABEL_CANCEL_DRAFT()}]]</a>
+    </th:block>
 
     <!-- 保存 -->
-    <button class="btn btn-button mr-2"
-            id="save"
-            name="save"
-            th:disabled="${buttonState.save__disabled}"
-            th:if="${buttonState.save__view}"
-            type="submit">保存
-    </button>
+    <th:block th:if="${#maps.containsKey(buttonState, 'save__view')}">
+        <button class="btn btn-button mr-2"
+                id="save"
+                name="save"
+                th:disabled="${buttonState.save__disabled}"
+                th:if="${buttonState.save__view}"
+                type="submit">保存
+        </button>
+    </th:block>
 
     <!-- 無効 -->
-    <a class="btn btn-button mr-2"
-       id="invalid"
-       th:disabled="${buttonState.invalid__disabled}"
-       th:href="@{${op.getInvalidUrl(id)}}"
-       th:if="${buttonState.invalid__view}">[[${op.getLABEL_INVALID()}]]</a>
+    <th:block th:if="${#maps.containsKey(buttonState, 'invalid__view')}">
+        <a class="btn btn-button mr-2"
+           id="invalid"
+           th:disabled="${buttonState.invalid__disabled}"
+           th:href="@{${op.getInvalidUrl('__${id}__')}}"
+           th:if="${buttonState.invalid__view}">[[${op.getLABEL_INVALID()}]]</a>
+    </th:block>
 
     <!-- 無効解除 -->
-    <a class="btn btn-button mr-2"
-       id="valid"
-       th:disabled="${buttonState.valid__disabled}"
-       th:href="@{${op.getValidUrl(id)}}"
-       th:if="${buttonState.valid__view}">[[${op.getLABEL_VALID()}]]</a>
+    <th:block th:if="${#maps.containsKey(buttonState, 'valid__view')}">
+        <a class="btn btn-button mr-2"
+           id="valid"
+           th:disabled="${buttonState.valid__disabled}"
+           th:href="@{${op.getValidUrl('__${id}__')}}"
+           th:if="${buttonState.valid__view}">[[${op.getLABEL_VALID()}]]</a>
+    </th:block>
 
     <!-- 削除 -->
-    <a class="btn btn-button mr-2"
-       id="delete"
-       th:disabled="${buttonState.delete__disabled}"
-       th:href="@{${op.getDeleteUrl(id)}}"
-       th:if="${buttonState.delete__view}">[[${op.getLABEL_DELETE()}]]</a>
+    <th:block th:if="${#maps.containsKey(buttonState, 'delete__view')}">
+        <a class="btn btn-button mr-2"
+           id="delete"
+           th:disabled="${buttonState.delete__disabled}"
+           th:href="@{${op.getDeleteUrl('__${id}__')}}"
+           th:if="${buttonState.delete__view}">[[${op.getLABEL_DELETE()}]]</a>
+    </th:block>
 
     <!-- 複製 -->
-    <a class="btn btn-button mr-2"
-       id="copy"
-       th:disabled="${buttonState.copy__disabled}"
-       th:href="@{${op.getCopyUrl(id)}}"
-       th:if="${buttonState.copy__view}">[[${op.getLABEL_COPY()}]]</a>
+    <th:block th:if="${#maps.containsKey(buttonState, 'copy__view')}">
+        <a class="btn btn-button mr-2"
+           id="copy"
+           th:disabled="${buttonState.copy__disabled}"
+           th:href="@{${op.getCopyUrl('__${id}__')}}"
+           th:if="${buttonState.copy__view}">[[${op.getLABEL_COPY()}]]</a>
+    </th:block>
 
 </th:block>
 </body>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html th:replace="~{/layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- ページタイトルを記入 -->
+    <title>Page Title</title>
+</head>
+<body>
+<section class="content-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-18 mb-3">
+                <!-- ページタイトルを記入 -->
+                <h4>ログイン中ユーザ一覧</h4>
+            </div>
+            <div class="col-18 text-right nav-tabs-wrapper">
+                <!-- ページタイトル右の余白 -->
+                <ul class="nav nav-tabs justify-content-end">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/admin/account/list}">アカウント</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">ログイン中</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/admin/role/list}">ロール</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/admin/permission/list}">パーミッション</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container">
+        <div th:replace="~{/fragments/message-panel :: message-panel}"></div>
+        <!-- ここより下にメインコンテンツを記入 -->
+
+        <table class="table-sm">
+            <thead>
+            <tr>
+                <th>Username</th>
+                <th>氏名</th>
+                <th>E-mail</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr th:each="item : ${activeUserList}">
+                    <td>
+                        [[${item.username}]]
+                    </td>
+                    <td>
+                        [[|${item.firstName} ${item.firstName}|]]
+                    </td>
+                    <td>
+                        [[${item.email}]]
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+        <!-- ここより上にメインコンテンツを記入 -->
+    </div>
+</section>
+
+</body>
+</html>

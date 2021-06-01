@@ -27,6 +27,6 @@ public class UploadFileResult implements Serializable {
 
     private String url;
 
-    private String deleteUrl;
+//    private String deleteUrl;
 
 }

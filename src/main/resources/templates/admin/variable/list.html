@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html th:replace="~{/layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- ページタイトルを記入 -->
+    <title>Variable</title>
+</head>
+<body>
+<div th:replace="~{/fragments/include-datatables :: include-datatables}"></div>
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row px-5">
+            <div class="col-18 mb-3">
+                <!-- ページタイトルを記入 -->
+                <h4>Variable</h4>
+            </div>
+            <div class="col-18 text-right">
+                <!-- ページタイトル右の余白 -->
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div th:replace="~{/fragments/message-panel :: message-panel}"></div>
+        <!-- ここより下にメインコンテンツを記入 -->
+        <div>
+            <p>変更してもコードリストに即時反映しません。再起動が必要。(TODO: コードリストのリロード機能を追加)<br>
+                新規登録ボタン押下し登録フォームを開いたときに、一覧画面で選択している「タイプ」を初期値設定する様にしたい。</p>
+        </div>
+
+        <table class="table-sm table-striped" id="list">
+            <thead>
+            <tr class="filter">
+                <th class="text-center px-1" data-filter="disable"></th>
+                <th data-filter="disable"></th>
+                <th></th>
+                <th></th>
+                <th data-filter="disable">
+                    <select class="dataTables_column_filter form-control" data-column="4" id="col_filter_4">
+                        <option value=""></option>
+                        <option th:each="obj : ${@CL_STATUS.asMap()}" th:value="${obj.key}">[[${obj.value}]]</option>
+                    </select>
+                </th>
+                <th data-filter="disable">
+                    <select class="form-control" id="type_filter">
+                        <option th:each="obj : ${@CL_VARIABLETYPE.asMap()}"
+                                th:selected="${obj.key == variableType.codeValue}"
+                                th:value="${obj.key}">[[${obj.value}]]
+                        </option>
+                    </select>
+                </th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr class="title">
+                <th class="text-center px-0"></th>
+                <th class="text-center">操作</th>
+                <th class="text-center">ID</th>
+                <th class="text-center">バージョン</th>
+                <th class="text-center">ステータス</th>
+                <th class="text-center">タイプ</th>
+                <th class="text-center">コード</th>
+                <th class="text-center">[[${variableType.labelValue1}]]</th>
+                <th class="text-center">[[${variableType.labelValue2}]]</th>
+                <th class="text-center">[[${variableType.labelValue3}]]</th>
+                <th class="text-center">[[${variableType.labelValue4}]]</th>
+                <th class="text-center">[[${variableType.labelValue5}]]</th>
+                <th class="text-center">[[${variableType.labelValue6}]]</th>
+                <th class="text-center">[[${variableType.labelValue7}]]</th>
+                <th class="text-center">[[${variableType.labelValue8}]]</th>
+                <th class="text-center">[[${variableType.labelValue9}]]</th>
+                <th class="text-center">[[${variableType.labelValue10}]]</th>
+                <th class="text-center">[[${variableType.labelDate1}]]</th>
+                <th class="text-center">[[${variableType.labelDate2}]]</th>
+                <th class="text-center">[[${variableType.labelDate3}]]</th>
+                <th class="text-center">[[${variableType.labelDate4}]]</th>
+                <th class="text-center">[[${variableType.labelDate5}]]</th>
+                <th class="text-center">[[${variableType.labelValint1}]]</th>
+                <th class="text-center">[[${variableType.labelValint2}]]</th>
+                <th class="text-center">[[${variableType.labelValint3}]]</th>
+                <th class="text-center">[[${variableType.labelValint4}]]</th>
+                <th class="text-center">[[${variableType.labelValint5}]]</th>
+                <th class="text-center">[[${variableType.labelTextarea}]]</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <form id="bulk-operation-form" method="post" th:action></form>
+
+        <!-- ここより上にメインコンテンツを記入 -->
+    </div>
+</section>
+
+<!-- Page script -->
+<script>
+
+  let stateSaveClear = '[[${stateSaveClear}]]';
+
+  [(${columnVisible})]
+
+
+  /**
+   * 新規作成ボタン(Variable用に上書き)
+   */
+  $.fn.dataTable.ext.buttons.createnew = {
+      text: '<i class="far fa-file"></i>',
+      titleAttr: '新規作成',
+      action: function (e, dt, node, config) {
+          let selectedType = document.getElementById("type_filter");
+          window.location.href = "create?form&variable_type=" + selectedType.value;
+      }
+  };
+
+
+  $(document)
+    .ready(
+      function () {
+
+        $('#type_filter').change(function () {
+          table.state.clear();
+          window.location.href = 'list?type=' + $(this).val();
+        });
+
+        // 項目単位フィルタ用のInputフィールドを追加する。
+        // TODO 開始列番号を指定
+        var startcolnum = 0;
+        $('tr.filter th').each(function () {
+          var idx = $(this).index();
+          if (startcolnum <= idx && $(this).data("filter") != 'disable') {
+            $(this).html('<input type="text" id="col_filter_' + idx + '" data-column="' + idx +
+              '" class="dataTables_column_filter form-control" />');
+          }
+        });
+
+        var table = $('#list').DataTable({
+
+          'ajax': {
+            'url': 'list/json',
+            'data': flatten
+          },
+
+          // stateSave: false,
+
+          // 一覧に表示する項目とJSONの項目にマッピング
+          'columns': [{
+              data: 'id',
+              className: 'text-center',
+              orderable: false,
+              searchable: false,
+              checkboxes: {
+                selectRow: true
+              },
+            },
+            {
+              data: 'operations',
+              orderable: false,
+              searchable: false,
+            },
+            {
+              data: 'id',
+              render: $.fn.dataTable.render.text(),
+              visible: false,
+            },
+            {
+              data: 'version',
+              render: $.fn.dataTable.render.text(),
+              visible: false,
+            },
+            {
+              data: 'statusLabel',
+              render: $.fn.dataTable.render.text(),
+            },
+            {
+              data: 'type',
+              render: $.fn.dataTable.render.text(),
+            },
+            {
+              data: 'code',
+              render: $.fn.dataTable.render.text(),
+            },
+            {
+              data: 'value1',
+              render: $.fn.dataTable.render.text(),
+              visible: columnVisible['value1'],
+            },
+            {
+              data: 'value2',
+              render: $.fn.dataTable.render.text(),
+              visible: columnVisible['value2'],
+            },
+            {
+              data: 'value3',
+              render: $.fn.dataTable.render.text(),
+              visible: columnVisible['value3'],
+            },
+            {
+              data: 'value4',
+              render: $.fn.dataTable.render.text(),
+              visible: columnVisible['value4'],
+            },
+            {
+              data: 'value5',
+              render: $.fn.dataTable.render.text(),
+              visible: columnVisible['value5'],
+            },
+            {
+              data: 'value6',
+              render: $.fn.dataTable.render.text(),
+              visible: columnVisible['value6'],
+            },
+            {
+              data: 'value7',
+              render: $.fn.dataTable.render.text(),
+              visible: columnVisible['value7'],
+            },
+            {
+              data: 'value8',
+              render: $.fn.dataTable.render.text(),
+              visible: columnVisible['value8'],
+            },
+            {
+              data: 'value9',
+              render: $.fn.dataTable.render.text(),
+              visible: columnVisible['value9'],
+            },
+            {
+              data: 'value10',
+              render: $.fn.dataTable.render.text(),
+              visible: columnVisible['value10'],
+            },
+            {
+              data: 'date1',
+              render: $.fn.dataTable.render.text(),
+              visible: columnVisible['date1'],
+            },
+            {
+              data: 'date2',
+              render: $.fn.dataTable.render.text(),
+              visible: columnVisible['date2'],
+            },
+            {
+              data: 'date3',
+              render: $.fn.dataTable.render.text(),
+              visible: columnVisible['date3'],
+            },
+            {
+              data: 'date4',
+              render: $.fn.dataTable.render.text(),
+              visible: columnVisible['date4'],
+            },
+            {
+              data: 'date5',
+              render: $.fn.dataTable.render.text(),
+              visible: columnVisible['date5'],
+            },
+            {
+              data: 'valint1',
+              render: $.fn.dataTable.render.text(),
+              visible: columnVisible['valint1'],
+            },
+            {
+              data: 'valint2',
+              render: $.fn.dataTable.render.text(),
+              visible: columnVisible['valint2'],
+            },
+            {
+              data: 'valint3',
+              render: $.fn.dataTable.render.text(),
+              visible: columnVisible['valint3'],
+            },
+            {
+              data: 'valint4',
+              render: $.fn.dataTable.render.text(),
+              visible: columnVisible['valint4'],
+            },
+            {
+              data: 'valint5',
+              render: $.fn.dataTable.render.text(),
+              visible: columnVisible['valint5'],
+            },
+            {
+              data: 'textarea',
+              render: $.fn.dataTable.render.text(),
+              visible: columnVisible['textarea'],
+            },
+          ],
+          // 初期ソート
+          'order': [
+            [2, 'asc']
+          ],
+          "searchCols": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            {
+              "search": '[[${variableType.codeValue}]]'
+            },
+          ],
+
+          // ボタンの表示
+          'buttons': ['colvis', 'stateClear', 'csvdownload', 'tsvdownload', 'upload', 'createnew'],
+
+          // データロード後処理
+          'initComplete': function (settings, json) {
+            // グローバルフィルターのEnterキーでサーバに送信
+            fnGlobalFilterOnReturn(table);
+          },
+        });
+
+        if (table.column(5).search() != '[[${variableType.codeValue}]]') {
+          table.state.clear();
+          window.location.reload();
+        }
+
+        // ページネーション後に画面トップに戻る
+        table.on('page.dt', function () {
+          $('html, body').animate({
+            scrollTop: 0
+          }, 300);
+        });
+
+        // 項目単位フィルタの追加
+        // addFieldFilter(table)
+
+        // 項目単位フィルタを追加(列の並び順対応版)
+        addFieldFilter2(table)
+
+      });
+
+
+
+</script>
+
+</body>
+</html>

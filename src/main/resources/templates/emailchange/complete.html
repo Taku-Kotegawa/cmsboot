@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html th:replace="~{/layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- ページタイトルを記入 -->
+    <title>メールアドレスの変更(変更の完了)</title>
+</head>
+<body>
+
+<section class="content-header">
+    <div class="container">
+        <div class="row pl-5">
+            <div class="col-18 mb-3">
+                <!-- ページタイトルを記入 -->
+                <h4>メールアドレスの変更(変更の完了)</h4>
+            </div>
+            <div class="col-18 text-right">
+                <!-- ページタイトル右の余白 -->
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container">
+        <div th:replace="~{/fragments/message-panel :: message-panel}"></div>
+        <!-- ここより下にメインコンテンツを記入 -->
+
+        <p>
+            <br>
+            新しいメールアドレスが登録されました。<br>
+            <br>
+            <a id="changePassword" th:href="@{/account}"
+               class="btn btn-button ml-2">マイアカウント情報</a>
+        </p>
+
+        <!-- ここより上にメインコンテンツを記入 -->
+    </div>
+</section>
+
+</body>
+</html>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html th:replace="~{/layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- ページタイトルを記入 -->
+    <title>Page Title</title>
+</head>
+<body>
+
+<section class="content-header">
+    <div class="container">
+        <div class="row pl-5">
+            <div class="col-18 mb-3">
+                <!-- ページタイトルを記入 -->
+                <h4>Page Title</h4>
+            </div>
+            <div class="col-18 text-right">
+                <!-- ページタイトル右の余白 -->
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container">
+        <div th:replace="~{/fragments/message-panel :: message-panel}"></div>
+        <!-- ここより下にメインコンテンツを記入 -->
+        <div th:replace="~{/fragments/include-upload :: include-upload}"></div>
+
+        <!-- アップロードファイルの仕様説明 -->
+        <caption>ファイルレイアウト</caption>
+        <table class="table-sm">
+            <thead>
+            <tr>
+                <th>No</th>
+                <th>カラム名</th>
+                <th>日本語名</th>
+                <th>入力要領</th>
+                <th>必須</th>
+                <th>例</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>1</td>
+                <td>id</td>
+                <td>ID</td>
+                <td>新規登録→空欄, 更新→登録済みID, 削除→99</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>status</td>
+                <td>ステータス</td>
+                <td>未使用</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>text01</td>
+                <td>テキストフィールド</td>
+                <td></td>
+                <td>必須</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>text02</td>
+                <td>テキストフィールド(数値・整数)</td>
+                <td>整数の数値</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>text03</td>
+                <td>テキストフィールド(数値・小数あり)</td>
+                <td>数値(Double)</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>text04</td>
+                <td>テキストフィールド(真偽値)</td>
+                <td>0もしくは1(1→真, 0→偽)</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>text05</td>
+                <td>テキストフィールド(複数の値)</td>
+                <td>カンマ区切りで複数の値を入力可能</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>radio01</td>
+                <td>ラジオボタン(真偽値)</td>
+                <td>0もしくは1(1→真, 0→偽)</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td>radio02</td>
+                <td>ラジオボタン(文字列)</td>
+                <td>「はい」または「いいえ」</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td>checkbox01</td>
+                <td>チェックボックス(文字列)</td>
+                <td>「yes」もしくは空欄</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>11</td>
+                <td>checkbox02</td>
+                <td>チェックボックス(複数の値)</td>
+                <td>0→下書き,1→有効,2→無効(カンマ区切りで複数の値を入力可能)</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>12</td>
+                <td>textarea01</td>
+                <td>テキストエリア</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>13</td>
+                <td>date01</td>
+                <td>日付</td>
+                <td>「yyyy/MM/dd」</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>14</td>
+                <td>datetime01</td>
+                <td>日付時刻</td>
+                <td>「yyyy/MM/dd hh:mm:ss」</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>15</td>
+                <td>select01</td>
+                <td>select</td>
+                <td>0→下書き,1→有効,2→無効</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>16</td>
+                <td>select02</td>
+                <td>select(複数の値)</td>
+                <td>0→下書き,1→有効,2→無効(カンマ区切りで複数の値を入力可能)</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>17</td>
+                <td>select03</td>
+                <td>select2</td>
+                <td>0→下書き,1→有効,2→無効</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>18</td>
+                <td>select04</td>
+                <td>select2(複数の値)</td>
+                <td>0→下書き,1→有効,2→無効(カンマ区切りで複数の値を入力可能)</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>19</td>
+                <td>combobox01</td>
+                <td>コンボボックス</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>20</td>
+                <td>combobox02</td>
+                <td>コンボボックス(Select2-tags)</td>
+                <td>0→下書き,1→有効,2→無効(カンマ区切りで複数の値を入力可能)</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>21</td>
+                <td>combobox03</td>
+                <td>コンボボックス(Select2-tags)</td>
+                <td>0→下書き,1→有効,2→無効(カンマ区切りで複数の値を入力可能)</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>21</td>
+                <td>attachedFile01</td>
+                <td>未使用</td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            </tbody>
+        </table>
+        <br>
+        <div class="border">
+            id,status,text01,text02,text03,text04,text05,radio01,radio02,checkbox01,checkbox02,textarea01,date01,datetime01,select01,select02,select03,select04,combobox01,combobox02,combobox03,attachedFile01
+        </div>
+
+
+
+        <!-- ここより上にメインコンテンツを記入 -->
+    </div>
+</section>
+
+</body>
+</html>

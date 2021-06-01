@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html th:replace="~{/layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- ページタイトルを記入 -->
+    <title>Job Summary</title>
+</head>
+<body>
+
+<section class="content-header">
+    <div class="container">
+        <div class="row pl-5">
+            <div class="col-18 mb-3">
+                <!-- ページタイトルを記入 -->
+                <h4>Job Summary</h4>
+            </div>
+            <div class="col-18 text-right nav-tabs-wrapper">
+                <!-- ページタイトル右の余白 -->
+                <ul class="nav nav-tabs justify-content-end">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{|result?target=${jobName}|}">ジョブログ一覧</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">サマリ</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container">
+        <div th:replace="~{/fragments/message-panel :: message-panel}"></div>
+        <!-- ここより下にメインコンテンツを記入 -->
+
+        <table>
+            <thead>
+            <tr>
+                <th>Job Name</th>
+                <th>Exe ID</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${jobSummary}">
+                <td>
+                    <a th:href="@{|/job/result?targetjob=${item.jobName}|}">[[${item.jobName}]]</a>
+                </td>
+                <td>
+                    [[${item.jobExecution.id}]]
+                </td>
+                <td>
+                    [[${item.jobExecution.startTime}]]
+                </td>
+                <td>
+                    [[${item.jobExecution.endTime}]]
+                </td>
+                <td>
+                    [[${item.jobExecution.status}]]
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- ここより上にメインコンテンツを記入 -->
+    </div>
+</section>
+
+</body>
+</html>

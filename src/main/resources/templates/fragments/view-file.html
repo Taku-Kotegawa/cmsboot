@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>入力フィールドの部品(view)</title>
+    <title>入力フィールドの部品(view-file)</title>
 </head>
 <body>
 
@@ -10,7 +10,9 @@
 
     <!--/* 参照用 */-->
     <th:block th:if="${fieldState.__${field_id}__Uuid__view}">
-        <div class="form-control form-control__view" th:text="${__${value}__}"></div>
+        <th:block th:if="${__${value}__}">
+            <div class="form-control form-control__view" th:text="${__${value}__.originalFilename}"></div>
+        </th:block>
     </th:block>
 
 </th:block>

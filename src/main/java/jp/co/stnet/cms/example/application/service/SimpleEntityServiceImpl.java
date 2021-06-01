@@ -48,6 +48,7 @@ public class SimpleEntityServiceImpl extends AbstractNodeRevService<SimpleEntity
 
     @Override
     public SimpleEntity save(SimpleEntity entity) {
+
         SimpleEntity simpleEntity = super.save(entity);
 
         // 添付ファイル確定

@@ -5,6 +5,7 @@ import jp.co.stnet.cms.base.application.service.authentication.PermissionRoleSha
 import jp.co.stnet.cms.base.domain.model.authentication.*;
 import jp.co.stnet.cms.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -15,13 +16,14 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.util.matcher.IpAddressMatcher;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 
 public class CustomUsernamePasswordAuthenticationProvider extends DaoAuthenticationProvider {
 
-    @Autowired
-    AccountSharedService accountSharedService;
+//    @Autowired
+//    AccountSharedService accountSharedService;
 
     @Autowired
     PermissionRoleSharedService permissionRoleSharedService;

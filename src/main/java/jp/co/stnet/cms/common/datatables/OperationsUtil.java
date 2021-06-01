@@ -64,7 +64,7 @@ public class OperationsUtil {
     // 12
     private String URL_DOWNLOAD = "{id}/download";
     // 13
-    private String URL_SWITCH_USER = "impersonate?username={id}";
+    private String URL_SWITCH_USER = "/admin/impersonate?username={id}";
 
     // ------ コンストラクタ -----------------------------------------
 
@@ -206,9 +206,9 @@ public class OperationsUtil {
      * @param id ID
      * @return URL
      */
-    public String getSwitchUserUrl(String id) {
-        return baseUrl + convId(URL_SWITCH_USER, id);
-    }
+//    public String getSwitchUserUrl(String id) {
+//        return baseUrl + convId(URL_SWITCH_USER, id);
+//    }
 
     // ------ Link<A> -----------------------------------------------
 
@@ -328,9 +328,9 @@ public class OperationsUtil {
      * @param id データを一位に特定する内部ID番号
      * @return リンクのHTML
      */
-    public String getSwitchUserLink(String id) {
-        return link(getSwitchUserUrl(id), LABEL_SWITCH_USER);
-    }
+//    public String getSwitchUserLink(String id) {
+//        return link(getSwitchUserUrl(id), LABEL_SWITCH_USER);
+//    }
 
     // ------ Button Link<A> -----------------------------------------
 
@@ -450,9 +450,9 @@ public class OperationsUtil {
      * @param id データを一位に特定する内部ID番号
      * @return ボタンのHTML
      */
-    public String getSwitchUserButton(String id) {
-        return link(getSwitchUserUrl(id), LABEL_SWITCH_USER, BUTTON_CLASS);
-    }
+//    public String getSwitchUserButton(String id) {
+//        return link(getSwitchUserUrl(id), LABEL_SWITCH_USER, BUTTON_CLASS);
+//    }
 
     // ------ private function --------------------------------------
 

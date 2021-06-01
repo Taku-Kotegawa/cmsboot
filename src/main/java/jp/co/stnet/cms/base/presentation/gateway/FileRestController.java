@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @Slf4j
 @RestController
-@RequestMapping("api/file")
+@RequestMapping("file")
 public class FileRestController {
 
     @Autowired
@@ -77,7 +77,6 @@ public class FileRestController {
                     .size(fileManaged.getFileSize())
                     .message("Upload Success.")
                     .url(fileManaged.getUuid() + "/download")
-//                    .deleteUrl(request.getContextPath() + "/api/file/" + fileManaged.getUuid() + "/delete")
                     .build();
 
         } catch (Exception e) {

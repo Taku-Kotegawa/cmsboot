@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>入力フィールドの部品(view-radio)</title>
+</head>
+<body>
+
+<th:block th:fragment="m(field_id, label, value, placeholder, items)">
+
+    <th:block th:if="${fieldState.__${field_id}____view}">
+        <th:block th:if="__${value}__ != null">
+            <!-- Boolean -->
+            <th:block th:if="${__${value}__ == true || __${value}__ == false}">
+                <div class="form-control form-control__view">
+                    <th:block th:each="item : ${__${items}__}">
+                        [['[']]
+                        [[${item.key == '1' ? '◯' : '　'}]]
+                        [[']']]
+                        [[${item.value}]]
+                    </th:block>
+                </div>
+            </th:block>
+
+            <!-- 非Boolean -->
+            <th:block th:if="${__${value}__ != true && __${value}__ != false}">
+                <div class="form-control form-control__view">
+                    <th:block th:each="item : ${__${items}__}">
+                        [['[']]
+                        [[${__${value}__ == item.key} ? '◯' : '　']]
+                        [[']']]
+                        [[${item.value}]]
+                    </th:block>
+                </div>
+            </th:block>
+        </th:block>
+    </th:block>
+
+</th:block>
+</body>
+</html>

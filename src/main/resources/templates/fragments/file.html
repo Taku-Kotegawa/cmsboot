@@ -11,11 +11,11 @@
     <!--/* 入力 */-->
     <th:block th:if="${fieldState.__${field_uuid}____input}">
         <input class="form-control form-control-file file-managed"
+               th:data-file-type="${data_file_type}"
                th:disabled="${fieldState.__${field_uuid}____disabled}"
                th:id="${field_id}"
                th:readonly="${fieldState.__${field_uuid}____readonly}"
-               th:data-file-type="${data_file_type}"
-               th:style="*{__${field_uuid}__ != null} ? 'display:none' : 'display:block'" type="file" />
+               th:style="*{__${field_uuid}__ != null} ? 'display:none' : 'display:block'" type="file"/>
         <span class="invalid-feedback" th:errors="*{__${field_uuid}__}" th:id="__${field_id}__-error"></span>
 
         <th:block th:if="*{__${field_managed}__ != null}">
@@ -24,14 +24,14 @@
                     <i class="far fa-file ml-2"></i>
                     <a class="link-attached"
                        target="_blank"
-                       th:href="${op.getDownloadUrl('uuid')}">[[*{attachedFile01Managed.originalFilename}]]</a>
-                      <i class="far fa-trash-alt" th:onclick="file_detach(${field_id})" style="color: brown;"></i>
-                    <input th:field="*{__${field_uuid}__" type="hidden"/>
+                       th:with="uuid = *{__${field_uuid}__}"
+                       th:href="${op.getDownloadUrl(uuid)}">[[*{__${field_managed}__.originalFilename}]]</a>
+                      <i class="far fa-trash-alt" style="color: brown;"
+                         th:onclick="|file_detach('__${field_id}__')|"></i>
+                    <input th:field="*{__${field_uuid}__}" type="hidden"/>
                   </span>
             </div>
         </th:block>
-
-        aaa
     </th:block>
 
 </th:block>

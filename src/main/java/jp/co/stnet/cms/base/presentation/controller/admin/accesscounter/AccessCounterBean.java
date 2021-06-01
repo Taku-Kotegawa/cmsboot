@@ -1,4 +1,4 @@
-package jp.co.stnet.cms.base.presentation.controller.accesscounter;
+package jp.co.stnet.cms.base.presentation.controller.admin.accesscounter;
 
 import lombok.Data;
 

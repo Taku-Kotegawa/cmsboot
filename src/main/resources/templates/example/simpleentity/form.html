@@ -2,16 +2,16 @@
 <html th:replace="~{/layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
 <head>
     <!-- ページタイトルを記入 -->
-    <title>Page Title</title>
+    <title>SimpleEntity</title>
 </head>
 <body>
 
 <section class="content-header">
-    <div class="container-fluid"> <!-- -fluidを外すと横幅が狭くなる-->
-        <div class="row mb-2">
-            <div class="col-18">
+    <div class="container">
+        <div class="row">
+            <div class="col-18 mb-3">
                 <!-- ページタイトルを記入 -->
-                <h4>Create SimpleEntity</h4>
+                <h4>SimpleEntity</h4>
             </div>
             <div class="col-18">
                 <!-- ページタイトル右の余白 -->
@@ -24,12 +24,15 @@
         <div th:replace="~{/fragments/message-panel :: message-panel}"></div>
         <!-- ここより下にメインコンテンツを記入 -->
 
-<!--        th:action="@{create}"-->
-
         <form autocomplete="off" enctype="multipart/form-data" method="post" th:action
               th:object="${simpleEntityForm}" th:with="id= ${simpleEntity != null} ? ${simpleEntity.id} : 0">
+
             <!-- EnterキーによるPOSTを無効化 -->
             <input disabled style="display:none" type="submit"/>
+
+            <!-- 隠しフィールド -->
+            <input th:field="*{id}" type="hidden"/>
+            <input th:field="*{version}" type="hidden"/>
 
             <!-- button -->
             <div th:replace="~{/fragments/button-area :: m(${id})}"></div>
@@ -47,13 +50,13 @@
 
                     <div th:replace="~{/fragments/field::input('text01', 'テキストフィールド', 'simpleEntity.text01', 'テキストを入力して下さい')}"></div>
 
-                    <div th:replace="~{/fragments/field::input('text02', 'テキストフィールド(数値・整数)', 'simpleEntity.text02', 'テキストを入力して下さい')}"></div>
+                    <div th:replace="~{/fragments/field::input-integer('text02', 'テキストフィールド(数値・整数)', 'simpleEntity.text02', 'テキストを入力して下さい')}"></div>
 
-                    <div th:replace="~{/fragments/field::input('text03', 'テキストフィールド(数値・小数あり)', 'simpleEntity.text03', 'テキストを入力して下さい')}"></div>
+                    <div th:replace="~{/fragments/field::input-decimal('text03', 'テキストフィールド(数値・小数あり)', 'simpleEntity.text03', 'テキストを入力して下さい')}"></div>
 
                     <div th:replace="~{/fragments/field::input('text04', 'テキストフィールド(真偽値)', 'simpleEntity.text04', 'テキストを入力して下さい')}"></div>
 
-                    <div th:replace="~{/fragments/field::input('text05', 'テキストフィールド(複数の値)', 'simpleEntity.text05', 'テキストを入力して下さい')}"></div>
+                    <div th:replace="~{/fragments/field::input('text05', 'テキストフィールド(複数の値)', 'simpleEntityBean.text05Label', 'テキストを入力して下さい')}"></div>
 
                     <div th:replace="~{/fragments/field::radio('radio01', 'ラジオボタン(真偽値)', 'simpleEntity.radio01', 'テキストを入力して下さい', '@CL_YESNO.asMap()')}"></div>
 
@@ -63,7 +66,7 @@
 
                     <div th:replace="~{/fragments/field::checkbox('checkbox02', 'チェックボックス(複数の値)', 'simpleEntity.checkbox02', 'テキストを入力して下さい', '@CL_STATUS.asMap()')}"></div>
 
-                    <div th:replace="~{/fragments/field::textarea('textarea01', 'テキストエリア', 'simpleEntity.checkbox02', 'テキストを入力して下さい', '4')}"></div>
+                    <div th:replace="~{/fragments/field::textarea('textarea01', 'テキストエリア', 'simpleEntity.textarea01', 'テキストを入力して下さい', '4')}"></div>
 
                     <div th:replace="~{/fragments/field::date('date01', '日付', 'simpleEntity.date01', 'テキストを入力して下さい')}"></div>
 
@@ -83,10 +86,15 @@
 
                     <div th:replace="~{/fragments/field::select2-tags-multi('combobox03', 'コンボボックス(select2-tags-multi)', 'simpleEntity.combobox03', 'テキストを入力して下さい', '@CL_STATUS.asMap()')}"></div>
 
-                    <div th:replace="~{/fragments/field::file('attachedFile01', '画像 *', 'simpleEntity', 'テキストを入力して下さい', 'simpleentity', '')}"></div>
+                    <div th:replace="~{/fragments/field::file('attachedFile01', '画像 *', 'simpleEntity.attachedFile01Managed', 'テキストを入力して下さい', 'simpleentity', '')}"></div>
 
                 </div>
+
+
             </div>
+            <br>
+            <hr>
+            <div th:replace="~{/fragments/button-area :: m(${id})}"></div>
 
         </form>
         <!-- ここより上にメインコンテンツを記入 -->

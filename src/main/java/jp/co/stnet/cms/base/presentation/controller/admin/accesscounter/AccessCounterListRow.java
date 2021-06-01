@@ -1,4 +1,4 @@
-package jp.co.stnet.cms.base.presentation.controller.accesscounter;
+package jp.co.stnet.cms.base.presentation.controller.admin.accesscounter;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -13,15 +13,12 @@ import java.util.Map;
 
 /**
  * アクセスカウンター管理の一覧の行のBean
- * @author Automatically generated
  *
+ * @author Automatically generated
  */
 @Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 public class AccessCounterListRow implements Serializable {
- 
+
     /**
      * Serial Version UID
      */
@@ -52,6 +49,22 @@ public class AccessCounterListRow implements Serializable {
      */
     @JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss")
     private LocalDateTime lastModifiedDate;
+    /**
+     * 内部ID
+     */
+    private Long id;
+    /**
+     * ステータス
+     */
+    private String statusLabel;
+    /**
+     * URL
+     */
+    private String url;
+    /**
+     * アクセス数
+     */
+    private Long count;
 
     @JsonProperty("DT_RowId")
     public String getDT_RowId() {
@@ -67,25 +80,5 @@ public class AccessCounterListRow implements Serializable {
     public Map<String, String> getDT_RowAttr() {
         return DT_RowAttr;
     }
-
-    /**
-     * 内部ID
-     */
-    private Long id;
-
-    /**
-     * ステータス
-     */
-    private String statusLabel;
-
-    /**
-     * URL
-     */
-    private String url;
-
-    /**
-     * アクセス数
-     */
-    private Long count;
 
 }

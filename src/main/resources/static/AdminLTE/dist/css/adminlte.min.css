@@ -52606,7 +52606,7 @@ table.DTFC_Cloned tr {
 .content-header {
   background-color: #e0e0d8;
   margin-bottom: 15px;
-  padding-bottom: 8px;
+  padding-bottom: 0px;
   padding-left: 0;
   padding-right: 0;
 }
@@ -52614,32 +52614,33 @@ table.DTFC_Cloned tr {
 .content-header:after {
   position: relative;
   z-index: 10;
-  /* right: 0; */
-  bottom: -8px;
-  /* left: 0; */
   display: block;
   height: 1px;
   content: "";
   background-color: #a6a6a6;
 }
 
-.nav-tabs-wrapper {
-  bottom: -9px;
+.content-header .nav-tabs-wrapper {
   z-index: 15;
 }
 
-.nav-tabs {
+.content-header .nav-tabs {
   border: 0;
+  border-right: solid 1px #a6a6a6;
 }
 
-.nav-tabs .nav-link.active {
+.content-header .nav-tabs .nav-link {
   border: solid 1px #a6a6a6;
-  border-bottom: 0;
+  border-right: 0;
+  background-color: #f3f3f3;
+  color: #495057;
 }
 
-.main-header {
-  box-shadow: 1px 0px 5px #000;
-  border-bottom: 0;
+.content-header .nav-tabs .nav-link.active {
+  border: solid 1px #a6a6a6;
+  border-right: 0;
+  border-bottom: solid 1px #fff;
+  background-color: #fff;
 }
 
 .admin-panel {

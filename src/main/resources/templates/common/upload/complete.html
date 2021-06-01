@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html th:replace="~{/layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- ページタイトルを記入 -->
+    <title>Page Title</title>
+</head>
+<body>
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row pl-5">
+            <div class="col-18 mb-3">
+                <!-- ページタイトルを記入 -->
+                <h4>Page Title</h4>
+            </div>
+            <div class="col-18 text-right">
+                <!-- ページタイトル右の余白 -->
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid"><!-- -fluidを外すと横幅が狭くなる-->
+        <div th:replace="~{/fragments/message-panel :: message-panel}"></div>
+        <!-- ここより下にメインコンテンツを記入 -->
+
+        <p class="border px-4 py-2">
+            データ取り込みを開始しました。貴方のジョブ番号は、<b>ID = [[${jobExecutionId}]]</b> です。<br>
+            処理結果は、ジョブログを確認してください。<br>
+            処理完了まで時間が要する場合があります。
+        </p>
+
+        <a th:href="@{${returnBackUrl}}" class="btn btn-button">[[${returnBackBtn}]]</a>
+
+        <a th:href="@{|/job/joblog?jobexecutionid=${jobExecutionId}|}" target="_blank" class="btn btn-button">ジョブログを確認する</a>
+
+        <a th:href="@{|/job/result?targetjob=${jobName}|}" target="_blank" class="btn btn-button">ジョブ一覧を表示する</a>
+
+        <!-- ここより上にメインコンテンツを記入 -->
+    </div>
+</section>
+
+</body>
+</html>

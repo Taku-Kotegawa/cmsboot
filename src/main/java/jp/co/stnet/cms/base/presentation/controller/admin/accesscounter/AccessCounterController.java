@@ -1,4 +1,4 @@
-package jp.co.stnet.cms.base.presentation.controller.accesscounter;
+package jp.co.stnet.cms.base.presentation.controller.admin.accesscounter;
 
 import com.github.dozermapper.core.Mapper;
 import jp.co.stnet.cms.base.application.service.accesscounter.AccessCounterService;
@@ -43,12 +43,12 @@ import java.util.Map;
 
 @Slf4j
 @Controller
-@RequestMapping("accesscounter")
+@RequestMapping("admin/accesscounter")
 @TransactionTokenCheck("accesscounter")
 public class AccessCounterController {
 
     // JSPのパス設定
-    private final String BASE_PATH = "accesscounter";
+    private final String BASE_PATH = "admin/accesscounter";
     private final String JSP_LIST = BASE_PATH + "/list";
     private final String JSP_FORM = BASE_PATH + "/form";
     private final String JSP_VIEW = BASE_PATH + "/view";
@@ -118,7 +118,8 @@ public class AccessCounterController {
         }
 
         for (AccessCounterBean bean : getBeanList(accessCounterList)) {
-            AccessCounterListRow accessCounterListRow = beanMapper.map(bean, AccessCounterListRow.class);
+            AccessCounterListRow accessCounterListRow = beanMapper.map(bean,AccessCounterListRow.class);
+
             accessCounterListRow.setOperations(getToggleButton(bean.getId().toString(), op(null)));
             accessCounterListRow.setDT_RowId(bean.getId().toString());
             // ステータスラベル

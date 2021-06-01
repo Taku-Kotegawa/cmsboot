@@ -9,6 +9,11 @@ import lombok.Data;
 public class SimpleEntityBean extends SimpleEntity {
 
     /**
+     * テキストフィールド(複数の値)のラベル
+     */
+    private String text05Label;
+
+    /**
      * ラジオボタン(真偽値)ラベル
      */
     private String radio01Label;

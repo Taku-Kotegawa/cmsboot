@@ -61,6 +61,7 @@ public final class Constants {
         public static final String GENERATE_APIKEY = "generateApiKey";
         public static final String DELETE_APIKEY = "deleteApiKey";
         public static final String SAVE_APIKEY = "saveApiKey";
+        public static final String SWITCH_USER = "switchUser";
     }
 
     /**

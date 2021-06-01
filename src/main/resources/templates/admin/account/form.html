@@ -2,35 +2,155 @@
 <html th:replace="~{/layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
 <head>
     <!-- ページタイトルを記入 -->
-    <title>Page Title</title>
+    <title>アカウント登録・編集(管理者)</title>
 </head>
 <body>
 
 <section class="content-header">
-    <div class="container-fluid"> <!-- -fluidを外すと横幅が狭くなる-->
-        <div class="row mb-2">
-            <div class="col-18">
+    <div class="container"> <!-- -fluidを外すと横幅が狭くなる-->
+        <div class="row">
+            <div class="col-18 mb-3">
                 <!-- ページタイトルを記入 -->
-                <h4>Page Title</h4>
+                <h4>アカウント登録・編集(管理者)</h4>
             </div>
-            <div class="col-18">
+            <div class="col-18 text-right">
                 <!-- ページタイトル右の余白 -->
             </div>
         </div>
     </div>
 </section>
 <section class="content">
-    <div class="container-fluid">
+    <div class="container">
         <div th:replace="~{/fragments/message-panel :: message-panel}"></div>
         <!-- ここより下にメインコンテンツを記入 -->
 
-        <form autocomplete="off" enctype="multipart/form-data"
-              method="POST" th:action="@{/create}" th:object="${accountForm}">
+        <!-- button -->
+        <div class="row">
+            <div th:replace="~{/fragments/button-area :: m(${id})}"></div>
+            <!-- Switch User -->
+            <th:block th:if="${#maps.containsKey(buttonState, 'switchUser__view')}">
+                <form method="post" th:action="@{/admin/impersonate}">
+                    <input class="btn btn-button mr-2" type="submit" value="ユーザ切り替え" />
+                    <input th:field="${account.username}" type="hidden"/>
+                </form>
+            </th:block>
+        </div>
+        <hr>
 
-            <div th:replace="~{/fragments/field::input('username', 'label', 'value', 'placeholder')}"></div>
+        <form autocomplete="off" enctype="multipart/form-data" method="post" th:action
+              th:object="${accountForm}" th:with="id= ${account != null} ? ${account.username} : 0">
+
+            <!-- EnterキーによるPOSTを無効化 -->
+            <input disabled style="display:none" type="submit"/>
+
+            <!-- 隠しフィールド -->
 
 
+            <!-- Input -->
+            <div class="row">
+                <div class="col-4">
+                    <div th:replace="~{/fragments/field::input('username', 'ユーザ名 *', 'account.username', '')}"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div th:replace="~{/fragments/field::input('firstName', '姓 *', 'account.firstName', '')}"></div>
+                </div>
+                <div class="col-6">
+                    <div th:replace="~{/fragments/field::input('lastName', '名 *', 'account.lastName', '')}"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-8">
+                    <div th:replace="~{/fragments/field::input('email', 'E-Mail *', 'account.email', '')}"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-8">
+                    <div th:replace="~{/fragments/field::input('url', 'URL', 'account.url', '')}"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <div th:replace="~{/fragments/field::input-password('password', 'パスワード', '', '')}"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="ml-1">新規は必須、変更は必要な場合のみ</div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div th:replace="~{/fragments/field::textarea('profile', 'プロフィール', 'account.profile', '', 4)}"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div th:replace="~{/fragments/field::file('image', '画像 *', 'account.imageManaged', 'テキストを入力して下さい', 'account', '')}"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div th:replace="~{/fragments/field::checkbox('roles', 'ロール', 'account.roles', '', '@CL_ROLE.asMap()')}"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div th:replace="~{/fragments/label :: m('apiKey', 'API KEY')}"></div>
+
+                    <th:block th:if="${fieldState.apiKey__input}">
+                        <div class="input-group">
+                            <input class="form-control" th:disabled="${fieldState.apiKey__disabled}"
+                                   th:errorclass="is-invalid" th:field="*{apiKey}"
+                                   th:readonly="${fieldState.apiKey__readonly}"/>
+                            <div class="input-group-append">
+                                <!-- API KEY 設定 -->
+                                <th:block th:if="${buttonState.setApiKey__view}">
+                                    <button class="btn btn-button mr-2" id="setApiKey" name="setApiKey"
+                                            th:disabled="${buttonState.setApiKey__disabled}"
+                                            type="submit">設定
+                                    </button>
+                                </th:block>
+                                <!-- API KEY 設定解除 -->
+                                <th:block th:if="${buttonState.unsetApiKey__view}">
+                                    <button class="btn btn-button mr-2" id="unsetApiKey" name="unsetApiKey"
+                                            th:disabled="${buttonState.unsetApiKey__disabled}"
+                                            type="submit">解除
+                                    </button>
+                                </th:block>
+                            </div>
+                            <span class="invalid-feedback" th:errors="*{apiKey}" th:id="apiKey-error"></span>
+                        </div>
+                    </th:block>
+
+                    <div th:replace="~{/fragments/hidden :: m('apiKey')}"></div>
+                    <div th:replace="~{/fragments/view :: m('apiKey', 'API KEY', 'account.apiKey', '')}"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div th:replace="~{/fragments/field::textarea('allowedIp', 'ログイン許可IPアドレス', 'account.allowedIp', 'ex: 192.168.100.0/24, 10.200.10.0/32 (カンマで複数指定)', 2)}"></div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <!-- ステータスは新規登録時非表示、それ以外は常に表示のみ -->
+                    <div th:if="${account != null}">
+                        <label class="mt-3">ステータス</label>
+                        <div>
+                            <th:block th:if="${account.status == '1'}">有効</th:block>
+                            <th:block th:if="${account.status != '1'}">無効</th:block>
+                            <th:block th:if="${isLocked}">(ロック)</th:block>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </form>
+
+        <!-- button -->
+        <br>
+        <hr>
+        <div th:replace="~{/fragments/button-area :: m(${'id'})}"></div>
         <!-- ここより上にメインコンテンツを記入 -->
     </div>
 </section>

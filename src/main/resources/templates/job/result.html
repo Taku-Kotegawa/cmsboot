@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html th:replace="~{/layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- ページタイトルを記入 -->
+    <title>Job Results</title>
+</head>
+<body>
+
+<section class="content-header">
+    <div class="container">
+        <div class="row pl-5">
+            <div class="col-18 mb-3">
+                <!-- ページタイトルを記入 -->
+                <h4>Job Results</h4>
+            </div>
+            <div class="col-18 text-right nav-tabs-wrapper">
+                <!-- ページタイトル右の余白 -->
+                <ul class="nav nav-tabs justify-content-end">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">ジョブログ一覧</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{summary}">サマリ</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container">
+        <div th:replace="~{/fragments/message-panel :: message-panel}"></div>
+        <!-- ここより下にメインコンテンツを記入 -->
+
+        <div class="row mb-3">
+            <div class="col-8">
+                <label>ジョブの選択</label>
+                <select class="form-control" id="targetJob">
+                    <th:block th:each="job : ${jobList}">
+                        <option th:selected="${job == selectedJob}">[[${job}]]</option>
+                    </th:block>
+                </select>
+            </div>
+            <div class="col-28 align-self-end">
+                <a class="btn btn-button" href="">更新</a>
+            </div>
+        </div>
+
+        <table class="table table-sm">
+            <thead>
+            <tr>
+                <th>id</th>
+                <th>startTime<br>endTime</th>
+                <th>status</th>
+                <th>jobParameters</th>
+                <th>log</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="result : ${jobResults}">
+                <td>[[${result.id}]]</td>
+                <td style="white-space: nowrap;">
+                    [[${#dates.format(result.startTime, 'yyyy/MM/dd')}]]
+                    <br>
+                    [[${#dates.format(result.endTime, 'yyyy/MM/dd')}]]
+                </td>
+                <td>[[${result.status}]]</td>
+                <td>[[${result.jobParameters}]]</td>
+                <td class="text-center"><a th:href="@{|/job/joblog?jobexecutionid=${result.id}|}">参照</a></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- ここより上にメインコンテンツを記入 -->
+    </div>
+</section>
+
+<script>
+  $(document)
+  .ready(
+  function () {
+    $('#targetJob').change(function() {
+        console.log(this);
+        var url = "result?targetjob=" + $(this).val();
+        location.href = url;
+    });
+  });
+
+
+</script>
+
+</body>
+</html>

@@ -23,6 +23,9 @@ import org.springframework.batch.core.JobParametersInvalidException;
 import org.springframework.batch.core.launch.JobInstanceAlreadyExistsException;
 import org.springframework.batch.core.launch.JobOperator;
 import org.springframework.batch.core.launch.NoSuchJobException;
+import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
+import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
+import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -58,7 +61,7 @@ public class SimpleEntityController {
     private final String JSP_VIEW = BASE_PATH + "/view";
 
     private final String JSP_UPLOAD_FORM = BASE_PATH + "/uploadform"; //TODO
-    private final String JSP_UPLOAD_COMPLETE = "upload/complete"; //TODO
+    private final String JSP_UPLOAD_COMPLETE = "common/upload/complete"; //TODO
 
     // CSV/Excelのファイル名(拡張子除く)
     private final String DOWNLOAD_FILENAME = "simpleentity";
@@ -227,6 +230,86 @@ public class SimpleEntityController {
         model.addAttribute("class", SimpleEntityCsvBean.class);
     }
 
+
+    private SimpleEntityBean getBean(SimpleEntity entity) {
+
+        SimpleEntityBean bean = beanMapper.map(entity, SimpleEntityBean.class);
+
+        // テキストフィールド(複数の値)
+        if (entity.getText05() != null) {
+            bean.setText05Label(String.join(",", entity.getText05()));
+        }
+
+        // ラジオボタン(真偽値)ラベル
+        if (entity.getRadio01() != null) {
+            bean.setRadio01Label(entity.getRadio01() ? "はい" : "いいえ");
+        }
+
+        // チェックボックス(文字列)ラベル
+        if (entity.getCheckbox01() != null) {
+            bean.setCheckbox01Label("はい".equals(entity.getCheckbox01()) ? "☑" : "□" + "利用規約に合意する");
+        }
+
+        // チェックボックス(複数の値)ラベル
+        if (entity.getCheckbox02() != null) {
+            String s = entity.getCheckbox02().stream()
+                    .map(str -> statusCodeList.asMap().get(str))
+                    .collect(Collectors.joining(", "));
+            bean.setCheckbox02Label(s);
+        }
+
+        // セレクト(単一の値)ラベル
+        if (entity.getSelect01() != null) {
+            bean.setSelect01Label(statusCodeList.asMap().get(entity.getSelect01()));
+        }
+
+        // セレクト(複数の値)
+        if (entity.getSelect02() != null) {
+            String t = entity.getSelect02().stream()
+                    .map(str -> statusCodeList.asMap().get(str))
+                    .collect(Collectors.joining(", "));
+            bean.setSelect02Label(t);
+        }
+
+        // セレクト(単一の値, select2)
+        if (entity.getSelect03() != null) {
+            bean.setSelect03Label(statusCodeList.asMap().get(entity.getSelect03()));
+        }
+
+        // セレクト(複数の値, select2)
+        String u = entity.getSelect04().stream()
+                .map(str -> statusCodeList.asMap().get(str))
+                .collect(Collectors.joining(", "));
+        bean.setSelect04Label(u);
+
+        // コンボボックス(単一の値, Select2)
+        if (entity.getCombobox02() != null) {
+            bean.setCombobox02Label(statusCodeList.asMap().get(entity.getCombobox02()));
+        }
+
+        // コンボボックス(複数の値, Select2)
+        if (entity.getCombobox03() != null) {
+            String v = entity.getCombobox03().stream()
+                    .map(str -> statusCodeList.asMap().get(str))
+                    .collect(Collectors.joining(", "));
+            bean.setCombobox03Label(v);
+        }
+
+        // 添付ファイル名
+//            if (entity.getAttachedFile01Uuid() != null) {
+//                bean.setAttachedFile01Managed(fileManagedSharedService.findByUuid(entity.getAttachedFile01Uuid()));
+//                if (bean.getAttachedFile01Managed() != null) {
+//                    bean.setAttachedFile01FileName(bean.getAttachedFile01Managed().getOriginalFilename());
+//                }
+//            }
+
+        if (entity.getAttachedFile01Managed() != null) {
+            bean.setAttachedFile01FileName(bean.getAttachedFile01Managed().getOriginalFilename());
+        }
+
+        return bean;
+    }
+
     /**
      * 一覧画面、CSVファイルのためのデータ変換
      *
@@ -236,77 +319,7 @@ public class SimpleEntityController {
     private List<SimpleEntityBean> getBeanList(List<SimpleEntity> entities) {
         List<SimpleEntityBean> beans = new ArrayList<>();
         for (SimpleEntity entity : entities) {
-            SimpleEntityBean bean = beanMapper.map(entity, SimpleEntityBean.class);
-
-            // ラジオボタン(真偽値)ラベル
-            if (entity.getRadio01() != null) {
-                bean.setRadio01Label(entity.getRadio01() ? "はい" : "いいえ");
-            }
-
-            // チェックボックス(文字列)ラベル
-            if (entity.getCheckbox01() != null) {
-                bean.setCheckbox01Label("はい".equals(entity.getCheckbox01()) ? "☑" : "□" + "利用規約に合意する");
-            }
-
-            // チェックボックス(複数の値)ラベル
-            if (entity.getCheckbox02() != null) {
-                String s = entity.getCheckbox02().stream()
-                        .map(str -> statusCodeList.asMap().get(str))
-                        .collect(Collectors.joining(", "));
-                bean.setCheckbox02Label(s);
-            }
-
-            // セレクト(単一の値)ラベル
-            if (entity.getSelect01() != null) {
-                bean.setSelect01Label(statusCodeList.asMap().get(entity.getSelect01()));
-            }
-
-            // セレクト(複数の値)
-            if (entity.getSelect02() != null) {
-                String t = entity.getSelect02().stream()
-                        .map(str -> statusCodeList.asMap().get(str))
-                        .collect(Collectors.joining(", "));
-                bean.setSelect02Label(t);
-            }
-
-            // セレクト(単一の値, select2)
-            if (entity.getSelect03() != null) {
-                bean.setSelect03Label(statusCodeList.asMap().get(entity.getSelect03()));
-            }
-
-            // セレクト(複数の値, select2)
-            String u = entity.getSelect04().stream()
-                    .map(str -> statusCodeList.asMap().get(str))
-                    .collect(Collectors.joining(", "));
-            bean.setSelect04Label(u);
-
-            // コンボボックス(単一の値, Select2)
-            if (entity.getCombobox02() != null) {
-                bean.setCombobox02Label(statusCodeList.asMap().get(entity.getCombobox02()));
-            }
-
-            // コンボボックス(複数の値, Select2)
-            if (entity.getCombobox03() != null) {
-                String v = entity.getCombobox03().stream()
-                        .map(str -> statusCodeList.asMap().get(str))
-                        .collect(Collectors.joining(", "));
-                bean.setCombobox03Label(v);
-            }
-
-            // 添付ファイル名
-//            if (entity.getAttachedFile01Uuid() != null) {
-//                bean.setAttachedFile01Managed(fileManagedSharedService.findByUuid(entity.getAttachedFile01Uuid()));
-//                if (bean.getAttachedFile01Managed() != null) {
-//                    bean.setAttachedFile01FileName(bean.getAttachedFile01Managed().getOriginalFilename());
-//                }
-//            }
-
-            if (entity.getAttachedFile01Managed() != null) {
-                bean.setAttachedFile01FileName(bean.getAttachedFile01Managed().getOriginalFilename());
-            }
-
-
-            beans.add(bean);
+            beans.add(getBean(entity));
         }
         return beans;
     }
@@ -386,6 +399,8 @@ public class SimpleEntityController {
             @AuthenticationPrincipal LoggedInUser loggedInUser) {
 
         simpleEntityService.hasAuthority(Constants.OPERATION.DOWNLOAD, loggedInUser);
+
+        // TODO 厳密な権限チェック
 
         model.addAttribute(fileManagedSharedService.findByUuid(uuid));
         return "fileManagedDownloadView";
@@ -806,7 +821,7 @@ public class SimpleEntityController {
 //        setFileManagedToEntity(simpleEntity);
 
         model.addAttribute("simpleEntity", simpleEntity);
-
+        model.addAttribute("simpleEntityBean", getBean(simpleEntity));
         model.addAttribute("buttonState", getButtonStateMap(Constants.OPERATION.VIEW, simpleEntity).asMap());
         model.addAttribute("fieldState", getFiledStateMap(Constants.OPERATION.VIEW, simpleEntity).asMap());
         model.addAttribute("op", op());
@@ -943,12 +958,17 @@ public class SimpleEntityController {
 
         form.setJobName("job03");
 
-        FileManaged uploadFileManaged = fileManagedSharedService.findByUuid(form.getUploadFileUuid());
-        form.setUploadFileManaged(uploadFileManaged);
+        if (form.getUploadFileUuid() != null) {
+            form.setUploadFileManaged(fileManagedSharedService.findByUuid(form.getUploadFileUuid()));
+        }
 
         model.addAttribute("pageTitle", "Import SimpleEntity");
         model.addAttribute("referer", "list");
         model.addAttribute("inputFileColumns", "ファイルパスを指定する予定");
+
+        model.addAttribute("fieldState", new StateMap(UploadForm.class, new ArrayList<>(), new ArrayList<>()).setInputTrueAll().asMap());
+
+        model.addAttribute("op", new OperationsUtil(BASE_PATH));
 
         return JSP_UPLOAD_FORM;
     }
@@ -962,9 +982,10 @@ public class SimpleEntityController {
                          @AuthenticationPrincipal LoggedInUser loggedInUser) {
 
         final String jobName = UPLOAD_JOB_ID;
+
         Long jobExecutionId = null;
 
-        if (result.hasErrors()) {
+        if (!jobName.equals(form.getJobName()) || result.hasErrors()) {
             return uploadForm(form, model, loggedInUser);
         }
 
@@ -974,14 +995,10 @@ public class SimpleEntityController {
         jobParams += ", encoding=" + form.getEncoding();
         jobParams += ", filetype=" + form.getFileType();
 
-        if (!jobName.equals(form.getJobName())) {
-            return uploadForm(form, model, loggedInUser);
-        }
-
         try {
             jobExecutionId = jobStarter.start(jobName, jobParams);
 
-        } catch (NoSuchJobException | JobInstanceAlreadyExistsException | JobParametersInvalidException e) {
+        } catch (NoSuchJobException | JobInstanceAlreadyExistsException | JobParametersInvalidException | JobExecutionAlreadyRunningException | JobRestartException | JobInstanceAlreadyCompleteException e) {
             e.printStackTrace();
 
             // メッセージをセットして、フォーム画面に戻る。

@@ -148,7 +148,7 @@ public class SimpleEntityRevision extends AbstractRevisionEntity implements Seri
     /**
      * 添付ファイル(FileManaged)
      */
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @NotFound(action = NotFoundAction.IGNORE)
     @JoinColumn(name = "attachedFile01Uuid", referencedColumnName = "uuid", unique = true, insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
     private FileManaged attachedFile01Managed;

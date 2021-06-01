@@ -1,8 +1,8 @@
 package jp.co.stnet.cms.config;
 
-import jp.co.stnet.cms.base.application.service.authentication.UserDetailsServiceImpl;
 import jp.co.stnet.cms.base.domain.model.authentication.CustomAuthenticationUserDetailService;
 import jp.co.stnet.cms.base.domain.model.authentication.CustomPreAuthenticatedProcessingFilter;
+import jp.co.stnet.cms.base.domain.model.authentication.CustomUsernamePasswordAuthenticationFilter;
 import jp.co.stnet.cms.base.domain.model.authentication.CustomUsernamePasswordAuthenticationProvider;
 import jp.co.stnet.cms.common.validation.rule.EncodedPasswordHistoryRule;
 import org.passay.*;
@@ -14,9 +14,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AccountStatusUserDetailsChecker;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,11 +28,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
+import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
+import org.springframework.security.web.authentication.session.*;
 import org.springframework.security.web.authentication.switchuser.SwitchUserFilter;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.csrf.CsrfAuthenticationStrategy;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -44,9 +47,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import static org.passay.EnglishCharacterData.*;
-import static org.springframework.security.config.Customizer.withDefaults;
 
-@Configuration
 public class SpringSecurityConfig {
 
     @Configuration
@@ -78,7 +79,7 @@ public class SpringSecurityConfig {
         // https://sebenkyo.com/2020/07/22/post-1186/#toc_id_4
         @Bean
         public PreAuthenticatedAuthenticationProvider preAuthenticatedAuthenticationProvider() {
-                PreAuthenticatedAuthenticationProvider preAuthenticatedAuthenticationProvider = new PreAuthenticatedAuthenticationProvider();
+            PreAuthenticatedAuthenticationProvider preAuthenticatedAuthenticationProvider = new PreAuthenticatedAuthenticationProvider();
             preAuthenticatedAuthenticationProvider.setPreAuthenticatedUserDetailsService(authenticationUserDetailsService());
             preAuthenticatedAuthenticationProvider.setUserDetailsChecker(new AccountStatusUserDetailsChecker());
 
@@ -121,13 +122,23 @@ public class SpringSecurityConfig {
         @Value("${security.passwordMinimumLength}")
         Integer minimumLength;
 
+        @Autowired
+        SessionRegistry sessionRegistry;
+
+        // ログイン中ユーザ一覧の表示のため
+        @Bean
+        public static ServletListenerRegistrationBean httpSessionEventPublisher() {
+            return new ServletListenerRegistrationBean(new HttpSessionEventPublisher());
+        }
+
         @Override
         protected void configure(HttpSecurity http) throws Exception {
 
+            http
+                    .addFilterAfter(switchUserFilter(), FilterSecurityInterceptor.class)
+                    .addFilterAt(customUsernamePasswordAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
 
-            // ユーザ切り替えのURLを有効化
-
-            http.authorizeRequests()
+                    .authorizeRequests()
 
                     .antMatchers("/login").permitAll()
                     .antMatchers("/account/create").permitAll()
@@ -140,10 +151,7 @@ public class SpringSecurityConfig {
                     .antMatchers("/admin/impersonate/**").hasAnyRole("ADMIN")
 
                     .anyRequest()
-                    .authenticated()
-
-                    .and()
-                    .addFilterAfter(switchUserFilter(), FilterSecurityInterceptor.class);;
+                    .authenticated();
 
             http.formLogin()
                     .loginPage("/login")
@@ -158,27 +166,20 @@ public class SpringSecurityConfig {
                     .invalidateHttpSession(true);
 
             // 同時ログイン数の制御
-            http.sessionManagement().maximumSessions(1).sessionRegistry(sessionRegistry());
+//            http.sessionManagement().maximumSessions(1).sessionRegistry(sessionRegistry());
 
         }
 
         @Override
         public void configure(AuthenticationManagerBuilder auth) throws Exception {
             auth.userDetailsService(loggedInUserDetailsService);
-//        auth.authenticationProvider(customUsernamePasswordAuthenticationProvider); //TODO 未対応
+            auth.authenticationProvider(customUsernamePasswordAuthenticationProvider());
         }
 
         @Bean
         public SessionRegistryImpl sessionRegistry() {
             return new SessionRegistryImpl();
         }
-
-        // ログイン中ユーザ一覧の表示のため
-        @Bean
-        public static ServletListenerRegistrationBean httpSessionEventPublisher() {
-            return new ServletListenerRegistrationBean(new HttpSessionEventPublisher());
-        }
-
 
         @Bean
         public PasswordEncoder passwordEncoder() {
@@ -254,11 +255,44 @@ public class SpringSecurityConfig {
         @Bean
         public CustomUsernamePasswordAuthenticationProvider customUsernamePasswordAuthenticationProvider() {
             CustomUsernamePasswordAuthenticationProvider provider = new CustomUsernamePasswordAuthenticationProvider();
-            provider.setPasswordEncoder(passwordEncoder());
             provider.setUserDetailsService(loggedInUserDetailsService);
+            provider.setPasswordEncoder(passwordEncoder());
 
             return provider;
         }
+
+
+        public CustomUsernamePasswordAuthenticationFilter customUsernamePasswordAuthenticationFilter() throws Exception {
+            CustomUsernamePasswordAuthenticationFilter filter = new CustomUsernamePasswordAuthenticationFilter();
+
+            filter.setRequiresAuthenticationRequestMatcher(
+                    new AntPathRequestMatcher("/login", "POST")
+            );
+
+            filter.setAuthenticationManager(authenticationManager());
+
+            filter.setAuthenticationFailureHandler(new SimpleUrlAuthenticationFailureHandler("/login?error=true"));
+
+            filter.setAuthenticationSuccessHandler(new SavedRequestAwareAuthenticationSuccessHandler());
+
+
+            List<SessionAuthenticationStrategy> strategies = new ArrayList<>();
+            strategies.add(new CsrfAuthenticationStrategy(new HttpSessionCsrfTokenRepository()));
+            strategies.add(new SessionFixationProtectionStrategy());
+
+            ConcurrentSessionControlAuthenticationStrategy sessionControlAuthenticationStrategy
+                    = new ConcurrentSessionControlAuthenticationStrategy(sessionRegistry);
+            sessionControlAuthenticationStrategy.setMaximumSessions(1);
+            sessionControlAuthenticationStrategy.setExceptionIfMaximumExceeded(true);
+            strategies.add(sessionControlAuthenticationStrategy);
+
+            filter.setSessionAuthenticationStrategy(new CompositeSessionAuthenticationStrategy(strategies));
+
+            strategies.add(new RegisterSessionAuthenticationStrategy((sessionRegistry)));
+
+            return filter;
+        }
+
 
         // 非同期処理で認証情報を呼び出し先のオブジェクトに渡す
         @PostConstruct
@@ -274,13 +308,9 @@ public class SpringSecurityConfig {
             filter.setSwitchUserUrl("/admin/impersonate");
             filter.setExitUserUrl("/logout/impersonate");
             filter.setTargetUrl("/");
-
-            //filter.setSuccessHandler(authenticationSuccessHandler);
-            //filter.setFailureHandler(authenticationFailureHandler());
-
+            filter.afterPropertiesSet();
             return filter;
         }
-
 
 
     }
