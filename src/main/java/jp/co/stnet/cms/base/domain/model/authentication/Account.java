@@ -47,6 +47,11 @@ public class Account extends AbstractEntity<String> implements Serializable, Sta
     private String lastName;
 
     /**
+     * 所属
+     */
+    private String department;
+
+    /**
      * メールアドレス
      */
     private String email;
@@ -85,7 +90,6 @@ public class Account extends AbstractEntity<String> implements Serializable, Sta
     @NotFound(action = NotFoundAction.IGNORE)
     @JoinColumn(name = "imageUuid", referencedColumnName = "uuid", unique = true, insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
     private FileManaged imageManaged;
-
 
     /**
      * API KEY

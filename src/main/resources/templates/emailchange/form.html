@@ -34,7 +34,7 @@
                 <div class="col-12">
                     <label th:for="*{newEmail}" class="form-label">新しいメールアドレス</label>
                     <input th:field="*{newEmail}" class="form-control" th:errorclass="is-invalid" />
-                    <span class="invalid-feedback" th:errors="*{newEmail}" th:id="newEmail-error"></span>
+                    <span class="invalid-feedback whitespace-nowrap" th:errors="*{newEmail}" th:id="newEmail-error"></span>
                 </div>
             </div>
             <br>

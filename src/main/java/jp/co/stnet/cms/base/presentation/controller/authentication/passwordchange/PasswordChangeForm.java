@@ -7,6 +7,7 @@ import jp.co.stnet.cms.common.validation.StrongPassword;
 import lombok.Data;
 import org.terasoluna.gfw.common.validator.constraints.Compare;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Data
@@ -22,6 +23,7 @@ public class PasswordChangeForm implements Serializable {
 
     private String oldPassword;
 
+    @NotNull
     private String newPassword;
 
     private String confirmNewPassword;

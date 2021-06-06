@@ -20,9 +20,7 @@ public class BlockHandlerInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-//        log.info("preHandle : {} {} {}", request, request, handler);
-        // Handlerメソッドが呼び出される前に行う処理を実装する
-        // (実装は省略)
+        // log.info("preHandle : {} {} {}", request, request, handler);
 
         // Handlerメソッドを呼び出す場合はtrueを返却する
         return true;
@@ -42,7 +40,7 @@ public class BlockHandlerInterceptor implements HandlerInterceptor {
 
         String[] noCountUrl = {""};
 
-        if (response.getContentType().contains("text/html")) {
+        if (response.getContentType() != null && response.getContentType().contains("text/html")) {
             accessCounterService.countUp(request.getRequestURI());
         }
     }

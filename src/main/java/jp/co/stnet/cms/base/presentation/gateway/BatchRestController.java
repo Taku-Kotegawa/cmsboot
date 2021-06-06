@@ -49,7 +49,7 @@ public class BatchRestController {
             responseResource.setJobExecutionId(jobExecutionId);
             requestResource.setJobParams(requestResource.getJobParams());
             return ResponseEntity.ok().body(responseResource);
-        } catch (NoSuchJobException | JobInstanceAlreadyExistsException | JobParametersInvalidException | ValidationException | JobExecutionAlreadyRunningException | JobRestartException | JobInstanceAlreadyCompleteException e) {
+        } catch (JobParametersInvalidException | ValidationException | JobExecutionAlreadyRunningException | JobRestartException | JobInstanceAlreadyCompleteException e) {
             e.printStackTrace();
             responseResource.setError(e);
             return ResponseEntity.badRequest().body(responseResource);

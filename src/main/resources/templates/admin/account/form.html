@@ -24,19 +24,6 @@
         <div th:replace="~{/fragments/message-panel :: message-panel}"></div>
         <!-- ここより下にメインコンテンツを記入 -->
 
-        <!-- button -->
-        <div class="row">
-            <div th:replace="~{/fragments/button-area :: m(${id})}"></div>
-            <!-- Switch User -->
-            <th:block th:if="${#maps.containsKey(buttonState, 'switchUser__view')}">
-                <form method="post" th:action="@{/admin/impersonate}">
-                    <input class="btn btn-button mr-2" type="submit" value="ユーザ切り替え" />
-                    <input th:field="${account.username}" type="hidden"/>
-                </form>
-            </th:block>
-        </div>
-        <hr>
-
         <form autocomplete="off" enctype="multipart/form-data" method="post" th:action
               th:object="${accountForm}" th:with="id= ${account != null} ? ${account.username} : 0">
 
@@ -44,6 +31,13 @@
             <input disabled style="display:none" type="submit"/>
 
             <!-- 隠しフィールド -->
+
+            <!-- button -->
+            <div class="row">
+                <div th:replace="~{/fragments/button-area :: m(${id})}"></div>
+                <!-- Switch User -->
+            </div>
+            <hr>
 
 
             <!-- Input -->
@@ -58,6 +52,11 @@
                 </div>
                 <div class="col-6">
                     <div th:replace="~{/fragments/field::input('lastName', '名 *', 'account.lastName', '')}"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div th:replace="~{/fragments/field::input('department', '所属', 'account.department', '')}"></div>
                 </div>
             </div>
             <div class="row">
@@ -118,7 +117,7 @@
                                     </button>
                                 </th:block>
                             </div>
-                            <span class="invalid-feedback" th:errors="*{apiKey}" th:id="apiKey-error"></span>
+                            <span class="invalid-feedback whitespace-nowrap" th:errors="*{apiKey}" th:id="apiKey-error"></span>
                         </div>
                     </th:block>
 
@@ -147,10 +146,14 @@
             </div>
         </form>
 
-        <!-- button -->
-        <br>
         <hr>
-        <div th:replace="~{/fragments/button-area :: m(${'id'})}"></div>
+        <th:block th:if="${#maps.containsKey(buttonState, 'switchUser__view')}">
+            <form method="post" th:action="@{/admin/impersonate}" th:if="${buttonState.switchUser__view}">
+                <input class="btn btn-button mr-2" type="submit" value="ユーザ切り替え" />
+                <input th:field="${account.username}" type="hidden"/>
+            </form>
+        </th:block>
+
         <!-- ここより上にメインコンテンツを記入 -->
     </div>
 </section>

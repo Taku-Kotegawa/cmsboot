@@ -48,11 +48,11 @@ import java.util.List;
 @TransactionTokenCheck("admin/account")
 public final class AdminAccountController {
 
-    private final String BASE_PATH = "/admin/account/";
-    private final String JSP_LIST = "admin/account/list";
-    private final String JSP_FORM = "admin/account/form";
-    private final String JSP_VIEW = "admin/account/view";
-    private final String JSP_ACTIVE_LIST = "admin/account/activeList";
+    private final String BASE_PATH = "admin/account";
+    private final String JSP_LIST = BASE_PATH + "/list";
+    private final String JSP_FORM = BASE_PATH + "/form";
+    private final String JSP_VIEW = BASE_PATH + "/view";
+    private final String JSP_ACTIVE_LIST = BASE_PATH + "/activeList";
 
     @Autowired
     AccountService accountService;
@@ -125,7 +125,7 @@ public final class AdminAccountController {
      */
     @ResponseBody
     @GetMapping(value = "/list/json")
-    public DataTablesOutput<AccountListBean> getListJson(@Validated DataTablesInput input) {
+    public DataTablesOutput<AccountListBean> listJson(@Validated DataTablesInput input) {
 
         OperationsUtil op = new OperationsUtil(null);
 
@@ -299,12 +299,12 @@ public final class AdminAccountController {
         account.setRoles(form.getRoles());
 
         // パスワード欄が入力された場合にパスワード設定
-        if (!StringUtils.isEmpty(form.getPassword())) {
-            passwordChangeService.updatePassword(form.getUsername(), form.getPassword());
+        if (StringUtils.isNotBlank(form.getPassword())) {
+            account.setPassword(passwordEncoder.encode(form.getPassword()));
         }
 
         try {
-            Account saved = accountService.save(account);
+            accountService.save(account);
         } catch (BusinessException e) {
             model.addAttribute(e.getResultMessages());
             return updateForm(form, model, loggedInUser, username);
@@ -465,6 +465,7 @@ public final class AdminAccountController {
     }
 
     // ---------------- API KEY 生成 / 削除 -----------------------------------------------
+
     @GetMapping("{username}/generateapikey")
     public String generateApiKey(Model model, @PathVariable("username") String username,
                                  RedirectAttributes redirect, @AuthenticationPrincipal LoggedInUser loggedInUser) {
@@ -613,11 +614,7 @@ public final class AdminAccountController {
         return fieldState;
     }
 
-//    @PostMapping("impersonate")
-//    public String impersonate(Model model, @AuthenticationPrincipal LoggedInUser loggedInUser){
-//        // SwitchUserFilterが動く
-//        return "dummy";
-//    }
+
 
 
 }

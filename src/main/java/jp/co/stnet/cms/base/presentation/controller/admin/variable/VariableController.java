@@ -584,12 +584,6 @@ public class VariableController {
         return "fileManagedDownloadView";
     }
 
-    @GetMapping("upload")
-    public String upload(Model model, @AuthenticationPrincipal LoggedInUser loggedInUser) {
-
-        return "redirect:/admin/upload/upload?form&jobName=job02";
-    }
-
     /**
      * アップロードファイル指定画面の表示
      */
@@ -641,7 +635,7 @@ public class VariableController {
         try {
             jobExecutionId = jobStarter.start(jobName, jobParams);
 
-        } catch (NoSuchJobException | JobInstanceAlreadyExistsException | JobParametersInvalidException | JobExecutionAlreadyRunningException | JobRestartException | JobInstanceAlreadyCompleteException e) {
+        } catch (JobParametersInvalidException | JobExecutionAlreadyRunningException | JobRestartException | JobInstanceAlreadyCompleteException e) {
             e.printStackTrace();
 
             // メッセージをセットして、フォーム画面に戻る。
@@ -667,7 +661,14 @@ public class VariableController {
     }
 
 
-
+    /**
+     * コードリスト更新
+     * @param model
+     * @param redirect
+     * @param type
+     * @param loggedInUser
+     * @return
+     */
     @GetMapping("refresh")
     public String refresh(Model model, RedirectAttributes redirect, @RequestParam(value = "type") String type,
                           @AuthenticationPrincipal LoggedInUser loggedInUser) {

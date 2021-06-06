@@ -28,7 +28,7 @@
                 <div class="col-10">
                     <label class="col-form-label" for="username">ユーザ名 *</label>
                     <input id="username" class="form-control" th:errorclass="is-invalid" th:field="*{username}"/>
-                    <span class="invalid-feedback" th:errors="*{username}"></span>
+                    <span class="invalid-feedback whitespace-nowrap" th:errors="*{username}"></span>
                 </div>
             </div>
             <br>

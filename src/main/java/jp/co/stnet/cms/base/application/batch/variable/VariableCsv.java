@@ -1,4 +1,4 @@
-package jp.co.stnet.cms.base.domain.model.variable;
+package jp.co.stnet.cms.base.application.batch.variable;
 
 
 import jp.co.stnet.cms.common.validation.IsDate;

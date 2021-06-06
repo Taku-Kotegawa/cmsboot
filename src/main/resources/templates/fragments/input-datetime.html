@@ -19,7 +19,7 @@
                 <div class="input-group-text"><i class="fa fa-calendar fa-fw"></i></div>
             </div>
         </div>
-        <span class="invalid-feedback" th:errors="*{__${field_id}__}" th:id="|${field_id}-error|"></span>
+        <span class="invalid-feedback whitespace-nowrap" th:errors="*{__${field_id}__}" th:id="|${field_id}-error|"></span>
         <script type="text/javascript">
             $(function () {
                 $('[[|#${field_id}-input-group|]]').datetimepicker({

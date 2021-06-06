@@ -1,6 +1,5 @@
 package jp.co.stnet.cms.common.batch;
 
-import jp.co.stnet.cms.base.domain.model.variable.VariableCsv;
 import jp.co.stnet.cms.common.mapper.NullBindBeanWrapperFieldSetMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.batch.item.ItemStreamReader;
@@ -11,9 +10,11 @@ import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.core.io.FileSystemResource;
 
 @AllArgsConstructor
-public class ReaderFactory {
+public class ReaderFactory<T> {
 
-    private String[] columns;
+    private final String[] columns;
+
+    private final Class<T> clazz;
 
     /**
      * 選択したフォーマット用のItemStreamReaderを取得する
@@ -23,12 +24,12 @@ public class ReaderFactory {
      * @param encoding  encoding
      * @return ItemStreamReader
      */
-    public ItemStreamReader getItemStreamReader(String fileType, String inputFile, String encoding) {
+    public ItemStreamReader<T> getItemStreamReader(String fileType, String inputFile, String encoding) {
         FlatFileItemReader fileReader;
         if ("CSV".equals(fileType)) {
-            fileReader = new ReaderFactory(columns).csvReader(inputFile, encoding);
+            fileReader = csvReader(inputFile, encoding);
         } else {
-            fileReader = new ReaderFactory(columns).tsvReader(inputFile, encoding);
+            fileReader = tsvReader(inputFile, encoding);
         }
         return fileReader;
     }
@@ -48,17 +49,18 @@ public class ReaderFactory {
         delimitedLineTokenizer.setQuoteCharacter('"');
 
         var nullBindBeanWrapperFieldSetMapper = new NullBindBeanWrapperFieldSetMapper();
-        nullBindBeanWrapperFieldSetMapper.setTargetType(VariableCsv.class);
+        nullBindBeanWrapperFieldSetMapper.setTargetType(clazz);
 
 
         var defaultLineMapper = new DefaultLineMapper();
         defaultLineMapper.setLineTokenizer(delimitedLineTokenizer);
         defaultLineMapper.setFieldSetMapper(nullBindBeanWrapperFieldSetMapper);
 
-        return new FlatFileItemReaderBuilder<VariableCsv>()
+        return new FlatFileItemReaderBuilder<T>()
                 .name("flatFileItemReader")
                 .strict(true)
                 .linesToSkip(1)
+                .recordSeparatorPolicy(new BlankLineRecordSeparatorPolicy())
                 .resource(new FileSystemResource(inputFile))
                 .encoding(encoding)
                 .lineMapper(defaultLineMapper)
@@ -79,17 +81,18 @@ public class ReaderFactory {
         delimitedLineTokenizer.setNames(columns);
 
         var nullBindBeanWrapperFieldSetMapper = new NullBindBeanWrapperFieldSetMapper();
-        nullBindBeanWrapperFieldSetMapper.setTargetType(VariableCsv.class);
+        nullBindBeanWrapperFieldSetMapper.setTargetType(clazz);
 
 
         var defaultLineMapper = new DefaultLineMapper();
         defaultLineMapper.setLineTokenizer(delimitedLineTokenizer);
         defaultLineMapper.setFieldSetMapper(nullBindBeanWrapperFieldSetMapper);
 
-        return new FlatFileItemReaderBuilder<VariableCsv>()
+        return new FlatFileItemReaderBuilder<T>()
                 .name("flatFileItemReader")
                 .strict(true)
                 .linesToSkip(1)
+                .recordSeparatorPolicy(new BlankLineRecordSeparatorPolicy())
                 .resource(new FileSystemResource(inputFile))
                 .encoding(encoding)
                 .lineMapper(defaultLineMapper)

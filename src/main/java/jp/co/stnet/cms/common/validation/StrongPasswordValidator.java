@@ -52,7 +52,11 @@ public class StrongPasswordValidator implements
         String newPassword = (String) beanWrapper
                 .getPropertyValue(newPasswordPropertyName);
 
-        newPassword = newPassword == null ? "" : newPassword;
+        // newPassword = newPassword == null ? "" : newPassword;
+        if (newPassword == null) {
+            return true;
+        }
+
         PasswordData passwordData = new PasswordData(newPassword);
         passwordData.setUsername(username);
 

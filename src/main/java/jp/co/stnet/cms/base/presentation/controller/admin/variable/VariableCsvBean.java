@@ -18,7 +18,7 @@ public class VariableCsvBean implements Serializable {
     /**
      * 内部ID
      */
-    @CsvColumn(name = "ID", position = 0)
+    @CsvColumn(name = "id", position = 0)
     private Long id;
 
     /**

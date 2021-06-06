@@ -54,6 +54,7 @@
                 <th></th>
                 <th></th>
                 <th></th>
+                <th></th>
                 <th data-filter="disable">
                     <select class="dataTables_column_filter form-control" data-column="7" id="col_filter_7">
                         <option value=""></option>
@@ -70,6 +71,7 @@
                 <th class="text-center">ユーザ名</th>
                 <th class="text-center">名</th>
                 <th class="text-center">姓</th>
+                <th class="text-center">所属</th>
                 <th class="text-center">e-mail</th>
                 <th class="text-center">URL</th>
                 <th>ステータス</th>
@@ -127,6 +129,9 @@
               data: 'lastName',
             },
             {
+              data: 'department',
+            },
+            {
               data: 'email',
             },
             {
@@ -149,7 +154,7 @@
           ],
 
           // ボタンの表示
-          'buttons': ['colvis', 'stateClear', 'createnew'],
+          'buttons': ['colvis', 'stateClear', 'csvdownload', 'tsvdownload', 'upload', 'createnew'],
 
           // データロード後処理
           'initComplete': function (settings, json) {

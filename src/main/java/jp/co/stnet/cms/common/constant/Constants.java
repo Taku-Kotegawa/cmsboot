@@ -91,6 +91,7 @@ public final class Constants {
      */
     public static final class JOBID {
         public static final String IMPORT_VARIABLE = "importVariable";
+        public static final String IMPORT_ACCOUNT = "importAccount";
     }
 
 

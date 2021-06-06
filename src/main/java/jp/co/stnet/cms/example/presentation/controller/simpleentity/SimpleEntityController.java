@@ -20,9 +20,7 @@ import jp.co.stnet.cms.example.domain.model.simpleentity.SimpleEntity;
 import jp.co.stnet.cms.example.domain.model.simpleentity.SimpleEntityRevision;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.JobParametersInvalidException;
-import org.springframework.batch.core.launch.JobInstanceAlreadyExistsException;
 import org.springframework.batch.core.launch.JobOperator;
-import org.springframework.batch.core.launch.NoSuchJobException;
 import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
 import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
 import org.springframework.batch.core.repository.JobRestartException;
@@ -996,7 +994,7 @@ public class SimpleEntityController {
         try {
             jobExecutionId = jobStarter.start(jobName, jobParams);
 
-        } catch (NoSuchJobException | JobInstanceAlreadyExistsException | JobParametersInvalidException | JobExecutionAlreadyRunningException | JobRestartException | JobInstanceAlreadyCompleteException e) {
+        } catch (JobParametersInvalidException | JobExecutionAlreadyRunningException | JobRestartException | JobInstanceAlreadyCompleteException e) {
             e.printStackTrace();
 
             // メッセージをセットして、フォーム画面に戻る。

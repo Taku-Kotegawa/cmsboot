@@ -1,9 +1,9 @@
-package jp.co.stnet.cms.base.application.batch.variable;
+package jp.co.stnet.cms.base.application.batch.account;
 
 import com.github.dozermapper.core.Mapper;
-import jp.co.stnet.cms.base.application.repository.variable.VariableRepository;
-import jp.co.stnet.cms.base.application.service.variable.VariableService;
-import jp.co.stnet.cms.base.domain.model.variable.Variable;
+import jp.co.stnet.cms.base.application.repository.authentication.AccountRepository;
+import jp.co.stnet.cms.base.application.service.authentication.AccountService;
+import jp.co.stnet.cms.base.domain.model.authentication.Account;
 import jp.co.stnet.cms.common.auditing.CustomDateFactory;
 import jp.co.stnet.cms.common.batch.ReaderFactory;
 import jp.co.stnet.cms.common.constant.Constants;
@@ -23,25 +23,31 @@ import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.SmartValidator;
 
-import java.util.List;
+import java.util.Objects;
 
-import static java.lang.String.*;
+import static java.lang.String.format;
 
 @Component
-public class ImportVariableTasklet implements Tasklet {
+public class ImportAccountTasklet implements Tasklet {
 
     // 専用のJOBログ用のlogger
     private static final Logger log = LoggerFactory.getLogger("JobLogger");
+
     // インポートファイルのカラム定義
-    private final String[] columns = {"id", "version", "status", "statusLabel", "type", "code", "value1", "value2", "value3", "value4", "value5", "value6", "value7", "value8", "value9", "value10", "date1", "date2", "date3", "date4", "date5", "valint1", "valint2", "valint3", "valint4", "valint5", "textarea", "file1Uuid", "remark"};
+    private final String[] columns = {"username","firstName","lastName","department","email","url","profile","roles","status","statusLabel","imageUuid","apiKey","allowedIp"};
+
     @Autowired
-    VariableService variableService;
+    AccountService accountService;
+
     @Autowired
-    VariableRepository variableRepository;
+    AccountRepository accountRepository;
+
     @Autowired
     SmartValidator smartValidator;
+
     @Autowired
     Mapper beanMapper;
+
     @Autowired
     CustomDateFactory dateFactory;
 
@@ -65,13 +71,14 @@ public class ImportVariableTasklet implements Tasklet {
         boolean hasDBAccessException = false;
 
         // CSVファイルを１行を格納するBean
-        VariableCsv csvLine = null;
+        AccountCsv csvLine = null;
 
         // CSVファイルの入力チェック結果を格納するBindingResult
         BindingResult result = new BeanPropertyBindingResult(csvLine, "csvLine");
 
         // 選択したフォーマット用のReader取得
-        ItemStreamReader<VariableCsv> fileReader = new ReaderFactory<VariableCsv>(columns, VariableCsv.class).getItemStreamReader(fileType, inputFile, encoding);
+        ItemStreamReader<AccountCsv> fileReader
+                = new ReaderFactory<AccountCsv>(columns, AccountCsv.class).getItemStreamReader(fileType, inputFile, encoding);
 
         // 初期化
         int countRead = 0; // 読み込み件数　読み込み件数 = 新規登録 + 更新 + 削除 + スキップ
@@ -95,34 +102,32 @@ public class ImportVariableTasklet implements Tasklet {
 
                 try {
                     // CSVの値をPOJOに格納する
-                    Variable input = map(csvLine);
+                    Account input = map(csvLine);
 
                     // キーでデータベースを検索
-                    Variable current = findByKey(input.getType(), input.getCode());
+                    Account current = findByKey(input.getUsername());
 
                     if (current == null) {
                         // データベースに存在しない場合、新規登録
-                        input.setVersion(0L);
-                        input.setId(null);
-                        variableService.save(input);
+                        input.setVersion(null);
+                        accountService.save(input);
                         countInsert++;
 
                     } else {
 
-                        input.setId(current.getId());
                         input.setVersion(current.getVersion());
-                        if (StringUtils.isNotBlank(input.getFile1Uuid())) {
-                            input.setFile1Uuid(current.getFile1Uuid());
+                        if (StringUtils.isNotBlank(input.getImageUuid())) {
+                            input.setImageUuid(current.getImageUuid());
                         }
 
                         if ("9".equals(input.getStatus())) {
                             // ステータス=9の場合は削除
-                            variableService.delete(input.getId());
+                            accountService.delete(input.getId());
                             countDelete++;
 
                         } else if (!equals(input, current)) {
                             // データベースに存在し、差異があれば更新
-                            variableService.save(input);
+                            accountService.save(input);
                             countUpdate++;
 
                         } else {
@@ -164,16 +169,15 @@ public class ImportVariableTasklet implements Tasklet {
         return RepeatStatus.FINISHED;
     }
 
-
-    private boolean equals(Variable input, Variable current) {
-        return variableService.equalsEntity(input, current);
+    private boolean equals(Account input, Account current) {
+        return Objects.equals(input, current);
     }
 
     /*
      * 入力チェック(全件チェック)
      */
-    private void validateInputFile(ChunkContext chunkContext, BindingResult result, ItemStreamReader<VariableCsv> fileReader) throws Exception {
-        VariableCsv csvLine;
+    private void validateInputFile(ChunkContext chunkContext, BindingResult result, ItemStreamReader<AccountCsv> fileReader) throws Exception {
+        AccountCsv csvLine;
         fileReader.open(chunkContext.getStepContext().getStepExecution().getExecutionContext());
         while ((csvLine = fileReader.read()) != null) {
             smartValidator.validate(csvLine, result);
@@ -187,10 +191,10 @@ public class ImportVariableTasklet implements Tasklet {
         fileReader.close();
     }
 
-    private Variable map(VariableCsv csv) {
+    private Account map(AccountCsv csv) {
         final String jobUser = "job_user";
 
-        Variable v = beanMapper.map(csv, Variable.class);
+        Account v = beanMapper.map(csv, Account.class);
         v.setCreatedDate(dateFactory.newLocalDateTime());
         v.setLastModifiedDate(dateFactory.newLocalDateTime());
         v.setCreatedBy(jobUser);
@@ -198,13 +202,8 @@ public class ImportVariableTasklet implements Tasklet {
         return v;
     }
 
-    private Variable findByKey(String type, String code) {
-        List<Variable> list = variableRepository.findAllByTypeAndCode(type, code);
-        if (!list.isEmpty()) {
-            return list.get(0);
-        } else {
-            return null;
-        }
+    private Account findByKey(String username) {
+        return accountRepository.findById(username).orElse(null);
     }
 
 }

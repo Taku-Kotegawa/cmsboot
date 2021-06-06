@@ -1,4 +1,4 @@
-package jp.co.stnet.cms.base.application.batch.variable;
+package jp.co.stnet.cms.base.application.batch.account;
 
 import jp.co.stnet.cms.common.constant.Constants;
 import org.springframework.batch.core.Job;
@@ -15,9 +15,9 @@ import org.springframework.context.annotation.Configuration;
 
 @EnableBatchProcessing
 @Configuration
-public class ImportVariableConfig {
+public class ImportAccountConfig {
 
-    private static final String JOB_ID = Constants.JOBID.IMPORT_VARIABLE;
+    private static final String JOB_ID = Constants.JOBID.IMPORT_ACCOUNT;
 
     private static final String TASKLET_NAME = JOB_ID + "Tasklet";
 
@@ -50,5 +50,4 @@ public class ImportVariableConfig {
                 .tasklet(tasklet)
                 .build();
     }
-
 }
