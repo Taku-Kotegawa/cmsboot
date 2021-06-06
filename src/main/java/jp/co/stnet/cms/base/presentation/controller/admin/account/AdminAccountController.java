@@ -596,7 +596,7 @@ public final class AdminAccountController {
         // 編集
         if (Constants.OPERATION.SAVE.equals(operation)) {
             fieldState.setInputTrueAll();
-            fieldState.setReadOnlyTrue("username");
+            fieldState.setDisabledTrue("username");
             fieldState.setReadOnlyTrue("apiKey");
 
             // スタータスが無効
