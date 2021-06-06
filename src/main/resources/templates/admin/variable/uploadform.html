@@ -2,7 +2,7 @@
 <html th:replace="~{/layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
 <head>
     <!-- ページタイトルを記入 -->
-    <title>Import Starting...</title>
+    <title>[[${pageTitle}]]</title>
 </head>
 <body>
 
@@ -11,7 +11,7 @@
         <div class="row">
             <div class="col-18 mb-3">
                 <!-- ページタイトルを記入 -->
-                <h4>Import Starting...</h4>
+                <h4>[[${pageTitle}]]</h4>
             </div>
             <div class="col-18 text-right">
                 <!-- ページタイトル右の余白 -->
@@ -24,18 +24,16 @@
     <div class="container">
         <div th:replace="~{/fragments/message-panel :: message-panel}"></div>
         <!-- ここより下にメインコンテンツを記入 -->
+        <div th:replace="~{/fragments/include-upload :: include-upload}"></div>
 
-        <p class="border px-4 py-2">
-            データ取り込みを開始しました。貴方のジョブ番号は、<b>ID = [[${jobExecutionId}]]</b> です。<br>
-            処理結果は、ジョブログを確認してください。<br>
-            処理完了まで時間が要する場合があります。
-        </p>
+        <br>
 
-        <a th:href="@{${returnBackUrl}}" class="btn btn-button">[[${returnBackBtn}]]</a>
-
-        <a th:href="@{|/job/joblog?jobexecutionid=${jobExecutionId}|}" target="_blank" class="btn btn-button">ジョブログを確認する</a>
-
-        <a th:href="@{|/job/result?targetjob=${jobName}|}" target="_blank" class="btn btn-button">ジョブ一覧を表示する</a>
+        <!-- アップロードファイルの仕様説明 -->
+        <div class="border p-3">
+            <p>
+                一覧画面のCSV/TSVダウンロード機能でダウンロードしたファイルと同じフォーマットを利用する。
+            </p>
+        </div>
 
         <!-- ここより上にメインコンテンツを記入 -->
     </div>

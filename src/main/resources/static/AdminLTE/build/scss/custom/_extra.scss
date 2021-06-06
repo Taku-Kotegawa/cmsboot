@@ -65,6 +65,10 @@
   color: #495057;
 }
 
+.content-header .nav-tabs .nav-link:hover {
+  background-color: #dfdfdf;
+}
+
 .content-header .nav-tabs .nav-link.active {
   border: solid 1px #a6a6a6;
   border-right: 0;

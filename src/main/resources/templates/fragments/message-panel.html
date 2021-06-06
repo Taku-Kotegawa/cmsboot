@@ -7,7 +7,7 @@
 <body>
 <div th:fragment="message-panel" th:remove="tag">
 
-    <div id="expiredMessage" th:class="|callout callout-${resultMessages.type}|"
+    <div id="expiredMessage" th:class="|callout callout-${resultMessages.type} mb-4|"
          th:if="${resultMessages} != null">
         <ul>
             <li th:each="message : ${resultMessages}"

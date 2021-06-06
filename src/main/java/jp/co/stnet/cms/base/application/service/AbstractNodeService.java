@@ -95,7 +95,7 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
                 currentCopy.setStatus(Status.DRAFT.getCodeValue());
             }
 
-            if (compareEntity(entity, currentCopy)) {
+            if (equalsEntity(entity, currentCopy)) {
                 throw new NoChangeBusinessException(ResultMessages.warning().add((MessageKeys.W_CM_FW_2001)));
             }
         }
@@ -128,7 +128,7 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
      * @param currentCopy
      * @return
      */
-    protected boolean compareEntity(T entity, T currentCopy) {
+    public boolean equalsEntity(T entity, T currentCopy) {
         return Objects.equals(entity, currentCopy);
     }
 

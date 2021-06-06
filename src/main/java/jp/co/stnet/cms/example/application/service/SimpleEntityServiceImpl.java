@@ -73,7 +73,7 @@ public class SimpleEntityServiceImpl extends AbstractNodeRevService<SimpleEntity
     }
 
     @Override
-    protected boolean compareEntity(SimpleEntity entity, SimpleEntity currentCopy) {
+    public boolean equalsEntity(SimpleEntity entity, SimpleEntity currentCopy) {
         currentCopy.setAttachedFile01Managed(null);
         return Objects.equals(entity, currentCopy);
     }

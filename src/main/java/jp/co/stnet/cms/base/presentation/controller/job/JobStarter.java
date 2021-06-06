@@ -19,6 +19,7 @@ import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.batch.support.PropertiesConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.ApplicationContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
@@ -35,8 +36,7 @@ public class JobStarter {
     JobLauncher jobLauncher;
 
     @Autowired
-    @Qualifier("job03")
-    Job job;
+    ApplicationContext applicationContext;
 
     private JobParametersConverter jobParametersConverter = new DefaultJobParametersConverter();
 
@@ -53,10 +53,9 @@ public class JobStarter {
         parameters += ",executedBy=" + username;
         parameters += ",executedFromClass=" + FromClassName;
 
-
         JobParameters jobParameters = this.jobParametersConverter.getJobParameters(PropertiesConverter.stringToProperties(parameters));
 
-        System.out.println(jobRegistry.getJobNames());
+        Job job = (Job)applicationContext.getBean(jobName);
 
 
         return jobLauncher.run(job, jobParameters).getJobId();

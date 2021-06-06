@@ -1,4 +1,4 @@
-package jp.co.stnet.cms.example.application.job.job03;
+package jp.co.stnet.cms.example.application.job.simpleentity;
 
 import jp.co.stnet.cms.common.mapper.NullBindBeanWrapperFieldSetMapper;
 import jp.co.stnet.cms.example.domain.model.simpleentity.SimpleEntityCsv;
@@ -18,7 +18,7 @@ import org.springframework.core.io.FileSystemResource;
 
 @EnableBatchProcessing
 @Configuration
-public class importEmployeeBatchConfig {
+public class ImportSimpleEntityBatchConfig {
 
     @Autowired
     JobBuilderFactory jobBuilderFactory;
@@ -27,31 +27,11 @@ public class importEmployeeBatchConfig {
     StepBuilderFactory stepBuilderFactory;
 
     @Autowired
-    Job03Tasklet job03Tasklet;
+    ImportSimpleEntityTasklet importSimpleEntityTasklet;
 
+    private final String[] columns = {"id","status","text01","text02","text03","text04","text05","radio01","radio02","checkbox01","checkbox02","textarea01","date01","datetime01","select01","select02","select03","select04","combobox01","combobox02","combobox03","attachedFile01Uuid"};
 
-//    <!-- CSVファイルリーダー -->
-//    <bean id="csvReader"
-//    class="org.springframework.batch.item.file.FlatFileItemReader" scope="step"
-//    p:resource="file:#{jobParameters['inputFile']}"
-//    p:encoding="#{jobParameters['encoding']}"
-//    p:linesToSkip="1"
-//    p:strict="true">
-//        <property name="lineMapper">
-//            <bean class="org.springframework.batch.item.file.mapping.DefaultLineMapper">
-//                <property name="lineTokenizer">
-//                    <bean class="org.springframework.batch.item.file.transform.DelimitedLineTokenizer"
-//    p:names="id,status,text01,text02,text03,text04,text05,radio01,radio02,checkbox01,checkbox02,textarea01,date01,datetime01,select01,select02,select03,select04,combobox01,combobox02,combobox03,attachedFile01"
-//    p:delimiter=","
-//    p:quoteCharacter='"'/>
-//                </property>
-//                <property name="fieldSetMapper">
-//                    <bean class="jp.co.stnet.cms.batch.common.mapper.NullBindBeanWrapperFieldSetMapper"
-//    p:targetType="jp.co.stnet.cms.batch.job03.SimpleEntityCsv"/>
-//                </property>
-//            </bean>
-//        </property>
-//    </bean>
+    private final String jobId = "job03";
 
     @Bean
     @StepScope
@@ -59,7 +39,7 @@ public class importEmployeeBatchConfig {
 
         DelimitedLineTokenizer delimitedLineTokenizer = new DelimitedLineTokenizer();
         delimitedLineTokenizer.setDelimiter(",");
-        delimitedLineTokenizer.setNames("id","status","text01","text02","text03","text04","text05","radio01","radio02","checkbox01","checkbox02","textarea01","date01","datetime01","select01","select02","select03","select04","combobox01","combobox02","combobox03","attachedFile01Uuid");
+        delimitedLineTokenizer.setNames(columns);
         delimitedLineTokenizer.setQuoteCharacter('"');
 
         NullBindBeanWrapperFieldSetMapper nullBindBeanWrapperFieldSetMapper = new NullBindBeanWrapperFieldSetMapper();
@@ -80,35 +60,13 @@ public class importEmployeeBatchConfig {
                 .build();
     }
 
-//    <!-- TSVファイルリーダー -->
-//    <bean id="tsvReader"
-//    class="org.springframework.batch.item.file.FlatFileItemReader" scope="step"
-//    p:resource="file:#{jobParameters['inputFile']}"
-//    p:encoding="#{jobParameters['encoding']}"
-//    p:linesToSkip="1"
-//    p:strict="true">
-//        <property name="lineMapper">
-//            <bean class="org.springframework.batch.item.file.mapping.DefaultLineMapper">
-//                <property name="lineTokenizer">
-//                    <bean class="org.springframework.batch.item.file.transform.DelimitedLineTokenizer"
-//    p:names="id,status,text01,text02,text03,text04,text05,radio01,radio02,checkbox01,checkbox02,textarea01,date01,datetime01,select01,select02,select03,select04,combobox01,combobox02,combobox03,attachedFile01"
-//    p:delimiter="&#09;" />
-//                </property>
-//                <property name="fieldSetMapper">
-//                    <bean class="jp.co.stnet.cms.batch.common.mapper.NullBindBeanWrapperFieldSetMapper"
-//    p:targetType="jp.co.stnet.cms.batch.job03.SimpleEntityCsv"/>
-//                </property>
-//            </bean>
-//        </property>
-//    </bean>
-
     @Bean
     @StepScope
     public FlatFileItemReader tsvReader(@Value("#{jobParameters[inputFile]}") String inputFile, @Value("#{jobParameters[encoding]}") String encoding) {
 
         DelimitedLineTokenizer delimitedLineTokenizer = new DelimitedLineTokenizer();
         delimitedLineTokenizer.setDelimiter(org.springframework.batch.item.file.transform.DelimitedLineTokenizer.DELIMITER_TAB);
-        delimitedLineTokenizer.setNames("id","status","text01","text02","text03","text04","text05","radio01","radio02","checkbox01","checkbox02","textarea01","date01","datetime01","select01","select02","select03","select04","combobox01","combobox02","combobox03","attachedFile01Uuid");
+        delimitedLineTokenizer.setNames(columns);
 
         NullBindBeanWrapperFieldSetMapper nullBindBeanWrapperFieldSetMapper = new NullBindBeanWrapperFieldSetMapper();
         nullBindBeanWrapperFieldSetMapper.setTargetType(SimpleEntityCsv.class);
@@ -130,20 +88,16 @@ public class importEmployeeBatchConfig {
 
     public Step step1() {
         return stepBuilderFactory.get("step1")
-                .tasklet(job03Tasklet)
+                .tasklet(importSimpleEntityTasklet)
                 .build();
     }
 
-    @Bean
-    public Job job03() {
-        return jobBuilderFactory.get("job03")
+    @Bean(name = "job03")
+    public Job job() {
+        return jobBuilderFactory.get(jobId)
                 .incrementer(new RunIdIncrementer())
                 .flow(step1())
                 .end()
                 .build();
     }
-
-
-
-
 }

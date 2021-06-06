@@ -86,5 +86,12 @@ public final class Constants {
         public static final String DB_ACCESS_ERROR_STOP = "データベース更新時にエラーが発生したため、処理を中断しました。";
     }
 
+    /**
+     * JOB_ID
+     */
+    public static final class JOBID {
+        public static final String IMPORT_VARIABLE = "importVariable";
+    }
+
 
 }

@@ -33,7 +33,6 @@
             <input th:field="*{id}" type="hidden"/>
             <input th:field="*{version}" type="hidden"/>
 
-
             <!-- button -->
             <div th:replace="~{/fragments/button-area :: m(${id})}"></div>
             <hr>
@@ -51,8 +50,9 @@
             </div>
 
             <div class="row">
-                <div class="col-6">
-                    <div th:replace="~{/fragments/field::select('type', 'タイプ', 'variable.type', '', '@CL_VARIABLETYPE.asMap()')}"></div>
+                <div class="col-8">
+<!--                    <div th:replace="~{/fragments/field::select('type', 'タイプ', 'variable.type', '', '@CL_VARIABLETYPE.asMap()')}"></div>-->
+                    <div th:replace="~{/fragments/field::input('type', 'タイプ', '@CL_VARIABLETYPE.asMap()[variable.type]', '')}"></div>
                 </div>
                 <div class="col-12">
                     <div th:replace="~{/fragments/field::input('code', 'コード', 'variable.code', '')}"></div>

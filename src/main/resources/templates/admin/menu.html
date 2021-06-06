@@ -79,12 +79,12 @@
                 </div>
 
                 <div class="admin-panel">
-                    <h5>マスタ</h5>
+                    <h5>マスタ(Variable)</h5>
                     <hr>
-                    <ul class="list-unstyled mb-0">
+                    <ul class="list-unstyled mb-0" th:each="variableType : ${@CL_VARIABLETYPE.asMap()}">
                         <li class="mb-2">
                             <i class="fas fa-angle-right"></i>
-                            <a th:href="@{/admin/variable/list}">バリアブル</a>
+                            <a th:href="@{|/admin/variable/list?type=${variableType.key}|}">[[${variableType.value}]]</a>
                         </li>
                     </ul>
                 </div>

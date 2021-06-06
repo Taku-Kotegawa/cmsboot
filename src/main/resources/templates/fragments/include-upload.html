@@ -15,14 +15,14 @@
 
         <!-- Input -->
         <div>
-            <div class="row mb-3">
+            <div class="row">
                 <div class="col-12">
                     <div th:replace="~{/fragments/label :: m('uploadFileUuid', 'インポートファイル *')}"></div>
                     <div th:replace="~{/fragments/file :: m('uploadFile', 'uploadFileUuid', 'uploadFileManaged', '', 'uploadFile', '')}"></div>
                 </div>
             </div>
 
-            <div class="row mb-3">
+            <div class="row">
                 <div class="col-12">
                     <div th:replace="~{/fragments/label :: m('fileType', 'ファイル形式 *')}"></div>
                     <select class="form-control" th:errorclass="is-invalid" th:field="*{fileType}">
@@ -33,7 +33,7 @@
                 </div>
             </div>
 
-            <div class="row mb-3">
+            <div class="row">
                 <div class="col-12">
                     <!-- ラベル -->
                     <div th:replace="~{/fragments/label :: m('encoding', '文字コード *')}"></div>
@@ -48,7 +48,7 @@
 
             <br>
 
-            <div class="row mb-3">
+            <div class="row">
                 <div class="col-36">
                     <a class="btn btn-button" th:href="@{${referer}}">キャンセル</a>
                     <button class="btn btn-button" name="confirm" type="submit" value="confirm">アップロード</button>
@@ -56,9 +56,6 @@
             </div>
         </div>
     </form>
-
-    <br>
-    <br>
 
 </div>
 </body>

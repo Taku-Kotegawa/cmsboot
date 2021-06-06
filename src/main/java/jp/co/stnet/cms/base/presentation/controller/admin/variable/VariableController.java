@@ -1,13 +1,17 @@
 package jp.co.stnet.cms.base.presentation.controller.admin.variable;
 
 import com.github.dozermapper.core.Mapper;
+import jp.co.stnet.cms.base.application.service.codelist.CodeListService;
 import jp.co.stnet.cms.base.application.service.filemanage.FileManagedSharedService;
 import jp.co.stnet.cms.base.application.service.variable.VariableService;
 import jp.co.stnet.cms.base.application.service.variable.VariableSharedService;
 import jp.co.stnet.cms.base.domain.model.authentication.LoggedInUser;
 import jp.co.stnet.cms.base.domain.model.common.Status;
+import jp.co.stnet.cms.base.domain.model.filemanage.FileManaged;
 import jp.co.stnet.cms.base.domain.model.variable.Variable;
 import jp.co.stnet.cms.base.domain.model.variable.VariableType;
+import jp.co.stnet.cms.base.presentation.controller.admin.upload.UploadForm;
+import jp.co.stnet.cms.base.presentation.controller.job.JobStarter;
 import jp.co.stnet.cms.common.constant.Constants;
 import jp.co.stnet.cms.common.datatables.DataTablesInputDraft;
 import jp.co.stnet.cms.common.datatables.DataTablesOutput;
@@ -16,6 +20,12 @@ import jp.co.stnet.cms.common.message.MessageKeys;
 import jp.co.stnet.cms.common.util.CsvUtils;
 import jp.co.stnet.cms.common.util.StateMap;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.batch.core.JobParametersInvalidException;
+import org.springframework.batch.core.launch.JobInstanceAlreadyExistsException;
+import org.springframework.batch.core.launch.NoSuchJobException;
+import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
+import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
+import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -27,6 +37,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.terasoluna.gfw.common.codelist.CodeList;
 import org.terasoluna.gfw.common.exception.BusinessException;
+import org.terasoluna.gfw.common.message.ResultMessage;
 import org.terasoluna.gfw.common.message.ResultMessages;
 import org.terasoluna.gfw.web.token.transaction.TransactionTokenCheck;
 import org.terasoluna.gfw.web.token.transaction.TransactionTokenType;
@@ -47,6 +58,14 @@ public class VariableController {
     private final String JSP_LIST = BASE_PATH + "/list";
     private final String JSP_FORM = BASE_PATH + "/form";
     private final String JSP_VIEW = BASE_PATH + "/view";
+    private final String JSP_UPLOAD_FORM = BASE_PATH + "/uploadform";
+    private final String JSP_UPLOAD_COMPLETE = "common/upload/complete";
+
+    // CSV/Excelのファイル名(拡張子除く)
+    private final String DOWNLOAD_FILENAME = "variable";
+
+    // アップロード用のインポートジョブID
+    private final String UPLOAD_JOB_ID = Constants.JOBID.IMPORT_VARIABLE;
 
     @Autowired
     VariableService variableService;
@@ -56,6 +75,12 @@ public class VariableController {
 
     @Autowired
     FileManagedSharedService fileManagedSharedService;
+
+    @Autowired
+    CodeListService codeListService;
+
+    @Autowired
+    JobStarter jobStarter;
 
     @Autowired
     @Named("CL_STATUS")
@@ -256,6 +281,12 @@ public class VariableController {
         return new OperationsUtil(BASE_PATH);
     }
 
+    protected OperationsUtil op(String variableType) {
+        OperationsUtil op = new OperationsUtil(BASE_PATH);
+        op.setURL_LIST("list?type=" + variableType);
+        return op;
+    }
+
     /**
      * 新規作成画面を開く
      */
@@ -290,7 +321,7 @@ public class VariableController {
         model.addAttribute("fieldLabel", getFieldLabel(variableType));
         model.addAttribute("buttonState", getButtonStateMap(Constants.OPERATION.CREATE, variable).asMap());
         model.addAttribute("fieldState", getFiledStateMap(Constants.OPERATION.CREATE, variable).asMap());
-        model.addAttribute("op", op());
+        model.addAttribute("op", op(variableType));
 
         return JSP_FORM;
     }
@@ -365,7 +396,7 @@ public class VariableController {
         model.addAttribute("fieldLabel", getFieldLabel(form.getType()));
         model.addAttribute("buttonState", getButtonStateMap(Constants.OPERATION.SAVE, variable).asMap());
         model.addAttribute("fieldState", getFiledStateMap(Constants.OPERATION.SAVE, variable).asMap());
-        model.addAttribute("op", op());
+        model.addAttribute("op", op(variable.getType()));
 
         return JSP_FORM;
     }
@@ -533,7 +564,7 @@ public class VariableController {
         model.addAttribute("fieldLabel", getFieldLabel(variable.getType()));
         model.addAttribute("buttonState", getButtonStateMap(Constants.OPERATION.VIEW, variable).asMap());
         model.addAttribute("fieldState", getFiledStateMap(Constants.OPERATION.VIEW, variable).asMap());
-        model.addAttribute("op", op());
+        model.addAttribute("op", op(variable.getType()));
 
         return JSP_FORM;
     }
@@ -555,8 +586,97 @@ public class VariableController {
 
     @GetMapping("upload")
     public String upload(Model model, @AuthenticationPrincipal LoggedInUser loggedInUser) {
-        variableService.hasAuthority(Constants.OPERATION.UPLOAD, loggedInUser);
+
         return "redirect:/admin/upload/upload?form&jobName=job02";
+    }
+
+    /**
+     * アップロードファイル指定画面の表示
+     */
+    @GetMapping(value = "upload", params = "form")
+    public String uploadForm(@ModelAttribute UploadForm form, Model model,
+                             @RequestParam(value = "variable_type", required = false) String variableType,
+                             @AuthenticationPrincipal LoggedInUser loggedInUser) {
+
+        variableService.hasAuthority(Constants.OPERATION.UPLOAD, loggedInUser);
+
+        form.setJobName(UPLOAD_JOB_ID);
+
+        if (form.getUploadFileUuid() != null) {
+            form.setUploadFileManaged(fileManagedSharedService.findByUuid(form.getUploadFileUuid()));
+        }
+
+        model.addAttribute("pageTitle", "Import Variable");
+        model.addAttribute("variableType", variableType);
+        model.addAttribute("referer", "list?type=" + variableType);
+        model.addAttribute("fieldState", new StateMap(UploadForm.class, new ArrayList<>(), new ArrayList<>()).setInputTrueAll().asMap());
+        model.addAttribute("op", new OperationsUtil(BASE_PATH));
+
+        return JSP_UPLOAD_FORM;
+    }
+
+    /**
+     * アップロード処理(バッチ実行)
+     */
+    @PostMapping(value = "upload")
+    public String upload(@Validated UploadForm form, BindingResult result, Model model,
+                         @RequestParam(value = "variable_type", required = false) String variableType,
+                         RedirectAttributes redirectAttributes,
+                         @AuthenticationPrincipal LoggedInUser loggedInUser) {
+
+        final String jobName = UPLOAD_JOB_ID;
+
+        Long jobExecutionId = null;
+
+        if (!jobName.equals(form.getJobName()) || result.hasErrors()) {
+            return uploadForm(form, model, variableType, loggedInUser);
+        }
+
+        FileManaged uploadFile = fileManagedSharedService.findByUuid(form.getUploadFileUuid());
+        String uploadFileAbsolutePath = fileManagedSharedService.getFileStoreBaseDir() + uploadFile.getUri();
+        String jobParams = "inputFile=" + uploadFileAbsolutePath;
+        jobParams += ", encoding=" + form.getEncoding();
+        jobParams += ", filetype=" + form.getFileType();
+
+        try {
+            jobExecutionId = jobStarter.start(jobName, jobParams);
+
+        } catch (NoSuchJobException | JobInstanceAlreadyExistsException | JobParametersInvalidException | JobExecutionAlreadyRunningException | JobRestartException | JobInstanceAlreadyCompleteException e) {
+            e.printStackTrace();
+
+            // メッセージをセットして、フォーム画面に戻る。
+
+        }
+
+        redirectAttributes.addAttribute("jobName", jobName);
+        redirectAttributes.addAttribute("jobExecutionId", jobExecutionId);
+
+        return "redirect:upload?complete";
+    }
+
+    /**
+     * アップロード完了画面
+     */
+    @GetMapping(value = "upload", params = "complete")
+    public String uploadComplete(Model model, @RequestParam Map<String, String> params, @AuthenticationPrincipal LoggedInUser loggedInUser) {
+        model.addAttribute("returnBackBtn", "一覧画面に戻る");
+        model.addAttribute("returnBackUrl", op().getListUrl());
+        model.addAttribute("jobName", params.get("jobName"));
+        model.addAttribute("jobExecutionId", params.get("jobExecutionId"));
+        return JSP_UPLOAD_COMPLETE;
+    }
+
+
+
+    @GetMapping("refresh")
+    public String refresh(Model model, RedirectAttributes redirect, @RequestParam(value = "type") String type,
+                          @AuthenticationPrincipal LoggedInUser loggedInUser) {
+
+        codeListService.refresh(type);
+
+        redirect.addFlashAttribute(ResultMessages.info().add("i.sl.va.0001"));
+
+        return "redirect:" + op(type).getURL_LIST();
     }
 
 
@@ -666,17 +786,15 @@ public class VariableController {
         // 新規作成
         if (Constants.OPERATION.CREATE.equals(operation)) {
             fieldState.setInputTrueAll();
+            fieldState.setInputFalse("type").setHiddenTrue("type").setViewTrue("type");
         }
 
         // 編集
         if (Constants.OPERATION.SAVE.equals(operation)) {
             fieldState.setInputTrueAll();
-
-            fieldState
-                    .setViewTrue("status")
-                    .setDisabledTrue("type")
-                    .setHiddenTrue("type")
-                    .setReadOnlyTrue("code");
+            fieldState.setInputFalse("type").setHiddenTrue("type").setViewTrue("type");
+            fieldState.setViewTrue("status");
+            fieldState.setReadOnlyTrue("code");
 
             // スタータスが無効
             if (Status.INVALID.toString().equals(record.getStatus())) {

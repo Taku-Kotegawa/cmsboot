@@ -52129,6 +52129,12 @@ a.text-muted:hover {
   -webkit-font-smoothing: antialiased;
 }
 
+.btn-button:hover, .dt-buttons .btn-secondary:hover {
+  color: unset;
+  background-color: #f2f1eb;
+  background-image: linear-gradient(to bottom, #e6e6e3, #d7d7cf);
+}
+
 .form-control {
   transition: border linear 0.2s, box-shadow linear 0.2s;
   color: #595959;
@@ -52634,6 +52640,10 @@ table.DTFC_Cloned tr {
   border-right: 0;
   background-color: #f3f3f3;
   color: #495057;
+}
+
+.content-header .nav-tabs .nav-link:hover {
+  background-color: #dfdfdf;
 }
 
 .content-header .nav-tabs .nav-link.active {

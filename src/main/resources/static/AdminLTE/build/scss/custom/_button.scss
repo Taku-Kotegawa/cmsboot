@@ -46,3 +46,10 @@
   -moz-appearance: none;
   -webkit-font-smoothing: antialiased;
 }
+
+.btn-button:hover {
+  color: unset;
+  background-color: #f2f1eb;
+  background-image: -webkit-linear-gradient(top, #e6e6e3, #d7d7cf);
+  background-image: linear-gradient(to bottom, #e6e6e3, #d7d7cf);
+}

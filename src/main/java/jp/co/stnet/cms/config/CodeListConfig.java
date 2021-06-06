@@ -13,11 +13,19 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.terasoluna.gfw.common.codelist.EnumCodeList;
+import org.terasoluna.gfw.common.codelist.JdbcCodeList;
 
 import javax.sql.DataSource;
 
 @Configuration
 public class CodeListConfig {
+
+    @Autowired
+    DataSource dataSource;
+
+    @Autowired
+    JdbcTemplate jdbcTemplate;
+
 
     @Bean("CL_STATUS")
     public EnumCodeList status() {
@@ -30,18 +38,45 @@ public class CodeListConfig {
     }
 
     @Bean("CL_FILESTATUS")
-    public EnumCodeList fileStatus() { return new EnumCodeList(FileStatus.class); }
+    public EnumCodeList fileStatus() {
+        return new EnumCodeList(FileStatus.class);
+    }
 
     @Bean("CL_VARIABLETYPE")
-    public EnumCodeList variableType() { return new EnumCodeList(VariableType.class); }
+    public EnumCodeList variableType() {
+        return new EnumCodeList(VariableType.class);
+    }
 
     @Bean("CL_ROLE")
-    public EnumCodeList role() { return new EnumCodeList(Role.class); }
+    public EnumCodeList role() {
+        return new EnumCodeList(Role.class);
+    }
 
     @Bean("CL_PERMISSION")
-    public EnumCodeList permission() { return new EnumCodeList(Permission.class); }
+    public EnumCodeList permission() {
+        return new EnumCodeList(Permission.class);
+    }
 
     @Bean("CL_FILETYPE")
-    public EnumCodeList fileType() { return new EnumCodeList(FileType.class); }
+    public EnumCodeList fileType() {
+        return new EnumCodeList(FileType.class);
+    }
+
+    private JdbcCodeList getJdbcCodeListBase() {
+        JdbcCodeList jdbcCodeList = new JdbcCodeList();
+        jdbcCodeList.setDataSource(dataSource);
+        jdbcCodeList.setJdbcTemplate(jdbcTemplate);
+        jdbcCodeList.setLazyInit(true);
+        return jdbcCodeList;
+    }
+
+    @Bean("CL_SAMPLE")
+    public JdbcCodeList sample() {
+        JdbcCodeList jdbcCodeList = getJdbcCodeListBase();
+        jdbcCodeList.setQuerySql("SELECT CODE, VALUE1 || case when STATUS = 2 then '(無効)' else '' end as VALUE1 FROM VARIABLE WHERE TYPE = 'SAMPLE_CODELIST' ORDER BY STATUS, CODE");
+        jdbcCodeList.setValueColumn("CODE");
+        jdbcCodeList.setLabelColumn("VALUE1");
+        return  jdbcCodeList;
+    }
 
 }

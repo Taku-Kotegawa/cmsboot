@@ -16,6 +16,7 @@
             </div>
             <div class="col-18 text-right">
                 <!-- ページタイトル右の余白 -->
+                <a th:href="@{|/admin/variable/refresh?type=${variableType.codeValue}|}" class="btn btn-button">コードリスト(プルダウンリスト)の更新</a>
             </div>
         </div>
     </div>
@@ -25,10 +26,6 @@
     <div class="container-fluid">
         <div th:replace="~{/fragments/message-panel :: message-panel}"></div>
         <!-- ここより下にメインコンテンツを記入 -->
-        <div>
-            <p>変更してもコードリストに即時反映しません。再起動が必要。(TODO: コードリストのリロード機能を追加)<br>
-                新規登録ボタン押下し登録フォームを開いたときに、一覧画面で選択している「タイプ」を初期値設定する様にしたい。</p>
-        </div>
 
         <table class="table-sm table-striped" id="list">
             <thead>
@@ -37,12 +34,6 @@
                 <th data-filter="disable"></th>
                 <th></th>
                 <th></th>
-                <th data-filter="disable">
-                    <select class="dataTables_column_filter form-control" data-column="4" id="col_filter_4">
-                        <option value=""></option>
-                        <option th:each="obj : ${@CL_STATUS.asMap()}" th:value="${obj.key}">[[${obj.value}]]</option>
-                    </select>
-                </th>
                 <th data-filter="disable">
                     <select class="form-control" id="type_filter">
                         <option th:each="obj : ${@CL_VARIABLETYPE.asMap()}"
@@ -73,13 +64,18 @@
                 <th></th>
                 <th></th>
                 <th></th>
+                <th data-filter="disable">
+                    <select class="dataTables_column_filter form-control" data-column="4" id="col_filter_4">
+                        <option value=""></option>
+                        <option th:each="obj : ${@CL_STATUS.asMap()}" th:value="${obj.key}">[[${obj.value}]]</option>
+                    </select>
+                </th>
             </tr>
             <tr class="title">
                 <th class="text-center px-0"></th>
                 <th class="text-center">操作</th>
                 <th class="text-center">ID</th>
                 <th class="text-center">バージョン</th>
-                <th class="text-center">ステータス</th>
                 <th class="text-center">タイプ</th>
                 <th class="text-center">コード</th>
                 <th class="text-center">[[${variableType.labelValue1}]]</th>
@@ -103,6 +99,7 @@
                 <th class="text-center">[[${variableType.labelValint4}]]</th>
                 <th class="text-center">[[${variableType.labelValint5}]]</th>
                 <th class="text-center">[[${variableType.labelTextarea}]]</th>
+                <th class="text-center">ステータス</th>
             </tr>
             </thead>
             <tbody></tbody>
@@ -134,6 +131,17 @@
       }
   };
 
+  /**
+   * アップロード画面ボタン
+   */
+  $.fn.dataTable.ext.buttons.upload = {
+      text: '<i class="fa fa-upload" aria-hidden="true"></i>',
+      titleAttr: 'アップロード',
+      action: function (e, dt, node, config) {
+          let selectedType = document.getElementById("type_filter");
+          window.location.href = "upload?form&variable_type=" + selectedType.value;
+      }
+  };
 
   $(document)
     .ready(
@@ -162,7 +170,12 @@
             'data': flatten
           },
 
-          // stateSave: false,
+          //stateSave: false,
+
+          // グローバルフィルタの無効化(Variableはグローバルフィルタが利かせることが難しい)
+          'dom':"<'row'<'col-32 d-inline-flex'B><'col-4 text-right'l>>" +
+            "<'row'<'col-36'tr>>" +
+            "<'row'<'col-15'i><'col-21'p>>",
 
           // 一覧に表示する項目とJSONの項目にマッピング
           'columns': [{
@@ -188,10 +201,6 @@
               data: 'version',
               render: $.fn.dataTable.render.text(),
               visible: false,
-            },
-            {
-              data: 'statusLabel',
-              render: $.fn.dataTable.render.text(),
             },
             {
               data: 'type',
@@ -306,13 +315,18 @@
               render: $.fn.dataTable.render.text(),
               visible: columnVisible['textarea'],
             },
+            {
+              data: 'statusLabel',
+              render: $.fn.dataTable.render.text(),
+            }
           ],
+
           // 初期ソート
           'order': [
-            [2, 'asc']
+            [5, 'asc']
           ],
+
           "searchCols": [
-            null,
             null,
             null,
             null,
@@ -320,6 +334,7 @@
             {
               "search": '[[${variableType.codeValue}]]'
             },
+            null,
           ],
 
           // ボタンの表示
@@ -332,7 +347,9 @@
           },
         });
 
-        if (table.column(5).search() != '[[${variableType.codeValue}]]') {
+        console.log(table.column(4).search());
+
+        if (table.column(4).search() != '[[${variableType.codeValue}]]') {
           table.state.clear();
           window.location.reload();
         }
@@ -351,8 +368,6 @@
         addFieldFilter2(table)
 
       });
-
-
 
 </script>
 

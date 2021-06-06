@@ -13,9 +13,13 @@ import org.terasoluna.gfw.common.codelist.EnumCodeList;
 @Getter
 public enum VariableType implements EnumCodeList.CodeListItem {
 
-    SAMPLE_CODELIST("サンプルコードリスト","ラベル","v2","v3","v4","v5","v6","v7","v8","v9","v10","d1","d2","d3","d4","d5","i1", "i2", "i3","i4","i5","ta","f1"),
-    SHORT_MESSAGE("ショートメッセージ","","","","","","","","","","","公開開始日","公開終了日","","","","", "", "","","","メッセージ",""),
-    MESSAGE_TEMPLETE("メッセージテンプレート","タイトル","","","","","","","","","","","","","","","", "", "","","","本文","");
+    SAMPLE_CODELIST("サンプルコードリスト","ラベル","v2","v3","v4","v5","v6","v7","v8","v9","v10","d1","d2","d3","d4","d5","i1", "i2", "i3","i4","i5","ta","f1", "CL_SAMPLE"),
+    SHORT_MESSAGE("ショートメッセージ","","","","","","","","","","","公開開始日","公開終了日","","","","", "", "","","","メッセージ","",""),
+    MESSAGE_TEMPLETE("メッセージテンプレート","タイトル","","","","","","","","","","","","","","","", "", "","","","本文","",""),
+    FLAG1("区分１","名称","","","","","","","","","","","","","","","", "", "","","","","","CL_FLAG1"),
+    FLAG2("区分２","名称","","","","","","","","","","","","","","","", "", "","","","","","CL_FLAG2"),
+    FLAG3("区分３","名称","","","","","","","","","","","","","","","", "", "","","","","","CL_FLAG3"),
+    DOC_TYPE("文書種類","名称","","","","","","","","","","","","","","","", "", "","","","","","CL_DOCTYPE");
 
     private final String label;
     private final String labelValue1;
@@ -40,6 +44,7 @@ public enum VariableType implements EnumCodeList.CodeListItem {
     private final String labelValint5;
     private final String labelTextarea;
     private final String labelFile1;
+    private final String codeListBeanName;
 
     @Override
     public String getCodeLabel() {

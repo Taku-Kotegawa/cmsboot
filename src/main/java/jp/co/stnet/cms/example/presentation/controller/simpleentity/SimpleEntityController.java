@@ -60,8 +60,8 @@ public class SimpleEntityController {
     private final String JSP_FORM = BASE_PATH + "/form";
     private final String JSP_VIEW = BASE_PATH + "/view";
 
-    private final String JSP_UPLOAD_FORM = BASE_PATH + "/uploadform"; //TODO
-    private final String JSP_UPLOAD_COMPLETE = "common/upload/complete"; //TODO
+    private final String JSP_UPLOAD_FORM = BASE_PATH + "/uploadform";
+    private final String JSP_UPLOAD_COMPLETE = "common/upload/complete";
 
     // CSV/Excelのファイル名(拡張子除く)
     private final String DOWNLOAD_FILENAME = "simpleentity";
@@ -964,10 +964,8 @@ public class SimpleEntityController {
 
         model.addAttribute("pageTitle", "Import SimpleEntity");
         model.addAttribute("referer", "list");
-        model.addAttribute("inputFileColumns", "ファイルパスを指定する予定");
-
+//        model.addAttribute("inputFileColumns", "ファイルパスを指定する予定");
         model.addAttribute("fieldState", new StateMap(UploadForm.class, new ArrayList<>(), new ArrayList<>()).setInputTrueAll().asMap());
-
         model.addAttribute("op", new OperationsUtil(BASE_PATH));
 
         return JSP_UPLOAD_FORM;

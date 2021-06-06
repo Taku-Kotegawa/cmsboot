@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
-public class importSimpleEntityBatchConfig {
+public class ImportEmployeeBatchConfig {
 
     @Autowired
     JobBuilderFactory jobBuilderFactory;

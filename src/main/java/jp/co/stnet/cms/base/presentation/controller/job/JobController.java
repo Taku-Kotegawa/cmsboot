@@ -45,8 +45,9 @@ public class JobController {
 
     private static final String FIND_EXECUTIONS =
             "SELECT p.JOB_EXECUTION_ID FROM BATCH_JOB_EXECUTION_PARAMS p\n" +
-                    "INNER JOIN BATCH_JOB_EXECUTION bje on bje.JOB_EXECUTION_ID = p.JOB_EXECUTION_ID and KEY_NAME = 'executedBy' AND STRING_VAL = ?\n" +
+                    "INNER JOIN BATCH_JOB_EXECUTION bje on bje.JOB_EXECUTION_ID = p.JOB_EXECUTION_ID \n" +
                     "INNER JOIN BATCH_JOB_INSTANCE bji on bji.JOB_INSTANCE_ID  = bje.JOB_INSTANCE_ID and bji.JOB_NAME = ?\n" +
+                    "WHERE p.KEY_NAME = 'executedBy' AND p.STRING_VAL = ?\n" +
                     "ORDER BY p.JOB_EXECUTION_ID DESC\n" +
                     "LIMIT 20";
 
@@ -116,7 +117,7 @@ public class JobController {
 
         List<String> jobList = jobExplorer.getJobNames();
 
-        if (targetjob == null) {
+        if (targetjob == null && !jobList.isEmpty()) {
             targetjob = jobList.get(0);
         }
 

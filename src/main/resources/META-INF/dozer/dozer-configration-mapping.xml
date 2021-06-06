@@ -7,7 +7,38 @@
         <!-- Collection型のフィールドを追記から上書きに変更-->
         <relationship-type>non-cumulative</relationship-type>
 
-
+        <custom-converters>
+            <converter
+                    type="jp.co.stnet.cms.common.converter.LocalDateTimeToLocalDateConverter">
+                <class-a>java.time.LocalDateTime</class-a>
+                <class-b>java.time.LocalDate</class-b>
+            </converter>
+            <converter
+                    type="jp.co.stnet.cms.common.converter.LocalDateToDateConverter">
+                <class-a>java.time.LocalDate</class-a>
+                <class-b>java.util.Date</class-b>
+            </converter>
+            <converter
+                    type="jp.co.stnet.cms.common.converter.LocalDateTimeToDateConverter">
+                <class-a>java.time.LocalDateTime</class-a>
+                <class-b>java.util.Date</class-b>
+            </converter>
+            <converter
+                    type="jp.co.stnet.cms.common.converter.StringToLocalDateConverter">
+                <class-a>java.lang.String</class-a>
+                <class-b>java.time.LocalDate</class-b>
+            </converter>
+            <converter
+                    type="jp.co.stnet.cms.common.converter.StringToLocalDateTimeConverter">
+                <class-a>java.lang.String</class-a>
+                <class-b>java.time.LocalDateTime</class-b>
+            </converter>
+            <converter
+                    type="jp.co.stnet.cms.common.converter.ListToStringConverter">
+                <class-a>java.util.List</class-a>
+                <class-b>java.lang.String</class-b>
+            </converter>
+        </custom-converters>
 
     </configuration>
 

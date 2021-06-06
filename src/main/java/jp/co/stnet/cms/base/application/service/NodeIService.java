@@ -83,4 +83,12 @@ public interface NodeIService<T extends AbstractEntity<ID>, ID> {
      */
     Boolean hasAuthority(String Operation, LoggedInUser loggedInUser);
 
+
+    /**
+     * エンティティの比較
+     * @param entity 比較対象
+     * @param other 比較対象
+     * @return true:差異なし, false:差異あり
+     */
+    boolean equalsEntity(T entity, T other);
 }

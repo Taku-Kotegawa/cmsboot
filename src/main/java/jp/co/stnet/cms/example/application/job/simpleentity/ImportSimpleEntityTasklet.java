@@ -1,4 +1,4 @@
-package jp.co.stnet.cms.example.application.job.job03;
+package jp.co.stnet.cms.example.application.job.simpleentity;
 
 import com.github.dozermapper.core.Mapper;
 import jp.co.stnet.cms.common.auditing.CustomDateFactory;
@@ -31,8 +31,7 @@ import org.springframework.validation.SmartValidator;
  * CSV -> VARIABLEテーブル
  */
 @Component
-@Transactional
-public class Job03Tasklet implements Tasklet {
+public class ImportSimpleEntityTasklet implements Tasklet {
 
     @Autowired
     ItemStreamReader<SimpleEntityCsv> csvReader;
@@ -198,7 +197,7 @@ public class Job03Tasklet implements Tasklet {
      * @return VariableのModel
      */
     private SimpleEntity map(SimpleEntityCsv csv) {
-        String JOB_EXECUTOR = "job_user";
+//        String JOB_EXECUTOR = "job_user";
         SimpleEntity v = beanMapper.map(csv, SimpleEntity.class);
         return v;
     }
