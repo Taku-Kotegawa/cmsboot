@@ -11,6 +11,7 @@ import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobInstance;
 import org.springframework.batch.core.explore.JobExplorer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -35,13 +36,17 @@ import java.util.Map;
 @RequestMapping("job")
 public class JobController {
 
-    private final String BASE_PATH = "job";
-    private final String JSP_RESULT = BASE_PATH + "/result";
-    private final String JSP_JOBLOG = BASE_PATH + "/joblog";
-    private final String JSP_SUMMARY = BASE_PATH + "/summary";
+    private static final String BASE_PATH = "job";
+    private static final String JSP_RESULT = BASE_PATH + "/result";
+    private static final String JSP_JOBLOG = BASE_PATH + "/joblog";
+    private static final String JSP_SUMMARY = BASE_PATH + "/summary";
 
     @Autowired
     JobExplorer jobExplorer;
+
+    @Value("${job.log.dir}")
+    String jobLogDir;
+
 
     private static final String FIND_EXECUTIONS =
             "SELECT p.JOB_EXECUTION_ID FROM BATCH_JOB_EXECUTION_PARAMS p\n" +
@@ -174,7 +179,7 @@ public class JobController {
         }
 
         String jobName = jobExecution.getJobInstance().getJobName();
-        String filePath = "/home/taku/Job_" + jobName + "_" + jobExecutionId + ".log";
+        String filePath = jobLogDir + "/Job_" + jobName + "_" + jobExecutionId + ".log";
         List<String> fileLines = new ArrayList<>();
         try {
             fileLines = Files.readAllLines(Paths.get(filePath));

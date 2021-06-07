@@ -17,6 +17,7 @@ import org.terasoluna.gfw.common.query.QueryEscapeUtils;
 
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -38,4 +39,8 @@ public class VariableServiceImpl extends AbstractNodeService<Variable, Long> imp
         return true;
     }
 
+    @Override
+    public List<Variable> findAllByTypeAndCode(String type, String code) {
+        return variableRepository.findAllByTypeAndCode(type, code);
+    }
 }

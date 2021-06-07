@@ -7,6 +7,11 @@
     <!-- デフォルト設定読み込み -->
     <include resource="org/springframework/boot/logging/logback/base.xml" />
 
+    <!-- Application.propertiesから設定読み込み -->
+    <springProperty scope="context" name="jobLogDir" source="job.log.dir"
+                    defaultValue="../log/job"/>
+
+
 
     <appender name="Job"
               class="ch.qos.logback.classic.sift.SiftingAppender">
@@ -16,7 +21,7 @@
         </discriminator>
         <sift>
             <appender name="FILE-${jobName_jobExecutionId}" class="ch.qos.logback.core.FileAppender">
-                <file>/home/taku/Job_${jobName_jobExecutionId}.log</file>
+                <file>${jobLogDir}/Job_${jobName_jobExecutionId}.log</file>
                 <append>true</append>
                 <layout class="ch.qos.logback.classic.PatternLayout">
                     <pattern>%date %level %logger{10} [%X{jobName_jobExecutionId}] %msg %n</pattern>

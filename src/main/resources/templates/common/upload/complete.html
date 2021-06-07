@@ -33,9 +33,9 @@
 
         <a th:href="@{${returnBackUrl}}" class="btn btn-button">[[${returnBackBtn}]]</a>
 
-        <a th:href="@{|/job/joblog?jobexecutionid=${jobExecutionId}|}" target="_blank" class="btn btn-button">ジョブログを確認する</a>
+        <a th:href="@{|/job/joblog?jobexecutionid=${jobExecutionId}&returnback=${returnBackUrl}|}" target="_blank" class="btn btn-button">ジョブログを表示する <i class="fas fa-external-link-alt"></i></a>
 
-        <a th:href="@{|/job/result?targetjob=${jobName}|}" target="_blank" class="btn btn-button">ジョブ一覧を表示する</a>
+        <a th:href="@{|/job/result?targetjob=${jobName}&returnback=${returnBackUrl}|}" target="_blank" class="btn btn-button">ジョブ一覧を表示する <i class="fas fa-external-link-alt"></i></a>
 
         <!-- ここより上にメインコンテンツを記入 -->
     </div>
