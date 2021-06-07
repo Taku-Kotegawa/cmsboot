@@ -306,6 +306,7 @@ public class VariableController {
             beanMapper.map(source, form);
             form.setId(null);
             form.setCode(null);
+            form.setVersion(null);
             variableType = source.getType();
         }
 

@@ -350,8 +350,11 @@
         console.log(table.column(4).search());
 
         if (table.column(4).search() != '[[${variableType.codeValue}]]') {
-          table.state.clear();
-          window.location.reload();
+          $.when(
+              table.state.clear()
+          ).done(function() {
+              window.location.reload();
+          });
         }
 
         // ページネーション後に画面トップに戻る

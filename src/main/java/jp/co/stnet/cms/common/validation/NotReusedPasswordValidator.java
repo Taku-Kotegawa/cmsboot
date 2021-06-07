@@ -100,6 +100,7 @@ public class NotReusedPasswordValidator implements
     private boolean checkNewPasswordDifferentFromCurrentPassword(
             String newPassword, String currentPassword,
             ConstraintValidatorContext context) {
+
         if (!passwordEncoder.matches(newPassword, currentPassword)) {
             return true;
         } else {

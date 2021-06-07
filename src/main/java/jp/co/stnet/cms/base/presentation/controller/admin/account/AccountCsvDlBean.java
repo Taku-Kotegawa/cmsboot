@@ -61,7 +61,7 @@ public class AccountCsvDlBean {
      * ロール
      */
     @CsvColumn(name = "roles", position = 7)
-    private List<String> roles;
+    private String roles;
 
     /**
      * ステータス
@@ -69,7 +69,9 @@ public class AccountCsvDlBean {
     @CsvColumn(name = "status", position = 8)
     private String status;
 
-
+    /**
+     * ステータス(ラベル)
+     */
     @CsvColumn(name = "statusLabel", position = 9)
     private String statusLabel;
 

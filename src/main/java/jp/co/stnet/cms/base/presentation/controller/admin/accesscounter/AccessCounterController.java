@@ -404,6 +404,7 @@ public class AccessCounterController {
             AccessCounter source = accessCounterService.findById(copy);
             beanMapper.map(source, form);
             form.setId(null);
+            form.setVersion(null);
         }
 
         setFileManagedToForm(form);

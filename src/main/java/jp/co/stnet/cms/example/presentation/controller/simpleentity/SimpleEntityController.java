@@ -491,6 +491,7 @@ public class SimpleEntityController {
             SimpleEntity source = simpleEntityService.findById(copy);
             beanMapper.map(source, form);
             form.setId(null);
+            form.setVersion(null);
 
             if (source.getAttachedFile01Uuid() != null) {
                 try {

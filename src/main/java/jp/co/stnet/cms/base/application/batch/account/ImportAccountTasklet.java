@@ -113,9 +113,14 @@ public class ImportAccountTasklet implements Tasklet {
                         accountService.save(input);
                         countInsert++;
 
+                    } else if ("admin".equals(current.getUsername())) {
+                        log.info("adminユーザは更新できないため、スキップされました。");
+                        countSkip++;
+
                     } else {
 
                         input.setVersion(current.getVersion());
+                        input.setPassword(current.getPassword());
                         if (StringUtils.isNotBlank(input.getImageUuid())) {
                             input.setImageUuid(current.getImageUuid());
                         }
