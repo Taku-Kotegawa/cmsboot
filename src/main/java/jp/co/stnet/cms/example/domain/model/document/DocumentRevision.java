@@ -1,10 +1,12 @@
 package jp.co.stnet.cms.example.domain.model.document;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jp.co.stnet.cms.base.domain.model.AbstractRevisionEntity;
 import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Collection;
 
 @Entity
@@ -21,20 +23,70 @@ public class DocumentRevision extends AbstractRevisionEntity implements Serializ
     /**
      * 内部ID
      */
-    @Column(nullable = false)
     private Long id;
 
     /**
      * ステータス
      */
-    @Column(nullable = false)
     private String status;
+
+    /**
+     * タイトル
+     */
+    private String title;
+
+    /**
+     * 本文
+     */
+    private String body;
+
+    /**
+     * 公開区分
+     */
+    private String publicScope;
+
+    /**
+     * 管理部門
+     */
+    private String chargeDepartment;
+
+    /**
+     * 管理担当者
+     */
+    private String chargePerson;
+
+    /**
+     * 制定日
+     */
+    @JsonFormat(pattern = "yyyy/MM/dd")
+    private LocalDate enactmentDate;
+
+    /**
+     * 最終改定日
+     */
+    @JsonFormat(pattern = "yyyy/MM/dd")
+    private LocalDate lastRevisedDate;
+
+    /**
+     * 実施日
+     */
+    @JsonFormat(pattern = "yyyy/MM/dd")
+    private LocalDate implementationDate;
+
+    /**
+     * 制定箇所
+     */
+    private String enactmentDepartment;
+
+    /**
+     * 変更理由
+     */
+    private String reasonForChange;
 
     /**
      * ファイル
      */
     @ElementCollection(fetch = FetchType.EAGER)
     private Collection<File> files;
-
 
 }

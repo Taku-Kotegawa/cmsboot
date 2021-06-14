@@ -121,9 +121,10 @@ public class DocumentHelper {
      */
     StateMap getFiledStateMap(String operation, Document record, DocumentForm form) {
         List<String> excludeKeys = new ArrayList<>();
+        List<String> includeKeys = List.of("status");
 
         // 常設の隠しフィールドは状態管理しない
-        StateMap fieldState = new StateMap(formClass, new ArrayList<>(), excludeKeys);
+        StateMap fieldState = new StateMap(formClass, includeKeys, excludeKeys);
 
         // 新規作成
         if (Constants.OPERATION.CREATE.equals(operation)) {
@@ -134,6 +135,7 @@ public class DocumentHelper {
         // 編集
         else if (Constants.OPERATION.UPDATE.equals(operation)) {
             fieldState.setInputTrueAll();
+            fieldState.setViewTrue("status");
 
             // スタータスが無効
             if (Status.INVALID.getCodeValue().equals(record.getStatus())) {

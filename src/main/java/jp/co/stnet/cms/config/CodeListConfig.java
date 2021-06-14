@@ -79,12 +79,51 @@ public class CodeListConfig {
         return  jdbcCodeList;
     }
 
-    @Bean("CL_DOC_TYPE_VAL")
+    @Bean("CL_DOC_TYPE")
     public JdbcCodeList docType() {
         JdbcCodeList jdbcCodeList = getJdbcCodeListBase();
-        jdbcCodeList.setQuerySql("SELECT CODE, VALUE1 || case when STATUS = 2 then '(無効)' else '' end as VALUE1 FROM VARIABLE WHERE TYPE = 'DOC_TYPE' ORDER BY STATUS, CODE");
+        jdbcCodeList.setQuerySql("SELECT CODE, VALUE1 || case when STATUS = 2 then '(無効)' else '' end as VALUE1 FROM VARIABLE WHERE TYPE = 'DOC_TYPE' ORDER BY STATUS, VALINT1, CODE");
         jdbcCodeList.setValueColumn("CODE");
         jdbcCodeList.setLabelColumn("VALUE1");
         return  jdbcCodeList;
     }
+
+    @Bean("CL_DOC_CATEGORY")
+    public JdbcCodeList docCategory() {
+        JdbcCodeList jdbcCodeList = getJdbcCodeListBase();
+        jdbcCodeList.setQuerySql("SELECT CODE, VALUE1 || case when STATUS = 2 then '(無効)' else '' end as VALUE1 FROM VARIABLE WHERE TYPE = 'DOC_CATEGORY' ORDER BY STATUS, VALINT1, CODE");
+        jdbcCodeList.setValueColumn("CODE");
+        jdbcCodeList.setLabelColumn("VALUE1");
+        return  jdbcCodeList;
+    }
+
+    @Bean("CL_DOC_STAGE")
+    public JdbcCodeList docStage() {
+        JdbcCodeList jdbcCodeList = getJdbcCodeListBase();
+        jdbcCodeList.setQuerySql("SELECT CODE, VALUE1 || case when STATUS = 2 then '(無効)' else '' end as VALUE1 FROM VARIABLE WHERE TYPE = 'DOC_STAGE' ORDER BY STATUS, VALINT1, CODE");
+        jdbcCodeList.setValueColumn("CODE");
+        jdbcCodeList.setLabelColumn("VALUE1");
+        return  jdbcCodeList;
+    }
+
+    @Bean("CL_EMPLOYEE")
+    public JdbcCodeList docEmployee() {
+        JdbcCodeList jdbcCodeList = getJdbcCodeListBase();
+        jdbcCodeList.setQuerySql("SELECT CODE, VALUE1 || case when STATUS = 2 then '(退職)' else '' end as VALUE1 FROM VARIABLE WHERE TYPE = 'EMPLOYEE' ORDER BY STATUS, VALINT1, CODE");
+        jdbcCodeList.setValueColumn("CODE");
+        jdbcCodeList.setLabelColumn("VALUE1");
+        return  jdbcCodeList;
+    }
+
+    @Bean("CL_DEPARTMENT")
+    public JdbcCodeList docDepartmetn() {
+        JdbcCodeList jdbcCodeList = getJdbcCodeListBase();
+        jdbcCodeList.setQuerySql("SELECT CODE, VALUE1 || case when STATUS = 2 then '(無効)' else '' end as VALUE1 FROM VARIABLE WHERE TYPE = 'DOC_DEPARTMENT' ORDER BY STATUS, VALINT1, CODE");
+        jdbcCodeList.setValueColumn("CODE");
+        jdbcCodeList.setLabelColumn("VALUE1");
+        return  jdbcCodeList;
+    }
+
+
+
 }

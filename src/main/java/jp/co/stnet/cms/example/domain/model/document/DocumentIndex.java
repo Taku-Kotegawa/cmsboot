@@ -16,6 +16,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
 
@@ -26,7 +27,6 @@ import java.util.Collection;
 @NoArgsConstructor
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = false)
-@EntityListeners(AuditingEntityListener.class)
 public class DocumentIndex implements Serializable, StatusInterface {
 
     /**
@@ -38,7 +38,7 @@ public class DocumentIndex implements Serializable, StatusInterface {
     /**
      * 作成者
      */
-    @Column(nullable = false, updatable = false)
+    @Column(nullable = false)
     private String createdBy;
 
     /**
@@ -51,7 +51,7 @@ public class DocumentIndex implements Serializable, StatusInterface {
      * 作成日時
      */
     @JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss")
-    @Column(nullable = false, updatable = false)
+    @Column(nullable = false)
     private LocalDateTime createdDate;
 
     /**
@@ -60,7 +60,6 @@ public class DocumentIndex implements Serializable, StatusInterface {
     @JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss")
     @Column(nullable = false)
     private LocalDateTime lastModifiedDate;
-
 
     /**
      * 内部ID
@@ -71,8 +70,61 @@ public class DocumentIndex implements Serializable, StatusInterface {
     /**
      * ステータス
      */
-    @Column(nullable = false)
     private String status;
+
+    /**
+     * タイトル
+     */
+    private String title;
+
+    /**
+     * 本文
+     */
+    @Column(columnDefinition = "TEXT")
+    private String body;
+
+    /**
+     * 公開区分
+     */
+    private String publicScope;
+
+    /**
+     * 管理部門
+     */
+    private String chargeDepartment;
+
+    /**
+     * 管理担当者
+     */
+    private String chargePerson;
+
+    /**
+     * 制定日
+     */
+    @JsonFormat(pattern = "yyyy/MM/dd")
+    private LocalDate enactmentDate;
+
+    /**
+     * 最終改定日
+     */
+    @JsonFormat(pattern = "yyyy/MM/dd")
+    private LocalDate lastRevisedDate;
+
+    /**
+     * 実施日
+     */
+    @JsonFormat(pattern = "yyyy/MM/dd")
+    private LocalDate implementationDate;
+
+    /**
+     * 制定箇所
+     */
+    private String enactmentDepartment;
+
+    /**
+     * 変更理由
+     */
+    private String reasonForChange;
 
     /**
      * ファイル

@@ -22,7 +22,6 @@ public class File implements Serializable {
 
     private String type;
 
-    @KeywordField
     private String fileUuid;
 
 //    @Transient

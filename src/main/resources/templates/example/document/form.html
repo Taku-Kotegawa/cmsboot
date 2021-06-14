@@ -47,6 +47,7 @@
                     </div>
                 </div>
             </div>
+            <br>
 
             <div class="row">
                 <div class="col-36">
@@ -70,7 +71,7 @@
                                     <select class="form-control" th:errorclass="is-invalid"
                                             th:field="*{files[__${status.index}__].type}">
                                         <option label="--Select--" value=""/>
-                                        <option th:each="item : ${@CL_DOC_TYPE_VAL.asMap()}"
+                                        <option th:each="item : ${@CL_DOC_TYPE.asMap()}"
                                                 th:text="${item.value}"
                                                 th:value="${item.key}"></option>
                                     </select>

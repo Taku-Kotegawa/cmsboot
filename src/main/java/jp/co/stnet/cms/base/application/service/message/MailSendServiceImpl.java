@@ -30,7 +30,7 @@ import java.util.Map;
 @Transactional
 public class MailSendServiceImpl implements MailSendService {
 
-    private static final String type = VariableType.MESSAGE_TEMPLETE.name();
+    private static final String type = VariableType.MESSAGE_TEMPLATE.name();
     @Autowired
     VariableService variableService;
 
