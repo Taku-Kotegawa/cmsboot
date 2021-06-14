@@ -3,11 +3,14 @@ package jp.co.stnet.cms.base.application.batch.account;
 import com.github.dozermapper.core.Mapper;
 import jp.co.stnet.cms.base.application.repository.authentication.AccountRepository;
 import jp.co.stnet.cms.base.application.service.authentication.AccountService;
+import jp.co.stnet.cms.base.application.service.authentication.PasswordHistorySharedService;
 import jp.co.stnet.cms.base.domain.model.authentication.Account;
 import jp.co.stnet.cms.common.auditing.CustomDateFactory;
 import jp.co.stnet.cms.common.batch.ReaderFactory;
 import jp.co.stnet.cms.common.constant.Constants;
 import org.apache.commons.lang3.StringUtils;
+import org.passay.CharacterRule;
+import org.passay.PasswordGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -18,11 +21,14 @@ import org.springframework.batch.item.ItemStreamReader;
 import org.springframework.batch.item.validator.ValidationException;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.SmartValidator;
 
+import javax.annotation.Resource;
+import java.util.List;
 import java.util.Objects;
 
 import static java.lang.String.format;
@@ -50,6 +56,15 @@ public class ImportAccountTasklet implements Tasklet {
 
     @Autowired
     CustomDateFactory dateFactory;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+    @Autowired
+    PasswordGenerator passwordGenerator;
+
+    @Resource(name = "passwordGenerationRules")
+    List<CharacterRule> passwordGenerationRules;
 
     @Override
     public RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext) throws Exception {
@@ -110,6 +125,8 @@ public class ImportAccountTasklet implements Tasklet {
                     if (current == null) {
                         // データベースに存在しない場合、新規登録
                         input.setVersion(null);
+                        String rawPassword = passwordGenerator.generatePassword(10, passwordGenerationRules);
+                        input.setPassword(passwordEncoder.encode(rawPassword));
                         accountService.save(input);
                         countInsert++;
 

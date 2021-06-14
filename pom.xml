@@ -63,12 +63,15 @@
 			<artifactId>thymeleaf-extras-springsecurity5</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<scope>runtime</scope>
-			<optional>true</optional>
-		</dependency>
+		<!-- Spring Data Jpa(Hibernate)が正しく動かなる-->
+		<!-- See https://stackoverflow.com/questions/48217195/caused-by-org-hibernate-property-access-spi-propertyaccessexception-error-acce -->
+		<!-- See https://www.debugcn.com/en/article/5611249.html -->
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-devtools</artifactId>-->
+<!--			<scope>runtime</scope>-->
+<!--			<optional>true</optional>-->
+<!--		</dependency>-->
 		<dependency>
 			<groupId>org.mariadb.jdbc</groupId>
 			<artifactId>mariadb-java-client</artifactId>
@@ -267,8 +270,14 @@
 			<artifactId>terasoluna-gfw-jodatime</artifactId>
 			<version>5.7.0-SNAPSHOT</version>
 		</dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
 
-	</dependencies>
+    </dependencies>
 
 	<build>
 		<plugins>

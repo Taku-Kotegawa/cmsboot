@@ -128,7 +128,7 @@ public class SimpleEntityController {
 
         for (SimpleEntityBean bean : getBeanList(simpleEntityList)) {
             SimpleEntityListRow simpleEntityListRow = beanMapper.map(bean, SimpleEntityListRow.class);
-            simpleEntityListRow.setOperations(getToggleButton(bean.getId().toString(), op(null)));
+            simpleEntityListRow.setOperations(getToggleButton(bean.getId().toString(), op()));
             simpleEntityListRow.setDT_RowId(bean.getId().toString());
             // ステータスラベル
             simpleEntityListRow.setStatusLabel(Status.getByValue(bean.getStatus()).getCodeLabel());
@@ -383,9 +383,9 @@ public class SimpleEntityController {
         return new OperationsUtil(BASE_PATH);
     }
 
-    private OperationsUtil op(String param) {
-        return new OperationsUtil(param);
-    }
+//    private OperationsUtil op(String param) {
+//        return new OperationsUtil(param);
+//    }
 
     /**
      * ダウンロード
@@ -610,7 +610,7 @@ public class SimpleEntityController {
                              @AuthenticationPrincipal LoggedInUser loggedInUser,
                              @PathVariable("id") Long id) {
 
-        simpleEntityService.hasAuthority(Constants.OPERATION.SAVE, loggedInUser);
+        simpleEntityService.hasAuthority(Constants.OPERATION.UPDATE, loggedInUser);
 
         SimpleEntity simpleEntity = simpleEntityService.findById(id);
         model.addAttribute("simpleEntity", simpleEntity);
@@ -628,8 +628,8 @@ public class SimpleEntityController {
 
         setFileManagedToForm(form);
 
-        model.addAttribute("buttonState", getButtonStateMap(Constants.OPERATION.SAVE, simpleEntity).asMap());
-        model.addAttribute("fieldState", getFiledStateMap(Constants.OPERATION.SAVE, simpleEntity).asMap());
+        model.addAttribute("buttonState", getButtonStateMap(Constants.OPERATION.UPDATE, simpleEntity).asMap());
+        model.addAttribute("fieldState", getFiledStateMap(Constants.OPERATION.UPDATE, simpleEntity).asMap());
         model.addAttribute("op", op());
 
         return JSP_FORM;
@@ -670,7 +670,7 @@ public class SimpleEntityController {
                          @PathVariable("id") Long id,
                          @RequestParam(value = "saveDraft", required = false) String saveDraft) {
 
-        simpleEntityService.hasAuthority(Constants.OPERATION.SAVE, loggedInUser);
+        simpleEntityService.hasAuthority(Constants.OPERATION.UPDATE, loggedInUser);
 
         if (bindingResult.hasErrors()) {
             return updateForm(form, model, loggedInUser, id);
@@ -845,7 +845,6 @@ public class SimpleEntityController {
         includeKeys.add(Constants.BUTTON.INVALID);
         includeKeys.add(Constants.BUTTON.VALID);
         includeKeys.add(Constants.BUTTON.DELETE);
-        includeKeys.add(Constants.BUTTON.UNLOCK);
         includeKeys.add(Constants.BUTTON.SAVE_DRAFT);
         includeKeys.add(Constants.BUTTON.CANCEL_DRAFT);
         includeKeys.add(Constants.BUTTON.COPY);
@@ -862,7 +861,7 @@ public class SimpleEntityController {
         }
 
         // 編集
-        if (Constants.OPERATION.SAVE.equals(operation)) {
+        if (Constants.OPERATION.UPDATE.equals(operation)) {
 
             if (Status.DRAFT.getCodeValue().equals(record.getStatus())) {
                 buttonState.setViewTrue(Constants.BUTTON.CANCEL_DRAFT);
@@ -892,19 +891,19 @@ public class SimpleEntityController {
         // 参照
         if (Constants.OPERATION.VIEW.equals(operation)) {
 
+            buttonState.setViewTrue(Constants.BUTTON.GOTOUPDATE);
+            buttonState.setViewTrue(Constants.BUTTON.COPY);
+
             // スタータスが公開時
-            if (Status.VALID.getCodeValue().equals(record.getStatus())) {
-                buttonState.setViewTrue(Constants.BUTTON.GOTOUPDATE);
-                buttonState.setViewTrue(Constants.BUTTON.INVALID);
-                buttonState.setViewTrue(Constants.BUTTON.UNLOCK);
-                buttonState.setViewTrue(Constants.BUTTON.COPY);
-            }
+//            if (Status.VALID.getCodeValue().equals(record.getStatus())) {
+//                buttonState.setViewTrue(Constants.BUTTON.INVALID);
+//            }
 
             // スタータスが無効
             if (Status.INVALID.getCodeValue().equals(record.getStatus())) {
-                buttonState.setViewTrue(Constants.BUTTON.VALID);
+//                buttonState.setViewTrue(Constants.BUTTON.VALID);
                 buttonState.setViewTrue(Constants.BUTTON.DELETE);
-                buttonState.setViewTrue(Constants.BUTTON.COPY);
+//                buttonState.setViewTrue(Constants.BUTTON.COPY);
             }
         }
 
@@ -930,7 +929,7 @@ public class SimpleEntityController {
         }
 
         // 編集
-        if (Constants.OPERATION.SAVE.equals(operation)) {
+        if (Constants.OPERATION.UPDATE.equals(operation)) {
             fieldState.setInputTrueAll();
             fieldState.setViewTrue("status");
 

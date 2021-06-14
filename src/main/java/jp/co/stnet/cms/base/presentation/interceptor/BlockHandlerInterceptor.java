@@ -28,10 +28,10 @@ public class BlockHandlerInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        if (modelAndView != null && modelAndView.hasView()) {
-            Optional<AccessCounter> accessCounter = accessCounterService.findByUrl(request.getRequestURI());
-            accessCounter.ifPresent(counter -> modelAndView.addObject("accessCount", counter.getCount()));
-        }
+//        if (modelAndView != null && modelAndView.hasView()) {
+//            Optional<AccessCounter> accessCounter = accessCounterService.findByUrl(request.getRequestURI());
+//            accessCounter.ifPresent(counter -> modelAndView.addObject("accessCount", counter.getCount()));
+//        }
 
     }
 

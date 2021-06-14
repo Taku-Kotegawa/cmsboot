@@ -283,7 +283,7 @@ public class SpringSecurityConfig {
             ConcurrentSessionControlAuthenticationStrategy sessionControlAuthenticationStrategy
                     = new ConcurrentSessionControlAuthenticationStrategy(sessionRegistry);
             sessionControlAuthenticationStrategy.setMaximumSessions(1);
-            sessionControlAuthenticationStrategy.setExceptionIfMaximumExceeded(true);
+            sessionControlAuthenticationStrategy.setExceptionIfMaximumExceeded(false);
             strategies.add(sessionControlAuthenticationStrategy);
 
             filter.setSessionAuthenticationStrategy(new CompositeSessionAuthenticationStrategy(strategies));

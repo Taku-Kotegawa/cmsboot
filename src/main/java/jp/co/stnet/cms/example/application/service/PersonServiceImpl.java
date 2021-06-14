@@ -166,7 +166,7 @@ public class PersonServiceImpl extends AbstractNodeService<Person, Long> impleme
 
     @Override
     @PostAuthorize("returnObject == true")
-    public Boolean hasAuthority(String Operation, LoggedInUser loggedInUser) {
+    public Boolean hasAuthority(String operation, LoggedInUser loggedInUser) {
         return true;
     }
 

@@ -4,6 +4,8 @@ package jp.co.stnet.cms.base.application.service.authentication;
 import jp.co.stnet.cms.base.application.service.NodeIService;
 import jp.co.stnet.cms.base.domain.model.authentication.Account;
 
+import java.util.List;
+
 /**
  * Accountサービス.
  */
@@ -48,5 +50,14 @@ public interface AccountService extends NodeIService<Account, String> {
      * @return Account
      */
     Account findByApiKey(String apiKey);
+
+
+    /**
+     * キーで検索(複数)
+     *
+     * @param ids キーのリスト
+     * @return アカウントのリスト
+     */
+    List<Account> findAllById(Iterable<String> ids);
 
 }

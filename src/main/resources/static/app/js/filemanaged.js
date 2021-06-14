@@ -104,11 +104,17 @@ console.log(element.dataset);
       uuid.value = data.uuid;
       span.appendChild(uuid);
 
+      // nameを初期化
+      $upload_file.name = "";
+
     }).fail(function (XMLHttpRequest, textStatus, errorThrown) {
       console.log(XMLHttpRequest);
       console.log(textStatus);
       console.log(errorThrown);
       alert("アップロードが失敗しました。");
+
+      // nameを初期化
+      $upload_file.name = "";
 
     });
   } else {

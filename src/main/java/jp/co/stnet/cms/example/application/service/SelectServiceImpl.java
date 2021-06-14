@@ -40,7 +40,7 @@ public class SelectServiceImpl extends AbstractNodeRevService<Select, SelectRevi
     }
 
     @Override
-    public Boolean hasAuthority(String Operation, LoggedInUser loggedInUser) {
+    public Boolean hasAuthority(String operation, LoggedInUser loggedInUser) {
         return true;
     }
 }

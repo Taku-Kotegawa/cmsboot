@@ -45,7 +45,7 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
 
 
     @Autowired
-    Mapper beanMapper;
+    public Mapper beanMapper;
 
     @PersistenceContext
     EntityManager entityManager;

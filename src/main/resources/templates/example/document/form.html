@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html th:replace="~{/layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- ページタイトルを記入 -->
+    <title>Page Title</title>
+</head>
+<body>
+
+<section class="content-header">
+    <div class="container"> <!-- -fluidを外すと横幅が狭くなる-->
+        <div class="row">
+            <div class="col-18 mb-3">
+                <!-- ページタイトルを記入 -->
+                <h4>Page Title</h4>
+            </div>
+            <div class="col-18 text-right">
+                <!-- ページタイトル右の余白 -->
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container">
+        <div th:replace="~{/fragments/message-panel :: message-panel}"></div>
+        <!-- ここより下にメインコンテンツを記入 -->
+        <form autocomplete="off" enctype="multipart/form-data" method="post" th:action
+              th:object="${documentForm}" th:with="id= ${document != null} ? ${document.id} : 0">
+
+            <!-- EnterキーによるPOSTを無効化 -->
+            <input disabled style="display:none" type="submit"/>
+
+            <!-- 隠しフィールド -->
+<!--            <input th:field="*{id}" type="hidden"/>-->
+            <input th:field="*{version}" type="hidden"/>
+
+
+            <!-- button -->
+            <div th:replace="~{/fragments/button-area :: m(${id})}"></div>
+            <hr>
+
+            <!-- Input -->
+            <div class="row">
+                <div class="col-6">
+                    <div th:replace="~{/fragments/label::m('status', 'ステータス')}"></div>
+                    <div class="form-control form-control__view" th:if="${fieldState.status__view}">
+                        [[${document != null} ? ${@CL_STATUS.asMap()[document.status]}]]
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-36">
+                    <table class="table-sm" id="filesArea">
+                        <thead>
+                        <tr>
+                            <td class="row">
+                                <div class="col-6">文書種類</div>
+                                <div class="col-14">ファイル</div>
+                                <div class="col-14">ファイル(PDF)</div>
+                                <div class="col-2 text-center">削除</div>
+                            </td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="item, status : *{files}">
+                            <td class="row">
+                                <div class="col-6">
+                                    <!--                                    <input class="form-control" th:field="*{files[__${status.index}__].type}"/>-->
+
+                                    <select class="form-control" th:errorclass="is-invalid"
+                                            th:field="*{files[__${status.index}__].type}">
+                                        <option label="--Select--" value=""/>
+                                        <option th:each="item : ${@CL_DOC_TYPE_VAL.asMap()}"
+                                                th:text="${item.value}"
+                                                th:value="${item.key}"></option>
+                                    </select>
+                                    <span class="invalid-feedback whitespace-nowrap"
+                                          th:errors="*{files[__${status.index}__].type}"
+                                          th:id="files.type-error"></span>
+                                </div>
+                                <div class="col-14">
+                                    <input class="form-control form-control-file file-managed"
+                                           data-file-type="document_file"
+                                           th:id="|files[__${status.index}__].file|"
+                                           th:style="*{files[__${status.index}__].fileUuid} ? 'display:none' : 'display:block'"
+                                           type="file"/>
+                                    <span class="invalid-feedback whitespace-nowrap"
+                                          th:errors="*{files[__${status.index}__].fileUuid}"
+                                          th:id="file.fileUuid-error"></span>
+
+                                    <th:block th:if="*{files[__${status.index}__].fileManaged}">
+                                        <div class="input-group" th:id="|files[${status.index}].file__attached-block|">
+                                          <span>
+                                            <i class="far fa-file ml-2"></i>
+                                            <a class="link-attached"
+                                               target="_blank"
+                                               th:href="${op.getDownloadUrl(uuid)}"
+                                               th:with="uuid = *{files[__${status.index}__].fileUuid}">[[*{files[__${status.index}__].fileManaged.originalFilename}]]</a>
+                                                  <i class="far fa-trash-alt" style="color: brown;"
+                                                     th:onclick="|file_detach('files[${status.index}].file')|"></i>
+                                            <input th:field="*{files[__${status.index}__].fileUuid}" type="hidden"/>
+                                          </span>
+                                        </div>
+                                    </th:block>
+
+                                </div>
+                                <div class="col-14">
+                                    <input class="form-control form-control-file file-managed"
+                                           data-file-type="document_file"
+                                           th:id="|files[__${status.index}__].pdf|"
+                                           th:style="*{files[__${status.index}__].pdfUuid} ? 'display:none' : 'display:block'"
+                                           type="file"/>
+                                    <span class="invalid-feedback whitespace-nowrap"
+                                          th:errors="*{files[__${status.index}__].pdfUuid}"
+                                          th:id="file.pdfUuid-error"></span>
+
+                                    <th:block th:if="*{files[__${status.index}__].pdfManaged}">
+                                        <div class="input-group" th:id="|files[${status.index}].pdf__attached-block|">
+                                          <span>
+                                            <i class="far fa-file ml-2"></i>
+                                            <a class="link-attached"
+                                               target="_blank"
+                                               th:href="${op.getDownloadUrl(uuid)}"
+                                               th:with="uuid = *{files[__${status.index}__].pdfUuid}">[[*{files[__${status.index}__].pdfManaged.originalFilename}]]</a>
+                                                  <i class="far fa-trash-alt" style="color: brown;"
+                                                     th:onclick="|file_detach('files[${status.index}].pdf')|"></i>
+                                            <input th:field="*{files[__${status.index}__].pdfUuid}" type="hidden"/>
+                                          </span>
+                                        </div>
+                                    </th:block>
+
+                                </div>
+                                <div class="col-2 text-center">
+                                    <button class="btn-button" onclick="lineDelete(this)" type="button">削除</button>
+                                </div>
+
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="row">
+                        <div class="col-36">
+                            <button class="btn-button" formaction="#addLinebutton" id="addLinebutton" name="addlineitem">行追加
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <!-- button -->
+            <br>
+            <hr>
+            <div th:replace="~{/fragments/button-area :: m(${id})}"></div>
+
+        </form>
+        <!-- ここより上にメインコンテンツを記入 -->
+    </div>
+</section>
+
+<script>
+  function lineDelete(e) {
+    let table = e.closest('table')
+<!--    if (table.rows.length == 2) {-->
+<!--      alert('全ての行は削除できません。');-->
+<!--      return false;-->
+<!--    }-->
+    let tr = e.closest('tr').remove();
+  }
+</script>
+
+</body>
+</html>

@@ -21,8 +21,6 @@ import jp.co.stnet.cms.common.util.CsvUtils;
 import jp.co.stnet.cms.common.util.StateMap;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.JobParametersInvalidException;
-import org.springframework.batch.core.launch.JobInstanceAlreadyExistsException;
-import org.springframework.batch.core.launch.NoSuchJobException;
 import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
 import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
 import org.springframework.batch.core.repository.JobRestartException;
@@ -37,7 +35,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.terasoluna.gfw.common.codelist.CodeList;
 import org.terasoluna.gfw.common.exception.BusinessException;
-import org.terasoluna.gfw.common.message.ResultMessage;
 import org.terasoluna.gfw.common.message.ResultMessages;
 import org.terasoluna.gfw.web.token.transaction.TransactionTokenCheck;
 import org.terasoluna.gfw.web.token.transaction.TransactionTokenType;
@@ -374,7 +371,7 @@ public class VariableController {
                              @AuthenticationPrincipal LoggedInUser loggedInUser,
                              @PathVariable("id") Long id) {
 
-        variableService.hasAuthority(Constants.OPERATION.SAVE, loggedInUser);
+        variableService.hasAuthority(Constants.OPERATION.UPDATE, loggedInUser);
 
         Variable variable = variableService.findById(id);
 
@@ -395,8 +392,8 @@ public class VariableController {
 
         model.addAttribute("variable", variable);
         model.addAttribute("fieldLabel", getFieldLabel(form.getType()));
-        model.addAttribute("buttonState", getButtonStateMap(Constants.OPERATION.SAVE, variable).asMap());
-        model.addAttribute("fieldState", getFiledStateMap(Constants.OPERATION.SAVE, variable).asMap());
+        model.addAttribute("buttonState", getButtonStateMap(Constants.OPERATION.UPDATE, variable).asMap());
+        model.addAttribute("fieldState", getFiledStateMap(Constants.OPERATION.UPDATE, variable).asMap());
         model.addAttribute("op", op(variable.getType()));
 
         return JSP_FORM;
@@ -415,7 +412,7 @@ public class VariableController {
                          @PathVariable("id") Long id,
                          @RequestParam(value = "saveDraft", required = false) String saveDraft) {
 
-        variableService.hasAuthority(Constants.OPERATION.SAVE, loggedInUser);
+        variableService.hasAuthority(Constants.OPERATION.UPDATE, loggedInUser);
 
         if (bindingResult.hasErrors()) {
             return updateForm(form, model, loggedInUser, id);
@@ -715,7 +712,7 @@ public class VariableController {
         }
 
         // 編集
-        if (Constants.OPERATION.SAVE.equals(operation)) {
+        if (Constants.OPERATION.UPDATE.equals(operation)) {
 
             if (Status.DRAFT.getCodeValue().equals(record.getStatus())) {
 //                buttonState.setViewTrue(Constants.BUTTON.CANCEL_DRAFT);
@@ -792,7 +789,7 @@ public class VariableController {
         }
 
         // 編集
-        if (Constants.OPERATION.SAVE.equals(operation)) {
+        if (Constants.OPERATION.UPDATE.equals(operation)) {
             fieldState.setInputTrueAll();
             fieldState.setInputFalse("type").setHiddenTrue("type").setViewTrue("type");
             fieldState.setViewTrue("status");

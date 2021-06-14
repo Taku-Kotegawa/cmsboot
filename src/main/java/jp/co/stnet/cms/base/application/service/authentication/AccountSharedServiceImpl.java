@@ -123,8 +123,7 @@ public class AccountSharedServiceImpl implements AccountSharedService {
         }
 
         if (exists(account.getUsername())) {
-            throw new BusinessException(ResultMessages.error().add(
-                    E_SL_FW_5001));
+            throw new BusinessException(ResultMessages.error().add(E_SL_FW_5001));
         }
         String rawPassword = passwordGenerator.generatePassword(10, passwordGenerationRules);
         account.setPassword(passwordEncoder.encode(rawPassword));

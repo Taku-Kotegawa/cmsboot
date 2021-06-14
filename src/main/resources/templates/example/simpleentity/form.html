@@ -90,8 +90,57 @@
 
                 </div>
 
-
             </div>
+            <br>
+            <div class="row">
+                <div class="col-36">
+                    <table class="table-sm" id="lineItemTable">
+                        <thead>
+                        <tr>
+                            <td class="row">
+                                <div class="col-18">商品名</div>
+                                <div class="col-6">単価</div>
+                                <div class="col-9">数量</div>
+                                <div class="col-3 text-center">削除</div>
+                            </td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="item, status : *{lineItems}">
+                            <td class="row">
+                                <div class="col-18">
+                                    <input th:field="*{lineItems[__${status.index}__].itemName}" class="form-control" />
+                                </div>
+                                <div class="col-6">
+                                    <input th:field="*{lineItems[__${status.index}__].unitPrise}" class="form-control" />
+                                </div>
+                                <div class="col-9">
+                                    <input th:field="*{lineItems[__${status.index}__].itemNumber}" class="form-control" />
+                                </div>
+                                <div class="col-3 text-center">
+                                    <button class="btn-button" onclick="lineDelete(this)" type="button">削除</button>
+                                </div>
+
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="row">
+                        <div class="col-36">
+                            <button class="btn-button" formaction="#addLinebutton" id="addLinebutton"
+                                    name="addlineitem">行追加(POST)
+                            </button>
+                            <button class="btn-button" onclick="addLine('lineItemTable')" type="button">
+                                行追加(JavaScript)
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
             <br>
             <hr>
             <div th:replace="~{/fragments/button-area :: m(${id})}"></div>
@@ -100,6 +149,32 @@
         <!-- ここより上にメインコンテンツを記入 -->
     </div>
 </section>
+
+<script>
+  function lineDelete(e) {
+
+    let table = e.closest('table')
+    if (table.rows.length == 2) {
+      alert('全ての行は削除できません。');
+      return false;
+    }
+    let tr = e.closest('tr').remove();
+  }
+
+  function addLine(table_id) {
+    let table = document.getElementById(table_id);
+    let newRowIdx = table.rows.length - 1;
+    let firstRow = table.rows[1];
+    let newRow = firstRow.cloneNode(true);
+    let replaceRowHTML = newRow.innerHTML.replace(/lineItems\[0\]/g, 'lineItems[' + newRowIdx + ']');
+    replaceRowHTML = replaceRowHTML.replace(/lineItems0/g, 'lineItems' + newRowIdx);
+    replaceRowHTML = replaceRowHTML.replace(/value=".*"/g, '');
+    let row = table.insertRow(-1);
+    row.innerHTML = replaceRowHTML;
+  }
+</script>
+
+
 
 </body>
 </html>

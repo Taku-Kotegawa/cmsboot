@@ -6,15 +6,32 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Apache Commons BeanUtils の拡張
  */
 public class BeanUtils extends org.apache.commons.beanutils.BeanUtils {
+
+    private static final Set<String> PRIMITIVE = Set.of(
+            "java.lang.String",
+            "java.lang.Integer",
+            "java.lang.Long",
+            "java.lang.Float",
+            "java.lang.Double",
+            "java.lang.BigDecimal",
+            "java.time.LocalDate",
+            "java.time.LocalDateTime",
+            "java.util.Date",
+            "java.lang.Enum"
+    );
+
+    private static final Set<String> COLLECTION = Set.of(
+            "java.util.Map",
+            "java.util.List",
+            "java.util.Set",
+            "java.util.Collection"
+    );
 
     /**
      * クラスのフィールド一覧を取得する。(Map)
@@ -42,15 +59,21 @@ public class BeanUtils extends org.apache.commons.beanutils.BeanUtils {
                 Class fieldClass = m.getParameterTypes()[0];
                 String fieldName = Introspector.decapitalize(m.getName().substring(3));
 
-                if ("java.lang.String".equals(fieldClass.getName())
-                        || "java.util.List".equals(fieldClass.getName())
-                        || "java.util.Map".equals(fieldClass.getName())
-                        || "java.lang.Enum".equals(fieldClass.getName())) {
+                if (PRIMITIVE.contains(fieldClass.getName())) {
                     // 何もしない
 
-                    //TODO モデルクラスのListの場合のネスト対応が未対応
-                    //getSigunature()を使う予定
+                } else if (COLLECTION.contains(fieldClass.getName())) {
+                    String c = getClassFromSig(getSignature(m));
 
+                    if (PRIMITIVE.contains(c)) {
+
+                    } else  {
+                        try {
+                            fieldsMap.putAll(getFields(Class.forName(c), fieldName));
+                        } catch (ClassNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                    }
 
                 } else {
                     fieldsMap.putAll(getFields(fieldClass, fieldName));
@@ -146,16 +169,19 @@ public class BeanUtils extends org.apache.commons.beanutils.BeanUtils {
         } catch (IllegalAccessException | NoSuchFieldException e) {
             e.printStackTrace();
         }
+        return "";
 
-        StringBuilder sb = new StringBuilder("(");
-        for (Class<?> c : m.getParameterTypes())
-            sb.append((sig = Array.newInstance(c, 0).toString()), 1, sig.indexOf('@'));
-        return sb.append(')')
-                .append(
-                        m.getReturnType() == void.class ? "V" :
-                                (sig = Array.newInstance(m.getReturnType(), 0).toString()).substring(1, sig.indexOf('@'))
-                )
-                .toString();
+    }
+
+    /**
+     * "(Ljava/util/List<Ljava/lang/String;>;)V" から "java.lang.String" を取得する。。
+     * @param sig sig
+     * @return クラス名
+     */
+    private static String getClassFromSig(String sig) {
+        int start = sig.indexOf("<L");
+        int end = sig.indexOf(";>");
+        return sig.substring(start + 2, end).replace("/", ".");
     }
 
     // インスタンス化禁止

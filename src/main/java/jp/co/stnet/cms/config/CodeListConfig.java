@@ -79,4 +79,12 @@ public class CodeListConfig {
         return  jdbcCodeList;
     }
 
+    @Bean("CL_DOC_TYPE_VAL")
+    public JdbcCodeList docType() {
+        JdbcCodeList jdbcCodeList = getJdbcCodeListBase();
+        jdbcCodeList.setQuerySql("SELECT CODE, VALUE1 || case when STATUS = 2 then '(無効)' else '' end as VALUE1 FROM VARIABLE WHERE TYPE = 'DOC_TYPE' ORDER BY STATUS, CODE");
+        jdbcCodeList.setValueColumn("CODE");
+        jdbcCodeList.setLabelColumn("VALUE1");
+        return  jdbcCodeList;
+    }
 }

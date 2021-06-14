@@ -1,6 +1,7 @@
 package jp.co.stnet.cms.base.presentation.controller.admin.account;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jp.co.stnet.cms.base.domain.model.authentication.Account;
@@ -8,6 +9,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 @Data
@@ -43,5 +45,9 @@ public class AccountListBean extends Account {
     public String getPassword() { return null; }
 
     private String statusLabel;
+
+    @JsonFormat(pattern = "yyyy/MM/dd")
+    private LocalDateTime welcomeMailSendDate;
+
 }
 

@@ -486,7 +486,7 @@ public class AccessCounterController {
                              @AuthenticationPrincipal LoggedInUser loggedInUser,
                              @PathVariable("id") Long id) {
 
-        accessCounterService.hasAuthority(Constants.OPERATION.SAVE, loggedInUser);
+        accessCounterService.hasAuthority(Constants.OPERATION.UPDATE, loggedInUser);
 
         AccessCounter accessCounter = accessCounterService.findById(id);
         model.addAttribute("accessCounter", accessCounter);
@@ -504,8 +504,8 @@ public class AccessCounterController {
 
         setFileManagedToForm(form);
 
-        model.addAttribute("buttonState", getButtonStateMap(Constants.OPERATION.SAVE, accessCounter).asMap());
-        model.addAttribute("fieldState", getFiledStateMap(Constants.OPERATION.SAVE, accessCounter).asMap());
+        model.addAttribute("buttonState", getButtonStateMap(Constants.OPERATION.UPDATE, accessCounter).asMap());
+        model.addAttribute("fieldState", getFiledStateMap(Constants.OPERATION.UPDATE, accessCounter).asMap());
         model.addAttribute("op", op());
 
         return JSP_FORM;
@@ -524,7 +524,7 @@ public class AccessCounterController {
                          @PathVariable("id") Long id,
                          @RequestParam(value = "saveDraft", required = false) String saveDraft) {
 
-        accessCounterService.hasAuthority(Constants.OPERATION.SAVE, loggedInUser);
+        accessCounterService.hasAuthority(Constants.OPERATION.UPDATE, loggedInUser);
 
         if (bindingResult.hasErrors()) {
             return updateForm(form, model, loggedInUser, id);
@@ -716,7 +716,7 @@ public class AccessCounterController {
         }
 
         // 編集
-        if (Constants.OPERATION.SAVE.equals(operation)) {
+        if (Constants.OPERATION.UPDATE.equals(operation)) {
 
             if (Status.DRAFT.getCodeValue().equals(record.getStatus())) {
                 buttonState.setViewTrue(Constants.BUTTON.CANCEL_DRAFT);
@@ -783,7 +783,7 @@ public class AccessCounterController {
         }
 
         // 編集
-        if (Constants.OPERATION.SAVE.equals(operation)) {
+        if (Constants.OPERATION.UPDATE.equals(operation)) {
             fieldState.setInputTrueAll();
             fieldState.setViewTrue("status");
 

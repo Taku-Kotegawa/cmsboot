@@ -26,8 +26,10 @@
                        target="_blank"
                        th:with="uuid = *{__${field_uuid}__}"
                        th:href="${op.getDownloadUrl(uuid)}">[[*{__${field_managed}__.originalFilename}]]</a>
-                      <i class="far fa-trash-alt" style="color: brown;"
-                         th:onclick="|file_detach('__${field_id}__')|"></i>
+                      <th:block th:if="${!fieldState.__${field_uuid}____disabled}">
+                          <i class="far fa-trash-alt" style="color: brown;"
+                             th:onclick="|file_detach('__${field_id}__')|"></i>
+                      </th:block>
                     <input th:field="*{__${field_uuid}__}" type="hidden"/>
                   </span>
             </div>

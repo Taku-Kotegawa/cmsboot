@@ -26,20 +26,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.ArrayList;
 import java.util.Map;
 
-@Slf4j
+import static jp.co.stnet.cms.base.presentation.controller.admin.account.AdminAccountConstant.*;
+
 @Controller
-@RequestMapping("admin/account")
+@RequestMapping(BASE_PATH)
 public class AdminAccountUploadController {
-
-    private final String BASE_PATH = "admin/account";
-    private final String JSP_LIST = BASE_PATH + "/list";
-    private final String JSP_FORM = BASE_PATH + "/form";
-    private final String JSP_VIEW = BASE_PATH + "/view";
-    private final String JSP_UPLOAD_FORM = BASE_PATH + "/uploadform";
-    private final String JSP_UPLOAD_COMPLETE = "common/upload/complete";
-
-    // アップロード用のインポートジョブID
-    private final String UPLOAD_JOB_ID = Constants.JOBID.IMPORT_ACCOUNT;
 
     @Autowired
     FileManagedSharedService fileManagedSharedService;
@@ -70,7 +61,7 @@ public class AdminAccountUploadController {
         model.addAttribute("fieldState", new StateMap(UploadForm.class, new ArrayList<>(), new ArrayList<>()).setInputTrueAll().asMap());
         model.addAttribute("op", new OperationsUtil(BASE_PATH));
 
-        return JSP_UPLOAD_FORM;
+        return TEMPLATE_UPLOAD_FORM;
     }
 
     /**
@@ -80,6 +71,8 @@ public class AdminAccountUploadController {
     public String upload(@Validated UploadForm form, BindingResult result, Model model,
                                                   RedirectAttributes redirectAttributes,
                          @AuthenticationPrincipal LoggedInUser loggedInUser) {
+
+        accountService.hasAuthority(Constants.OPERATION.UPLOAD, loggedInUser);
 
         final String jobName = UPLOAD_JOB_ID;
 
@@ -120,7 +113,7 @@ public class AdminAccountUploadController {
         model.addAttribute("returnBackUrl", "/admin/account/list");
         model.addAttribute("jobName", params.get("jobName"));
         model.addAttribute("jobExecutionId", params.get("jobExecutionId"));
-        return JSP_UPLOAD_COMPLETE;
+        return TEMPLATE_UPLOAD_COMPLETE;
     }
     
 }

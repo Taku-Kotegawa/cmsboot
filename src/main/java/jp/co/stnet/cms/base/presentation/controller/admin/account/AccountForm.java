@@ -17,6 +17,8 @@ import java.util.List;
 @StrongPassword(usernamePropertyName = "username", newPasswordPropertyName = "password")
 public class AccountForm {
 
+    private Long version;
+
     @NotNull                    //null禁止
     @Size(min = 4, max = 128)   //4文字以上128文字以下
     private String username;

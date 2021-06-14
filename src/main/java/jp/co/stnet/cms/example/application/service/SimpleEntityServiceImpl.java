@@ -68,7 +68,7 @@ public class SimpleEntityServiceImpl extends AbstractNodeRevService<SimpleEntity
     }
 
     @Override
-    public Boolean hasAuthority(String Operation, LoggedInUser loggedInUser) {
+    public Boolean hasAuthority(String operation, LoggedInUser loggedInUser) {
         return true;
     }
 

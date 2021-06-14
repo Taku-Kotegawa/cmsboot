@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="jp.co.stnet.cms.base.infrastructure.datasource.message.MailSendHistoryMapper">
+    <resultMap id="MailSendHistory" type="jp.co.stnet.cms.base.domain.model.message.MailSendHistory">
+        <id column="ID" jdbcType="VARCHAR" property="id"/>
+        <result column="body" jdbcType="VARCHAR" property="body"/>
+        <result column="CREATED_BY" jdbcType="VARCHAR" property="createdBy"/>
+        <result column="EMAIL" jdbcType="VARCHAR" property="receiver.email"/>
+        <result column="USERNAME" jdbcType="VARCHAR" property="receiver.username"/>
+        <result column="SEND_TIME" jdbcType="DATETIMEOFFSET" property="sendTime"/>
+        <result column="SUBJECT" jdbcType="VARCHAR" property="subject"/>
+    </resultMap>
+
+
+    <select id="selectNewest" resultMap="MailSendHistory">
+        <![CDATA[
+        SELECT *
+        FROM
+            MAIL_SEND_HISTORY A
+        INNER JOIN (SELECT USERNAME, MAX(ID) as ID FROM MAIL_SEND_HISTORY GROUP BY USERNAME) B ON B.USERNAME = A.USERNAME AND B.ID = A.ID
+        ]]>
+    </select>
+</mapper>

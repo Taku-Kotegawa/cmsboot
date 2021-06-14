@@ -12,7 +12,7 @@
     <th:block th:if="${fieldState.__${field_id}____input}">
         <div class="form-check-inline" style="width:100%">
             <th:block class="" th:each="item : ${__${items}__}">
-                <input class="" th:field="*{__${field_id}__}" th:value="${item.key}" type="checkbox"/>
+                <input class="" th:field="*{__${field_id}__}" th:value="${item.key}" type="checkbox" th:disabled="${fieldState.__${field_id}____disabled}"/>
                 <label class="" th:for="${#ids.prev('__${field_id}__')}" th:text="${item.value}"></label>
             </th:block>
         </div>

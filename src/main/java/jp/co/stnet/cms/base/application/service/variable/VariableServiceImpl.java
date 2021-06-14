@@ -33,7 +33,7 @@ public class VariableServiceImpl extends AbstractNodeService<Variable, Long> imp
     }
 
     @Override
-    public Boolean hasAuthority(String Operation, LoggedInUser loggedInUser) {
+    public Boolean hasAuthority(String operation, LoggedInUser loggedInUser) {
 
         // TODO 権限チェックの追加
         return true;

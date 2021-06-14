@@ -9,7 +9,7 @@
 <th:block th:fragment="m(field_id, label, value, placeholder, items)">
     <!--/* 参照用 */-->
     <th:block th:if="${fieldState.__${field_id}____view}">
-        <div class="form-control form-control__view">
+        <div class="form-control form-control__view border-0">
             <th:block th:each="item : ${__${items}__}">
                 [['[']]
                 [[${ __${value}__ != null && #lists.contains(__${value}__, item.key) } ? '✓' : '　']]

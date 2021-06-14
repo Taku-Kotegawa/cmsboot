@@ -11,7 +11,20 @@
     <!--/* 参照用 */-->
     <th:block th:if="${fieldState.__${field_id}__Uuid__view}">
         <th:block th:if="${__${value}__}">
-            <div class="form-control form-control__view" th:text="${__${value}__.originalFilename}"></div>
+
+            <div class="input-group" th:id="|__${field_id}____attached-block|">
+              <span>
+                <i class="far fa-file ml-2"></i>
+                <a class="link-attached"
+                   target="_blank"
+                   th:with="uuid = ${__${value}__.uuid}"
+                   th:href="${op.getDownloadUrl(uuid)}">[[${__${value}__.originalFilename}]]</a>
+              </span>
+            </div>
+
+        </th:block>
+        <th:block th:if="!${__${value}__}">
+            <div class="form-control form-control__view border-0" > - </div>
         </th:block>
     </th:block>
 

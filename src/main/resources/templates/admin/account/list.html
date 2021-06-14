@@ -44,9 +44,9 @@
             <thead>
             <tr class="filter">
                 <th class="text-center px-1">
-                    <button class="btn" onclick="checkAll();">
-                        <i class="fas fa-check"></i>
-                    </button>
+<!--                    <button class="btn" onclick="checkAll();">-->
+<!--                        <i class="fas fa-check"></i>-->
+<!--                    </button>-->
                 </th>
                 <th data-filter="disable"></th>
                 <th></th>
@@ -54,7 +54,7 @@
                 <th></th>
                 <th></th>
                 <th></th>
-                <th></th>
+<!--                <th></th>-->
                 <th data-filter="disable">
                     <select class="dataTables_column_filter form-control" data-column="7" id="col_filter_7">
                         <option value=""></option>
@@ -64,6 +64,7 @@
                     </select>
                 </th>
                 <th></th>
+                <th data-filter="disable"></th>
             </tr>
             <tr class="title">
                 <th class="text-center px-0"></th>
@@ -73,9 +74,10 @@
                 <th class="text-center">姓</th>
                 <th class="text-center">所属</th>
                 <th class="text-center">e-mail</th>
-                <th class="text-center">URL</th>
+<!--                <th class="text-center">URL</th>-->
                 <th>ステータス</th>
                 <th class="text-center">最終更新日時</th>
+                <th class="text-center">案内メール送信日</th>
             </tr>
             </thead>
             <tbody></tbody>
@@ -134,9 +136,9 @@
             {
               data: 'email',
             },
-            {
-              data: 'url',
-            },
+<!--            {-->
+<!--              data: 'url',-->
+<!--            },-->
             {
               data: 'statusLabel',
               className: 'text-center',
@@ -145,6 +147,11 @@
             },
             {
               data: 'lastModifiedDate',
+            },
+            {
+              data: 'welcomeMailSendDate',
+              orderable: false,
+              searchable: false,
             },
           ],
 
