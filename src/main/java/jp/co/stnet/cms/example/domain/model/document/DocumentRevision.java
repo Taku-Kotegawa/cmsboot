@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @Data
@@ -82,6 +83,17 @@ public class DocumentRevision extends AbstractRevisionEntity implements Serializ
      * 変更理由
      */
     private String reasonForChange;
+
+    /**
+     * 利用シーン
+     */
+    @ElementCollection(fetch = FetchType.EAGER)
+    private Set<String> useStage;
+
+    /**
+     * 区分
+     */
+    private String docCategory;
 
     /**
      * ファイル

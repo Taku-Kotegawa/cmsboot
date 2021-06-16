@@ -3,6 +3,8 @@ import jp.co.stnet.cms.base.application.service.filemanage.FileManagedSharedServ
 import jp.co.stnet.cms.base.domain.model.filemanage.FileManaged;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import jp.co.stnet.cms.example.domain.model.document.File;
 
@@ -50,7 +52,7 @@ class DocumentServiceImplTest {
 
         Document document = new Document();
 
-        Collection<File> files = new ArrayList<>();
+        Set<File> files = new HashSet<>();
         files.add(createFile(1));
         files.add(createFile(2));
 
@@ -105,7 +107,7 @@ class DocumentServiceImplTest {
         // 準備
         Document expected = target.findById(1L);
         entityManager.detach(expected);
-        expected.setFiles(new ArrayList<>());
+        expected.setFiles(new HashSet<>());
 
         // 実行
         Document saved = target.save(expected);

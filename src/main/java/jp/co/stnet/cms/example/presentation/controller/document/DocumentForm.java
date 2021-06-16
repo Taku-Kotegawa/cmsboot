@@ -7,15 +7,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.*;
 
 @Data
 @AllArgsConstructor
@@ -77,6 +74,16 @@ public class DocumentForm implements Serializable {
      * 変更理由
      */
     private String reasonForChange;
+
+    /**
+     * 利用シーン
+     */
+    private Set<String> useStage;
+
+    /**
+     * 区分
+     */
+    private String docCategory;
 
     private Collection<@Valid FileForm> files = new ArrayList<>();
 

@@ -72,6 +72,7 @@ public class DocumentCreateController {
 
         setFileManaged(form.getFiles(), fileManagedSharedService);
         addFilesItem(form);
+        form.getFiles().add(new FileForm());
 
         model.addAttribute("buttonState", helper.getButtonStateMap(Constants.OPERATION.CREATE, null, form).asMap());
         model.addAttribute("fieldState", helper.getFiledStateMap(Constants.OPERATION.CREATE, null, form).asMap());

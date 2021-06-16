@@ -25,6 +25,7 @@ import org.terasoluna.gfw.web.token.transaction.TransactionTokenType;
 import javax.validation.groups.Default;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
 
 import static jp.co.stnet.cms.example.presentation.controller.document.DocConstant.BASE_PATH;
@@ -71,7 +72,7 @@ public class DocumentUpdateController {
             }
         }
 
-        form.getFiles().add(new FileForm());
+//        form.getFiles().add(new FileForm());
 
     }
 
@@ -110,7 +111,7 @@ public class DocumentUpdateController {
         }
 
         setFileManaged(form.getFiles(), fileManagedSharedService);
-        addFilesItem(form);
+//        addFilesItem(form);
 
         model.addAttribute("document", document);
         model.addAttribute("buttonState", helper.getButtonStateMap(Constants.OPERATION.UPDATE, document, form).asMap());
@@ -246,6 +247,7 @@ public class DocumentUpdateController {
 
         setFileManaged(form.getFiles(), fileManagedSharedService);
         addFilesItem(form);
+        form.getFiles().add(new FileForm());
 
         return updateForm(form, model, loggedInUser, form.getId());
 

@@ -53,6 +53,13 @@
     <div th:replace="~{/fragments/view-textarea :: m(${field_id}, ${label}, ${value}, ${placeholder})}"></div>
 </th:block>
 
+<th:block th:fragment="summernote(field_id, label, value, placeholder, rows)">
+    <div th:replace="~{/fragments/label :: m(${field_id}, ${label})}"></div>
+    <div th:replace="~{/fragments/summernote :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${rows})}"></div>
+    <div th:replace="~{/fragments/hidden :: m(${field_id})}"></div>
+    <div th:replace="~{/fragments/view-textarea :: m(${field_id}, ${label}, ${value}, ${placeholder})}"></div>
+</th:block>
+
 <th:block th:fragment="date(field_id, label, value, placeholder)">
     <div th:replace="~{/fragments/label :: m(${field_id}, ${label})}"></div>
     <div th:replace="~{/fragments/input-date :: m(${field_id}, ${label}, ${value}, ${placeholder})}"></div>

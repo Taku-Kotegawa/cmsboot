@@ -129,6 +129,7 @@ public class DocumentHelper {
         // 新規作成
         if (Constants.OPERATION.CREATE.equals(operation)) {
             fieldState.setInputTrueAll();
+            fieldState.setInputFalse("status");
 
         }
 
