@@ -24,6 +24,11 @@ fieldset legend {
     /* font-weight: 700; */
 }
 
+.note-frame.card {
+    box-shadow: unset;
+}
+
+
 </style>
 
 <section class="content-header">
@@ -59,67 +64,38 @@ fieldset legend {
             <hr>
 
             <!-- Input -->
-            <div class="row">
-                <div class="col-6">
-                    <div th:replace="~{/fragments/label::m('status', 'ステータス')}"></div>
-                    <div class="form-control form-control__view" th:if="${fieldState.status__view}">
-                        [[${document != null} ? ${@CL_STATUS.asMap()[document.status]}]]
-                    </div>
-                </div>
-            </div>
 
             <div class="row">
-                <fieldset class="col-36 border">
-                    <legend>基本情報</legend>
-                    <div class="col-12">
+                <div class="col-24">
+                    <fieldset class="col-36 border">
+                        <legend>基本情報</legend>
+                        <div class="col-12">
+                            <div th:replace="~{/fragments/label::m('status', 'ステータス')}"></div>
+                            <div class="form-control form-control__view" th:if="${fieldState.status__view}">
+                                [[${document != null} ? ${@CL_STATUS.asMap()[document.status]}]]
+                            </div>
+                        </div>
                         <div th:replace="~{/fragments/field::input('title', 'タイトル', 'document.title', '')}"></div>
-                    </div>
-                </fieldset>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <div th:replace="~{/fragments/field::radio('publicScope', '公開区分', 'document.publicScope', '', '@CL_DOC_PUBLIC_SCOPE.asMap()')}"></div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <div th:replace="~{/fragments/field::input('chargeDepartment', '管理部門', 'document.chargeDepartment', '')}"></div>
-                </div>
-                <div class="col-6">
-                    <div th:replace="~{/fragments/field::input('chargePerson', '管理担当者', 'document.chargePerson', '')}"></div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-5">
-                    <div th:replace="~{/fragments/field::date('enactmentDate', '制定日', 'document.enactmentDate', '')}"></div>
-                </div>
-                <div class="col-5">
-                    <div th:replace="~{/fragments/field::date('lastRevisedDate', '最終改定日', 'document.lastRevisedDate', '')}"></div>
-                </div>
-                <div class="col-5">
-                    <div th:replace="~{/fragments/field::date('implementationDate', '実施日', 'document.implementationDate', '')}"></div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <div th:replace="~{/fragments/field::input('enactmentDepartment', '制定箇所', 'document.enactmentDepartment', '')}"></div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-36">
-                    <div th:replace="~{/fragments/field::input('reasonForChange', '変更理由', 'document.reasonForChange', '')}"></div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <div th:replace="~{/fragments/field::checkbox('useStage', '利用シーン', 'document.useStage', '', '@CL_DOC_STAGE.asMap()')}"></div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                </div>
-            </div>
+                        <div th:replace="~{/fragments/field::radio('publicScope', '公開区分', 'document.publicScope', '', '@CL_DOC_PUBLIC_SCOPE.asMap()')}"></div>
+                        <div th:replace="~{/fragments/field::checkbox('useStage', '利用シーン', 'document.useStage', '', '@CL_DOC_STAGE.asMap()')}"></div>
+                        <div th:replace="~{/fragments/field::input('reasonForChange', '変更理由', 'document.reasonForChange', '')}"></div>
+                    </fieldset>
 
+                </div><!-- <div class="col-24"> -->
+
+                <div class="col-12">
+                    <fieldset class="col-36 border">
+                        <legend>管理情報</legend>
+                        <div th:replace="~{/fragments/field::input('chargeDepartment', '管理部門', 'document.chargeDepartment', '')}"></div>
+                        <div th:replace="~{/fragments/field::input('chargePerson', '管理担当者', 'document.chargePerson', '')}"></div>
+                        <div th:replace="~{/fragments/field::date('enactmentDate', '制定日', 'document.enactmentDate', '')}"></div>
+                        <div th:replace="~{/fragments/field::date('lastRevisedDate', '最終改定日', 'document.lastRevisedDate', '')}"></div>
+                        <div th:replace="~{/fragments/field::date('implementationDate', '実施日', 'document.implementationDate', '')}"></div>
+                        <div th:replace="~{/fragments/field::input('enactmentDepartment', '制定箇所', 'document.enactmentDepartment', '')}"></div>
+                    </fieldset>
+
+                </div><!-- <div class="col-12"> -->
+            </div>
 
             <br>
             <div class="row">
