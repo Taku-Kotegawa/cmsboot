@@ -3521,6 +3521,7 @@ textarea.form-control {
       align-items: center;
   padding-left: 0;
   margin-right: 0.75rem;
+  vertical-align: middle;
 }
 
 .form-check-inline .form-check-input {
@@ -52408,6 +52409,7 @@ table.dataTable .dt-checkboxes-cell {
 
 .form-check-inline label {
   margin-left: .1rem;
+  margin-right: .2rem;
   font-weight: 400 !important;
 }
 

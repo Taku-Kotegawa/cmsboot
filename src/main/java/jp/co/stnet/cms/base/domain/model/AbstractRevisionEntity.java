@@ -55,4 +55,8 @@ public abstract class AbstractRevisionEntity {
     @JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss")
     private LocalDateTime lastModifiedDate;
 
+    /**
+     * 変更履歴を残す(コピー)
+     */
+    private boolean saveRevision;
 }

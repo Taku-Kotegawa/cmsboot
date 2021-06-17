@@ -85,7 +85,25 @@ public class DocumentForm implements Serializable {
      */
     private String docCategory;
 
+    /**
+     * ファイル
+     */
     private Collection<@Valid FileForm> files = new ArrayList<>();
+
+    /**
+     * 想定読者
+     */
+    private String intendedReader;
+
+    /**
+     * 概要
+     */
+    private String summary;
+
+    /**
+     * 変更履歴を残す
+     */
+    private boolean saveRevision;
 
     public interface Create {
     }

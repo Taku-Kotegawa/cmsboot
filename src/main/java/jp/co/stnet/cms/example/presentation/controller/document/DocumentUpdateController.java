@@ -112,6 +112,7 @@ public class DocumentUpdateController {
 
         setFileManaged(form.getFiles(), fileManagedSharedService);
 //        addFilesItem(form);
+        form.setSaveRevision(false);
 
         model.addAttribute("document", document);
         model.addAttribute("buttonState", helper.getButtonStateMap(Constants.OPERATION.UPDATE, document, form).asMap());

@@ -229,6 +229,7 @@ textarea.form-control {
   align-items: center;
   padding-left: 0; // Override base .form-check
   margin-right: $form-check-inline-margin-x;
+  vertical-align: middle;
 
   // Undo .form-check-input defaults and add some `margin-right`.
   .form-check-input {

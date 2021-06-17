@@ -108,4 +108,14 @@ public class Document extends AbstractEntity<Long> implements Serializable, Stat
     @ElementCollection(fetch = FetchType.EAGER)
     private Collection<File> files;
 
+    /**
+     * 想定読者
+     */
+    private String intendedReader;
+
+    /**
+     * 概要
+     */
+    private String summary;
+
 }

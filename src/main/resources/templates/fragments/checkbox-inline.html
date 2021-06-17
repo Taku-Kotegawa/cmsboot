@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>入力フィールドの部品(checkbox)</title>
+</head>
+<body>
+
+<th:block th:fragment="m(field_id, label, value, placeholder, items)">
+
+    <!--/* 入力 */-->
+    <th:block th:if="${fieldState.__${field_id}____input}">
+        <div class="form-check-inline">
+            <th:block class="" th:each="item : ${__${items}__}">
+                <input class="" th:field="*{__${field_id}__}" th:value="${item.key}" type="checkbox" th:disabled="${fieldState.__${field_id}____disabled}"/>
+                <label class="" th:for="${#ids.prev('__${field_id}__')}" th:text="${item.value}"></label>
+            </th:block>
+        </div>
+        <span class="invalid-feedback whitespace-nowrap" th:errors="*{__${field_id}__}" th:id="__${field_id}__-error"></span>
+    </th:block>
+
+</th:block>
+</body>
+</html>

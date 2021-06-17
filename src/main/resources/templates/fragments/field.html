@@ -46,6 +46,13 @@
     <div th:replace="~{/fragments/view-checkbox :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
 </th:block>
 
+<th:block th:fragment="checkbox-inline(field_id, label, value, placeholder, items)">
+<!--    <div th:replace="~{/fragments/label :: m(${field_id}, ${label})}"></div>-->
+    <div th:replace="~{/fragments/checkbox-inline :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
+    <div th:replace="~{/fragments/hidden :: m(${field_id})}"></div>
+    <div th:replace="~{/fragments/view-checkbox :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
+</th:block>
+
 <th:block th:fragment="textarea(field_id, label, value, placeholder, rows)">
     <div th:replace="~{/fragments/label :: m(${field_id}, ${label})}"></div>
     <div th:replace="~{/fragments/textarea :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${rows})}"></div>

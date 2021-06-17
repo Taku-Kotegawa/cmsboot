@@ -1,6 +1,7 @@
 package jp.co.stnet.cms.example.config;
 
 import jp.co.stnet.cms.example.domain.model.document.DocPublicScope;
+import jp.co.stnet.cms.example.domain.model.document.SaveRevision;
 import jp.co.stnet.cms.example.domain.model.simpleentity.Agreement;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +18,11 @@ public class ExampleCodeListConfig {
     @Bean("CL_DOC_PUBLIC_SCOPE")
     public EnumCodeList clDocPublicScope() {
         return new EnumCodeList(DocPublicScope.class);
+    }
+
+    @Bean("CL_SAVE_REVISION")
+    public EnumCodeList clSaveRevision() {
+        return new EnumCodeList(SaveRevision.class);
     }
 
 }
