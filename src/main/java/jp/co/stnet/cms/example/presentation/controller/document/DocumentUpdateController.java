@@ -28,8 +28,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 
-import static jp.co.stnet.cms.example.presentation.controller.document.DocConstant.BASE_PATH;
-import static jp.co.stnet.cms.example.presentation.controller.document.DocConstant.TEMPLATE_FORM;
+import static jp.co.stnet.cms.example.presentation.controller.document.DocumentConstant.BASE_PATH;
+import static jp.co.stnet.cms.example.presentation.controller.document.DocumentConstant.TEMPLATE_FORM;
 
 
 @Controller
@@ -143,6 +143,7 @@ public class DocumentUpdateController {
 
         Document document = documentService.findById(id);
         document.setFiles(new ArrayList<>());
+        document.setUseStage(new HashSet<>());
         beanMapper.map(form, document);
 
         try {

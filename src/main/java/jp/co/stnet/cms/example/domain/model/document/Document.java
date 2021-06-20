@@ -3,13 +3,20 @@ package jp.co.stnet.cms.example.domain.model.document;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jp.co.stnet.cms.base.domain.model.AbstractEntity;
 import jp.co.stnet.cms.base.domain.model.StatusInterface;
+import jp.co.stnet.cms.base.domain.model.variable.Variable;
 import lombok.*;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+import org.hibernate.search.mapper.pojo.automaticindexing.ReindexOnUpdate;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexingDependency;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -100,13 +107,18 @@ public class Document extends AbstractEntity<Long> implements Serializable, Stat
     /**
      * 区分
      */
-    private String docCategory;
+    private Long docCategory;
+
+    @ManyToOne
+    @NotFound(action = NotFoundAction.IGNORE)
+    @JoinColumn(name = "docCategory", referencedColumnName = "id", unique = false, insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
+    private Variable docCategoryVariable;
 
     /**
      * ファイル
      */
     @ElementCollection(fetch = FetchType.EAGER)
-    private Collection<File> files;
+    private List<File> files;
 
     /**
      * 想定読者

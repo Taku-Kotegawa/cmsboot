@@ -4,10 +4,12 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jp.co.stnet.cms.base.domain.model.AbstractRevisionEntity;
 import lombok.*;
 
-import javax.persistence.*;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -93,12 +95,12 @@ public class DocumentRevision extends AbstractRevisionEntity implements Serializ
     /**
      * 区分
      */
-    private String docCategory;
+    private Long docCategory;
 
     /**
      * ファイル
      */
     @ElementCollection(fetch = FetchType.EAGER)
-    private Collection<File> files;
+    private List<File> files;
 
 }

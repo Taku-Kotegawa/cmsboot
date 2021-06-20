@@ -3,7 +3,6 @@ package jp.co.stnet.cms.base.application.batch.account;
 import com.github.dozermapper.core.Mapper;
 import jp.co.stnet.cms.base.application.repository.authentication.AccountRepository;
 import jp.co.stnet.cms.base.application.service.authentication.AccountService;
-import jp.co.stnet.cms.base.application.service.authentication.PasswordHistorySharedService;
 import jp.co.stnet.cms.base.domain.model.authentication.Account;
 import jp.co.stnet.cms.common.auditing.CustomDateFactory;
 import jp.co.stnet.cms.common.batch.ReaderFactory;

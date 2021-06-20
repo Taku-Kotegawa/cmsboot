@@ -130,6 +130,7 @@ public class DocumentHelper {
         if (Constants.OPERATION.CREATE.equals(operation)) {
             fieldState.setInputTrueAll();
             fieldState.setInputFalse("status");
+            fieldState.setInputFalse("saveRevision");
 
         }
 

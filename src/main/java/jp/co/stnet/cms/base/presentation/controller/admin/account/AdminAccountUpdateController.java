@@ -3,14 +3,10 @@ package jp.co.stnet.cms.base.presentation.controller.admin.account;
 import com.github.dozermapper.core.Mapper;
 
 import jp.co.stnet.cms.base.application.service.authentication.AccountService;
-import jp.co.stnet.cms.base.application.service.authentication.AccountSharedService;
 import jp.co.stnet.cms.base.application.service.authentication.UnlockService;
 import jp.co.stnet.cms.base.application.service.filemanage.FileManagedSharedService;
 import jp.co.stnet.cms.base.domain.model.authentication.Account;
 import jp.co.stnet.cms.base.domain.model.authentication.LoggedInUser;
-import jp.co.stnet.cms.base.domain.model.common.Status;
-import jp.co.stnet.cms.base.domain.model.filemanage.FileManaged;
-import jp.co.stnet.cms.base.infrastructure.datasource.message.MailSendHistoryMapper;
 import jp.co.stnet.cms.common.constant.Constants;
 import jp.co.stnet.cms.common.datatables.OperationsUtil;
 import jp.co.stnet.cms.common.message.MessageKeys;
@@ -147,11 +143,11 @@ public class AdminAccountUpdateController {
     @PostMapping(value = "{username}/update", params = "setApiKey")
     @TransactionTokenCheck
     public String setApiKey(AccountForm form,
-                         BindingResult bindingResult,
-                         Model model,
-                         RedirectAttributes redirect,
-                         @AuthenticationPrincipal LoggedInUser loggedInUser,
-                         @PathVariable("username") String username) {
+                            BindingResult bindingResult,
+                            Model model,
+                            RedirectAttributes redirect,
+                            @AuthenticationPrincipal LoggedInUser loggedInUser,
+                            @PathVariable("username") String username) {
 
         form.setApiKey(accountService.generateApiKey(username));
 
@@ -161,11 +157,11 @@ public class AdminAccountUpdateController {
     @PostMapping(value = "{username}/update", params = "unsetApiKey")
     @TransactionTokenCheck
     public String unsetApiKey(AccountForm form,
-                            BindingResult bindingResult,
-                            Model model,
-                            RedirectAttributes redirect,
-                            @AuthenticationPrincipal LoggedInUser loggedInUser,
-                            @PathVariable("username") String username) {
+                              BindingResult bindingResult,
+                              Model model,
+                              RedirectAttributes redirect,
+                              @AuthenticationPrincipal LoggedInUser loggedInUser,
+                              @PathVariable("username") String username) {
 
         form.setApiKey(null);
 

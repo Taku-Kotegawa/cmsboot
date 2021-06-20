@@ -1,24 +1,20 @@
 package jp.co.stnet.cms.example.domain.model.document;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jp.co.stnet.cms.base.domain.model.AbstractEntity;
 import jp.co.stnet.cms.base.domain.model.StatusInterface;
+import jp.co.stnet.cms.base.domain.model.variable.Variable;
 import lombok.*;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+import org.hibernate.search.engine.backend.types.Aggregable;
 import org.hibernate.search.mapper.pojo.automaticindexing.ReindexOnUpdate;
-import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
-import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
-import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexingDependency;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Indexed
@@ -76,72 +72,91 @@ public class DocumentIndex implements Serializable, StatusInterface {
     /**
      * タイトル
      */
+    @FullTextField(analyzer = "japanese")
     private String title;
 
     /**
      * 本文
      */
+    @FullTextField(analyzer = "japanese")
     @Column(columnDefinition = "TEXT")
     private String body;
 
     /**
      * 公開区分
      */
+    @KeywordField(aggregable = Aggregable.YES)
     private String publicScope;
 
     /**
      * 管理部門
      */
+    @KeywordField(aggregable = Aggregable.YES)
     private String chargeDepartment;
 
     /**
      * 管理担当者
      */
+    @KeywordField(aggregable = Aggregable.YES)
     private String chargePerson;
 
     /**
      * 制定日
      */
+    @GenericField(aggregable = Aggregable.YES)
     @JsonFormat(pattern = "yyyy/MM/dd")
     private LocalDate enactmentDate;
 
     /**
      * 最終改定日
      */
+    @GenericField(aggregable = Aggregable.YES)
     @JsonFormat(pattern = "yyyy/MM/dd")
     private LocalDate lastRevisedDate;
 
     /**
      * 実施日
      */
+    @GenericField(aggregable = Aggregable.YES)
     @JsonFormat(pattern = "yyyy/MM/dd")
     private LocalDate implementationDate;
 
     /**
      * 制定箇所
      */
+    @KeywordField(aggregable = Aggregable.YES)
     private String enactmentDepartment;
 
     /**
      * 変更理由
      */
+    @KeywordField(aggregable = Aggregable.YES)
     private String reasonForChange;
 
     /**
      * 利用シーン
      */
+    @GenericField(aggregable = Aggregable.YES)
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> useStage;
 
     /**
      * 区分
      */
-    private String docCategory;
+    @GenericField(aggregable = Aggregable.YES)
+    private Long docCategory;
+
+    @ManyToOne
+    @NotFound(action = NotFoundAction.IGNORE)
+    @JoinColumn(name = "docCategory", referencedColumnName = "id", unique = false, insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
+    @IndexedEmbedded
+    @IndexingDependency(reindexOnUpdate = ReindexOnUpdate.SHALLOW)
+    private Variable docCategoryVariable;
 
     /**
      * ファイル
      */
     @IndexedEmbedded
     @ElementCollection(fetch = FetchType.EAGER)
-    private Collection<File> files;
+    private List<File> files;
 }

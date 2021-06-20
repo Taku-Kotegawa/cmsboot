@@ -2,7 +2,7 @@ package jp.co.stnet.cms.example.presentation.controller.document;
 
 import jp.co.stnet.cms.common.constant.Constants;
 
-public class DocConstant {
+public class DocumentConstant {
 
     static final String BASE_PATH = "example/document";
     static final String TEMPLATE_LIST = BASE_PATH + "/list";

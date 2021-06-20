@@ -24,8 +24,8 @@ import org.terasoluna.gfw.web.token.transaction.TransactionTokenType;
 
 import javax.validation.groups.Default;
 
-import static jp.co.stnet.cms.example.presentation.controller.document.DocConstant.BASE_PATH;
-import static jp.co.stnet.cms.example.presentation.controller.document.DocConstant.TEMPLATE_FORM;
+import static jp.co.stnet.cms.example.presentation.controller.document.DocumentConstant.BASE_PATH;
+import static jp.co.stnet.cms.example.presentation.controller.document.DocumentConstant.TEMPLATE_FORM;
 import static jp.co.stnet.cms.example.presentation.controller.document.DocumentUpdateController.addFilesItem;
 import static jp.co.stnet.cms.example.presentation.controller.document.DocumentUpdateController.setFileManaged;
 

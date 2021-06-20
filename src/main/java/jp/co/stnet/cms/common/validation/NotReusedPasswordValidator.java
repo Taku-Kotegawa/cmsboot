@@ -20,7 +20,6 @@ import jp.co.stnet.cms.base.application.service.authentication.PasswordHistorySh
 import jp.co.stnet.cms.base.domain.model.authentication.Account;
 import jp.co.stnet.cms.base.domain.model.authentication.PasswordHistory;
 import jp.co.stnet.cms.base.domain.model.authentication.Role;
-import jp.co.stnet.cms.base.domain.model.authentication.Role.*;
 
 import org.passay.PasswordData;
 import org.passay.PasswordValidator;

@@ -69,6 +69,7 @@ fieldset legend {
                 <div class="col-24">
                     <fieldset class="col-36 border h-100">
                         <legend>基本情報</legend>
+                        <div th:replace="~{/fragments/field::select2('docCategory', '文書区分', 'document.docCategory', '', '@CL_DOC_CATEGORY.asMap()')}"></div>
                         <div th:replace="~{/fragments/field::input('title', 'タイトル', 'document.title', '')}"></div>
                         <div class="col-12 p-0">
                             <div th:replace="~{/fragments/label::m('status', 'ステータス')}"></div>
@@ -221,10 +222,6 @@ fieldset legend {
         <!-- ここより上にメインコンテンツを記入 -->
     </div>
 </section>
-
-<!--<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">-->
-<!--<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>-->
-<!--<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>-->
 
 
 <link rel="stylesheet" th:href="@{/plugins/summernote/summernote-bs4.min.css}">

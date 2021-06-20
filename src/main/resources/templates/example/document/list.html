@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html th:replace="~{/layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- ページタイトルを記入 -->
+    <title>Document List</title>
+</head>
+<body>
+<div th:replace="~{/fragments/include-datatables :: include-datatables}"></div>
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row px-5">
+            <div class="col-18 mb-3">
+                <!-- ページタイトルを記入 -->
+                <h4>Document List</h4>
+            </div>
+            <div class="col-18 text-right">
+                <!-- ページタイトル右の余白 -->
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid"><!-- -fluidを外すと横幅が狭くなる-->
+        <div th:replace="~{/fragments/message-panel :: message-panel}"></div>
+        <!-- ここより下にメインコンテンツを記入 -->
+
+        <div class="row mb-3">
+            <div class="form-check-inline">
+                <input id="draft" name="draft" type="checkbox" checked="checked">
+                <label for="draft">下書きを含む</label>
+            </div>
+        </div>
+
+        <table id="list" class="table-sm table-striped nowrap">
+            <thead>
+            <tr class="filter">
+                <th class="text-center px-2" data-filter="disable"></th><!-- 隠しフィールド -->
+                <th data-filter="disable"></th><!-- # -->
+                <th data-filter="disable"></th><!-- 操作 -->
+                <th data-filter="disable"><!-- ステータス -->
+                    <select id="col_filter_3" data-column="3" class="dataTables_column_filter form-control">
+                        <option value="">&nbsp;</option>
+                        <th:block th:each="obj : ${@CL_STATUS.asMap()}">
+                            <option th:value="${obj.key}">[[${obj.value}]]</option>
+                        </th:block>
+                    </select>
+                </th>
+                <th></th><!-- 区分1 -->
+                <th></th><!-- 区分2 -->
+                <th></th><!-- 区分3 -->
+                <th></th><!-- 区分4 -->
+                <th></th><!-- 区分5 -->
+                <th></th><!-- 区分6 -->
+                <th></th><!-- タイトル -->
+                <th data-filter="disable"><!-- 利用シーン -->
+                    <select id="col_filter_11" data-column="11" class="dataTables_column_filter form-control">
+                        <option value="">&nbsp;</option>
+                        <th:block th:each="obj : ${@CL_DOC_STAGE.asMap()}">
+                            <option th:value="${obj.key}">[[${obj.value}]]</option>
+                        </th:block>
+                    </select>
+                </th>
+                <th></th><!-- 想定読者 -->
+                <th></th><!-- 概要 -->
+                <th></th><!-- 文書 -->
+                <th></th><!-- 管理部門 -->
+                <th></th><!-- 管理担当者 -->
+                <th></th><!-- 制定日 -->
+                <th></th><!-- 最終改定日 -->
+                <th></th><!-- 実施日 -->
+                <th></th><!-- 制定箇所 -->
+                <th></th><!-- 最終更新日 -->
+            </tr>
+            <tr class="title">
+                <th class="text-center px-0"></th>
+                <th class="text-center">#</th>
+                <th class="text-center">操作</th>
+                <th class="text-center">ステータス</th>
+                <th class="text-center">区分1</th>
+                <th class="text-center">区分2</th>
+                <th class="text-center">区分3</th>
+                <th class="text-center">区分4</th>
+                <th class="text-center">区分5</th>
+                <th class="text-center">区分6</th>
+                <th class="text-center">タイトル</th>
+                <th class="text-center">利用シーン</th>
+                <th class="text-center">想定読者</th>
+                <th class="text-center">概要</th>
+                <th class="text-center">ファイル</th>
+                <th class="text-center">管理部門</th>
+                <th class="text-center">管理担当者</th>
+                <th class="text-center">制定日</th>
+                <th class="text-center">最終改定日</th>
+                <th class="text-center">実施日</th>
+                <th class="text-center">制定箇所</th>
+                <th class="text-center">最終更新日時</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <form id="bulk-operation-form" method="post" th:action></form>
+
+        <!-- ここより上にメインコンテンツを記入 -->
+    </div>
+</section>
+
+<!-- Page script -->
+<script>
+
+var pagechange = false;
+
+  $(document)
+    .ready(
+      function () {
+
+        // 項目単位フィルタ用のInputフィールドを追加する。
+        // TODO 開始列番号を指定
+        var startcolnum = 0;
+        $('tr.filter th').each(function () {
+          var idx = $(this).index();
+          if (startcolnum <= idx && $(this).data("filter") != 'disable') {
+            $(this).html('<input type="text" id="col_filter_' + idx + '" data-column="' + idx +
+              '" class="dataTables_column_filter form-control" />');
+          }
+        });
+
+        var table = $('#list').DataTable({
+
+          'ajax': {
+            'url': 'list/json',
+            'data': myflatten
+          },
+
+          scrollX: true,
+
+          // fixedColumns: {
+          //   leftColumns: 3
+          // },
+
+          // select: 'multi',
+
+          // 一覧に表示する項目とJSONの項目にマッピング
+          'columns': [
+            {
+              data: 'id',
+              className: 'text-center',
+              orderable: false,
+              searchable: false,
+              checkboxes: {
+               'selectRow': false
+              }
+            },
+            {
+              data: 'id',
+              searchable: true,
+            },
+            {
+              data: 'operations',
+              orderable: false,
+              searchable: false,
+            },
+            {
+              data: 'statusLabel',
+              render: $.fn.dataTable.render.text(),
+            },
+            {
+              data: 'docCategoryVariable.value1',
+              render: $.fn.dataTable.render.text(),
+            },
+            {
+              data: 'docCategoryVariable.value2',
+              render: $.fn.dataTable.render.text(),
+            },
+            {
+              data: 'docCategoryVariable.value3',
+              render: $.fn.dataTable.render.text(),
+            },
+            {
+              data: 'docCategoryVariable.value4',
+              render: $.fn.dataTable.render.text(),
+            },
+            {
+              data: 'docCategoryVariable.value5',
+              render: $.fn.dataTable.render.text(),
+            },
+            {
+              data: 'docCategoryVariable.value6',
+              render: $.fn.dataTable.render.text(),
+            },
+            {
+              data: 'title',
+              render: $.fn.dataTable.render.text(),
+            },
+            {
+              data: 'useStageLabel',
+              render: $.fn.dataTable.render.text(),
+            },
+            {
+              data: 'intendedReader',
+              render: $.fn.dataTable.render.text(),
+            },
+            {
+              data: 'summary',
+              render: $.fn.dataTable.render.text(),
+            },
+            {
+              data: 'filesLabel',
+            },
+            {
+              data: 'chargeDepartment',
+              render: $.fn.dataTable.render.text(),
+            },
+            {
+              data: 'chargePerson',
+              render: $.fn.dataTable.render.text(),
+            },
+            {
+              data: 'enactmentDate',
+              render: $.fn.dataTable.render.text(),
+            },
+            {
+              data: 'lastRevisedDate',
+              render: $.fn.dataTable.render.text(),
+            },
+            {
+              data: 'implementationDate',
+              render: $.fn.dataTable.render.text(),
+            },
+            {
+              data: 'enactmentDepartment',
+              render: $.fn.dataTable.render.text(),
+            },
+            {
+              data: 'lastModifiedDate',
+              className: 'text-center',
+            },
+          ],
+
+          // 初期ソート
+          'order': [
+            [1, 'asc']
+          ],
+
+          // ボタンの表示
+          'buttons': ['bulkdelete', 'bulkinvalid', 'bulkvalid','colvis', 'stateClear', 'csvdownload', 'tsvdownload', 'exceldownload', 'upload', 'createnew'],
+
+          // データロード後処理
+          'initComplete': function (settings, json) {
+            // グローバルフィルターのEnterキーでサーバに送信
+            fnGlobalFilterOnReturn(table);
+
+          },
+        });
+
+        // 項目単位フィルタの追加
+        // addFieldFilter(table) // 通常版
+        addFieldFilter2(table) // (列の並び順対応版)
+
+        // ページネーション後に画面トップに戻る
+        table.on('page.dt', function () {
+          pagechange = true;
+        });
+
+        table.on( 'draw.dt', function (e, s) {
+          if (pagechange) {
+            pagechange = false;
+            $('html, body').animate({
+              scrollTop: 0
+            }, 0);
+          }
+        } );
+
+        // 下書きチェックボックス押下時の操作
+        $('#draft').change().on('change', function (e, s) {
+          localStorage.dataTables_Draft = e.target.checked;
+          table.draw();
+          // fnColumns(table);
+        });
+
+        // 画面表示時の下書きチェックボックスの復元
+        if (localStorage.dataTables_Draft == 'false') {
+          $('#draft')[0].checked = false;
+          table.draw();
+        } else if (localStorage.dataTables_Draft != 'false' && $('#draft')[0].checked == false) {
+          $('#draft')[0].checked = true;
+          table.draw();
+        }
+
+      });
+
+  function myflatten(params, settings) {
+    params = flatten(params, settings);
+    if ($('#draft')[0] == undefined) {
+        params.draft = true;
+    } else {
+        params.draft = $('#draft')[0].checked
+    }
+    return params;
+  }
+</script>
+
+
+</body>
+</html>

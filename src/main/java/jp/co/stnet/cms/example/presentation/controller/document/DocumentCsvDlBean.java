@@ -1,53 +1,54 @@
 package jp.co.stnet.cms.example.presentation.controller.document;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import jp.co.stnet.cms.example.domain.model.document.DocPublicScope;
-import lombok.AllArgsConstructor;
+import com.orangesignal.csv.annotation.CsvColumn;
+import com.orangesignal.csv.annotation.CsvEntity;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.validation.annotation.Validated;
 
-import javax.persistence.*;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.Set;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class DocumentForm implements Serializable {
+@CsvEntity
+public class DocumentCsvDlBean implements Serializable {
 
-    @NotNull(groups = Update.class)
+    @CsvColumn(name = "id", position = 0)
     private Long id;
 
-    @NotNull(groups = Update.class)
-    private Long version;
+    /**
+     * ステータス(ラベル)
+     */
+    @CsvColumn(name = "status", position = 1)
+    private String statusLabel;
 
     /**
      * タイトル
      */
+    @CsvColumn(name = "title", position = 2)
     private String title;
 
     /**
      * 本文
      */
+    @CsvColumn(name = "body", position = 3)
     private String body;
 
     /**
      * 公開区分
      */
-    private String publicScope = DocPublicScope.ALL.getValue();
+    @CsvColumn(name = "publicScope", position = 4)
+    private String publicScope;
 
     /**
      * 管理部門
      */
+    @CsvColumn(name = "chargeDepartment", position = 5)
     private String chargeDepartment;
 
     /**
      * 管理担当者
      */
+    @CsvColumn(name = "chargePerson", position = 6)
     private String chargePerson;
 
     /**
@@ -81,17 +82,6 @@ public class DocumentForm implements Serializable {
     private Set<String> useStage;
 
     /**
-     * 区分
-     */
-    @NotNull
-    private Long docCategory;
-
-    /**
-     * ファイル
-     */
-    private Collection<@Valid FileForm> files = new ArrayList<>();
-
-    /**
      * 想定読者
      */
     private String intendedReader;
@@ -101,15 +91,5 @@ public class DocumentForm implements Serializable {
      */
     private String summary;
 
-    /**
-     * 変更履歴を残す
-     */
-    private boolean saveRevision;
-
-    public interface Create {
-    }
-
-    public interface Update {
-    }
 
 }
