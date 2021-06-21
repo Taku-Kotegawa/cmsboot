@@ -508,7 +508,7 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
                 sql.append(" ESCAPE '~'");
             } else if (isCollection(convertedColumnName)) {
                 sql.append(convertedColumnName);
-                sql.append(" LIKE :");
+                sql.append(" LIKE :"); // TODO 何かおかしい
                 sql.append(replacedColumnName);
                 sql.append(" ESCAPE '~'");
             } else if (isRelation(originalColumnName)) {
@@ -588,6 +588,7 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
      */
     protected boolean isCollection(String fieldName) {
         return "java.util.Collection".equals(fieldMap.get(fieldName))
+                || "java.util.Set".equals(fieldMap.get(fieldName))
                 || "java.util.List".equals(fieldMap.get(fieldName));
     }
 
@@ -676,7 +677,7 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
      * @return true:INで検索する, false:しない
      */
     protected boolean isFilterINClause(String fieldName) {
-        return false;
+        return isCollectionElement(fieldName);
     }
 
     /**
