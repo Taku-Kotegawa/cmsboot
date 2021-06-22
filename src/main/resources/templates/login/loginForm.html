@@ -22,7 +22,7 @@
 <body class="login-page">
 <div class="login-box">
     <div class="login-logo">
-        <a href="#"><b>My scaffold</b></a>
+        <a href="#"><b>ドキュメント整備ツール</b></a>
     </div>
     <!-- /.login-logo -->
     <div class="card">
@@ -56,18 +56,18 @@
                     </div>
                 </div>
                 <br>
+                <p class="mb-0">
+                    <a id="forgotten" th:href="@{/reissue/create?form}">パスワードを忘れた場合</a>
+                </p>
                 <div class="form-check-inline">
                     <input class="ml-0 mr-1" id="loginAsAdministrator" name="loginAsAdministrator" type="checkbox"
                            value="true"/>
-                    <label for="loginAsAdministrator">login as Administrator</label>
+                    <label for="loginAsAdministrator">管理者としてログイン</label>
                 </div>
             </form>
-            <p class="mb-1">
-                <a id="create" th:href="@{/account/create?form}">Create new account</a>
-            </p>
-            <p class="mb-0">
-                <a id="forgotten" th:href="@{/reissue/create?form}">I've forgotten my password</a>
-            </p>
+<!--            <p class="mb-1">-->
+<!--                <a id="create" th:href="@{/account/create?form}">Create new account</a>-->
+<!--            </p>-->
 
         </div>
         <!-- /.login-card-body -->
