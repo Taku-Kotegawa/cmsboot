@@ -70,6 +70,11 @@ public class DocumentIndex implements Serializable, StatusInterface {
     private String status;
 
     /**
+     * 変更履歴を残す(コピー)
+     */
+    private boolean saveRevision;
+
+    /**
      * タイトル
      */
     @FullTextField(analyzer = "japanese")
@@ -99,6 +104,12 @@ public class DocumentIndex implements Serializable, StatusInterface {
      */
     @KeywordField(aggregable = Aggregable.YES)
     private String chargePerson;
+
+    /**
+     * ドキュメント管理番号
+     */
+    @KeywordField
+    private String documentNumber;
 
     /**
      * 制定日
@@ -146,12 +157,30 @@ public class DocumentIndex implements Serializable, StatusInterface {
     @GenericField(aggregable = Aggregable.YES)
     private Long docCategory;
 
+    /**
+     * 区分(Variable)
+     */
+    @IndexedEmbedded
+    @IndexingDependency(reindexOnUpdate = ReindexOnUpdate.SHALLOW)
     @ManyToOne
     @NotFound(action = NotFoundAction.IGNORE)
     @JoinColumn(name = "docCategory", referencedColumnName = "id", unique = false, insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
+    private Variable docCategoryVariable;
+
+    /**
+     * サービス
+     */
+    private Long docService;
+
+    /**
+     * サービス(Variable)
+     */
     @IndexedEmbedded
     @IndexingDependency(reindexOnUpdate = ReindexOnUpdate.SHALLOW)
-    private Variable docCategoryVariable;
+    @ManyToOne
+    @NotFound(action = NotFoundAction.IGNORE)
+    @JoinColumn(name = "docService", referencedColumnName = "id", unique = false, insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
+    private Variable docServiceVariable;
 
     /**
      * ファイル

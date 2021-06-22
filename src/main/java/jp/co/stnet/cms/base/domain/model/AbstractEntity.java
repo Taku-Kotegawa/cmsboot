@@ -59,11 +59,6 @@ public abstract class AbstractEntity<ID> implements Persistable<ID> {
     @Column(nullable = false)
     private LocalDateTime lastModifiedDate;
 
-    /**
-     * 変更履歴を残す
-     */
-    private boolean saveRevision = false;
-
     @Override
     public boolean isNew() {
         return getVersion() == null;

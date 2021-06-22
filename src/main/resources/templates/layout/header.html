@@ -29,55 +29,58 @@
                 <div class="collapse navbar-collapse order-3" id="navbarCollapse">
                     <!-- Left navbar links -->
                     <ul class="navbar-nav">
+<!--                        <li class="nav-item">-->
+<!--                            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i-->
+<!--                                    class="fas fa-bars"></i></a>-->
+<!--                        </li>-->
                         <li class="nav-item">
-                            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i
-                                    class="fas fa-bars"></i></a>
+                            <a class="nav-link" th:href="@{/}"><i class="fas fa-home"></i> Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{/}">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Contact</a>
-                        </li>
+<!--                        <li class="nav-item">-->
+<!--                            <a class="nav-link" th:href="@{/example/document/create?form}"><i class="fas fa-file"></i> 新規登録</a>-->
+<!--                        </li>-->
                         <li class="nav-item dropdown">
                             <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle"
                                data-toggle="dropdown"
-                               href="#" id="dropdownSubMenu1">Dropdown</a>
+                               href="#" id="dropdownSubMenu1"><i class="fas fa-folder-open"></i> ドキュメント</a>
                             <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-                                <li><a class="dropdown-item" href="#">Some action </a></li>
-                                <li><a class="dropdown-item" href="#">Some other action</a></li>
-
+                                <li><a class="dropdown-item" th:href="@{/example/document/list}">一覧 </a></li>
+                                <li><a class="dropdown-item" href="#">全文検索</a></li>
                                 <li class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" th:href="@{/example/document/list}">管理</a></li>
+                                <li><a class="dropdown-item" th:href="@{/example/document/create?form}">新規登録</a></li>
+
+<!--                                <li class="dropdown-divider"></li>-->
 
                                 <!-- Level two dropdown-->
-                                <li class="dropdown-submenu dropdown-hover">
-                                    <a aria-expanded="false" aria-haspopup="true" class="dropdown-item dropdown-toggle"
-                                       data-toggle="dropdown"
-                                       href="#" id="dropdownSubMenu2" role="button">Hover
-                                        for action</a>
-                                    <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
-                                        <li>
-                                            <a class="dropdown-item" href="#" tabindex="-1">level 2</a>
-                                        </li>
+<!--                                <li class="dropdown-submenu dropdown-hover">-->
+<!--                                    <a aria-expanded="false" aria-haspopup="true" class="dropdown-item dropdown-toggle"-->
+<!--                                       data-toggle="dropdown"-->
+<!--                                       href="#" id="dropdownSubMenu2" role="button">Hover-->
+<!--                                        for action</a>-->
+<!--                                    <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">-->
+<!--                                        <li>-->
+<!--                                            <a class="dropdown-item" href="#" tabindex="-1">level 2</a>-->
+<!--                                        </li>-->
 
-                                        <!-- Level three dropdown-->
-                                        <li class="dropdown-submenu">
-                                            <a aria-expanded="false" aria-haspopup="true"
-                                               class="dropdown-item dropdown-toggle" data-toggle="dropdown"
-                                               href="#" id="dropdownSubMenu3"
-                                               role="button">level 2</a>
-                                            <ul aria-labelledby="dropdownSubMenu3"
-                                                class="dropdown-menu border-0 shadow">
-                                                <li><a class="dropdown-item" href="#">3rd level</a></li>
-                                                <li><a class="dropdown-item" href="#">3rd level</a></li>
-                                            </ul>
-                                        </li>
-                                        <!-- End Level three -->
+<!--                                        &lt;!&ndash; Level three dropdown&ndash;&gt;-->
+<!--                                        <li class="dropdown-submenu">-->
+<!--                                            <a aria-expanded="false" aria-haspopup="true"-->
+<!--                                               class="dropdown-item dropdown-toggle" data-toggle="dropdown"-->
+<!--                                               href="#" id="dropdownSubMenu3"-->
+<!--                                               role="button">level 2</a>-->
+<!--                                            <ul aria-labelledby="dropdownSubMenu3"-->
+<!--                                                class="dropdown-menu border-0 shadow">-->
+<!--                                                <li><a class="dropdown-item" href="#">3rd level</a></li>-->
+<!--                                                <li><a class="dropdown-item" href="#">3rd level</a></li>-->
+<!--                                            </ul>-->
+<!--                                        </li>-->
+<!--                                        &lt;!&ndash; End Level three &ndash;&gt;-->
 
-                                        <li><a class="dropdown-item" href="#">level 2</a></li>
-                                        <li><a class="dropdown-item" href="#">level 2</a></li>
-                                    </ul>
-                                </li>
+<!--                                        <li><a class="dropdown-item" href="#">level 2</a></li>-->
+<!--                                        <li><a class="dropdown-item" href="#">level 2</a></li>-->
+<!--                                    </ul>-->
+<!--                                </li>-->
                                 <!-- End Level two -->
                             </ul>
                         </li>

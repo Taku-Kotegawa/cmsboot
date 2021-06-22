@@ -42,7 +42,7 @@ public class File implements Serializable {
     private FileManaged pdfManaged;
 
     @FullTextField(analyzer = "japanese")
-    @Column(columnDefinition = "MEDIUMTEXT")
+    @Column(columnDefinition = "TEXT")
     private String content;
 
 }

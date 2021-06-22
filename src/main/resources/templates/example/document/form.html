@@ -2,7 +2,7 @@
 <html th:replace="~{/layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
 <head>
     <!-- ページタイトルを記入 -->
-    <title>Page Title</title>
+    <title>ドキュメント</title>
 </head>
 <body>
 
@@ -36,7 +36,7 @@ fieldset legend {
         <div class="row">
             <div class="col-18 mb-3">
                 <!-- ページタイトルを記入 -->
-                <h4>Page Title</h4>
+                <h4>ドキュメント</h4>
             </div>
             <div class="col-18 text-right">
                 <!-- ページタイトル右の余白 -->
@@ -70,6 +70,7 @@ fieldset legend {
                     <fieldset class="col-36 border h-100">
                         <legend>基本情報</legend>
                         <div th:replace="~{/fragments/field::select2('docCategory', '文書区分', 'document.docCategory', '', '@CL_DOC_CATEGORY.asMap()')}"></div>
+                        <div th:replace="~{/fragments/field::select2('docService', 'サービス', 'document.docService', '', '@CL_DOC_SERVICE.asMap()')}"></div>
                         <div th:replace="~{/fragments/field::input('title', 'タイトル', 'document.title', '')}"></div>
                         <div class="col-12 p-0">
                             <div th:replace="~{/fragments/label::m('status', 'ステータス')}"></div>
@@ -89,6 +90,7 @@ fieldset legend {
                 <div class="col-12">
                     <fieldset class="col-36 border h-100">
                         <legend>管理情報</legend>
+                        <div th:replace="~{/fragments/field::input('documentNumber', '管理番号', 'document.documentNumber', '')}"></div>
                         <div th:replace="~{/fragments/field::input('chargeDepartment', '管理部門', 'document.chargeDepartment', '')}"></div>
                         <div th:replace="~{/fragments/field::input('chargePerson', '管理担当者', 'document.chargePerson', '')}"></div>
                         <div th:replace="~{/fragments/field::date('enactmentDate', '制定日', 'document.enactmentDate', '')}"></div>
@@ -116,7 +118,7 @@ fieldset legend {
                         </thead>
                         <tbody>
                         <tr th:each="item, status : *{files}">
-                            <td class="row pb-0">
+                            <td class="row">
                                 <div class="col-6">
                                     <!--                                    <input class="form-control" th:field="*{files[__${status.index}__].type}"/>-->
 

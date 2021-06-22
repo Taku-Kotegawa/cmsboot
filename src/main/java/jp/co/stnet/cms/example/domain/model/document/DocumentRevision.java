@@ -2,11 +2,12 @@ package jp.co.stnet.cms.example.domain.model.document;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jp.co.stnet.cms.base.domain.model.AbstractRevisionEntity;
+import jp.co.stnet.cms.base.domain.model.variable.Variable;
 import lombok.*;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
@@ -34,6 +35,11 @@ public class DocumentRevision extends AbstractRevisionEntity implements Serializ
     private String status;
 
     /**
+     * 変更履歴を残す(コピー)
+     */
+    private boolean saveRevision;
+
+    /**
      * タイトル
      */
     private String title;
@@ -57,6 +63,11 @@ public class DocumentRevision extends AbstractRevisionEntity implements Serializ
      * 管理担当者
      */
     private String chargePerson;
+
+    /**
+     * ドキュメント管理番号
+     */
+    private String documentNumber;
 
     /**
      * 制定日
@@ -96,6 +107,27 @@ public class DocumentRevision extends AbstractRevisionEntity implements Serializ
      * 区分
      */
     private Long docCategory;
+
+    /**
+     * 区分(Variable)
+     */
+    @ManyToOne
+    @NotFound(action = NotFoundAction.IGNORE)
+    @JoinColumn(name = "docCategory", referencedColumnName = "id", unique = false, insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
+    private Variable docCategoryVariable;
+
+    /**
+     * サービス
+     */
+    private Long docService;
+
+    /**
+     * サービス(Variable)
+     */
+    @ManyToOne
+    @NotFound(action = NotFoundAction.IGNORE)
+    @JoinColumn(name = "docService", referencedColumnName = "id", unique = false, insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
+    private Variable docServiceVariable;
 
     /**
      * ファイル

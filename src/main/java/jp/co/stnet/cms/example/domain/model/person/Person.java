@@ -66,7 +66,7 @@ public class Person extends AbstractEntity<Long> implements Serializable, Status
      * 添付ファイルの内容
      */
     @FullTextField(analyzer = "japanese")
-    @Column(columnDefinition = "MEDIUMTEXT")
+    @Column(columnDefinition = "TEXT")
     private String content;
 
     /**

@@ -44,6 +44,11 @@ public class Document extends AbstractEntity<Long> implements Serializable, Stat
     private String status;
 
     /**
+     * 変更履歴を残す
+     */
+    private boolean saveRevision;
+
+    /**
      * タイトル
      */
     private String title;
@@ -69,6 +74,11 @@ public class Document extends AbstractEntity<Long> implements Serializable, Stat
      * 管理担当者
      */
     private String chargePerson;
+
+    /**
+     * ドキュメント管理番号
+     */
+    private String documentNumber;
 
     /**
      * 制定日
@@ -109,10 +119,26 @@ public class Document extends AbstractEntity<Long> implements Serializable, Stat
      */
     private Long docCategory;
 
+    /**
+     * 区分(Variable)
+     */
     @ManyToOne
     @NotFound(action = NotFoundAction.IGNORE)
     @JoinColumn(name = "docCategory", referencedColumnName = "id", unique = false, insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
     private Variable docCategoryVariable;
+
+    /**
+     * サービス
+     */
+    private Long docService;
+
+    /**
+     * サービス(Variable)
+     */
+    @ManyToOne
+    @NotFound(action = NotFoundAction.IGNORE)
+    @JoinColumn(name = "docService", referencedColumnName = "id", unique = false, insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
+    private Variable docServiceVariable;
 
     /**
      * ファイル

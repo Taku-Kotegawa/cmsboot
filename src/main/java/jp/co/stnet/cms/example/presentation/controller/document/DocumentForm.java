@@ -41,6 +41,11 @@ public class DocumentForm implements Serializable {
     private String publicScope = DocPublicScope.ALL.getValue();
 
     /**
+     * ドキュメント管理番号
+     */
+    private String documentNumber;
+
+    /**
      * 管理部門
      */
     private String chargeDepartment;
@@ -85,6 +90,11 @@ public class DocumentForm implements Serializable {
      */
     @NotNull
     private Long docCategory;
+
+    /**
+     * サービス
+     */
+    private Long docService;
 
     /**
      * ファイル

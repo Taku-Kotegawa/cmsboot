@@ -7,12 +7,15 @@ import jp.co.stnet.cms.base.domain.model.filemanage.FileManaged;
 import lombok.*;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.BitSet;
 import java.util.Collection;
 import java.util.List;
 
@@ -63,6 +66,8 @@ public class SimpleEntity extends AbstractEntity<Long> implements Serializable, 
     /**
      * テキストフィールド(真偽値)
      */
+    @Type(type = "org.hibernate.type.NumericBooleanType")
+    @Column(columnDefinition="smallint")
     private Boolean text04;
 
     /**

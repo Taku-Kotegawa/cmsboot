@@ -261,6 +261,9 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
                 } else if (isFilterINClause(convertColumnName)) {
                     typedQuery.setParameter(replacedColumnName, Arrays.asList(StringUtils.split(column.getSearch().getValue(), ",")));
 
+                } else if (isBoolean(convertColumnName)) {
+                    typedQuery.setParameter(replacedColumnName, "1".equals(column.getSearch().getValue()));
+
                 } else if (isEnum(convertColumnName)) {
                     typedQuery.setParameter(
                             replacedColumnName,
@@ -437,16 +440,14 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
                 sql.append(convertedColumnName);
                 sql.append(", '%Y/%m/%d %h:%i:%s') LIKE :globalSearch ESCAPE '~'");
             } else if (isNumber(convertedColumnName)) {
-                sql.append("function('CONVERT', c.");
+                sql.append("function('to_char', c.");
                 sql.append(convertedColumnName);
-                sql.append(", CHAR) LIKE :globalSearch ESCAPE '~'");
+                sql.append(", 'FM999999999') LIKE :globalSearch ESCAPE '~'");
             } else if (isCollection(convertedColumnName)) {
                 sql.append(convertedColumnName);
                 sql.append(" LIKE :globalSearch ESCAPE '~'");
             } else if (isBoolean(convertedColumnName)) {
-                sql.append("function('CONVERT', c.");
-                sql.append(convertedColumnName);
-                sql.append(", CHAR) LIKE :globalSearch ESCAPE '~'");
+
             } else if (isRelation(originalColumnName)) {
                 sql.append("c." + originalColumnName);
                 sql.append(" LIKE :globalSearch ESCAPE '~'");
@@ -501,9 +502,9 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
                 sql.append(replacedColumnName);
                 sql.append(" ESCAPE '~'");
             } else if (isNumber(convertedColumnName)) {
-                sql.append("function('CONVERT', c.");
+                sql.append("function('to_char', c.");
                 sql.append(convertedColumnName);
-                sql.append(", CHAR) LIKE :");
+                sql.append(", 'FM999999999') LIKE :");
                 sql.append(replacedColumnName);
                 sql.append(" ESCAPE '~'");
             } else if (isCollection(convertedColumnName)) {
@@ -517,11 +518,11 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
                 sql.append(replacedColumnName);
                 sql.append(" ESCAPE '~'");
             } else if (isBoolean(convertedColumnName)) {
-                sql.append("function('FORMAT', c.");
+                sql.append("c.");
                 sql.append(convertedColumnName);
-                sql.append(", 0) LIKE :");
+                sql.append(" = :");
                 sql.append(replacedColumnName);
-                sql.append(" ESCAPE '~'");
+//                sql.append(" ESCAPE '~'");
             } else {
                 sql.append("c.");
                 sql.append(convertedColumnName);

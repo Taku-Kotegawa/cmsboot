@@ -12,9 +12,9 @@ import org.terasoluna.gfw.common.codelist.EnumCodeList;
 @Getter
 public enum DocPublicScope implements EnumCodeList.CodeListItem {
 
-    EMPLOYEE("10", "社員・職員"),
-    DISPATCHED_LABOR("20", "社員・職員・契約社員"),
-    ALL("99", "全員");
+    ALL("99", "全員(外部委託含)"),
+    EMPLOYEE("10", "社員(職員)"),
+    DISPATCHED_LABOR("20", "社員(職員)・派遣社員");
 
     private final String value;
     private final String label;
