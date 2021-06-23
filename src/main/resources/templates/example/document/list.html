@@ -30,6 +30,7 @@
                 <input id="draft" name="draft" type="checkbox" checked="checked">
                 <label for="draft">下書きを含む</label>
             </div>
+            <button class="btn btn-button" id="reverse">並べ替え</button>
         </div>
 
         <table id="list" class="table-sm table-striped nowrap">
@@ -288,6 +289,12 @@ var pagechange = false;
           table.draw();
         }
 
+        // 列の並び替えと表示／非表示を操作するテスト
+        $('#reverse').click( function (e) {
+            table.columns( [10, 11] ).visible( false );
+            table.colReorder.order( [0, 1, 2, 3, 5, 6, 7, 8, 4, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21], true );
+        });
+
       });
 
   function myflatten(params, settings) {
@@ -299,6 +306,7 @@ var pagechange = false;
     }
     return params;
   }
+
 </script>
 
 

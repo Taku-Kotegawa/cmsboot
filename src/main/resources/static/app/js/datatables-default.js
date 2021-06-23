@@ -25,6 +25,7 @@ $.extend($.fn.dataTable.defaults, {
 
     // 検索条件・並び順などの状態をLocalStorageに保存し、再表示時に復元
     'stateSave': true,
+    'stateDuration': -1,
 
     // グローバルフィルタ、ページ数切替、ページネーションボタン等の部品のレイアウトを調整
     'dom':"<'row'<'col-32 d-inline-flex'fB><'col-4 text-right'l>>" +

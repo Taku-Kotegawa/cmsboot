@@ -37,11 +37,14 @@ public abstract class AbstractNodeRevService<T extends AbstractEntity<ID> & Stat
         if (entity.getStatus() == null) {
             entity.setStatus(Status.VALID.getCodeValue());
         }
+
+        boolean isNew = entity.isNew();
+
         T saved = super.save(entity);
 
         // 本保存はリビジョンを保存する
         U rev = beanMapper.map(saved, revClass);
-        rev.setRevType(entity.isNew() ? 0 : 1);
+        rev.setRevType(isNew ? 0 : 1);
         getRevisionRepository().saveAndFlush(rev);
         saveMaxRev(saved.getId(), rev.getRid());
 

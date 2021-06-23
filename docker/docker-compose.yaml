@@ -9,7 +9,7 @@ services:
       POSTGRES_PASSWORD: admin
     volumes:
       - database:/var/lib/postgresql/data
-
+      - ./initdb:/docker-entrypoint-initdb.d
 volumes:
   database:
     driver: local

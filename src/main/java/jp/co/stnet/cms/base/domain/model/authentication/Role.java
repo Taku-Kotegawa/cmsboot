@@ -11,8 +11,12 @@ import org.terasoluna.gfw.common.codelist.EnumCodeList;
 @Getter
 public enum Role implements EnumCodeList.CodeListItem {
 
-    ADMIN("管理者"),
-    USER("一般ユーザ");
+    ADMIN("システム管理者"),
+    USER("一般ユーザ"),
+    MANAGER("社員(職員)・管理者"),
+    MEMBER("社員(職員)・メンバー"),
+    DISPATCHED_LABOR("派遣社員"),
+    OUTSOURCING("外部委託");
 
     private final String label;
 
