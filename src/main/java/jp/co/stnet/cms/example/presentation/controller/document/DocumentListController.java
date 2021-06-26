@@ -8,6 +8,7 @@ import jp.co.stnet.cms.common.datatables.DataTablesOutput;
 import jp.co.stnet.cms.common.datatables.OperationsUtil;
 import jp.co.stnet.cms.example.application.service.document.DocumentService;
 import jp.co.stnet.cms.example.domain.model.document.Document;
+import jp.co.stnet.cms.example.domain.model.document.Documents;
 import jp.co.stnet.cms.example.domain.model.document.File;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -41,6 +42,10 @@ public class DocumentListController {
     @Named("CL_DOC_STAGE")
     CodeList useStageCodeList;
 
+    @Autowired
+    @Named("CL_DOC_TYPE")
+    CodeList docTypeCodeList;
+
     /**
      * 一覧画面の表示
      */
@@ -59,47 +64,52 @@ public class DocumentListController {
     @GetMapping(value = "/list/json")
     public DataTablesOutput<DocumentListBean> listJson(@Validated DataTablesInput input) {
 
-        OperationsUtil op = new OperationsUtil(null);
-
-        List<DocumentListBean> list = new ArrayList<>();
+//        OperationsUtil op = new OperationsUtil(null);
+//
+//        List<DocumentListBean> list = new ArrayList<>();
         Page<Document> documentPage = documentService.findPageByInput(input);
 
-
-        for (Document document : documentPage.getContent()) {
-            DocumentListBean documentListBean = beanMapper.map(document, DocumentListBean.class);
-            documentListBean.setOperations(getToggleButton(document.getId().toString(), op));
-            documentListBean.setDT_RowId(document.getId().toString());
-
-            // ステータスラベル
-            String statusLabel = document.getStatus().equals(Status.VALID.getCodeValue()) ? Status.VALID.getCodeLabel() : Status.INVALID.getCodeLabel();
-            documentListBean.setStatusLabel(statusLabel);
-
-            // 利用シーン
-            List<String> useStages = new ArrayList<>();
-            for (String v : useStageCodeList.asMap().keySet()) {
-                if (document.getUseStage().contains(v)) {
-                    useStages.add(useStageCodeList.asMap().get(v));
-                }
-            }
-            documentListBean.setUseStageLabel(String.join(", ", useStages));
-
-            // ファイル名のリスト
-            List<String> originalFilenames = new ArrayList<>();
-            for (File file : document.getFiles()) {
-                if (file.getFileManaged() != null) {
-                    originalFilenames.add(file.getFileManaged().getOriginalFilename());
-                }
-            }
-            documentListBean.setFilesLabel(String.join("<br>", originalFilenames));
-
-            documentListBean.setFiles(new ArrayList<>());
+        Documents documents = new Documents(documentPage.getContent(), useStageCodeList, docTypeCodeList, beanMapper);
 
 
-            list.add(documentListBean);
-        }
+//        for (Document document : documentPage.getContent()) {
+//
+//            DocumentListBean documentListBean = beanMapper.map(document, DocumentListBean.class);
+//            documentListBean.setDT_RowId(document.getId().toString());
+//
+//            // ボタン
+//            documentListBean.setOperations(getToggleButton(document.getId().toString(), op));
+//
+//            // ステータスラベル
+//            String statusLabel = document.getStatus().equals(Status.VALID.getCodeValue()) ? Status.VALID.getCodeLabel() : Status.INVALID.getCodeLabel();
+//            documentListBean.setStatusLabel(statusLabel);
+//
+//            // 活用シーン
+//            List<String> useStages = new ArrayList<>();
+//            for (String v : useStageCodeList.asMap().keySet()) {
+//                if (document.getUseStage().contains(v)) {
+//                    useStages.add(useStageCodeList.asMap().get(v));
+//                }
+//            }
+//            documentListBean.setUseStageLabel(String.join(", ", useStages));
+//
+//            // ファイル名のリスト
+//            List<String> originalFilenames = new ArrayList<>();
+//            for (File file : document.getFiles()) {
+//                if (file.getFileManaged() != null) {
+//                    originalFilenames.add(file.getFileManaged().getOriginalFilename());
+//                }
+//            }
+//            documentListBean.setFilesLabel(String.join("<br>", originalFilenames));
+//
+//            // 不要な情報をクリア
+//            documentListBean.setFiles(new ArrayList<>());
+//
+//            list.add(documentListBean);
+//        }
 
         DataTablesOutput<DocumentListBean> output = new DataTablesOutput<>();
-        output.setData(list);
+        output.setData(documents.getDocumentListBeans());
         output.setDraw(input.getDraw());
         output.setRecordsTotal(0);
         output.setRecordsFiltered(documentPage.getTotalElements());
@@ -107,17 +117,16 @@ public class DocumentListController {
         return output;
     }
 
-    /**
-     * 一覧画面のボタンHTMLの準備
-     * @param id
-     * @param op
-     * @return
-     */
-    private String getToggleButton(String id, OperationsUtil op) {
-
-        StringBuffer link = new StringBuffer();
-        link.append("<a href=\"" + op.getEditUrl(id) + "\" class=\"btn btn-button btn-sm\" style=\"white-space: nowrap\">" + op.getLABEL_EDIT() + "</a>");
-        return link.toString();
-    }    
+//    /**
+//     * 一覧画面のボタンHTMLの準備
+//     * @param id
+//     * @param op
+//     * @return
+//     */
+//    protected String getToggleButton(String id, OperationsUtil op) {
+//        StringBuffer link = new StringBuffer();
+//        link.append("<a href=\"" + op.getEditUrl(id) + "\" class=\"btn btn-button btn-sm\" style=\"white-space: nowrap\">" + op.getLABEL_EDIT() + "</a>");
+//        return link.toString();
+//    }
     
 }

@@ -1,20 +1,19 @@
 package jp.co.stnet.cms.example.domain.model.document;
 
-import jp.co.stnet.cms.base.domain.model.common.Status;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.terasoluna.gfw.common.codelist.EnumCodeList;
 
 /**
- * 公開範囲
+ * 顧客公開
  */
 @AllArgsConstructor
 @Getter
-public enum DocPublicScope implements EnumCodeList.CodeListItem {
+public enum CustomerPublic implements EnumCodeList.CodeListItem {
 
-    ALL("99", "全員(外部委託含)"),
-    EMPLOYEE("10", "社員(職員)"),
-    DISPATCHED_LABOR("20", "社員(職員)・派遣社員");
+    OPEN("1", "公開"),
+    CLOSE("0", "非公開")
+    ;
 
     private final String value;
     private final String label;
@@ -34,13 +33,14 @@ public enum DocPublicScope implements EnumCodeList.CodeListItem {
      * @param value 検索したいvalue
      * @return Enum, 指定したvalueが存在しない場合はnull.
      */
-    public static DocPublicScope getByValue(String value) {
-        for (DocPublicScope docPublicScope : DocPublicScope.values()) {
-            if (docPublicScope.getCodeValue().equals(value)) {
-                return docPublicScope;
+    public static CustomerPublic getByValue(String value) {
+        for (CustomerPublic customerPublic : CustomerPublic.values()) {
+            if (customerPublic.getCodeValue().equals(value)) {
+                return customerPublic;
             }
         }
         return null;
     }
+
 
 }

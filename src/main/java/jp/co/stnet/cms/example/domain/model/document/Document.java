@@ -7,15 +7,11 @@ import jp.co.stnet.cms.base.domain.model.variable.Variable;
 import lombok.*;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
-import org.hibernate.search.mapper.pojo.automaticindexing.ReindexOnUpdate;
-import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
-import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexingDependency;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -28,7 +24,7 @@ import java.util.Set;
 @EntityListeners(AuditingEntityListener.class)
 public class Document extends AbstractEntity<Long> implements Serializable, StatusInterface {
 
-    // DocumentRevisionエンティティとフィールドを一致させること
+    // DocumentIndex, DocumentRevisionエンティティとフィールドを一致させること
 
     /**
      * 内部ID
@@ -63,7 +59,7 @@ public class Document extends AbstractEntity<Long> implements Serializable, Stat
      * 公開区分
      */
     @Column(nullable = false)
-    private String publicScope = DocPublicScope.ALL.getValue();;
+    private String publicScope = DocPublicScope.ALL.getValue();
 
     /**
      * 管理部門
@@ -109,7 +105,7 @@ public class Document extends AbstractEntity<Long> implements Serializable, Stat
     private String reasonForChange;
 
     /**
-     * 利用シーン
+     * 活用シーン
      */
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> useStage;
@@ -155,5 +151,11 @@ public class Document extends AbstractEntity<Long> implements Serializable, Stat
      * 概要
      */
     private String summary;
+
+    /**
+     * 顧客公開区分
+     */
+    @Column(nullable = false)
+    private String customerPublic = CustomerPublic.OPEN.getCodeValue();
 
 }

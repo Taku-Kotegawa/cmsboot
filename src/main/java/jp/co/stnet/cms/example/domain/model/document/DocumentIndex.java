@@ -145,7 +145,7 @@ public class DocumentIndex implements Serializable, StatusInterface {
     private String reasonForChange;
 
     /**
-     * 利用シーン
+     * 活用シーン
      */
     @GenericField(aggregable = Aggregable.YES)
     @ElementCollection(fetch = FetchType.EAGER)
@@ -188,4 +188,20 @@ public class DocumentIndex implements Serializable, StatusInterface {
     @IndexedEmbedded
     @ElementCollection(fetch = FetchType.EAGER)
     private List<File> files;
+
+    /**
+     * 想定読者
+     */
+    private String intendedReader;
+
+    /**
+     * 概要
+     */
+    private String summary;
+
+    /**
+     * 顧客公開区分
+     */
+    private String customerPublic;
+
 }

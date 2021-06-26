@@ -79,7 +79,7 @@ fieldset legend {
                             </div>
                         </div>
                         <div th:replace="~{/fragments/field::radio('publicScope', '公開区分', 'document.publicScope', '', '@CL_DOC_PUBLIC_SCOPE.asMap()')}"></div>
-                        <div th:replace="~{/fragments/field::checkbox('useStage', '利用シーン', 'document.useStage', '', '@CL_DOC_STAGE.asMap()')}"></div>
+                        <div th:replace="~{/fragments/field::checkbox('useStage', '活用シーン', 'document.useStage', '', '@CL_DOC_STAGE.asMap()')}"></div>
                         <div th:replace="~{/fragments/field::input('intendedReader', '想定読者', 'document.intendedReader', '')}"></div>
                         <div th:replace="~{/fragments/field::textarea('summary', '概要', 'document.summary', '', '3')}"></div>
                         <div th:replace="~{/fragments/field::input('reasonForChange', '変更理由', 'document.reasonForChange', '')}"></div>

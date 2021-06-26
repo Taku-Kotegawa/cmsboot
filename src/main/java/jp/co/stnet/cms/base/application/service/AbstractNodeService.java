@@ -308,8 +308,10 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
 
         // OrderBY句
         if (!count) {
+            sql.append(" group by c ");
             sql.append(getOrderClause(input));
         }
+
 
         return sql.toString();
     }
@@ -325,7 +327,7 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
         StringBuilder sql = new StringBuilder();
         // SELECT句
         if (!count) {
-            sql.append("SELECT distinct c");
+            sql.append("SELECT c");
         } else {
             sql.append("SELECT count(distinct c)");
         }

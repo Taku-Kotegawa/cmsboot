@@ -81,7 +81,7 @@ public class DocumentForm implements Serializable {
     private String reasonForChange;
 
     /**
-     * 利用シーン
+     * 活用シーン
      */
     private Set<String> useStage;
 

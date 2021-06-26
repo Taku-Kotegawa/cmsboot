@@ -23,10 +23,10 @@ public enum YesNo implements EnumCodeList.CodeListItem {
      * @param value 検索したいvalue
      * @return Enum, 指定したvalueが存在しない場合はnull.
      */
-    public static Status getByValue(String value) {
-        for (Status status : Status.values()) {
-            if (status.getCodeValue().equals(value)) {
-                return status;
+    public static YesNo getByValue(String value) {
+        for (YesNo e : YesNo.values()) {
+            if (e.getCodeValue().equals(value)) {
+                return e;
             }
         }
         return null;

@@ -1,6 +1,5 @@
 package jp.co.stnet.cms.example.presentation.controller.document;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jp.co.stnet.cms.example.domain.model.document.Document;
 import lombok.Data;
@@ -22,6 +21,20 @@ public class DocumentListBean extends Document {
 
     private Map<String, String> DT_RowAttr;
 
+    private String statusLabel;
+
+    private String useStageLabel;
+
+    private String filesLabel;
+
+    private String pdfFilesLabel;
+
+    private String fileTypeLabel;
+
+    private String publicScopeLabel;
+
+    private String customerPublicLabel;
+
     @JsonProperty("DT_RowId")
     public String getDT_RowId() {
         return DT_RowId;
@@ -36,11 +49,5 @@ public class DocumentListBean extends Document {
     public Map<String, String> getDT_RowAttr() {
         return DT_RowAttr;
     }
-
-    private String statusLabel;
-
-    private String useStageLabel;
-
-    private String filesLabel;
 
 }
