@@ -11,7 +11,7 @@
     <!--/* 入力 */-->
     <th:block th:if="${fieldState.__${field_id}____input}">
         <select class="form-control select2" th:errorclass="is-invalid" th:field="*{__${field_id}__}"
-                th:placeholder="${placeholder}" multiple="true">
+                th:placeholder="${placeholder}" th:disabled="${fieldState.__${field_id}____disabled}" multiple="true">
             <option th:each="item : ${__${items}__}"
                     th:text="${item.value}"
                     th:value="${item.key}"></option>

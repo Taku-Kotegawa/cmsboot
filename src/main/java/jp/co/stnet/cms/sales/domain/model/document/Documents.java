@@ -2,6 +2,7 @@ package jp.co.stnet.cms.sales.domain.model.document;
 
 import com.github.dozermapper.core.Mapper;
 import jp.co.stnet.cms.base.domain.model.common.Status;
+import jp.co.stnet.cms.base.domain.model.variable.Variable;
 import jp.co.stnet.cms.common.datatables.OperationsUtil;
 import jp.co.stnet.cms.common.util.StringUtils;
 import jp.co.stnet.cms.sales.presentation.controller.document.DocumentCsvDlBean;
@@ -67,6 +68,11 @@ public class Documents {
             // 不要な情報をクリア
             documentListBean.setFiles(new ArrayList<>());
 
+            // null対策
+            if (documentListBean.getDocServiceVariable() == null) {
+                documentListBean.setDocServiceVariable(new Variable());
+            }
+
             list.add(documentListBean);
         }
 
@@ -129,7 +135,6 @@ public class Documents {
             if (file.getType() != null) {
                 for (String v : docTypeCodeList.asMap().keySet()) {
                     if (file.getType().equals(v)) {
-                        System.out.println(docTypeCodeList.asMap());
                         fileTypeLabel.add(docTypeCodeList.asMap().get(v));
                     }
                 }

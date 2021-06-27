@@ -50,9 +50,9 @@
                 <th></th><!-- 区分1 -->
                 <th></th><!-- 区分2 -->
                 <th></th><!-- 区分3 -->
-                <th></th><!-- 区分4 -->
-                <th></th><!-- 区分5 -->
-                <th></th><!-- 区分6 -->
+                <th></th><!-- サービス1 -->
+                <th></th><!-- サービス2 -->
+                <th></th><!-- サービス3 -->
                 <th></th><!-- タイトル -->
                 <th data-filter="disable"><!-- 活用シーン -->
                     <select id="col_filter_11" data-column="11" class="dataTables_column_filter form-control">
@@ -64,14 +64,20 @@
                 </th>
                 <th></th><!-- 想定読者 -->
                 <th></th><!-- 概要 -->
-                <th></th><!-- 文書 -->
+                <th></th><!-- 文書種類 -->
+                <th></th><!-- ファイル -->
+                <th></th><!-- 管理番号 -->
                 <th></th><!-- 管理部門 -->
                 <th></th><!-- 管理担当者 -->
                 <th></th><!-- 制定日 -->
                 <th></th><!-- 最終改定日 -->
                 <th></th><!-- 実施日 -->
                 <th></th><!-- 制定箇所 -->
+                <th></th><!-- 最終更新者 -->
                 <th></th><!-- 最終更新日 -->
+                <th></th><!-- 公開区分 -->
+                <th></th><!-- 変更理由 -->
+                <th></th><!-- 顧客公開 -->
             </tr>
             <tr class="title">
                 <th class="text-center px-0"></th>
@@ -81,14 +87,16 @@
                 <th class="text-center">区分1</th>
                 <th class="text-center">区分2</th>
                 <th class="text-center">区分3</th>
-                <th class="text-center">区分4</th>
-                <th class="text-center">区分5</th>
-                <th class="text-center">区分6</th>
+                <th class="text-center">サービス1</th>
+                <th class="text-center">サービス2</th>
+                <th class="text-center">サービス3</th>
                 <th class="text-center">タイトル</th>
                 <th class="text-center">活用シーン</th>
                 <th class="text-center">想定読者</th>
                 <th class="text-center">概要</th>
+                <th class="text-center">文書種類</th>
                 <th class="text-center">ファイル</th>
+                <th class="text-center">管理番号</th>
                 <th class="text-center">管理部門</th>
                 <th class="text-center">管理担当者</th>
                 <th class="text-center">制定日</th>
@@ -96,6 +104,10 @@
                 <th class="text-center">実施日</th>
                 <th class="text-center">制定箇所</th>
                 <th class="text-center">最終更新日時</th>
+                <th class="text-center">最終更新者</th>
+                <th class="text-center">公開区分</th>
+                <th class="text-center">変更理由</th>
+                <th class="text-center">顧客公開</th>
             </tr>
             </thead>
             <tbody></tbody>
@@ -179,15 +191,15 @@ var pagechange = false;
               render: $.fn.dataTable.render.text(),
             },
             {
-              data: 'docCategoryVariable.value4',
+              data: 'docServiceVariable.value1',
               render: $.fn.dataTable.render.text(),
             },
             {
-              data: 'docCategoryVariable.value5',
+              data: 'docServiceVariable.value2',
               render: $.fn.dataTable.render.text(),
             },
             {
-              data: 'docCategoryVariable.value6',
+              data: 'docServiceVariable.value3',
               render: $.fn.dataTable.render.text(),
             },
             {
@@ -207,7 +219,14 @@ var pagechange = false;
               render: $.fn.dataTable.render.text(),
             },
             {
+              data: 'fileTypeLabel',
+            },
+            {
               data: 'filesLabel',
+            },
+            {
+              data: 'documentNumber',
+              render: $.fn.dataTable.render.text(),
             },
             {
               data: 'chargeDepartment',
@@ -236,6 +255,22 @@ var pagechange = false;
             {
               data: 'lastModifiedDate',
               className: 'text-center',
+            },
+            {
+              data: 'lastModifiedBy',
+              render: $.fn.dataTable.render.text(),
+            },
+            {
+              data: 'publicScopeLabel',
+              render: $.fn.dataTable.render.text(),
+            },
+            {
+              data: 'reasonForChange',
+              render: $.fn.dataTable.render.text(),
+            },
+            {
+              data: 'customerPublicLabel',
+              render: $.fn.dataTable.render.text(),
             },
           ],
 

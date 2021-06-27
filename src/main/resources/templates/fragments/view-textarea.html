@@ -15,7 +15,7 @@
         <div class="form-control form-control__view">
             <th:block th:if="${__${value}__}">
                 <th:block th:each="str, stat : ${__${value}__.split('\r\n|\r|\n', -1)}">
-                    <th:block th:text="${str}"/>
+                    <th:block th:utext="${str}"/>
                     <br th:if="${!stat.last}"/>
                 </th:block>
             </th:block>

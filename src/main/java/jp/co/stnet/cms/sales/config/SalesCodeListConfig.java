@@ -1,5 +1,6 @@
 package jp.co.stnet.cms.sales.config;
 
+import jp.co.stnet.cms.sales.domain.model.document.CustomerPublic;
 import jp.co.stnet.cms.sales.domain.model.document.DocPublicScope;
 import jp.co.stnet.cms.sales.domain.model.document.SaveRevision;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,11 @@ public class SalesCodeListConfig {
     @Bean("CL_DOC_PUBLIC_SCOPE")
     public EnumCodeList clDocPublicScope() {
         return new EnumCodeList(DocPublicScope.class);
+    }
+
+    @Bean("CL_CUSTOMER_PUBLIC")
+    public EnumCodeList clCustomerPublic() {
+        return new EnumCodeList(CustomerPublic.class);
     }
 
     @Bean("CL_SAVE_REVISION")

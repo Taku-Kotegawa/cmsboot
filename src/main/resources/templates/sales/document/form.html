@@ -79,6 +79,7 @@ fieldset legend {
                             </div>
                         </div>
                         <div th:replace="~{/fragments/field::radio('publicScope', '公開区分', 'document.publicScope', '', '@CL_DOC_PUBLIC_SCOPE.asMap()')}"></div>
+                        <div th:replace="~{/fragments/field::radio('customerPublic', '顧客公開', 'document.customerPublic', '', '@CL_CUSTOMER_PUBLIC.asMap()')}"></div>
                         <div th:replace="~{/fragments/field::checkbox('useStage', '活用シーン', 'document.useStage', '', '@CL_DOC_STAGE.asMap()')}"></div>
                         <div th:replace="~{/fragments/field::input('intendedReader', '想定読者', 'document.intendedReader', '')}"></div>
                         <div th:replace="~{/fragments/field::textarea('summary', '概要', 'document.summary', '', '3')}"></div>
@@ -97,6 +98,7 @@ fieldset legend {
                         <div th:replace="~{/fragments/field::date('lastRevisedDate', '最終改定日', 'document.lastRevisedDate', '')}"></div>
                         <div th:replace="~{/fragments/field::date('implementationDate', '実施日', 'document.implementationDate', '')}"></div>
                         <div th:replace="~{/fragments/field::input('enactmentDepartment', '制定箇所', 'document.enactmentDepartment', '')}"></div>
+
                     </fieldset>
 
                 </div><!-- <div class="col-12"> -->
@@ -120,8 +122,6 @@ fieldset legend {
                         <tr th:each="item, status : *{files}">
                             <td class="row">
                                 <div class="col-6">
-                                    <!--                                    <input class="form-control" th:field="*{files[__${status.index}__].type}"/>-->
-
                                     <select class="form-control" th:errorclass="is-invalid"
                                             th:field="*{files[__${status.index}__].type}">
                                         <option label="--Select--" value=""/>

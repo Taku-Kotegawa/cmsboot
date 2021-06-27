@@ -1,10 +1,12 @@
 package jp.co.stnet.cms.sales.presentation.controller.document;
 
+import jp.co.stnet.cms.sales.domain.model.document.CustomerPublic;
 import jp.co.stnet.cms.sales.domain.model.document.DocPublicScope;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -112,6 +114,12 @@ public class DocumentForm implements Serializable {
      * 変更履歴を残す
      */
     private boolean saveRevision;
+
+    /**
+     * 顧客公開区分
+     */
+    private String customerPublic = CustomerPublic.OPEN.getValue();
+
 
     public interface Create {
     }
