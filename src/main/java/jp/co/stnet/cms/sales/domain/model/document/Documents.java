@@ -1,6 +1,8 @@
 package jp.co.stnet.cms.sales.domain.model.document;
 
 import com.github.dozermapper.core.Mapper;
+import jp.co.stnet.cms.base.application.service.authentication.AccountService;
+import jp.co.stnet.cms.base.domain.model.authentication.Account;
 import jp.co.stnet.cms.base.domain.model.common.Status;
 import jp.co.stnet.cms.base.domain.model.variable.Variable;
 import jp.co.stnet.cms.common.datatables.OperationsUtil;
@@ -9,30 +11,40 @@ import jp.co.stnet.cms.sales.presentation.controller.document.DocumentCsvDlBean;
 import jp.co.stnet.cms.sales.presentation.controller.document.DocumentListBean;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.terasoluna.gfw.common.codelist.CodeList;
 
+import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-@Data
-@AllArgsConstructor
+@Component
 public class Documents {
 
-    private List<Document> documents;
+    @Autowired
+    AccountService accountService;
 
+    @Autowired
+    @Named("CL_DOC_STAGE")
     private CodeList useStageCodeList;
 
+    @Autowired
+    @Named("CL_DOC_TYPE")
     private CodeList docTypeCodeList;
 
+    @Autowired
     private Mapper beanMapper;
+
+
 
     /**
      * DataTables用のリストを取得
      *
      * @return DocumentListBeanのリスト
      */
-    public List<DocumentListBean> getDocumentListBeans() {
+    public List<DocumentListBean> getDocumentListBeans(List<Document> documents) {
         List<DocumentListBean> list = new ArrayList<>();
 
         for (Document document : documents) {
@@ -84,7 +96,7 @@ public class Documents {
      *
      * @return
      */
-    public List<DocumentCsvDlBean> getDocumentCsvDlBean() {
+    public List<DocumentCsvDlBean> getDocumentCsvDlBean(List<Document> documents) {
         List<DocumentCsvDlBean> list = new ArrayList<>();
 
         for (Document document : documents) {
@@ -93,21 +105,45 @@ public class Documents {
             // ステータスラベル
             documentCsvDlBean.setStatusLabel(getStatusLabel(document.getStatus()));
 
+            // 区分
+            documentCsvDlBean.setDocCategoryCode(document.getDocCategoryVariable().getCode());
+            documentCsvDlBean.setDocCategoryValue1(document.getDocCategoryVariable().getValue1());
+            documentCsvDlBean.setDocCategoryValue2(document.getDocCategoryVariable().getValue2());
+            documentCsvDlBean.setDocCategoryValue3(document.getDocCategoryVariable().getValue3());
+
+            // サービス
+            documentCsvDlBean.setDocServiceCode(document.getDocServiceVariable().getCode());
+            documentCsvDlBean.setDocServiceValue1(document.getDocServiceVariable().getValue1());
+            documentCsvDlBean.setDocServiceValue2(document.getDocServiceVariable().getValue2());
+            documentCsvDlBean.setDocServiceValue3(document.getDocServiceVariable().getValue3());
+
             // 活用シーン
-//            documentCsvDlBean.setUseStageLabel(getUseStageLabel(document.getUseStage()));
+            documentCsvDlBean.setUseStageLabel(getUseStageLabel(document.getUseStage(), ","));
 
             // ファイル名のリスト
-//            documentCsvDlBean.setFilesLabel(getFilesLabel(document.getFiles()));
+            documentCsvDlBean.setFilesLabel(getFilesLabel(document.getFiles(), ","));
 
-            // 不要な情報をクリア
-//            documentCsvDlBean.setFiles(new ArrayList<>());
+            // ファイル名(PDF)のリスト
+            documentCsvDlBean.setPdfFilesLabel(getPdfFilesLabel(document.getFiles(), ","));
+
+            // 公開区分のラベル
+            documentCsvDlBean.setPublicScopeLabel(getPublicScopeLabel(document.getPublicScope()));
+
+            // 文書の種類
+            documentCsvDlBean.setFileTypeLabel(getFileTypeLabel(document.getFiles(), ","));
+
+            // 顧客公開区分のラベル
+            documentCsvDlBean.setCustomerPublicLabel(getCustomerPublicLabel(document.getCustomerPublic()));
+
+            // 最終更新者(氏名)
+            documentCsvDlBean.setLastModifiedByLabel(accountService.getUserFullName(document.getLastModifiedBy()));
 
             list.add(documentCsvDlBean);
         }
 
-
-        return null;
+        return list;
     }
+
 
     /**
      * 公開区分を取得する

@@ -61,19 +61,19 @@ public class VariableCsv {
     @Size(max = 255)
     private String value10;
 
-    @IsDate("yyy/MM/dd")
+    @IsDate("yyyy/MM/dd")
     private String date1;
 
-    @IsDate("yyy/MM/dd")
+    @IsDate("yyyy/MM/dd")
     private String date2;
 
-    @IsDate("yyy/MM/dd")
+    @IsDate("yyyy/MM/dd")
     private String date3;
 
-    @IsDate("yyy/MM/dd")
+    @IsDate("yyyy/MM/dd")
     private String date4;
 
-    @IsDate("yyy/MM/dd")
+    @IsDate("yyyy/MM/dd")
     private String date5;
 
     @Parseable(value = TO_INT)

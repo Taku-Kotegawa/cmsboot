@@ -90,5 +90,13 @@ public class AccountServiceImpl extends AbstractNodeService<Account, String> imp
         return accountRepository.findAllById(ids);
     }
 
-
+    @Override
+    public String getUserFullName(String username) {
+        Account account = accountRepository.findById(username).orElse(null);
+        if (account != null) {
+            return account.getLastName() + " " + account.getFirstName();
+        } else {
+            return "";
+        }
+    }
 }

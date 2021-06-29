@@ -14,6 +14,6 @@ public class DocumentConstant {
     static final String DOWNLOAD_FILENAME = "document";
 
     // アップロード用のインポートジョブID
-    static final String UPLOAD_JOB_ID = Constants.JOBID.IMPORT_ACCOUNT;
+    static final String UPLOAD_JOB_ID = Constants.JOBID.IMPORT_DOCUMENT;
 
 }

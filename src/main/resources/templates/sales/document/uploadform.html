@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html th:replace="~{/layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- ページタイトルを記入 -->
+    <title>[[${pageTitle}]]</title>
+</head>
+<body>
+
+<section class="content-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-18 mb-3">
+                <!-- ページタイトルを記入 -->
+                <h4>[[${pageTitle}]]</h4>
+            </div>
+            <div class="col-18 text-right">
+                <!-- ページタイトル右の余白 -->
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container">
+        <div th:replace="~{/fragments/message-panel :: message-panel}"></div>
+        <!-- ここより下にメインコンテンツを記入 -->
+        <div th:replace="~{/fragments/include-upload :: include-upload}"></div>
+
+        <br>
+
+        <!-- アップロードファイルの仕様説明 -->
+        <div class="border p-3">
+            <p>
+                ファイルの仕様を記載予定
+            </p>
+        </div>
+
+        <!-- ここより上にメインコンテンツを記入 -->
+    </div>
+</section>
+
+</body>
+</html>

@@ -1,14 +1,17 @@
 package jp.co.stnet.cms.sales.presentation.controller.document;
 
 import com.github.dozermapper.core.Mapper;
+import jp.co.stnet.cms.base.application.service.authentication.AccountService;
 import jp.co.stnet.cms.base.application.service.filemanage.FileManagedSharedService;
 import jp.co.stnet.cms.base.domain.model.authentication.LoggedInUser;
-import jp.co.stnet.cms.base.domain.model.common.Status;
-import jp.co.stnet.cms.common.constant.Constants;
+
+
+import static jp.co.stnet.cms.common.constant.Constants.*;
 import jp.co.stnet.cms.common.datatables.DataTablesInputDraft;
 import jp.co.stnet.cms.common.util.CsvUtils;
 import jp.co.stnet.cms.sales.application.service.document.DocumentService;
 import jp.co.stnet.cms.sales.domain.model.document.Document;
+import jp.co.stnet.cms.sales.domain.model.document.Documents;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,9 +21,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.terasoluna.gfw.common.codelist.CodeList;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.inject.Named;
 
 import static jp.co.stnet.cms.sales.presentation.controller.document.DocumentConstant.BASE_PATH;
 import static jp.co.stnet.cms.sales.presentation.controller.document.DocumentConstant.DOWNLOAD_FILENAME;
@@ -39,15 +42,21 @@ public class DocumentDownloadController {
     @Autowired
     FileManagedSharedService fileManagedSharedService;
 
+    @Autowired
+    Documents documents;
+
+
+
     /**
      * CSVファイルダウンロード
      */
     @GetMapping(value = "/list/csv")
     public String listCsv(@Validated DataTablesInputDraft input, Model model, @AuthenticationPrincipal LoggedInUser loggedInUser) {
 
-        documentService.hasAuthority(Constants.OPERATION.UPDATE, loggedInUser);
+//        documentService.hasAuthority(Constants.OPERATION.UPDATE, loggedInUser);
 
         setModelForCsv(input, model);
+
         model.addAttribute("csvConfig", CsvUtils.getCsvDefault());
         model.addAttribute("csvFileName", DOWNLOAD_FILENAME + ".csv");
         return "csvDownloadView";
@@ -59,9 +68,10 @@ public class DocumentDownloadController {
     @GetMapping(value = "/list/tsv")
     public String listTsv(@Validated DataTablesInputDraft input, Model model, @AuthenticationPrincipal LoggedInUser loggedInUser) {
 
-        documentService.hasAuthority(Constants.OPERATION.UPDATE, loggedInUser);
+        documentService.hasAuthority(OPERATION.UPDATE, loggedInUser);
 
         setModelForCsv(input, model);
+
         model.addAttribute("csvConfig", CsvUtils.getTsvDefault());
         model.addAttribute("csvFileName", DOWNLOAD_FILENAME + ".tsv");
         return "csvDownloadView";
@@ -75,21 +85,11 @@ public class DocumentDownloadController {
      */
     private void setModelForCsv(DataTablesInputDraft input, Model model) {
         input.setStart(0);
-        input.setLength(Constants.CSV.MAX_LENGTH);
-
-        List<DocumentCsvDlBean> csvList = new ArrayList<>();
-        List<Document> list = new ArrayList<>();
+        input.setLength(CSV.MAX_LENGTH);
 
         Page<Document> page = documentService.findPageByInput(input);
-        list.addAll(page.getContent());
 
-        for (Document document : list) {
-            DocumentCsvDlBean row = beanMapper.map(document, DocumentCsvDlBean.class);
-            row.setStatusLabel(Status.getByValue(document.getStatus()).getCodeLabel());
-            csvList.add(row);
-        }
-
-        model.addAttribute("exportCsvData", csvList);
+        model.addAttribute("exportCsvData", documents.getDocumentCsvDlBean(page.getContent()));
         model.addAttribute("class", DocumentCsvDlBean.class);
     }
 
@@ -103,7 +103,7 @@ public class DocumentDownloadController {
             @PathVariable("no") Integer no,
             @AuthenticationPrincipal LoggedInUser loggedInUser) {
 
-        documentService.hasAuthority(Constants.OPERATION.UPDATE, loggedInUser);
+        documentService.hasAuthority(OPERATION.UPDATE, loggedInUser);
 
         Document document = documentService.findById(id);
         if (!document.getFiles().isEmpty()) {

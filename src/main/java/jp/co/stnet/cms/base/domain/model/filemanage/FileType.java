@@ -15,6 +15,7 @@ import org.terasoluna.gfw.common.codelist.EnumCodeList;
 @Getter
 public enum FileType implements EnumCodeList.CodeListItem {
 
+    UPLOAD_FILE("uploadFile", "tsv;csv;", "10"),
     PERSON("person",  "txt;csv;", "2"),
     SIMPLE_ENTITY("simpleentity",  "png;jpg;gif;", "5"),
     FILE_UPLOAD("fileupload",  "png;jpg;gif;", "10"),

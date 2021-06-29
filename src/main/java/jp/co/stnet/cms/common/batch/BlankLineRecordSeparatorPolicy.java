@@ -1,11 +1,12 @@
 package jp.co.stnet.cms.common.batch;
 
+import org.springframework.batch.item.file.separator.DefaultRecordSeparatorPolicy;
 import org.springframework.batch.item.file.separator.SimpleRecordSeparatorPolicy;
 
 /**
  * FileInputStreamで、空白レコードを無視するポリシー
  */
-public class BlankLineRecordSeparatorPolicy extends SimpleRecordSeparatorPolicy {
+public class BlankLineRecordSeparatorPolicy extends DefaultRecordSeparatorPolicy {
 
     @Override
     public boolean isEndOfRecord(final String line) {

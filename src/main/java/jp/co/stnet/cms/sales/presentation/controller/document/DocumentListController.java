@@ -32,6 +32,9 @@ public class DocumentListController {
     DocumentService documentService;
 
     @Autowired
+    Documents documents;
+
+    @Autowired
     @Named("CL_DOC_STAGE")
     CodeList useStageCodeList;
 
@@ -61,9 +64,6 @@ public class DocumentListController {
 //
 //        List<DocumentListBean> list = new ArrayList<>();
         Page<Document> documentPage = documentService.findPageByInput(input);
-
-        Documents documents = new Documents(documentPage.getContent(), useStageCodeList, docTypeCodeList, beanMapper);
-
 
 //        for (Document document : documentPage.getContent()) {
 //
@@ -102,7 +102,7 @@ public class DocumentListController {
 //        }
 
         DataTablesOutput<DocumentListBean> output = new DataTablesOutput<>();
-        output.setData(documents.getDocumentListBeans());
+        output.setData(documents.getDocumentListBeans(documentPage.getContent()));
         output.setDraw(input.getDraw());
         output.setRecordsTotal(0);
         output.setRecordsFiltered(documentPage.getTotalElements());
