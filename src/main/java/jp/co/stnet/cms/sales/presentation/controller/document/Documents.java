@@ -1,4 +1,4 @@
-package jp.co.stnet.cms.sales.domain.model.document;
+package jp.co.stnet.cms.sales.presentation.controller.document;
 
 import com.github.dozermapper.core.Mapper;
 import jp.co.stnet.cms.base.application.service.authentication.AccountService;
@@ -7,6 +7,10 @@ import jp.co.stnet.cms.base.domain.model.common.Status;
 import jp.co.stnet.cms.base.domain.model.variable.Variable;
 import jp.co.stnet.cms.common.datatables.OperationsUtil;
 import jp.co.stnet.cms.common.util.StringUtils;
+import jp.co.stnet.cms.sales.domain.model.document.CustomerPublic;
+import jp.co.stnet.cms.sales.domain.model.document.DocPublicScope;
+import jp.co.stnet.cms.sales.domain.model.document.Document;
+import jp.co.stnet.cms.sales.domain.model.document.File;
 import jp.co.stnet.cms.sales.presentation.controller.document.DocumentCsvDlBean;
 import jp.co.stnet.cms.sales.presentation.controller.document.DocumentListBean;
 import lombok.AllArgsConstructor;
