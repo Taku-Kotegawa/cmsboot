@@ -6,31 +6,6 @@
 </head>
 <body>
 
-<style>
-
-fieldset {
-    padding-left: .5rem !important;
-    padding-right: .5rem !important;
-
-    margin: .5rem 0;
-}
-
-fieldset legend {
-    width: auto;
-    font-size: unset;
-    padding: 0 5px;
-    margin: 0;
-    margin-left: 0.5rem;
-    /* font-weight: 700; */
-}
-
-.note-frame.card {
-    box-shadow: unset;
-}
-
-
-</style>
-
 <section class="content-header">
     <div class="container"> <!-- -fluidを外すと横幅が狭くなる-->
         <div class="row">
@@ -55,7 +30,6 @@ fieldset legend {
             <input disabled style="display:none" type="submit"/>
 
             <!-- 隠しフィールド -->
-<!--            <input th:field="*{id}" type="hidden"/>-->
             <input th:field="*{version}" type="hidden"/>
 
             <!-- button -->
@@ -64,14 +38,31 @@ fieldset legend {
             <hr>
 
             <!-- Input -->
+            <div class="row">
+                <div class="col-4"><label>文書タイトル</label></div>
+                <div class="col-20">
+                    <div th:replace="~{/fragments/field::input('title', '', 'document.title', '')}"></div>
+                </div>
+                <div class="col-4"><label>文書区分</label></div>
+                <div class="col-20">
+                </div>
+
+
+
+            </div>
+
+
+
+
+
+
 
             <div class="row">
                 <div class="col-24">
-                    <fieldset class="col-36 border h-100">
-                        <legend>基本情報</legend>
+                    <fieldset class="col-36 h-100">
                         <div th:replace="~{/fragments/field::select2('docCategory', '文書区分', 'document.docCategory', '', '@CL_DOC_CATEGORY.asMap()')}"></div>
                         <div th:replace="~{/fragments/field::select2('docService', 'サービス', 'document.docService', '', '@CL_DOC_SERVICE.asMap()')}"></div>
-                        <div th:replace="~{/fragments/field::input('title', 'タイトル', 'document.title', '')}"></div>
+
                         <div class="col-12 p-0">
                             <div th:replace="~{/fragments/label::m('status', 'ステータス')}"></div>
                             <div class="form-control form-control__view" th:if="${fieldState.status__view}">
@@ -89,8 +80,7 @@ fieldset legend {
                 </div><!-- <div class="col-24"> -->
 
                 <div class="col-12">
-                    <fieldset class="col-36 border h-100">
-                        <legend>管理情報</legend>
+                    <fieldset class="col-36 h-100">
                         <div th:replace="~{/fragments/field::input('documentNumber', '管理番号', 'document.documentNumber', '')}"></div>
                         <div th:replace="~{/fragments/field::input('chargeDepartment', '管理部門', 'document.chargeDepartment', '')}"></div>
                         <div th:replace="~{/fragments/field::input('chargePerson', '管理担当者', 'document.chargePerson', '')}"></div>
@@ -114,11 +104,12 @@ fieldset legend {
                                 <div class="col-6">文書種類</div>
                                 <div class="col-14">ファイル</div>
                                 <div class="col-14">ファイル(PDF)</div>
-                                <div class="col-2 text-center">削除</div>
+                                <div class="col-2"></div>
                             </td>
                         </tr>
                         </thead>
                         <tbody>
+                        <!-- 編集 -->
                         <tr th:each="item, status : *{files}">
                             <td class="row">
                                 <div class="col-6">
@@ -157,7 +148,6 @@ fieldset legend {
                                           </span>
                                         </div>
                                     </th:block>
-
                                 </div>
                                 <div class="col-14">
                                     <input class="form-control form-control-file file-managed"
@@ -183,20 +173,35 @@ fieldset legend {
                                           </span>
                                         </div>
                                     </th:block>
-
                                 </div>
                                 <div class="col-2 text-center">
                                     <button class="btn-button" onclick="lineDelete(this)" type="button">削除</button>
                                 </div>
-
                             </td>
                         </tr>
+
+                        <!-- 参照用 -->
+                        <tr th:each="item, status : ${document.files}">
+                            <td class="row">
+                                <div class="col-6">
+                                    <div th:replace="~{/fragments/view-select::m('files_type', '', 'item.type', '', '@CL_DOC_TYPE.asMap()')}"></div>
+                                </div>
+                                <div class="col-14">
+                                    <div th:replace="~{/fragments/view-file-document::m('files_file', '', 'item.fileManaged', '')}"></div>
+                                </div>
+                                <div class="col-14">
+                                    <div th:replace="~{/fragments/view-file-document::m('files_pdf', '', 'item.pdfManaged', '')}"></div>
+                                </div>
+                            </td>
+                        </tr>
+
                         </tbody>
                     </table>
 
-                    <div class="row">
+                    <div class="row" th:if="${buttonState.addItem__view}">
                         <div class="col-36">
-                            <button class="btn-button" formaction="#addLinebutton" id="addLinebutton" name="addlineitem">行追加
+                            <button class="btn-button" formaction="#addLinebutton" id="addLinebutton"
+                                    name="addlineitem">行追加
                             </button>
                         </div>
                     </div>
@@ -210,8 +215,6 @@ fieldset legend {
                     <div th:replace="~{/fragments/field::summernote('body', '本文', 'document.body', '', '8')}"></div>
                 </div>
             </div>
-
-
 
             <!-- button -->
             <br>
@@ -229,7 +232,6 @@ fieldset legend {
 <link rel="stylesheet" th:href="@{/plugins/summernote/summernote-bs4.min.css}">
 <script th:src="@{/plugins/summernote/summernote-bs4.min.js}"></script>
 <script th:src="@{/plugins/summernote/lang/summernote-ja-JP.min.js}"></script>
-
 
 <script>
   function lineDelete(e) {
@@ -256,6 +258,7 @@ $(document).ready(function() {
             $('.note-image-input')[0].name = 'summernote-files';
       });
 });
+
 
 </script>
 

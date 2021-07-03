@@ -9,6 +9,8 @@ import jp.co.stnet.cms.common.datatables.OperationsUtil;
 import jp.co.stnet.cms.common.message.MessageKeys;
 import jp.co.stnet.cms.sales.application.service.document.DocumentService;
 import jp.co.stnet.cms.sales.domain.model.document.Document;
+import jp.co.stnet.cms.sales.domain.model.document.File;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -23,6 +25,8 @@ import org.terasoluna.gfw.web.token.transaction.TransactionTokenCheck;
 import org.terasoluna.gfw.web.token.transaction.TransactionTokenType;
 
 import javax.validation.groups.Default;
+
+import java.util.Iterator;
 
 import static jp.co.stnet.cms.sales.presentation.controller.document.DocumentConstant.BASE_PATH;
 import static jp.co.stnet.cms.sales.presentation.controller.document.DocumentConstant.TEMPLATE_FORM;
@@ -90,6 +94,7 @@ public class DocumentCreateController {
                          BindingResult bindingResult,
                          Model model,
                          RedirectAttributes redirect,
+                         @RequestParam(value = "saveDraft", required = false) boolean saveDraft,
                          @AuthenticationPrincipal LoggedInUser loggedInUser) {
 
         documentService.hasAuthority(Constants.OPERATION.CREATE, loggedInUser);
@@ -102,7 +107,11 @@ public class DocumentCreateController {
         document.setStatus(Status.VALID.getCodeValue());
 
         try {
-            documentService.save(document);
+            if (saveDraft) {
+                documentService.saveDraft(document);
+            } else {
+                documentService.save(document);
+            }
         } catch (BusinessException e) {
             model.addAttribute(e.getResultMessages());
             return createForm(form, model, loggedInUser, null);

@@ -1,25 +1,31 @@
-package jp.co.stnet.cms.sales.presentation.controller.document;
+package jp.co.stnet.cms.sales.domain.model.document;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.orangesignal.csv.annotation.CsvColumn;
 import com.orangesignal.csv.annotation.CsvEntity;
+import jp.co.stnet.cms.common.validation.IsDate;
+import jp.co.stnet.cms.common.validation.Parseable;
 import lombok.Data;
+import org.terasoluna.gfw.common.codelist.ExistInCodeList;
 
-import javax.persistence.Column;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.Date;
+
+import static jp.co.stnet.cms.common.validation.ParseableType.TO_INT;
+import static jp.co.stnet.cms.common.validation.ParseableType.TO_LONG;
 
 @Data
 @CsvEntity
-public class DocumentCsvDlBean implements Serializable {
+public class DocumentCsvBean implements Serializable {
 
+    @Parseable(value = TO_LONG)
     @CsvColumn(name = "id")
-    private Long id;
+    private String id;
 
     /**
-     * ステータス(ラベル)
+     * ステータス
      */
+    @Parseable(value = TO_INT)
+    @Pattern(regexp = "^[0129]$")
     @CsvColumn(name = "status")
     private String status;
 
@@ -38,8 +44,9 @@ public class DocumentCsvDlBean implements Serializable {
     /**
      * 区分 - コード
      */
-    @CsvColumn(name = "docCategoryCode")
-    private String docCategoryCode;
+    @ExistInCodeList(codeListId = "CL_DOC_CATEGORY")
+    @CsvColumn(name = "docCategory")
+    private String docCategory;
 
     /**
      * 区分 - 区分1
@@ -62,8 +69,9 @@ public class DocumentCsvDlBean implements Serializable {
     /**
      * サービス - コード
      */
-    @CsvColumn(name = "docServiceCode")
-    private String docServiceCode;
+    @ExistInCodeList(codeListId = "CL_DOC_SERVICE")
+    @CsvColumn(name = "docService")
+    private String docService;
 
     /**
      * サービス - 事業
@@ -90,6 +98,12 @@ public class DocumentCsvDlBean implements Serializable {
     private String body;
 
     /**
+     * ドキュメント管理番号
+     */
+    @CsvColumn(name = "documentNumber")
+    private String documentNumber;
+
+    /**
      * 管理部門
      */
     @CsvColumn(name = "chargeDepartment")
@@ -104,20 +118,23 @@ public class DocumentCsvDlBean implements Serializable {
     /**
      * 制定日
      */
-    @CsvColumn(name = "enactmentDate", format = "yyyy/MM/dd")
-    private Date enactmentDate;
+    @IsDate("yyyy/MM/dd")
+    @CsvColumn(name = "enactmentDate")
+    private String enactmentDate;
 
     /**
      * 最終改定日
      */
-    @CsvColumn(name = "lastRevisedDate", format = "yyyy/MM/dd")
-    private Date lastRevisedDate;
+    @IsDate("yyyy/MM/dd")
+    @CsvColumn(name = "lastRevisedDate")
+    private String lastRevisedDate;
 
     /**
      * 実施日
      */
-    @CsvColumn(name = "implementationDate", format = "yyyy/MM/dd")
-    private Date implementationDate;
+    @IsDate("yyyy/MM/dd")
+    @CsvColumn(name = "implementationDate")
+    private String implementationDate;
 
     /**
      * 制定箇所
@@ -133,6 +150,12 @@ public class DocumentCsvDlBean implements Serializable {
 
     /**
      * 活用シーン
+     */
+    @CsvColumn(name = "useStage")
+    private String useStage;
+
+    /**
+     * 活用シーン(ラベル)
      */
     @CsvColumn(name = "useStageLabel")
     private String useStageLabel;
@@ -205,6 +228,7 @@ public class DocumentCsvDlBean implements Serializable {
     /**
      * 最終更新日時
      */
-    @CsvColumn(name = "lastModifiedDate", format = "yyyy/MM/dd HH:mm:ss")
-    private Date lastModifiedDate;
+    @IsDate("yyyy/MM/dd HH:mm:ss")
+    @CsvColumn(name = "lastModifiedDate")
+    private String lastModifiedDate;
 }

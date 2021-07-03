@@ -56,8 +56,8 @@ public class SalesCodeListConfig {
     @Bean("CL_DOC_CATEGORY")
     public JdbcCodeList docCategory() {
         JdbcCodeList jdbcCodeList = getJdbcCodeListBase();
-        jdbcCodeList.setQuerySql("SELECT ID, CONCAT(VALUE10, case when STATUS = '2' then '(無効)' else '' end) as VALUE10 FROM VARIABLE WHERE TYPE = 'DOC_CATEGORY' ORDER BY STATUS, VALINT1, CODE");
-        jdbcCodeList.setValueColumn("ID");
+        jdbcCodeList.setQuerySql("SELECT CODE, CONCAT(VALUE10, case when STATUS = '2' then '(無効)' else '' end) as VALUE10 FROM VARIABLE WHERE TYPE = 'DOC_CATEGORY' ORDER BY STATUS, VALINT1, CODE");
+        jdbcCodeList.setValueColumn("CODE");
         jdbcCodeList.setLabelColumn("VALUE10");
         return jdbcCodeList;
     }
@@ -65,8 +65,8 @@ public class SalesCodeListConfig {
     @Bean("CL_DOC_SERVICE")
     public JdbcCodeList docService() {
         JdbcCodeList jdbcCodeList = getJdbcCodeListBase();
-        jdbcCodeList.setQuerySql("SELECT ID, CONCAT(VALUE10, case when STATUS = '2' then '(無効)' else '' end) as VALUE10 FROM VARIABLE WHERE TYPE = 'DOC_SERVICE' ORDER BY STATUS, VALINT1, CODE");
-        jdbcCodeList.setValueColumn("ID");
+        jdbcCodeList.setQuerySql("SELECT CODE, CONCAT(VALUE10, case when STATUS = '2' then '(無効)' else '' end) as VALUE10 FROM VARIABLE WHERE TYPE = 'DOC_SERVICE' ORDER BY STATUS, VALINT1, CODE");
+        jdbcCodeList.setValueColumn("CODE");
         jdbcCodeList.setLabelColumn("VALUE10");
         return jdbcCodeList;
     }

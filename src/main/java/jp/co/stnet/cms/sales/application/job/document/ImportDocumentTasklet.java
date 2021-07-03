@@ -1,13 +1,13 @@
 package jp.co.stnet.cms.sales.application.job.document;
 
 import com.github.dozermapper.core.Mapper;
-import jp.co.stnet.cms.base.domain.model.authentication.Account;
 import jp.co.stnet.cms.common.auditing.CustomDateFactory;
 import jp.co.stnet.cms.common.batch.ReaderFactory;
 import jp.co.stnet.cms.common.constant.Constants;
+import jp.co.stnet.cms.sales.application.repository.document.DocumentRepository;
 import jp.co.stnet.cms.sales.application.service.document.DocumentService;
 import jp.co.stnet.cms.sales.domain.model.document.Document;
-import jp.co.stnet.cms.sales.presentation.controller.document.DocumentCsvDlBean;
+import jp.co.stnet.cms.sales.domain.model.document.DocumentCsvBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -21,10 +21,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.SmartValidator;
-import org.terasoluna.gfw.common.exception.ResourceNotFoundException;
 
 import javax.validation.ValidationException;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Objects;
 
 import static java.lang.String.format;
@@ -36,7 +37,7 @@ public class ImportDocumentTasklet implements Tasklet {
     private static final Logger log = LoggerFactory.getLogger("JobLogger");
 
     // インポートファイルのカラム定義
-    private final String[] columns = {"id","statusLabel","title","body","publicScope","chargeDepartment","chargePerson","enactmentDate","lastRevisedDate","implementationDate","enactmentDepartment","reasonForChange","useStageLabel","intendedReader","summary","filesLabel","pdfFilesLabel","publicScopeLabel","fileTypeLabel","customerPublicLabel"};
+    private final String[] columns = {"id","status","statusLabel","title","docCategory","docCategoryValue1","docCategoryValue2","docCategoryValue3","docService","docServiceValue1","docServiceValue2","docServiceValue3","body","documentNumber", "chargeDepartment","chargePerson","enactmentDate","lastRevisedDate","implementationDate","enactmentDepartment","reasonForChange","useStage","useStageLabel","intendedReader","summary","fileTypeLabel","filesLabel","pdfFilesLabel","publicScope","publicScopeLabel","customerPublic","customerPublicLabel","lastModifiedBy","lastModifiedByLabel","lastModifiedDate"};
 
     @Autowired
     SmartValidator smartValidator;
@@ -49,6 +50,9 @@ public class ImportDocumentTasklet implements Tasklet {
 
     @Autowired
     DocumentService documentService;
+
+    @Autowired
+    DocumentRepository documentRepository;
 
 
     @Override
@@ -71,14 +75,14 @@ public class ImportDocumentTasklet implements Tasklet {
         boolean hasDBAccessException = false;
 
         // CSVファイルを１行を格納するBean
-        DocumentCsv csvLine = null;
+        DocumentCsvBean csvLine = null;
 
         // CSVファイルの入力チェック結果を格納するBindingResult
         BindingResult result = new BeanPropertyBindingResult(csvLine, "csvLine");
 
         // 選択したフォーマット用のReader取得
-        ItemStreamReader<DocumentCsv> fileReader
-                = new ReaderFactory<DocumentCsv>(columns, DocumentCsv.class).getItemStreamReader(fileType, inputFile, encoding);
+        ItemStreamReader<DocumentCsvBean> fileReader
+                = new ReaderFactory<DocumentCsvBean>(columns, DocumentCsvBean.class).getItemStreamReader(fileType, inputFile, encoding);
 
         // 初期化
         int countRead = 0; // 読み込み件数　読み込み件数 = 新規登録 + 更新 + 削除 + スキップ
@@ -109,17 +113,16 @@ public class ImportDocumentTasklet implements Tasklet {
 
                     if (current == null) {
                         // データベースに存在しない場合、新規登録
+                        input.setId(null);
                         input.setVersion(null);
                         documentService.save(input);
                         countInsert++;
 
-                    } else if ("admin".equals(current.getId())) {
-                        log.info("adminユーザは更新できないため、スキップされました。");
-                        countSkip++;
-
                     } else {
 
+                        // CSVの値で更新しない項目を復元
                         input.setVersion(current.getVersion());
+                        input.setFiles(current.getFiles());
 
                         if ("9".equals(input.getStatus())) {
                             // ステータス=9の場合は削除
@@ -173,8 +176,8 @@ public class ImportDocumentTasklet implements Tasklet {
     /*
      * 入力チェック(全件チェック)
      */
-    private void validateInputFile(ChunkContext chunkContext, BindingResult result, ItemStreamReader<DocumentCsv> fileReader) throws Exception {
-        DocumentCsv csvLine;
+    private void validateInputFile(ChunkContext chunkContext, BindingResult result, ItemStreamReader<DocumentCsvBean> fileReader) throws Exception {
+        DocumentCsvBean csvLine;
         fileReader.open(chunkContext.getStepContext().getStepExecution().getExecutionContext());
         while ((csvLine = fileReader.read()) != null) {
             smartValidator.validate(csvLine, result);
@@ -194,19 +197,18 @@ public class ImportDocumentTasklet implements Tasklet {
     }
 
     private Document findByKey(Long id) {
-
-        try {
-            return documentService.findById(id);
-        } catch (ResourceNotFoundException e) {
+        if (id == null) {
             return null;
         }
 
+            return documentRepository.findById(id).orElse(null);
     }
 
-    private Document map(DocumentCsv csv) {
+    private Document map(DocumentCsvBean csv) {
         final String jobUser = "job_user";
 
         Document v = beanMapper.map(csv, Document.class);
+        v.setUseStage(new HashSet( Arrays.asList( csv.getUseStage().split(",", 0) ) ));
         v.setCreatedDate(dateFactory.newLocalDateTime());
         v.setLastModifiedDate(dateFactory.newLocalDateTime());
         v.setCreatedBy(jobUser);

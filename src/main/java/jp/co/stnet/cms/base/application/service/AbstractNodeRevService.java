@@ -69,8 +69,11 @@ public abstract class AbstractNodeRevService<T extends AbstractEntity<ID> & Stat
             super.delete(id);
             return null;
         } else {
-            before.setVersion(current.getVersion());
-            return getRepository().saveAndFlush(beanMapper.map(before, clazz));
+            entityManager.detach(before);
+            T entity = beanMapper.map(before, clazz);
+            entity.setVersion(current.getVersion());
+
+            return getRepository().saveAndFlush(entity);
         }
     }
 

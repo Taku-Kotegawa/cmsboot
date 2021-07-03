@@ -36,7 +36,7 @@
         <table id="list" class="table-sm table-striped nowrap">
             <thead>
             <tr class="filter">
-                <th class="text-center px-2" data-filter="disable"></th><!-- 隠しフィールド -->
+<!--                <th class="text-center px-2" data-filter="disable"></th>&lt;!&ndash; 隠しフィールド &ndash;&gt;-->
                 <th data-filter="disable"></th><!-- # -->
                 <th data-filter="disable"></th><!-- 操作 -->
                 <th data-filter="disable"><!-- ステータス -->
@@ -80,7 +80,7 @@
                 <th></th><!-- 顧客公開 -->
             </tr>
             <tr class="title">
-                <th class="text-center px-0"></th>
+<!--                <th class="text-center px-0"></th>-->
                 <th class="text-center">#</th>
                 <th class="text-center">操作</th>
                 <th class="text-center">ステータス</th>
@@ -156,15 +156,15 @@ var pagechange = false;
 
           // 一覧に表示する項目とJSONの項目にマッピング
           'columns': [
-            {
-              data: 'id',
-              className: 'text-center',
-              orderable: false,
-              searchable: false,
-              checkboxes: {
-               'selectRow': false
-              }
-            },
+<!--            {-->
+<!--              data: 'id',-->
+<!--              className: 'text-center',-->
+<!--              orderable: false,-->
+<!--              searchable: false,-->
+<!--              checkboxes: {-->
+<!--               'selectRow': false-->
+<!--              }-->
+<!--            },-->
             {
               data: 'id',
               searchable: true,
@@ -276,11 +276,12 @@ var pagechange = false;
 
           // 初期ソート
           'order': [
-            [1, 'asc']
+            [0, 'asc']
           ],
 
           // ボタンの表示
-          'buttons': ['bulkdelete', 'bulkinvalid', 'bulkvalid','colvis', 'stateClear', 'csvdownload', 'tsvdownload', 'exceldownload', 'upload', 'createnew'],
+          // 'buttons': ['bulkdelete', 'bulkinvalid', 'bulkvalid',' colvis', 'stateClear', 'csvdownload', 'tsvdownload', 'exceldownload', 'upload', 'createnew'],
+          'buttons': ['colvis', 'stateClear', 'csvdownload', 'tsvdownload', 'upload', 'createnew'],
 
           // データロード後処理
           'initComplete': function (settings, json) {

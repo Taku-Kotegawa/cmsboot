@@ -1,5 +1,7 @@
 package jp.co.stnet.cms.common.validation;
 
+import jp.co.stnet.cms.common.util.StringUtils;
+
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.function.Function;
@@ -16,7 +18,7 @@ public class ParseableValidator implements ConstraintValidator<Parseable, String
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
 
-        if (null == value) {
+        if (StringUtils.isBlank(value)) {
             return true;
         }
 

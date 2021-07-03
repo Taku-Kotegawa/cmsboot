@@ -52179,6 +52179,25 @@ a.text-muted:hover {
   padding-bottom: 0px;
 }
 
+fieldset {
+  padding-left: .5rem !important;
+  padding-right: .5rem !important;
+  margin: .5rem 0;
+}
+
+fieldset legend {
+  width: auto;
+  font-size: medium;
+  padding: 0 5px;
+  margin: 0;
+  margin-left: 0.5rem;
+  /* font-weight: 700; */
+}
+
+.note-frame.card {
+  box-shadow: unset;
+}
+
 /**
  * @file
  * Seven styles for Tables.

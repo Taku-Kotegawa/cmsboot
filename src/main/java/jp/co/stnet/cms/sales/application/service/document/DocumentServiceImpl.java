@@ -8,10 +8,14 @@ import jp.co.stnet.cms.sales.application.repository.document.DocumentIndexReposi
 import jp.co.stnet.cms.sales.application.repository.document.DocumentRepository;
 import jp.co.stnet.cms.sales.application.repository.document.DocumentRevisionRepository;
 import jp.co.stnet.cms.sales.domain.model.document.*;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Iterator;
+import java.util.List;
 
 @Service
 @Transactional
@@ -49,11 +53,11 @@ public class DocumentServiceImpl extends AbstractNodeRevService<Document, Docume
         return true;
     }
 
-
     // FileManagedの永続化処理を追加
 
     @Override
     public Document save(Document entity) {
+        removeNullFile(entity.getFiles());
         Document saved = super.save(entity);
 
         if (saved.getFiles() != null) {
@@ -70,6 +74,7 @@ public class DocumentServiceImpl extends AbstractNodeRevService<Document, Docume
 
     @Override
     public Document saveDraft(Document entity) {
+        removeNullFile(entity.getFiles());
         Document saved = super.saveDraft(entity);
 
         if (saved.getFiles() != null) {
@@ -109,7 +114,9 @@ public class DocumentServiceImpl extends AbstractNodeRevService<Document, Docume
 
         super.delete(id);
 
-        documentIndexRepository.deleteById(id);
+        if (documentIndexRepository.existsById(id)) {
+            documentIndexRepository.deleteById(id);
+        }
 
     }
 
@@ -117,4 +124,21 @@ public class DocumentServiceImpl extends AbstractNodeRevService<Document, Docume
     public boolean equalsEntity(Document entity, Document currentCopy) {
         return false;
     }
+
+    /**
+     * フィールドがnullのFileを除去
+     * @param files Fileのリスト
+     * @return Fileのリスト
+     */
+    private List<File> removeNullFile(List<File> files) {
+        Iterator<File> iterator = files.iterator();
+        while (iterator.hasNext()) {
+            File file = iterator.next();
+            if (StringUtils.isAllBlank(file.getType(), file.getFileUuid(), file.getPdfUuid())) {
+                iterator.remove();
+            }
+        }
+        return files;
+    }
+
 }

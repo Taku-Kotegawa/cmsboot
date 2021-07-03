@@ -4,11 +4,14 @@ import jp.co.stnet.cms.base.domain.model.common.Status;
 import jp.co.stnet.cms.common.constant.Constants;
 import jp.co.stnet.cms.common.util.StateMap;
 import jp.co.stnet.cms.sales.domain.model.document.Document;
+import jp.co.stnet.cms.sales.domain.model.document.File;
 import lombok.NonNull;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import javax.validation.groups.Default;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -30,7 +33,11 @@ public class DocumentHelper {
             Constants.BUTTON.SAVE,
             Constants.BUTTON.VALID,
             Constants.BUTTON.INVALID,
-            Constants.BUTTON.DELETE
+            Constants.BUTTON.DELETE,
+            Constants.BUTTON.SAVE_DRAFT,
+            Constants.BUTTON.CANCEL_DRAFT,
+            Constants.BUTTON.COPY,
+            Constants.BUTTON.ADD_ITEM
     );
 
     // 対象のフォーム
@@ -75,37 +82,46 @@ public class DocumentHelper {
         // 新規作成
         if (Constants.OPERATION.CREATE.equals(operation)) {
             buttonState.setViewTrue(Constants.BUTTON.SAVE);
+            buttonState.setViewTrue(Constants.BUTTON.SAVE_DRAFT);
+            buttonState.setViewTrue(Constants.BUTTON.ADD_ITEM);
         }
 
         // 編集
         else if (Constants.OPERATION.UPDATE.equals(operation)) {
 
+            // ステータスが下書き
+            if (Status.DRAFT.getCodeValue().equals(record.getStatus())) {
+                buttonState.setViewTrue(Constants.BUTTON.CANCEL_DRAFT);
+                buttonState.setViewTrue(Constants.BUTTON.SAVE_DRAFT);
+                buttonState.setViewTrue(Constants.BUTTON.SAVE);
+                buttonState.setViewTrue(Constants.BUTTON.VIEW);
+                buttonState.setViewTrue(Constants.BUTTON.COPY);
+                buttonState.setViewTrue(Constants.BUTTON.ADD_ITEM);
+            }
+
             // ステータス有効
-            if (Status.VALID.getCodeValue().equals(record.getStatus())) {
+            else if (Status.VALID.getCodeValue().equals(record.getStatus())) {
+                buttonState.setViewTrue(Constants.BUTTON.SAVE_DRAFT);
                 buttonState.setViewTrue(Constants.BUTTON.SAVE);
                 buttonState.setViewTrue(Constants.BUTTON.VIEW);
                 buttonState.setViewTrue(Constants.BUTTON.INVALID);
+                buttonState.setViewTrue(Constants.BUTTON.COPY);
+                buttonState.setViewTrue(Constants.BUTTON.ADD_ITEM);
             }
 
             // ステータス無効
-            if (Status.INVALID.getCodeValue().equals(record.getStatus())) {
+            else if (Status.INVALID.getCodeValue().equals(record.getStatus())) {
                 buttonState.setViewTrue(Constants.BUTTON.VIEW);
                 buttonState.setViewTrue(Constants.BUTTON.VALID);
                 buttonState.setViewTrue(Constants.BUTTON.DELETE);
+                buttonState.setViewTrue(Constants.BUTTON.COPY);
             }
 
         }
 
         // 参照
         else if (Constants.OPERATION.VIEW.equals(operation)) {
-
-            // スタータス有効
-            if (Status.VALID.getCodeValue().equals(record.getStatus())) {
-                buttonState.setViewTrue(Constants.BUTTON.GOTOUPDATE);
-            } else {
-                // ステータス無効
-                buttonState.setViewTrue(Constants.BUTTON.GOTOUPDATE);
-            }
+            buttonState.setViewTrue(Constants.BUTTON.GOTOUPDATE);
         }
 
         return buttonState;
@@ -148,6 +164,7 @@ public class DocumentHelper {
         // 参照
         else if (Constants.OPERATION.VIEW.equals(operation)) {
             fieldState.setViewTrueAll();
+            fieldState.setViewFalse("saveRevision");
         }
 
         return fieldState;

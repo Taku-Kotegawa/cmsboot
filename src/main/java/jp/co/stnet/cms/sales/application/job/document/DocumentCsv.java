@@ -1,5 +1,6 @@
 package jp.co.stnet.cms.sales.application.job.document;
 
+import com.orangesignal.csv.annotation.CsvColumn;
 import jp.co.stnet.cms.common.validation.IsDate;
 import jp.co.stnet.cms.common.validation.Parseable;
 import lombok.Data;
@@ -7,12 +8,18 @@ import org.terasoluna.gfw.common.codelist.ExistInCodeList;
 
 import javax.validation.constraints.Pattern;
 
+import java.util.Date;
+
 import static jp.co.stnet.cms.common.validation.ParseableType.TO_INT;
 import static jp.co.stnet.cms.common.validation.ParseableType.TO_LONG;
 
+@Deprecated
 @Data
 public class DocumentCsv {
 
+    /**
+     * ID
+     */
     @Parseable(value = TO_LONG)
     private String id;
 
@@ -34,14 +41,56 @@ public class DocumentCsv {
     private String title;
 
     /**
+     * 区分 - コード
+     */
+    @ExistInCodeList(codeListId = "CL_DOC_CATEGORY")
+    private String docCategory;
+
+    /**
+     * 区分 - 区分1
+     */
+    private String docCategoryValue1;
+
+    /**
+     * 区分 - 区分2
+     */
+    private String docCategoryValue2;
+
+    /**
+     * 区分 - 区分3
+     */
+    private String docCategoryValue3;
+
+    /**
+     * サービス - コード
+     */
+    @ExistInCodeList(codeListId = "CL_DOC_SERVICE")
+    private String docService;
+
+    /**
+     * サービス - 事業
+     */
+    private String docServiceValue1;
+
+    /**
+     * サービス - サービス種別
+     */
+    private String docServiceValue2;
+
+    /**
+     * サービス - サービス
+     */
+    private String docServiceValue3;
+
+    /**
      * 本文
      */
     private String body;
 
     /**
-     * 公開区分
+     * ドキュメント管理番号
      */
-    private String publicScope;
+    private String documentNumber;
 
     /**
      * 管理部門
@@ -97,6 +146,10 @@ public class DocumentCsv {
     private String summary;
 
     /**
+     * 文書種類
+     */
+    private String fileTypeLabel;
+    /**
      * ファイル名
      */
     private String filesLabel;
@@ -109,15 +162,37 @@ public class DocumentCsv {
     /**
      * 公開区分
      */
-    private String publicScopeLabel;
+    private String publicScope;
 
     /**
-     * 文書種類
+     * 公開区分(ラベル)
      */
-    private String fileTypeLabel;
+    private String publicScopeLabel;
 
     /**
      * 顧客公開
      */
+    private String customerPublic;
+
+    /**
+     * 顧客公開(ラベル)
+     */
     private String customerPublicLabel;
+
+    /**
+     * 最終更新者(ユーザID)
+     */
+    private String lastModifiedBy;
+
+    /**
+     * 最終更新者(氏名)
+     */
+    private String lastModifiedByLabel;
+
+    /**
+     * 最終更新日時
+     */
+    @IsDate("yyyy/MM/dd HH:mm:ss")
+    private String lastModifiedDate;
+
 }

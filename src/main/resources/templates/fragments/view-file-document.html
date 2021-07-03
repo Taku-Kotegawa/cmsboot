@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>入力フィールドの部品(view-file-document)</title>
+</head>
+<body>
+
+<th:block th:fragment="m(field_id, label, value, placeholder)">
+
+    <!--/* 参照用 */-->
+    <th:block th:if="${fieldState.__${field_id}__Uuid__view}">
+        <th:block th:if="${__${value}__}">
+
+            <div class="input-group" th:id="|__${field_id}____attached-block|">
+              <span>
+                <i class="far fa-file ml-2"></i>
+                <a class="link-attached"
+                   target="_blank"
+                   th:href="|${op.getViewUrl(id)}/file/${field_id}/${status.index}|">[[${__${value}__.originalFilename}]]</a>
+              </span>
+            </div>
+
+        </th:block>
+        <th:block th:if="!${__${value}__}">
+            <div class="form-control form-control__view border-0" > - </div>
+        </th:block>
+    </th:block>
+
+</th:block>
+</body>
+</html>

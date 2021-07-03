@@ -10,6 +10,7 @@ import jp.co.stnet.cms.common.datatables.DataTablesInputDraft;
 import jp.co.stnet.cms.common.util.CsvUtils;
 import jp.co.stnet.cms.sales.application.service.document.DocumentService;
 import jp.co.stnet.cms.sales.domain.model.document.Document;
+import jp.co.stnet.cms.sales.domain.model.document.DocumentCsvBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -85,7 +86,7 @@ public class DocumentDownloadController {
         Page<Document> page = documentService.findPageByInput(input);
 
         model.addAttribute("exportCsvData", documents.getDocumentCsvDlBean(page.getContent()));
-        model.addAttribute("class", DocumentCsvDlBean.class);
+        model.addAttribute("class", DocumentCsvBean.class);
     }
 
     /**

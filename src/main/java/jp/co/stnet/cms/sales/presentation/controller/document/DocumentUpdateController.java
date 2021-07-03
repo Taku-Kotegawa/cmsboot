@@ -3,6 +3,7 @@ package jp.co.stnet.cms.sales.presentation.controller.document;
 import com.github.dozermapper.core.Mapper;
 import jp.co.stnet.cms.base.application.service.filemanage.FileManagedSharedService;
 import jp.co.stnet.cms.base.domain.model.authentication.LoggedInUser;
+import jp.co.stnet.cms.base.domain.model.common.Status;
 import jp.co.stnet.cms.common.constant.Constants;
 import jp.co.stnet.cms.common.datatables.OperationsUtil;
 import jp.co.stnet.cms.common.message.MessageKeys;
@@ -131,8 +132,9 @@ public class DocumentUpdateController {
                          BindingResult bindingResult,
                          Model model,
                          RedirectAttributes redirect,
-                         @AuthenticationPrincipal LoggedInUser loggedInUser,
-                         @PathVariable("id") Long id) {
+                         @PathVariable("id") Long id,
+                         @RequestParam(value = "saveDraft", required = false) boolean saveDraft,
+                         @AuthenticationPrincipal LoggedInUser loggedInUser) {
 
         // 実行権限が無い場合、AccessDeniedExceptionをスローし、キャッチしないと権限エラー画面に遷移
         documentService.hasAuthority(Constants.OPERATION.UPDATE, loggedInUser);
@@ -147,7 +149,12 @@ public class DocumentUpdateController {
         beanMapper.map(form, document);
 
         try {
-            documentService.save(document);
+            if (saveDraft) {
+                documentService.saveDraft(document);
+            } else {
+                document.setStatus(Status.VALID.getCodeValue());
+                documentService.save(document);
+            }
         } catch (BusinessException e) {
             model.addAttribute(e.getResultMessages());
             return updateForm(form, model, loggedInUser, id);
@@ -217,10 +224,10 @@ public class DocumentUpdateController {
         documentService.hasAuthority(Constants.OPERATION.CANCEL_DRAFT, loggedInUser);
 
         // 存在チェックを兼ねる
-        Document entity = documentService.findById(id);
+        Document document = documentService.findById(id);
 
         try {
-            entity = documentService.cancelDraft(id);
+            document = documentService.cancelDraft(id);
         } catch (BusinessException e) {
             redirect.addFlashAttribute(e.getResultMessages());
             return "redirect:" + op.getEditUrl(id.toString());
@@ -228,7 +235,7 @@ public class DocumentUpdateController {
 
         redirect.addFlashAttribute(ResultMessages.info().add(MessageKeys.I_CM_FW_0002));
 
-        if (entity != null) {
+        if (document != null) {
             return "redirect:" + op.getEditUrl(id.toString());
         } else {
             return "redirect:" + op.getListUrl();
@@ -254,6 +261,4 @@ public class DocumentUpdateController {
         return updateForm(form, model, loggedInUser, form.getId());
 
     }
-
-
 }

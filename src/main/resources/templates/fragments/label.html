@@ -9,13 +9,17 @@
 <th:block th:fragment="m(field_id, label)">
 
     <!--/* ラベル */-->
-    <th:block th:if="${fieldState.__${field_id}____label}">
-        <div th:if="${!#strings.startsWith(label,'$')}">
-            <label class="mt-3" th:for="${field_id}">[[${label}]]</label>
-        </div>
-        <div th:if="${#strings.startsWith(label,'$')}">
-            <label class="mt-3" th:for="${field_id}">[[__${label}__]]</label>
-        </div>
+    <th:block th:if="!${#strings.isEmpty(label)}">
+
+        <th:block th:if="${fieldState.__${field_id}____label}">
+            <div th:if="${!#strings.startsWith(label,'$')}">
+                <label class="mt-3" th:for="${field_id}">[[${label}]]</label>
+            </div>
+            <div th:if="${#strings.startsWith(label,'$')}">
+                <label class="mt-3" th:for="${field_id}">[[__${label}__]]</label>
+            </div>
+        </th:block>
+
     </th:block>
 
 </th:block>

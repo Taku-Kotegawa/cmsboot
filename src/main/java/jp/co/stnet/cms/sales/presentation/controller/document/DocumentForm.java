@@ -98,7 +98,7 @@ public class DocumentForm implements Serializable {
     /**
      * ファイル
      */
-    private Collection<@Valid FileForm> files = new ArrayList<>();
+    private List<@Valid FileForm> files = new ArrayList<>();
 
     /**
      * 想定読者

@@ -5,11 +5,15 @@ import jp.co.stnet.cms.base.domain.model.AbstractEntity;
 import jp.co.stnet.cms.base.domain.model.StatusInterface;
 import jp.co.stnet.cms.base.domain.model.variable.Variable;
 import lombok.*;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.CascadeType;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.validation.annotation.Validated;
 
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.*;
+import javax.validation.Valid;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
@@ -62,6 +66,11 @@ public class Document extends AbstractEntity<Long> implements Serializable, Stat
     private String publicScope = DocPublicScope.ALL.getValue();
 
     /**
+     * ドキュメント管理番号
+     */
+    private String documentNumber;
+
+    /**
      * 管理部門
      */
     private String chargeDepartment;
@@ -70,11 +79,6 @@ public class Document extends AbstractEntity<Long> implements Serializable, Stat
      * 管理担当者
      */
     private String chargePerson;
-
-    /**
-     * ドキュメント管理番号
-     */
-    private String documentNumber;
 
     /**
      * 制定日
@@ -120,7 +124,11 @@ public class Document extends AbstractEntity<Long> implements Serializable, Stat
      */
     @ManyToOne
     @NotFound(action = NotFoundAction.IGNORE)
-    @JoinColumn(name = "docCategory", referencedColumnName = "id", unique = false, insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
+//    @JoinColumn(name = "docCategory", referencedColumnName = "id", unique = false, insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
+    @JoinColumnsOrFormulas({
+            @JoinColumnOrFormula(formula = @JoinFormula(value = "'DOC_CATEGORY'", referencedColumnName = "type")),
+            @JoinColumnOrFormula(column = @JoinColumn(name = "docCategory", referencedColumnName = "code", unique = false, insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT)))
+    })
     private Variable docCategoryVariable;
 
     /**
@@ -133,13 +141,19 @@ public class Document extends AbstractEntity<Long> implements Serializable, Stat
      */
     @ManyToOne
     @NotFound(action = NotFoundAction.IGNORE)
-    @JoinColumn(name = "docService", referencedColumnName = "id", unique = false, insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
+//    @JoinColumn(name = "docService", referencedColumnName = "code", unique = false, insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
+//    @WhereJoinTable(clause = "type = 'DOC_SERVICE'")
+    @JoinColumnsOrFormulas({
+            @JoinColumnOrFormula(formula = @JoinFormula(value = "'DOC_SERVICE'", referencedColumnName = "type")),
+            @JoinColumnOrFormula(column = @JoinColumn(name = "docService", referencedColumnName = "code", unique = false, insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT)))
+    })
     private Variable docServiceVariable;
 
     /**
      * ファイル
      */
     @ElementCollection(fetch = FetchType.EAGER)
+    @OrderColumn
     private List<File> files;
 
     /**

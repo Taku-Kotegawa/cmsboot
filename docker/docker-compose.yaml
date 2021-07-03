@@ -3,6 +3,8 @@ services:
   db:
     image: mariadb:10.5
     restart: always
+    ports: 
+      - 3306:3306
     environment:
       MARIADB_ROOT_PASSWORD: rootroot
       MARIADB_DATABASE: cmsboot

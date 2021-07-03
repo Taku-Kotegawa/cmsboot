@@ -13,6 +13,8 @@ import java.util.*;
  */
 public class BeanUtils extends org.apache.commons.beanutils.BeanUtils {
 
+    private static final String SEPARATOR = "_";
+
     private static final Set<String> PRIMITIVE = Set.of(
             "java.lang.String",
             "java.lang.Integer",
@@ -50,7 +52,7 @@ public class BeanUtils extends org.apache.commons.beanutils.BeanUtils {
 
         String prefix = "";
         if (parentClassName != null && !parentClassName.isEmpty()) {
-            prefix = parentClassName + "-";
+            prefix = parentClassName + SEPARATOR;
         }
 
         Method[] methods = clazz.getMethods();
@@ -132,7 +134,7 @@ public class BeanUtils extends org.apache.commons.beanutils.BeanUtils {
 
         String prefix = "";
         if (parentClassName != null && !parentClassName.isEmpty()) {
-            prefix = parentClassName + "-";
+            prefix = parentClassName + SEPARATOR;
         }
 
         Map<String, String> fields = getFields(clazz, parentClassName);
