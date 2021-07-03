@@ -12,7 +12,7 @@
         <th:block th:if="__${value}__ != null">
             <!-- Boolean -->
             <th:block th:if="${__${value}__ == true || __${value}__ == false}">
-                <div class="form-control form-control__view">
+                <div class="form-control form-control__view border-0">
                     <th:block th:each="item : ${__${items}__}">
                         [['[']]
                         [[${item.key == '1' ? '◯' : '　'}]]
@@ -24,7 +24,7 @@
 
             <!-- 非Boolean -->
             <th:block th:if="${__${value}__ != true && __${value}__ != false}">
-                <div class="form-control form-control__view">
+                <div class="form-control form-control__view border-0">
                     <th:block th:each="item : ${__${items}__}">
                         [['[']]
                         [[${__${value}__ == item.key} ? '◯' : '　']]

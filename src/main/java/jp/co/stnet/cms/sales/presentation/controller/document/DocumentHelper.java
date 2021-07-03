@@ -165,6 +165,7 @@ public class DocumentHelper {
         else if (Constants.OPERATION.VIEW.equals(operation)) {
             fieldState.setViewTrueAll();
             fieldState.setViewFalse("saveRevision");
+            fieldState.setViewFalse("reasonForChange");
         }
 
         return fieldState;

@@ -7,9 +7,6 @@
 <body>
 
 <th:block th:fragment="m(field_id, label, value, placeholder)">
-
-    <!-- TODO この場所で本当に良いのか？   -->
-
     <!--/* 参照用 */-->
     <th:block th:if="${fieldState.__${field_id}____view}">
         <div class="form-control form-control__view">
