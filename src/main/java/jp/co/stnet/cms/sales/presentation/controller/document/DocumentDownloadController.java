@@ -3,14 +3,12 @@ package jp.co.stnet.cms.sales.presentation.controller.document;
 import com.github.dozermapper.core.Mapper;
 import jp.co.stnet.cms.base.application.service.filemanage.FileManagedSharedService;
 import jp.co.stnet.cms.base.domain.model.authentication.LoggedInUser;
-
-
-import static jp.co.stnet.cms.common.constant.Constants.*;
 import jp.co.stnet.cms.common.datatables.DataTablesInputDraft;
 import jp.co.stnet.cms.common.util.CsvUtils;
 import jp.co.stnet.cms.sales.application.service.document.DocumentService;
 import jp.co.stnet.cms.sales.domain.model.document.Document;
 import jp.co.stnet.cms.sales.domain.model.document.DocumentCsvBean;
+import jp.co.stnet.cms.sales.domain.model.document.File;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -20,7 +18,10 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.terasoluna.gfw.common.exception.ResourceNotFoundException;
 
+import static jp.co.stnet.cms.common.constant.Constants.CSV;
+import static jp.co.stnet.cms.common.constant.Constants.OPERATION;
 import static jp.co.stnet.cms.sales.presentation.controller.document.DocumentConstant.BASE_PATH;
 import static jp.co.stnet.cms.sales.presentation.controller.document.DocumentConstant.DOWNLOAD_FILENAME;
 
@@ -40,7 +41,6 @@ public class DocumentDownloadController {
 
     @Autowired
     Documents documents;
-
 
 
     /**
@@ -92,24 +92,35 @@ public class DocumentDownloadController {
     /**
      * ファイルダウンロード
      */
-    @GetMapping("{id}/download/{no}")
+    @GetMapping("{id}/file/{fileType}/{no}")
     public String download(
             Model model,
             @PathVariable("id") Long id,
+            @PathVariable("fileType") String fileType,
             @PathVariable("no") Integer no,
             @AuthenticationPrincipal LoggedInUser loggedInUser) {
 
         documentService.hasAuthority(OPERATION.UPDATE, loggedInUser);
 
         Document document = documentService.findById(id);
-        if (!document.getFiles().isEmpty()) {
-            String uuid = document.getFiles().get(no).getFileUuid();
-            if (uuid != null) {
-                model.addAttribute(fileManagedSharedService.findByUuid(uuid));
+
+        File file = document.getFiles().get(no);
+        if (file != null) {
+            if ("files_file".equals(fileType)) {
+                if (file.getFileManaged() != null) {
+                    model.addAttribute(file.getFileManaged());
+                }
+            } else {
+                if (file.getPdfManaged() != null) {
+                    model.addAttribute(file.getPdfManaged());
+                }
             }
+        } else {
+            throw new ResourceNotFoundException("file not found.");
         }
 
         return "fileManagedDownloadView";
     }
+
 
 }

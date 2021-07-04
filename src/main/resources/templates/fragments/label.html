@@ -13,10 +13,10 @@
 
         <th:block th:if="${fieldState.__${field_id}____label}">
             <div th:if="${!#strings.startsWith(label,'$')}">
-                <label class="mt-3" th:for="${field_id}">[[${label}]]</label>
+                <label class="mt-1" th:for="${field_id}">[[${label}]]</label>
             </div>
             <div th:if="${#strings.startsWith(label,'$')}">
-                <label class="mt-3" th:for="${field_id}">[[__${label}__]]</label>
+                <label class="mt-1" th:for="${field_id}">[[__${label}__]]</label>
             </div>
         </th:block>
 
