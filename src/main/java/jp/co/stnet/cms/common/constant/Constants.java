@@ -14,6 +14,7 @@ public final class Constants {
         public static final String DELETE = "delete";
         public static final String INVALID = "invalid";
         public static final String VALID = "valid";
+        public static final String SAVE = "save";
         public static final String SAVE_DRAFT = "saveDraft";
         public static final String CANCEL_DRAFT = "cancelDraft";
         public static final String LIST = "list";

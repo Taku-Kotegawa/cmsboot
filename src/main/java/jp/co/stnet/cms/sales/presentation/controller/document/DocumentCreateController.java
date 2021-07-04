@@ -42,6 +42,9 @@ public class DocumentCreateController {
     DocumentHelper helper;
 
     @Autowired
+    DocumentAuthority authority;
+
+    @Autowired
     DocumentService documentService;
 
     @Autowired

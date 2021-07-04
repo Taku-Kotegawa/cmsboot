@@ -24,6 +24,9 @@ import static jp.co.stnet.cms.sales.presentation.controller.document.DocumentCon
 public class DocumentDeleteController {
 
     @Autowired
+    DocumentAuthority authority;
+
+    @Autowired
     DocumentService documentService;
 
     /**
@@ -33,7 +36,7 @@ public class DocumentDeleteController {
     public String delete(Model model, RedirectAttributes redirect, @AuthenticationPrincipal LoggedInUser loggedInUser,
                          @PathVariable("id") Long id) {
 
-        documentService.hasAuthority(Constants.OPERATION.DELETE, loggedInUser);
+        authority.hasAuthority(Constants.OPERATION.DELETE, loggedInUser);
 
         try {
             documentService.delete(id);

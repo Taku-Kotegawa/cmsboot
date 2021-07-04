@@ -27,7 +27,6 @@ import javax.validation.groups.Default;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Iterator;
 
 import static jp.co.stnet.cms.sales.presentation.controller.document.DocumentConstant.BASE_PATH;
 import static jp.co.stnet.cms.sales.presentation.controller.document.DocumentConstant.TEMPLATE_FORM;
@@ -41,6 +40,9 @@ public class DocumentUpdateController {
     private final OperationsUtil op = new OperationsUtil(BASE_PATH);
 
     @Autowired
+    DocumentAuthority authority;
+
+    @Autowired
     DocumentHelper helper;
 
     @Autowired
@@ -52,6 +54,11 @@ public class DocumentUpdateController {
     @Autowired
     Mapper beanMapper;
 
+    /**
+     * 行追加ボタン押下時の操作
+     *
+     * @param form
+     */
     static void addFilesItem(DocumentForm form) {
 
         if (form.getFiles() == null) {
@@ -59,24 +66,22 @@ public class DocumentUpdateController {
             return;
         }
 
-        Iterator<FileForm> iterator = form.getFiles().iterator();
-        while (iterator.hasNext()) {
-            FileForm fileForm = iterator.next();
-            if (StringUtils.isAllBlank(fileForm.getType(), fileForm.getFileUuid(), fileForm.getPdfUuid())) {
-                iterator.remove();
-            }
-        }
+        form.getFiles().removeIf(fileForm
+                -> StringUtils.isAllBlank(fileForm.getType(), fileForm.getFileUuid(), fileForm.getPdfUuid()));
 
         for (FileForm fileForm : form.getFiles()) {
             if (fileForm.getFileUuid() == null) {
                 return;
             }
         }
-
-//        form.getFiles().add(new FileForm());
-
     }
 
+    /**
+     * uuidからFileManagedを設定
+     *
+     * @param fileForms ファイル設定行のフォーム
+     * @param service   FileManagedSharedService
+     */
     static void setFileManaged(Collection<FileForm> fileForms, FileManagedSharedService service) {
         for (FileForm fileForm : fileForms) {
             if (fileForm.getFileUuid() != null) {
@@ -101,10 +106,10 @@ public class DocumentUpdateController {
     public String updateForm(DocumentForm form, Model model, @AuthenticationPrincipal LoggedInUser loggedInUser,
                              @PathVariable("id") Long id) {
 
-        // 実行権限が無い場合、AccessDeniedExceptionをスローし、キャッチしないと権限エラー画面に遷移
-        documentService.hasAuthority(Constants.OPERATION.UPDATE, loggedInUser);
-
         Document document = documentService.findById(id);
+
+        // 実行権限が無い場合、AccessDeniedExceptionをスローし、キャッチしないと権限エラー画面に遷移
+        authority.hasAuthority(Constants.OPERATION.UPDATE, loggedInUser, document);
 
         // 初回表示(入力チェックエラー時の再表示でない場合)
         if (form.getVersion() == null) {
@@ -112,13 +117,12 @@ public class DocumentUpdateController {
         }
 
         setFileManaged(form.getFiles(), fileManagedSharedService);
-//        addFilesItem(form);
         form.setSaveRevision(false);
 
         model.addAttribute("document", document);
         model.addAttribute("buttonState", helper.getButtonStateMap(Constants.OPERATION.UPDATE, document, form).asMap());
         model.addAttribute("fieldState", helper.getFiledStateMap(Constants.OPERATION.UPDATE, document, form).asMap());
-        model.addAttribute("op", new OperationsUtil(BASE_PATH));
+        model.addAttribute("op", op);
 
         return TEMPLATE_FORM;
     }
@@ -136,14 +140,15 @@ public class DocumentUpdateController {
                          @RequestParam(value = "saveDraft", required = false) boolean saveDraft,
                          @AuthenticationPrincipal LoggedInUser loggedInUser) {
 
-        // 実行権限が無い場合、AccessDeniedExceptionをスローし、キャッチしないと権限エラー画面に遷移
-        documentService.hasAuthority(Constants.OPERATION.UPDATE, loggedInUser);
-
         if (bindingResult.hasErrors()) {
             return updateForm(form, model, loggedInUser, id);
         }
 
         Document document = documentService.findById(id);
+
+        // 実行権限が無い場合、AccessDeniedExceptionをスローし、キャッチしないと権限エラー画面に遷移
+        authority.hasAuthority(Constants.OPERATION.UPDATE, loggedInUser, document);
+
         document.setFiles(new ArrayList<>());
         document.setUseStage(new HashSet<>());
         beanMapper.map(form, document);
@@ -163,7 +168,6 @@ public class DocumentUpdateController {
         ResultMessages messages = ResultMessages.info().add(MessageKeys.I_CM_FW_0004);
         redirect.addFlashAttribute(messages);
 
-        OperationsUtil op = new OperationsUtil(BASE_PATH);
         return "redirect:" + op.getEditUrl(id.toString());
     }
 
@@ -174,12 +178,12 @@ public class DocumentUpdateController {
     public String invalid(Model model, RedirectAttributes redirect, @AuthenticationPrincipal LoggedInUser loggedInUser,
                           @PathVariable("id") Long id) {
 
-        documentService.hasAuthority(Constants.OPERATION.INVALID, loggedInUser);
+        Document document = documentService.findById(id);
 
-        Document entity = documentService.findById(id);
+        authority.hasAuthority(Constants.OPERATION.INVALID, loggedInUser, document);
 
         try {
-            entity = documentService.invalid(id);
+            documentService.invalid(id);
         } catch (BusinessException e) {
             redirect.addFlashAttribute(e.getResultMessages());
             return "redirect:" + op.getEditUrl(id.toString());
@@ -197,13 +201,14 @@ public class DocumentUpdateController {
     public String valid(Model model, RedirectAttributes redirect, @AuthenticationPrincipal LoggedInUser loggedInUser,
                         @PathVariable("id") Long id) {
 
-        documentService.hasAuthority(Constants.OPERATION.VALID, loggedInUser);
 
         // 存在チェックを兼ねる
-        Document entity = documentService.findById(id);
+        Document document = documentService.findById(id);
+
+        authority.hasAuthority(Constants.OPERATION.VALID, loggedInUser, document);
 
         try {
-            entity = documentService.valid(id);
+            documentService.valid(id);
         } catch (BusinessException e) {
             redirect.addFlashAttribute(e.getResultMessages());
             return "redirect:" + op.getViewUrl(id.toString());
@@ -221,13 +226,14 @@ public class DocumentUpdateController {
     public String cancelDraft(Model model, RedirectAttributes redirect, @AuthenticationPrincipal LoggedInUser loggedInUser,
                               @PathVariable("id") Long id) {
 
-        documentService.hasAuthority(Constants.OPERATION.CANCEL_DRAFT, loggedInUser);
 
         // 存在チェックを兼ねる
         Document document = documentService.findById(id);
 
+        authority.hasAuthority(Constants.OPERATION.CANCEL_DRAFT, loggedInUser, document);
+
         try {
-            document = documentService.cancelDraft(id);
+            documentService.cancelDraft(id);
         } catch (BusinessException e) {
             redirect.addFlashAttribute(e.getResultMessages());
             return "redirect:" + op.getEditUrl(id.toString());
@@ -251,8 +257,7 @@ public class DocumentUpdateController {
                                     BindingResult bindingResult,
                                     Model model,
                                     RedirectAttributes redirect,
-                                    @AuthenticationPrincipal LoggedInUser loggedInUser,
-                                    @RequestParam(value = "saveDraft", required = false) String saveDraft) {
+                                    @AuthenticationPrincipal LoggedInUser loggedInUser) {
 
         setFileManaged(form.getFiles(), fileManagedSharedService);
         addFilesItem(form);

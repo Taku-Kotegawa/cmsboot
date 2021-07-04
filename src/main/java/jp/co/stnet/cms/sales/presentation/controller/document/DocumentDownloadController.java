@@ -31,6 +31,9 @@ import static jp.co.stnet.cms.sales.presentation.controller.document.DocumentCon
 public class DocumentDownloadController {
 
     @Autowired
+    DocumentAuthority authority;
+
+    @Autowired
     DocumentService documentService;
 
     @Autowired
@@ -49,7 +52,7 @@ public class DocumentDownloadController {
     @GetMapping(value = "/list/csv")
     public String listCsv(@Validated DataTablesInputDraft input, Model model, @AuthenticationPrincipal LoggedInUser loggedInUser) {
 
-//        documentService.hasAuthority(Constants.OPERATION.UPDATE, loggedInUser);
+        authority.hasAuthority(OPERATION.LIST, loggedInUser);
 
         setModelForCsv(input, model);
 
@@ -64,7 +67,7 @@ public class DocumentDownloadController {
     @GetMapping(value = "/list/tsv")
     public String listTsv(@Validated DataTablesInputDraft input, Model model, @AuthenticationPrincipal LoggedInUser loggedInUser) {
 
-        documentService.hasAuthority(OPERATION.UPDATE, loggedInUser);
+        authority.hasAuthority(OPERATION.LIST, loggedInUser);
 
         setModelForCsv(input, model);
 
@@ -100,9 +103,9 @@ public class DocumentDownloadController {
             @PathVariable("no") Integer no,
             @AuthenticationPrincipal LoggedInUser loggedInUser) {
 
-        documentService.hasAuthority(OPERATION.UPDATE, loggedInUser);
-
         Document document = documentService.findById(id);
+
+        authority.hasAuthority(OPERATION.VIEW, loggedInUser, document);
 
         File file = document.getFiles().get(no);
         if (file != null) {
@@ -121,6 +124,5 @@ public class DocumentDownloadController {
 
         return "fileManagedDownloadView";
     }
-
 
 }

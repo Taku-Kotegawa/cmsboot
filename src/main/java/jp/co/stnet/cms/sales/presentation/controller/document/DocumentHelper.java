@@ -1,17 +1,17 @@
 package jp.co.stnet.cms.sales.presentation.controller.document;
 
+import jp.co.stnet.cms.base.domain.model.authentication.LoggedInUser;
 import jp.co.stnet.cms.base.domain.model.common.Status;
 import jp.co.stnet.cms.common.constant.Constants;
 import jp.co.stnet.cms.common.util.StateMap;
 import jp.co.stnet.cms.sales.domain.model.document.Document;
-import jp.co.stnet.cms.sales.domain.model.document.File;
 import lombok.NonNull;
-import org.apache.commons.lang3.StringUtils;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.stereotype.Component;
 
 import javax.validation.groups.Default;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 

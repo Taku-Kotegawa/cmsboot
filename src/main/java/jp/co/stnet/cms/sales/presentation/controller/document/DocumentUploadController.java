@@ -33,6 +33,9 @@ import static jp.co.stnet.cms.sales.presentation.controller.document.DocumentCon
 public class DocumentUploadController {
 
     @Autowired
+    DocumentAuthority authority;
+
+    @Autowired
     FileManagedSharedService fileManagedSharedService;
 
     @Autowired
@@ -49,7 +52,7 @@ public class DocumentUploadController {
     public String uploadForm(@ModelAttribute UploadForm form, Model model,
                              @AuthenticationPrincipal LoggedInUser loggedInUser) {
 
-        documentService.hasAuthority(Constants.OPERATION.UPLOAD, loggedInUser);
+        authority.hasAuthority(Constants.OPERATION.UPLOAD, loggedInUser);
 
         form.setJobName(UPLOAD_JOB_ID);
 
@@ -73,7 +76,7 @@ public class DocumentUploadController {
                          RedirectAttributes redirectAttributes,
                          @AuthenticationPrincipal LoggedInUser loggedInUser) {
 
-        documentService.hasAuthority(Constants.OPERATION.UPLOAD, loggedInUser);
+        authority.hasAuthority(Constants.OPERATION.UPLOAD, loggedInUser);
 
         final String jobName = UPLOAD_JOB_ID;
 

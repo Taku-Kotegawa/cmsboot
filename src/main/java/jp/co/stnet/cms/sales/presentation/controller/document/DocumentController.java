@@ -27,6 +27,9 @@ public class DocumentController {
     DocumentHelper helper;
 
     @Autowired
+    DocumentAuthority authority;
+
+    @Autowired
     DocumentService documentService;
 
     @ModelAttribute
@@ -42,7 +45,7 @@ public class DocumentController {
                        @PathVariable("id") Long id) {
 
         // 権限チェック
-        documentService.hasAuthority(Constants.OPERATION.VIEW, loggedInUser);
+        authority.hasAuthority(Constants.OPERATION.VIEW, loggedInUser);
 
         // データ取得
         Document document = documentService.findById(id);

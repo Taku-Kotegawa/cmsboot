@@ -81,6 +81,7 @@ public interface NodeIService<T extends AbstractEntity<ID>, ID> {
      * @return true=操作する権限を持つ, false=操作する権限なし
      * @throws AccessDeniedException @PostAuthorizeを用いてfalse時にスロー
      */
+    @Deprecated
     Boolean hasAuthority(String operation, LoggedInUser loggedInUser);
 
 
