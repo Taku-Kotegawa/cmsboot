@@ -44,11 +44,13 @@ public class DocumentController {
     public String view(Model model, @AuthenticationPrincipal LoggedInUser loggedInUser,
                        @PathVariable("id") Long id) {
 
-        // 権限チェック
-        authority.hasAuthority(Constants.OPERATION.VIEW, loggedInUser);
 
         // データ取得
         Document document = documentService.findById(id);
+
+        // 権限チェック
+        authority.hasAuthority(Constants.OPERATION.VIEW, loggedInUser, document);
+
         model.addAttribute("document", document);
 
         model.addAttribute("buttonState", helper.getButtonStateMap(Constants.OPERATION.VIEW, document, null).asMap());

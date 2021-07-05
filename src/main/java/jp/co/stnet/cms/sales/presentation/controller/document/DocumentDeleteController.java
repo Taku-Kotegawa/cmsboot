@@ -5,6 +5,7 @@ import jp.co.stnet.cms.common.constant.Constants;
 import jp.co.stnet.cms.common.datatables.OperationsUtil;
 import jp.co.stnet.cms.common.message.MessageKeys;
 import jp.co.stnet.cms.sales.application.service.document.DocumentService;
+import jp.co.stnet.cms.sales.domain.model.document.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -36,7 +37,8 @@ public class DocumentDeleteController {
     public String delete(Model model, RedirectAttributes redirect, @AuthenticationPrincipal LoggedInUser loggedInUser,
                          @PathVariable("id") Long id) {
 
-        authority.hasAuthority(Constants.OPERATION.DELETE, loggedInUser);
+        Document document = documentService.findById(id);
+        authority.hasAuthority(Constants.OPERATION.DELETE, loggedInUser, document);
 
         try {
             documentService.delete(id);

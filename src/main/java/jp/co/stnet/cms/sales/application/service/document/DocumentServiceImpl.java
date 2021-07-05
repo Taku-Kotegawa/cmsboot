@@ -14,6 +14,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -56,9 +57,9 @@ public class DocumentServiceImpl extends AbstractNodeRevService<Document, Docume
     // FileManagedの永続化処理を追加
 
     @Override
-    public Document save(Document entity) {
-        removeNullFile(entity.getFiles());
-        Document saved = super.save(entity);
+    public Document save(Document document) {
+        removeNullFile(document.getFiles());
+        Document saved = super.save(document);
 
         if (saved.getFiles() != null) {
             for (File file : saved.getFiles()) {
@@ -67,15 +68,16 @@ public class DocumentServiceImpl extends AbstractNodeRevService<Document, Docume
             }
         }
 
-        documentIndexRepository.save(beanMapper.map(saved, DocumentIndex.class));
+        documentIndexRepository.deleteById(saved.getId());
+        documentIndexRepository.saveAll(mapDocumentIndex(saved));
 
         return saved;
     }
 
     @Override
-    public Document saveDraft(Document entity) {
-        removeNullFile(entity.getFiles());
-        Document saved = super.saveDraft(entity);
+    public Document saveDraft(Document document) {
+        removeNullFile(document.getFiles());
+        Document saved = super.saveDraft(document);
 
         if (saved.getFiles() != null) {
             for (File file : saved.getFiles()) {
@@ -97,7 +99,8 @@ public class DocumentServiceImpl extends AbstractNodeRevService<Document, Docume
     @Override
     public Document valid(Long id) {
         Document saved = super.valid(id);
-        documentIndexRepository.save(beanMapper.map(saved, DocumentIndex.class));
+        documentIndexRepository.deleteById(saved.getId());
+        documentIndexRepository.saveAll(mapDocumentIndex(saved));
         return saved;
     }
 
@@ -114,19 +117,18 @@ public class DocumentServiceImpl extends AbstractNodeRevService<Document, Docume
 
         super.delete(id);
 
-        if (documentIndexRepository.existsById(id)) {
-            documentIndexRepository.deleteById(id);
-        }
+        documentIndexRepository.deleteById(id);
 
     }
 
     @Override
-    public boolean equalsEntity(Document entity, Document currentCopy) {
+    public boolean equalsEntity(Document document, Document currentCopy) {
         return false;
     }
 
     /**
      * フィールドがnullのFileを除去
+     *
      * @param files Fileのリスト
      * @return Fileのリスト
      */
@@ -141,4 +143,29 @@ public class DocumentServiceImpl extends AbstractNodeRevService<Document, Docume
         return files;
     }
 
+
+    /**
+     * Document -> DocumentIdx にマップ
+     *
+     * @param document Documentエンティティ
+     * @return DocumentIndexエンティティ
+     */
+    private List<DocumentIndex> mapDocumentIndex(Document document) {
+
+        if (document == null) {
+            throw new IllegalArgumentException("document must not be null.");
+        }
+
+        List<DocumentIndex> documentIndices = new ArrayList<>();
+
+        for (int i = 0; i < document.getFiles().size(); i++) {
+            File file = document.getFiles().get(i);
+            DocumentIndex documentIndex = beanMapper.map(file, DocumentIndex.class);
+            beanMapper.map(document, documentIndex);
+            documentIndex.setNo(i);
+            documentIndices.add(documentIndex);
+        }
+
+        return documentIndices;
+    }
 }

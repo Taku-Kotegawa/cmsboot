@@ -41,8 +41,8 @@ public class File implements Serializable {
     @JoinColumn(name = "pdfUuid", referencedColumnName = "uuid", unique = false, insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
     private FileManaged pdfManaged;
 
-    @FullTextField(analyzer = "japanese")
-    @Column(columnDefinition = "TEXT")
-    private String content;
+//    @FullTextField(analyzer = "japanese")
+//    @Column(columnDefinition = "TEXT")
+//    private String content;
 
 }

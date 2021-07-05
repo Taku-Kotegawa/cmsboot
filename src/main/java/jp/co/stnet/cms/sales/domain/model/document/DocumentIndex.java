@@ -2,6 +2,8 @@ package jp.co.stnet.cms.sales.domain.model.document;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jp.co.stnet.cms.base.domain.model.StatusInterface;
+import jp.co.stnet.cms.base.domain.model.authentication.FailedPasswordReissuePK;
+import jp.co.stnet.cms.base.domain.model.filemanage.FileManaged;
 import jp.co.stnet.cms.base.domain.model.variable.Variable;
 import lombok.*;
 import org.hibernate.annotations.*;
@@ -25,6 +27,7 @@ import java.util.Set;
 @NoArgsConstructor
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = false)
+@IdClass(DocumentIndexPK.class)
 public class DocumentIndex implements Serializable, StatusInterface {
 
     /**
@@ -63,7 +66,12 @@ public class DocumentIndex implements Serializable, StatusInterface {
      * 内部ID
      */
     @Id
+    @DocumentId
     private Long id;
+
+    @Id
+    @DocumentId
+    private Integer no;
 
     /**
      * ステータス
@@ -191,12 +199,35 @@ public class DocumentIndex implements Serializable, StatusInterface {
     })
     private Variable docServiceVariable;
 
-    /**
-     * ファイル
-     */
+//    /**
+//     * ファイル
+//     */
+//    @IndexedEmbedded
+//    @ElementCollection(fetch = FetchType.EAGER)
+//    private List<File> files;
+
+
+    private String type;
+
+    private String fileUuid;
+
+    @ManyToOne
+    @NotFound(action = NotFoundAction.IGNORE)
+    @JoinColumn(name = "fileUuid", referencedColumnName = "uuid", unique = false, insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
     @IndexedEmbedded
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<File> files;
+    @IndexingDependency(reindexOnUpdate = ReindexOnUpdate.NO)
+    private FileManaged fileManaged;
+
+    private String pdfUuid;
+
+    @ManyToOne
+    @NotFound(action = NotFoundAction.IGNORE)
+    @JoinColumn(name = "pdfUuid", referencedColumnName = "uuid", unique = false, insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
+    private FileManaged pdfManaged;
+
+    @FullTextField(analyzer = "japanese")
+    @Column(columnDefinition = "TEXT")
+    private String content;
 
     /**
      * 想定読者
