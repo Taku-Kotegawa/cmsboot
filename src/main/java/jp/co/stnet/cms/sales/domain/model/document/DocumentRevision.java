@@ -56,19 +56,34 @@ public class DocumentRevision extends AbstractRevisionEntity implements Serializ
     private String publicScope;
 
     /**
-     * 管理部門
-     */
-    private String chargeDepartment;
-
-    /**
-     * 管理担当者
-     */
-    private String chargePerson;
-
-    /**
      * ドキュメント管理番号
      */
     private String documentNumber;
+
+    /**
+     * 作成部門
+     */
+    private String departmentForCreation;
+
+    /**
+     * 作成担当者
+     */
+    private String chargePersonForCreation;
+
+    /**
+     * 作成責任者
+     */
+    private String responsiblePersonForCreation;
+
+    /**
+     * 発行部門
+     */
+    private String departmentForPublish;
+
+    /**
+     * 発行責任者
+     */
+    private String responsiblePersonForPublish;
 
     /**
      * 制定日

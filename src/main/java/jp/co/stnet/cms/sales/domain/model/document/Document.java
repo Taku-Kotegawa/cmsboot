@@ -71,14 +71,29 @@ public class Document extends AbstractEntity<Long> implements Serializable, Stat
     private String documentNumber;
 
     /**
-     * 管理部門
+     * 作成部門
      */
-    private String chargeDepartment;
+    private String departmentForCreation;
 
     /**
-     * 管理担当者
+     * 作成担当者
      */
-    private String chargePerson;
+    private String chargePersonForCreation;
+
+    /**
+     * 作成責任者
+     */
+    private String responsiblePersonForCreation;
+
+    /**
+     * 発行部門
+     */
+    private String departmentForPublish;
+
+    /**
+     * 発行責任者
+     */
+    private String responsiblePersonForPublish;
 
     /**
      * 制定日

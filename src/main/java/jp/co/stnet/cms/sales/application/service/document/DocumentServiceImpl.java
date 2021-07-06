@@ -133,14 +133,18 @@ public class DocumentServiceImpl extends AbstractNodeRevService<Document, Docume
      * @return Fileのリスト
      */
     private List<File> removeNullFile(List<File> files) {
-        Iterator<File> iterator = files.iterator();
-        while (iterator.hasNext()) {
-            File file = iterator.next();
-            if (StringUtils.isAllBlank(file.getType(), file.getFileUuid(), file.getPdfUuid())) {
-                iterator.remove();
+        if (files != null) {
+            Iterator<File> iterator = files.iterator();
+            while (iterator.hasNext()) {
+                File file = iterator.next();
+                if (StringUtils.isAllBlank(file.getType(), file.getFileUuid(), file.getPdfUuid())) {
+                    iterator.remove();
+                }
             }
+            return files;
         }
-        return files;
+
+        return new ArrayList<>();
     }
 
 

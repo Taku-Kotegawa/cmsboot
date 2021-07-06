@@ -137,7 +137,7 @@ public class DocumentHelper {
      */
     StateMap getFiledStateMap(String operation, Document record, DocumentForm form) {
         List<String> excludeKeys = new ArrayList<>();
-        List<String> includeKeys = List.of("status");
+        List<String> includeKeys = List.of("status", "lastModifiedBy", "lastModifiedDate");
 
         // 常設の隠しフィールドは状態管理しない
         StateMap fieldState = new StateMap(formClass, includeKeys, excludeKeys);
@@ -147,6 +147,8 @@ public class DocumentHelper {
             fieldState.setInputTrueAll();
             fieldState.setInputFalse("status");
             fieldState.setInputFalse("saveRevision");
+            fieldState.setInputFalse("lastModifiedBy");
+            fieldState.setInputFalse("lastModifiedDate");
 
         }
 
@@ -154,6 +156,8 @@ public class DocumentHelper {
         else if (Constants.OPERATION.UPDATE.equals(operation)) {
             fieldState.setInputTrueAll();
             fieldState.setViewTrue("status");
+            fieldState.setInputFalse("lastModifiedBy");
+            fieldState.setInputFalse("lastModifiedDate");
 
             // スタータスが無効
             if (Status.INVALID.getCodeValue().equals(record.getStatus())) {

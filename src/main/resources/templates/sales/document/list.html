@@ -62,17 +62,20 @@
                         </th:block>
                     </select>
                 </th>
-                <th></th><!-- 想定読者 -->
-                <th></th><!-- 概要 -->
+<!--                <th></th>&lt;!&ndash; 想定読者 &ndash;&gt;-->
+<!--                <th></th>&lt;!&ndash; 概要 &ndash;&gt;-->
                 <th></th><!-- 文書種類 -->
                 <th></th><!-- ファイル -->
-                <th></th><!-- 管理番号 -->
-                <th></th><!-- 管理部門 -->
-                <th></th><!-- 管理担当者 -->
-                <th></th><!-- 制定日 -->
-                <th></th><!-- 最終改定日 -->
-                <th></th><!-- 実施日 -->
-                <th></th><!-- 制定箇所 -->
+<!--                <th></th>&lt;!&ndash; 管理番号 &ndash;&gt;-->
+                <th></th><!-- 作成部門 -->
+                <th></th><!-- 作成担当者 -->
+                <th></th><!-- 作成責任者 -->
+                <th></th><!-- 発行部門 -->
+                <th></th><!-- 発行責任者 -->
+<!--                <th></th>&lt;!&ndash; 制定日 &ndash;&gt;-->
+<!--                <th></th>&lt;!&ndash; 最終改定日 &ndash;&gt;-->
+<!--                <th></th>&lt;!&ndash; 実施日 &ndash;&gt;-->
+<!--                <th></th>&lt;!&ndash; 制定箇所 &ndash;&gt;-->
                 <th></th><!-- 最終更新者 -->
                 <th></th><!-- 最終更新日 -->
                 <th></th><!-- 公開区分 -->
@@ -92,22 +95,25 @@
                 <th class="text-center">サービス3</th>
                 <th class="text-center">タイトル</th>
                 <th class="text-center">活用シーン</th>
-                <th class="text-center">想定読者</th>
-                <th class="text-center">概要</th>
+<!--                <th class="text-center">想定読者</th>-->
+<!--                <th class="text-center">概要</th>-->
                 <th class="text-center">文書種類</th>
                 <th class="text-center">ファイル</th>
-                <th class="text-center">管理番号</th>
-                <th class="text-center">管理部門</th>
-                <th class="text-center">管理担当者</th>
-                <th class="text-center">制定日</th>
-                <th class="text-center">最終改定日</th>
-                <th class="text-center">実施日</th>
-                <th class="text-center">制定箇所</th>
+<!--                <th class="text-center">管理番号</th>-->
+                <th class="text-center">作成部門</th>
+                <th class="text-center">作成担当者</th>
+                <th class="text-center">作成責任者</th>
+                <th class="text-center">発行部門</th>
+                <th class="text-center">発行責任者</th>
+<!--                <th class="text-center">制定日</th>-->
+<!--                <th class="text-center">最終改定日</th>-->
+<!--                <th class="text-center">実施日</th>-->
+<!--                <th class="text-center">制定箇所</th>-->
+                <th class="text-center">公開区分</th>
+                <th class="text-center">顧客公開</th>
+                <th class="text-center">変更理由</th>
                 <th class="text-center">最終更新日時</th>
                 <th class="text-center">最終更新者</th>
-                <th class="text-center">公開区分</th>
-                <th class="text-center">変更理由</th>
-                <th class="text-center">顧客公開</th>
             </tr>
             </thead>
             <tbody></tbody>
@@ -153,6 +159,8 @@ var pagechange = false;
           // },
 
           // select: 'multi',
+
+          checkboxes: false,
 
           // 一覧に表示する項目とJSONの項目にマッピング
           'columns': [
@@ -210,46 +218,70 @@ var pagechange = false;
               data: 'useStageLabel',
               render: $.fn.dataTable.render.text(),
             },
-            {
-              data: 'intendedReader',
-              render: $.fn.dataTable.render.text(),
-            },
-            {
-              data: 'summary',
-              render: $.fn.dataTable.render.text(),
-            },
+<!--            {-->
+<!--              data: 'intendedReader',-->
+<!--              render: $.fn.dataTable.render.text(),-->
+<!--            },-->
+<!--            {-->
+<!--              data: 'summary',-->
+<!--              render: $.fn.dataTable.render.text(),-->
+<!--            },-->
             {
               data: 'fileTypeLabel',
             },
             {
               data: 'filesLabel',
             },
+<!--            {-->
+<!--              data: 'documentNumber',-->
+<!--              render: $.fn.dataTable.render.text(),-->
+<!--            },-->
             {
-              data: 'documentNumber',
+              data: 'departmentForCreation',
               render: $.fn.dataTable.render.text(),
             },
             {
-              data: 'chargeDepartment',
+              data: 'responsiblePersonForCreation',
               render: $.fn.dataTable.render.text(),
             },
             {
-              data: 'chargePerson',
+              data: 'chargePersonForCreation',
               render: $.fn.dataTable.render.text(),
             },
             {
-              data: 'enactmentDate',
+              data: 'departmentForPublish',
               render: $.fn.dataTable.render.text(),
             },
             {
-              data: 'lastRevisedDate',
+              data: 'responsiblePersonForPublish',
+              render: $.fn.dataTable.render.text(),
+            },
+<!--            {-->
+<!--              data: 'enactmentDate',-->
+<!--              render: $.fn.dataTable.render.text(),-->
+<!--            },-->
+<!--            {-->
+<!--              data: 'lastRevisedDate',-->
+<!--              render: $.fn.dataTable.render.text(),-->
+<!--            },-->
+<!--            {-->
+<!--              data: 'implementationDate',-->
+<!--              render: $.fn.dataTable.render.text(),-->
+<!--            },-->
+<!--            {-->
+<!--              data: 'enactmentDepartment',-->
+<!--              render: $.fn.dataTable.render.text(),-->
+<!--            },-->
+            {
+              data: 'publicScopeLabel',
               render: $.fn.dataTable.render.text(),
             },
             {
-              data: 'implementationDate',
+              data: 'customerPublicLabel',
               render: $.fn.dataTable.render.text(),
             },
             {
-              data: 'enactmentDepartment',
+              data: 'reasonForChange',
               render: $.fn.dataTable.render.text(),
             },
             {
@@ -258,18 +290,6 @@ var pagechange = false;
             },
             {
               data: 'lastModifiedBy',
-              render: $.fn.dataTable.render.text(),
-            },
-            {
-              data: 'publicScopeLabel',
-              render: $.fn.dataTable.render.text(),
-            },
-            {
-              data: 'reasonForChange',
-              render: $.fn.dataTable.render.text(),
-            },
-            {
-              data: 'customerPublicLabel',
               render: $.fn.dataTable.render.text(),
             },
           ],
@@ -310,20 +330,20 @@ var pagechange = false;
         } );
 
         // 下書きチェックボックス押下時の操作
-        $('#draft').change().on('change', function (e, s) {
-          localStorage.dataTables_Draft = e.target.checked;
-          table.draw();
-          // fnColumns(table);
-        });
+<!--        $('#draft').change().on('change', function (e, s) {-->
+<!--          localStorage.dataTables_Draft = e.target.checked;-->
+<!--          table.draw();-->
+<!--          // fnColumns(table);-->
+<!--        });-->
 
         // 画面表示時の下書きチェックボックスの復元
-        if (localStorage.dataTables_Draft == 'false') {
-          $('#draft')[0].checked = false;
-          table.draw();
-        } else if (localStorage.dataTables_Draft != 'false' && $('#draft')[0].checked == false) {
-          $('#draft')[0].checked = true;
-          table.draw();
-        }
+<!--        if (localStorage.dataTables_Draft == 'false') {-->
+<!--          $('#draft')[0].checked = false;-->
+<!--          table.draw();-->
+<!--        } else if (localStorage.dataTables_Draft != 'false' && $('#draft')[0].checked == false) {-->
+<!--          $('#draft')[0].checked = true;-->
+<!--          table.draw();-->
+<!--        }-->
 
         // 列の並び替えと表示／非表示を操作するテスト
         $('#reverse').click( function (e) {

@@ -91,9 +91,18 @@ public class CodeListConfig {
     @Bean("CL_DEPARTMENT")
     public JdbcCodeList docDepartmetn() {
         JdbcCodeList jdbcCodeList = getJdbcCodeListBase();
-        jdbcCodeList.setQuerySql("SELECT CODE, CONCAT(VALUE1, case when STATUS = '2' then '(無効)' else '' end) as VALUE1 FROM VARIABLE WHERE TYPE = 'DOC_DEPARTMENT' ORDER BY STATUS, VALINT1, CODE");
+        jdbcCodeList.setQuerySql("SELECT CODE, CONCAT(VALUE1, case when STATUS = '2' then '(無効)' else '' end) as VALUE1 FROM VARIABLE WHERE TYPE = 'DEPARTMENT' ORDER BY STATUS, VALINT1, CODE");
         jdbcCodeList.setValueColumn("CODE");
         jdbcCodeList.setLabelColumn("VALUE1");
+        return  jdbcCodeList;
+    }
+
+    @Bean("CL_ACCOUNT_FULLNAME")
+    public JdbcCodeList accountFullName() {
+        JdbcCodeList jdbcCodeList = getJdbcCodeListBase();
+        jdbcCodeList.setQuerySql("SELECT USERNAME, CONCAT(LAST_NAME, ' ', FIRST_NAME) AS FULL_NAME FROM ACCOUNT  ORDER BY USERNAME");
+        jdbcCodeList.setValueColumn("USERNAME");
+        jdbcCodeList.setLabelColumn("FULL_NAME");
         return  jdbcCodeList;
     }
 

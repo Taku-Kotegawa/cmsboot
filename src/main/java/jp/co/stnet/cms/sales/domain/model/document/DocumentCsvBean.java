@@ -104,16 +104,34 @@ public class DocumentCsvBean implements Serializable {
     private String documentNumber;
 
     /**
-     * 管理部門
+     * 作成部門
      */
-    @CsvColumn(name = "chargeDepartment")
-    private String chargeDepartment;
+    @CsvColumn(name = "departmentForCreation")
+    private String departmentForCreation;
 
     /**
-     * 管理担当者
+     * 作成担当者
      */
-    @CsvColumn(name = "chargePerson")
-    private String chargePerson;
+    @CsvColumn(name = "chargePersonForCreation")
+    private String chargePersonForCreation;
+
+    /**
+     * 作成責任者
+     */
+    @CsvColumn(name = "responsiblePersonForCreation")
+    private String responsiblePersonForCreation;
+
+    /**
+     * 発行部門
+     */
+    @CsvColumn(name = "departmentForPublish")
+    private String departmentForPublish;
+
+    /**
+     * 発行責任者
+     */
+    @CsvColumn(name = "responsiblePersonForPublish")
+    private String responsiblePersonForPublish;
 
     /**
      * 制定日

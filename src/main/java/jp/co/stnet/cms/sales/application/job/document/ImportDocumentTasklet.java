@@ -37,7 +37,7 @@ public class ImportDocumentTasklet implements Tasklet {
     private static final Logger log = LoggerFactory.getLogger("JobLogger");
 
     // インポートファイルのカラム定義
-    private final String[] columns = {"id","status","statusLabel","title","docCategory","docCategoryValue1","docCategoryValue2","docCategoryValue3","docService","docServiceValue1","docServiceValue2","docServiceValue3","body","documentNumber", "chargeDepartment","chargePerson","enactmentDate","lastRevisedDate","implementationDate","enactmentDepartment","reasonForChange","useStage","useStageLabel","intendedReader","summary","fileTypeLabel","filesLabel","pdfFilesLabel","publicScope","publicScopeLabel","customerPublic","customerPublicLabel","lastModifiedBy","lastModifiedByLabel","lastModifiedDate"};
+    private final String[] columns = {"id","status","statusLabel","title","docCategory","docCategoryValue1","docCategoryValue2","docCategoryValue3","docService","docServiceValue1","docServiceValue2","docServiceValue3","body","documentNumber","departmentForCreation","chargePersonForCreation","responsiblePersonForCreation","departmentForPublish","responsiblePersonForPublish","enactmentDate","lastRevisedDate","implementationDate","enactmentDepartment","reasonForChange","useStage","useStageLabel","intendedReader","summary","fileTypeLabel","filesLabel","pdfFilesLabel","publicScope","publicScopeLabel","customerPublic","customerPublicLabel","lastModifiedBy","lastModifiedByLabel","lastModifiedDate"};
 
     @Autowired
     SmartValidator smartValidator;

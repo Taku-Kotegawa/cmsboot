@@ -18,7 +18,7 @@
                 <div class="input-group-text"><i class="fas fa-angle-down"></i></div>
             </div>
             <ul class="dropdown-menu dropdown-menu-right combobox" aria-labelledby="dropdownMenuButton">
-                <input class="form-control" id="myInput" type="text" placeholder="Filter..">
+                <input class="form-control dropdown-menu-input" type="text" placeholder="Filter..">
                 <th:block th:each="item, stat : ${__${items}__}" th:object="${item}">
                     <li class="autocomplete" th:data-autocomplete="*{value}" th:data-target="__${field_id}__">[[*{value}]]</li>
                 </th:block>
