@@ -109,7 +109,6 @@ public class Documents {
             documentCsvBean.setDocCategory(document.getDocCategoryVariable().getCode());
             documentCsvBean.setDocCategoryValue1(document.getDocCategoryVariable().getValue1());
             documentCsvBean.setDocCategoryValue2(document.getDocCategoryVariable().getValue2());
-            documentCsvBean.setDocCategoryValue3(document.getDocCategoryVariable().getValue3());
 
             // サービス
             documentCsvBean.setDocService(document.getDocServiceVariable().getCode());

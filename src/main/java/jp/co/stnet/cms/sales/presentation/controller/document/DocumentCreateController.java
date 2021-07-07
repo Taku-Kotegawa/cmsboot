@@ -57,6 +57,8 @@ public class DocumentCreateController {
     DocumentForm setUp() {
         DocumentForm form = new DocumentForm();
         form.getFiles().add(new FileForm());
+        form.setSaveRevision(true);
+        form.setReasonForChange("新規作成");
         return form;
     }
 
@@ -70,7 +72,7 @@ public class DocumentCreateController {
                              @AuthenticationPrincipal LoggedInUser loggedInUser,
                              @RequestParam(value = "copy", required = false) Long copy) {
 
-        documentService.hasAuthority(Constants.OPERATION.CREATE, loggedInUser);
+        authority.hasAuthority(Constants.OPERATION.CREATE, loggedInUser);
 
         if (copy != null) {
             Document source = documentService.findById(copy);

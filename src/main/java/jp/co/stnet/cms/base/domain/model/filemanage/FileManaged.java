@@ -94,13 +94,13 @@ public class FileManaged extends AbstractEntity<Long> implements Serializable {
      */
     public ContentDisposition getAttachmentContentDisposition() {
         if (originalFilename != null) {
-            String encodedFilename;
-            try {
-                encodedFilename = URLEncoder.encode(originalFilename, "UTF-8");
-            } catch (
-                    UnsupportedEncodingException e) {
-                encodedFilename = originalFilename;
-            }
+            String encodedFilename = originalFilename;
+//            try {
+//                encodedFilename = URLEncoder.encode(originalFilename, "UTF-8");
+//            } catch (
+//                    UnsupportedEncodingException e) {
+//                encodedFilename = originalFilename;
+//            }
             if (isOpenWindows()) {
                 return ContentDisposition.builder("filename=\"" + encodedFilename + "\"").build();
             } else {

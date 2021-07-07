@@ -35,6 +35,14 @@
             <!-- button -->
             <div th:replace="~{/fragments/button-area :: m(${id})}"></div>
             <div th:replace="~{/fragments/field::checkbox-inline('saveRevision', '', 'document.saveRevision', '', '@CL_SAVE_REVISION.asMap()')}"></div>
+            <div class="row mt-3">
+                <div class="col-3">
+                    <div th:replace="~{/fragments/label::m('reasonForChange', '変更理由')}"></div>
+                </div>
+                <div class="col-33">
+                    <div th:replace="~{/fragments/field::input('reasonForChange', '', 'document.reasonForChange', '')}"></div>
+                </div>
+            </div>
             <hr>
 
             <!-- Input -->
@@ -42,13 +50,28 @@
                 <div class="col-3">
                     <div th:replace="~{/fragments/label::m('title', '文書タイトル')}"></div>
                 </div>
-                <div class="col-18">
+                <div class="col-14">
                     <div th:replace="~{/fragments/field::input('title', '', 'document.title', '')}"></div>
                 </div>
-                <div class="col-2 offset-8">
+
+                <div class="col-2 offset-1">
+                    <div th:replace="~{/fragments/label::m('documentNumber', '文書番号')}"></div>
+                </div>
+                <div class="col-4">
+                    <div th:replace="~{/fragments/field::input('documentNumber', '', 'document.documentNumber', '')}"></div>
+                </div>
+
+                <div class="col-2 offset-1">
+                    <div th:replace="~{/fragments/label::m('versionNumber', '版数')}"></div>
+                </div>
+                <div class="col-2">
+                    <div th:replace="~{/fragments/field::input('versionNumber', '', 'document.versionNumber', '')}"></div>
+                </div>
+
+                <div class="col-3 offset-2">
                     <div th:replace="~{/fragments/label::m('status', 'ステータス')}"></div>
                 </div>
-                <div class="col-5">
+                <div class="col-2">
                     <div th:replace="~{/fragments/view-select::m('status', '', 'document.status', '', '@CL_STATUS.asMap()')}"></div>
                 </div>
             </div>
@@ -207,20 +230,19 @@
             <div class="row mt-3">
                 <div class="col-36">
                     <div th:replace="~{/fragments/field::summernote('body', '本文', 'document.body', '', '8')}"></div>
-
                 </div>
             </div>
 
-            <div class="row mt-3">
+            <div class="row mt-1">
                 <div class="col-3">
-                    <div th:replace="~{/fragments/label::m('reasonForChange', '変更理由')}"></div>
+                    <div th:replace="~{/fragments/label::m('remark', '備考')}"></div>
                 </div>
                 <div class="col-33">
-                    <div th:replace="~{/fragments/field::input('reasonForChange', '', 'document.reasonForChange', '')}"></div>
+                    <div th:replace="~{/fragments/field::input('remark', '', 'document.remark', '')}"></div>
                 </div>
             </div>
 
-            <div class="row mt-3">
+            <div class="row mt-5">
                 <div class="col-3">
                     <div th:replace="~{/fragments/label::m('departmentForCreation', '作成部門')}"></div>
                 </div>
@@ -261,6 +283,35 @@
 
             <div class="row mt-3">
                 <div class="col-3">
+                    <div th:replace="~{/fragments/label::m('publishedDate', '発行日')}"></div>
+                </div>
+                <div class="col-5">
+                    <div th:replace="~{/fragments/field::date('publishedDate', '', 'document.publishedDate', '')}"></div>
+                </div>
+                <div class="col-3 offset-1">
+                    <div th:replace="~{/fragments/label::m('lastRevisedDate', '改訂日')}"></div>
+                </div>
+                <div class="col-5">
+                    <div th:replace="~{/fragments/field::date('lastRevisedDate', '', 'document.lastRevisedDate', '')}"></div>
+                </div>
+                <div class="col-3 offset-1">
+                    <div th:replace="~{/fragments/label::m('invalidationDate', '廃止日')}"></div>
+                </div>
+                <div class="col-5">
+                    <div th:replace="~{/fragments/field::date('invalidationDate', '', 'document.invalidationDate', '')}"></div>
+                </div>
+                <div class="col-3 offset-1">
+                    <div th:replace="~{/fragments/label::m('announceDate', '周知日')}"></div>
+                </div>
+                <div class="col-5">
+                    <div th:replace="~{/fragments/field::date('announceDate', '', 'document.announceDate', '')}"></div>
+                </div>
+            </div>
+
+
+
+            <div class="row mt-3">
+                <div class="col-3">
                     <div th:replace="~{/fragments/label::m('publicScope', '公開範囲')}"></div>
                 </div>
                 <div class="col-14">
@@ -270,16 +321,16 @@
 
 
             <div class="row mt-3">
-                <div class="col-4">
+                <div class="col-3">
                     <div th:replace="~{/fragments/label::m('lastModifiedDate', '最終日時')}"></div>
                 </div>
-                <div class="col-8">
+                <div class="col-6">
                     <div th:replace="~{/fragments/field::datetime('lastModifiedDate', '', 'document.lastModifiedDate', '')}"></div>
                 </div>
-                <div class="col-4 offset-1">
+                <div class="col-3 offset-1">
                     <div th:replace="~{/fragments/label::m('lastModifiedBy', '最終更新者')}"></div>
                 </div>
-                <div class="col-8">
+                <div class="col-6">
                     <div th:replace="~{/fragments/field::select('lastModifiedBy', '', 'document.lastModifiedBy', '', '@CL_ACCOUNT_FULLNAME.asMap()')}"></div>
                 </div>
             </div>
@@ -317,8 +368,11 @@ $(document).ready(function() {
 <!--              .summernote("fontName", "Meiryo")-->
 
       ).done(function() {
-            $('.note-image-input')[0].name = 'summernote-files';
-      });
+            var note_image_input = $('.note-image-input');
+            if (note_image_input[0] !== undefined) {
+                note_image_input[0].name = 'summernote-files';
+            }
+    });
 });
 
 

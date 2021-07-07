@@ -109,6 +109,13 @@ public class DocumentIndex implements Serializable, StatusInterface {
     private String documentNumber;
 
     /**
+     * 版数
+     */
+    @KeywordField
+    private String versionNumber;
+
+
+    /**
      * 作成部門
      */
     @KeywordField
@@ -139,31 +146,28 @@ public class DocumentIndex implements Serializable, StatusInterface {
     private String responsiblePersonForPublish;
 
     /**
-     * 制定日
+     * 発行日
      */
     @GenericField(aggregable = Aggregable.YES)
-    @JsonFormat(pattern = "yyyy/MM/dd")
-    private LocalDate enactmentDate;
+    private LocalDate publishedDate;
 
     /**
-     * 最終改定日
+     * 改定日
      */
     @GenericField(aggregable = Aggregable.YES)
-    @JsonFormat(pattern = "yyyy/MM/dd")
     private LocalDate lastRevisedDate;
 
     /**
-     * 実施日
+     * 廃止日
      */
     @GenericField(aggregable = Aggregable.YES)
-    @JsonFormat(pattern = "yyyy/MM/dd")
-    private LocalDate implementationDate;
+    private LocalDate invalidationDate;
 
     /**
-     * 制定箇所
+     * 周知日
      */
-    @KeywordField(aggregable = Aggregable.YES)
-    private String enactmentDepartment;
+    @GenericField(aggregable = Aggregable.YES)
+    private LocalDate announceDate;
 
     /**
      * 変更理由
@@ -253,9 +257,9 @@ public class DocumentIndex implements Serializable, StatusInterface {
     private String intendedReader;
 
     /**
-     * 概要
+     * 備考
      */
-    private String summary;
+    private String remark;
 
     /**
      * 顧客公開区分

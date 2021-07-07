@@ -1,5 +1,6 @@
 package jp.co.stnet.cms.sales.presentation.controller.document;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jp.co.stnet.cms.sales.domain.model.document.CustomerPublic;
 import jp.co.stnet.cms.sales.domain.model.document.DocPublicScope;
 import lombok.AllArgsConstructor;
@@ -27,6 +28,7 @@ public class DocumentForm implements Serializable {
     /**
      * タイトル
      */
+    @NotNull
     private String title;
 
     /**
@@ -43,6 +45,11 @@ public class DocumentForm implements Serializable {
      * ドキュメント管理番号
      */
     private String documentNumber;
+
+    /**
+     * 版数
+     */
+    private String versionNumber;
 
     /**
      * 作成部門
@@ -70,24 +77,24 @@ public class DocumentForm implements Serializable {
     private String responsiblePersonForPublish;
 
     /**
-     * 制定日
+     * 発行日
      */
-    private LocalDate enactmentDate;
+    private LocalDate publishedDate;
 
     /**
-     * 最終改定日
+     * 改定日
      */
     private LocalDate lastRevisedDate;
 
     /**
-     * 実施日
+     * 廃止日
      */
-    private LocalDate implementationDate;
+    private LocalDate invalidationDate;
 
     /**
-     * 制定箇所
+     * 周知日
      */
-    private String enactmentDepartment;
+    private LocalDate announceDate;
 
     /**
      * 変更理由
@@ -121,9 +128,9 @@ public class DocumentForm implements Serializable {
     private String intendedReader;
 
     /**
-     * 概要
+     * 備考
      */
-    private String summary;
+    private String remark;
 
     /**
      * 変更履歴を残す
