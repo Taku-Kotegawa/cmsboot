@@ -100,7 +100,7 @@ public class CodeListConfig {
     @Bean("CL_ACCOUNT_FULLNAME")
     public JdbcCodeList accountFullName() {
         JdbcCodeList jdbcCodeList = getJdbcCodeListBase();
-        jdbcCodeList.setQuerySql("SELECT USERNAME, CONCAT(LAST_NAME, ' ', FIRST_NAME) AS FULL_NAME FROM ACCOUNT  ORDER BY USERNAME");
+        jdbcCodeList.setQuerySql("SELECT USERNAME, TRIM(CONCAT(LAST_NAME, ' ', FIRST_NAME)) AS FULL_NAME FROM ACCOUNT ORDER BY USERNAME");
         jdbcCodeList.setValueColumn("USERNAME");
         jdbcCodeList.setLabelColumn("FULL_NAME");
         return  jdbcCodeList;

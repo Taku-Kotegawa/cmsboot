@@ -4,6 +4,7 @@ import jp.co.stnet.cms.base.domain.model.AbstractEntity;
 import jp.co.stnet.cms.base.domain.model.StatusInterface;
 import jp.co.stnet.cms.base.domain.model.filemanage.FileManaged;
 import lombok.*;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -112,5 +113,22 @@ public class Account extends AbstractEntity<String> implements Serializable, Sta
         return getVersion() == null;
     }
 
+    /**
+     * フルネーム(姓 + 名、半角スペース区切り)
+     * @return フルネーム
+     */
+    public String getFullName() {
+
+        if (StringUtils.isAllBlank(lastName, firstName)) {
+            return "";
+        }
+        else if (StringUtils.isAllBlank(lastName)) {
+            return firstName;
+        }
+        else if (StringUtils.isAllBlank(firstName)) {
+            return lastName;
+        }
+        return lastName + " " + firstName;
+    }
 
 }

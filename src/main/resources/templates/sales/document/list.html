@@ -80,7 +80,7 @@
                 <th></th><!-- 公開区分 -->
                 <th></th><!-- 顧客公開 -->
                 <th></th><!-- 最終更新者 -->
-                <th></th><!-- 最終更新日 -->
+                <th data-filter="disable"></th><!-- 最終更新日 -->
             </tr>
             <tr class="title">
 <!--                <th class="text-center px-0"></th>-->
@@ -284,7 +284,7 @@ var pagechange = false;
               className: 'text-center',
             },
             {
-              data: 'lastModifiedBy',
+              data: 'lastModifiedByLabel',
               render: $.fn.dataTable.render.text(),
             },
           ],

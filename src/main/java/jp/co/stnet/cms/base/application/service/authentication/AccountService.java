@@ -60,11 +60,4 @@ public interface AccountService extends NodeIService<Account, String> {
      */
     List<Account> findAllById(Iterable<String> ids);
 
-    /**
-     * ユーザ氏名を取得する
-     * @param username ユーザID
-     * @return 氏名、ユーザが存在しない場合空白文字
-     */
-    String getUserFullName(String username);
-
 }

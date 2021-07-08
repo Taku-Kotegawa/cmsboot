@@ -14,7 +14,9 @@ import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.terasoluna.gfw.common.codelist.ReloadableCodeList;
 
+import javax.inject.Named;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,6 +30,10 @@ public class AccountServiceImpl extends AbstractNodeService<Account, String> imp
 
     @Autowired
     AccountRepository accountRepository;
+
+    @Autowired
+    @Named("CL_ACCOUNT_FULLNAME")
+    ReloadableCodeList accountFullNameCodeList;
 
     protected AccountServiceImpl() {
         super(Account.class);
@@ -44,22 +50,11 @@ public class AccountServiceImpl extends AbstractNodeService<Account, String> imp
         return loggedInUser.getAuthorities().contains(new SimpleGrantedAuthority(Permission.ADMIN_USER.name()));
     }
 
-//    @Override
-//    public Account save(Account account, String ImageUuid) {
-//
-//        if (ImageUuid != null) {
-//            FileManaged fileManaged = fileManagedSharedService.findByUuid(ImageUuid);
-//
-//            AccountImage image = AccountImage.builder()
-//                    .username(account.getUsername())
-//                    .extension(StringUtils.getFilenameExtension(fileManaged.getOriginalFilename()))
-//                    .body(fileManagedSharedService.getFile(fileManaged.getFid()))
-//                    .build();
-//            accountImageRepository.save(image);
-//        }
-//
-//        return getRepository().save(account);
-//    }
+    @Override
+    protected void afterSave(Account entity, Account current) {
+        super.afterSave(entity, current);
+        accountFullNameCodeList.refresh();
+    }
 
     @Override
     public String generateApiKey(String username) {
@@ -90,13 +85,4 @@ public class AccountServiceImpl extends AbstractNodeService<Account, String> imp
         return accountRepository.findAllById(ids);
     }
 
-    @Override
-    public String getUserFullName(String username) {
-        Account account = accountRepository.findById(username).orElse(null);
-        if (account != null) {
-            return account.getLastName() + " " + account.getFirstName();
-        } else {
-            return "";
-        }
-    }
 }
