@@ -34,8 +34,8 @@ function file_attach(element) {
     return;
   }
 
-  if ($upload_file.files[0].size > 10 * 1024 * 1024) {
-    alert("ファイルが大きすぎます。(10MBまで)");
+  if ($upload_file.files[0].size > 100 * 1024 * 1024) {
+    alert("ファイルが大きすぎます。(100MBまで)");
     $upload_file.value = "";
     return;
   }
@@ -81,17 +81,14 @@ function file_attach(element) {
       file_icon.classList = "far fa-file ml-2";
       span.appendChild(file_icon);
 
-//      var link = document.createElement('a');
-//      link.href = data.url;
-//      link.textContent = data.name;
-//      link.target = "_blank";
-//      link.classList = "link-attached";
-//      span.appendChild(link);
+      var link = document.createElement('a');
+      link.href = data.url;
+      link.textContent = data.name;
+      link.target = "_blank";
+      link.classList = "link-attached";
+      span.appendChild(link);
 
-      var filename = document.createElement('span');
-      filename.textContent = data.name;
-      filename.classList = "link-attached";
-      span.appendChild(filename);
+
 
       var trush_icon = document.createElement('i');
       trush_icon.classList = "far fa-trash-alt";

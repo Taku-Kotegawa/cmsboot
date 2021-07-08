@@ -246,6 +246,7 @@ public class FileManagedSharedServiceImpl implements FileManagedSharedService {
     @Transactional(readOnly = true)
     public String getContent(String uuid) throws IOException, TikaException {
         Tika tika = new Tika();
+        tika.setMaxStringLength(1000 * 1000); // 1M
         return tika.parseToString(new FileInputStream(new File(STORE_BASEDIR + findByUuid(uuid).getUri())));
     }
 

@@ -155,7 +155,7 @@
                                             <i class="far fa-file ml-2"></i>
                                             <a class="link-attached"
                                                target="_blank"
-                                               th:href="${op.getDownloadUrl(uuid)}"
+                                               th:href="|${op.getViewUrl(id)}/file/files_file/${status.index}|"
                                                th:with="uuid = *{files[__${status.index}__].fileUuid}">[[*{files[__${status.index}__].fileManaged.originalFilename}]]</a>
                                                   <i class="far fa-trash-alt" style="color: brown;"
                                                      th:onclick="|file_detach('files[${status.index}].file')|"></i>
@@ -180,7 +180,7 @@
                                             <i class="far fa-file ml-2"></i>
                                             <a class="link-attached"
                                                target="_blank"
-                                               th:href="${op.getDownloadUrl(uuid)}"
+                                               th:href="|${op.getViewUrl(id)}/file/files_pdf/${status.index}|"
                                                th:with="uuid = *{files[__${status.index}__].pdfUuid}">[[*{files[__${status.index}__].pdfManaged.originalFilename}]]</a>
                                                   <i class="far fa-trash-alt" style="color: brown;"
                                                      th:onclick="|file_detach('files[${status.index}].pdf')|"></i>

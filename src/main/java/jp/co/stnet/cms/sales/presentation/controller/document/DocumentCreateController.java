@@ -77,6 +77,8 @@ public class DocumentCreateController {
         if (copy != null) {
             Document source = documentService.findById(copy);
             beanMapper.map(source, form);
+            form.setId(null);
+            form.setVersion(null);
         }
 
         setFileManaged(form.getFiles(), fileManagedSharedService);

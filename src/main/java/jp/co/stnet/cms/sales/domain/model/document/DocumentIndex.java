@@ -248,13 +248,9 @@ public class DocumentIndex implements Serializable, StatusInterface {
     private FileManaged pdfManaged;
 
     @FullTextField(analyzer = "japanese")
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "LONGTEXT")
     private String content;
 
-    /**
-     * 想定読者
-     */
-    private String intendedReader;
 
     /**
      * 備考
