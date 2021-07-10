@@ -16,6 +16,8 @@ import javax.persistence.*;
 import javax.validation.Valid;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -132,8 +134,9 @@ public class Document extends AbstractEntity<Long> implements Serializable, Stat
     /**
      * 活用シーン
      */
-    @ElementCollection(fetch = FetchType.EAGER)
-    private Set<String> useStage;
+//    @ElementCollection(fetch = FetchType.EAGER)
+    @ElementCollection
+    private Set<String> useStage = new HashSet<>();
 
     /**
      * 区分

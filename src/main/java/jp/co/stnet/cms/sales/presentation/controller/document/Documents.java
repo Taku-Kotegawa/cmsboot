@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import static jp.co.stnet.cms.sales.presentation.controller.document.DocumentConstant.BASE_PATH;
+
 @Component
 public class Documents {
 
@@ -58,6 +60,9 @@ public class Documents {
 
             // ボタン
             documentListBean.setOperations(getToggleButton(document.getId().toString()));
+
+            // タイトル(リンク)
+            documentListBean.setTitle(getTitleLink(document.getId(), document.getTitle()));
 
             // ステータスラベル
             documentListBean.setStatusLabel(getStatusLabel(document.getStatus()));
@@ -151,6 +156,11 @@ public class Documents {
         }
 
         return list;
+    }
+
+    protected String getTitleLink(Long id, String value) {
+        OperationsUtil op = new OperationsUtil(BASE_PATH);
+        return "<a href=\"" + op.getViewUrl(id.toString()) +  "\">" + value + "</a>";
     }
 
 

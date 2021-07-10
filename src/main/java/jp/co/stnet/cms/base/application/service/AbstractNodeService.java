@@ -13,7 +13,10 @@ import jp.co.stnet.cms.common.exception.OptimisticLockingFailureBusinessExceptio
 import jp.co.stnet.cms.common.message.MessageKeys;
 import jp.co.stnet.cms.common.util.BeanUtils;
 import jp.co.stnet.cms.common.util.StringUtils;
+import jp.co.stnet.cms.sales.domain.model.document.Document;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -42,7 +45,6 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
     protected final Map<String, Annotation> elementCollectionFieldsMap;
 
     protected final Map<String, Annotation> relationFieldsMap;
-
 
     @Autowired
     public Mapper beanMapper;
@@ -355,6 +357,7 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
             if (isCollectionElement(convertedColumnName)) {
                 sql.append(" LEFT JOIN c.");
                 sql.append(convertedColumnName);
+                sql.append(" " + convertedColumnName);
             } else if (getRelationEntity(originalColumnName) != null) {
                 sql.append(" LEFT JOIN c.");
                 sql.append(getRelationEntity(originalColumnName));
@@ -484,7 +487,11 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
                 sql.append(" = :");
                 sql.append(replacedColumnName);
             } else if (isFilterINClause(convertedColumnName)) {
-                sql.append("c." + convertedColumnName);
+                if (isCollectionElement(convertedColumnName)) {
+                    sql.append(convertedColumnName);
+                } else {
+                    sql.append("c." + convertedColumnName);
+                }
                 sql.append(" IN (:");
                 sql.append(replacedColumnName);
                 sql.append(")");
@@ -513,7 +520,7 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
                 sql.append(" ESCAPE '~'");
             } else if (isCollection(convertedColumnName)) {
                 sql.append(convertedColumnName);
-                sql.append(" LIKE :"); // TODO 何かおかしい
+                sql.append(" LIKE :");
                 sql.append(replacedColumnName);
                 sql.append(" ESCAPE '~'");
             } else if (isRelation(originalColumnName)) {
@@ -700,14 +707,14 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
     /**
      * DataTablesのフィールド名とエンティティのフィールド名の変換
      *
-     * @param org 変換前のフィールド名
+     * @param fieldName 変換前のフィールド名
      * @return 変換後のフォールド名
      */
-    protected String convertColumnName(String org) {
-        if (StringUtils.endsWith(org, "Label")) {
-            return StringUtils.left(org, org.length() - 5);
+    protected String convertColumnName(String fieldName) {
+        if (StringUtils.endsWith(fieldName, "Label")) {
+            return StringUtils.left(fieldName, fieldName.length() - 5);
         } else {
-            return org;
+            return fieldName;
         }
     }
 

@@ -5,7 +5,9 @@
     <title>Document List</title>
 </head>
 <body>
-<div th:replace="~{/fragments/include-datatables :: include-datatables}"></div>
+<div th:replace="~{/layout/libraries :: datatables}"></div>
+<div th:replace="~{/layout/libraries :: multiple-select}"></div>
+
 <section class="content-header">
     <div class="container-fluid">
         <div class="row px-5">
@@ -20,6 +22,12 @@
     </div>
 </section>
 
+<style>
+div#list_filter {
+    display: none;
+}
+</style>
+
 <section class="content">
     <div class="container-fluid"><!-- -fluidを外すと横幅が狭くなる-->
         <div th:replace="~{/fragments/message-panel :: message-panel}"></div>
@@ -30,7 +38,12 @@
 <!--                <input id="draft" name="draft" type="checkbox" checked="checked">-->
 <!--                <label for="draft">下書きを含む</label>-->
 <!--            </div>-->
-            <button class="btn btn-button" id="reverse">並べ替え</button>
+            <div class="dt-buttons btn-group flex-wrap ml-2">
+                <button class="btn btn-button" id="filter1">区分別</button>
+                <button class="btn btn-button" id="filter2">サービス別</button>
+                <button class="btn btn-button" id="filter3">日付・部門</button>
+                <button class="btn btn-button" id="filter9">全項目</button>
+            </div>
         </div>
 
         <table id="list" class="table-sm table-striped nowrap">
@@ -40,8 +53,8 @@
                 <th data-filter="disable"></th><!-- # -->
                 <th data-filter="disable"></th><!-- 操作 -->
                 <th data-filter="disable"><!-- ステータス -->
-                    <select id="col_filter_3" data-column="3" class="dataTables_column_filter form-control">
-                        <option value="">&nbsp;</option>
+                    <select id="col_filter_3" data-column="3" class="form-control dataTables_column_filter multiple-select" multiple="multiple" data-container=".content">
+<!--                        <option value="">&nbsp;</option>-->
                         <th:block th:each="obj : ${@CL_STATUS.asMap()}">
                             <option th:value="${obj.key}">[[${obj.value}]]</option>
                         </th:block>
@@ -67,20 +80,40 @@
                 <th></th><!-- 発行部門 -->
                 <th></th><!-- 備考 -->
                 <th></th><!-- 変更理由 -->
-                <th></th><!-- 文書種類 -->
-                <th></th><!-- ファイル -->
+                <th data-filter="disable"></th><!-- 文書種類 -->
+                <th data-filter="disable"></th><!-- ファイル -->
                 <th data-filter="disable"><!-- 活用シーン -->
-                    <select id="col_filter_11" data-column="11" class="dataTables_column_filter form-control">
-                        <option value="">&nbsp;</option>
+                    <select id="col_filter_11" data-column="11" class="dataTables_column_filter form-control multiple-select" multiple="multiple" data-container=".content">
+<!--                        <option value="">&nbsp;</option>-->
                         <th:block th:each="obj : ${@CL_DOC_STAGE.asMap()}">
                             <option th:value="${obj.key}">[[${obj.value}]]</option>
                         </th:block>
                     </select>
                 </th>
-                <th></th><!-- 公開区分 -->
-                <th></th><!-- 顧客公開 -->
-                <th></th><!-- 最終更新者 -->
-                <th data-filter="disable"></th><!-- 最終更新日 -->
+                <th data-filter="disable">
+                    <select id="col_filter_25" data-column="25" class="dataTables_column_filter form-control multiple-select" multiple="multiple" data-container=".content">
+<!--                        <option value="">&nbsp;</option>-->
+                        <th:block th:each="obj : ${@CL_DOC_PUBLIC_SCOPE.asMap()}">
+                            <option th:value="${obj.key}">[[${obj.value}]]</option>
+                        </th:block>
+                    </select>
+                </th><!-- 公開区分 -->
+                <th data-filter="disable"><!-- 顧客公開 -->
+                    <select id="col_filter_26" data-column="26" class="dataTables_column_filter form-control multiple-select" multiple="multiple" data-container=".content">
+<!--                        <option value="">&nbsp;</option>-->
+                        <th:block th:each="obj : ${@CL_CUSTOMER_PUBLIC.asMap()}">
+                            <option th:value="${obj.key}">[[${obj.value}]]</option>
+                        </th:block>
+                    </select>
+                </th>
+                <th data-filter="disable">
+                    <select id="col_filter_28" data-column="28" class="dataTables_column_filter form-control multiple-select" multiple="multiple" data-container=".content">
+                        <th:block th:each="obj : ${@CL_ACCOUNT_FULLNAME.asMap()}">
+                            <option th:value="${obj.key}">[[${obj.value}]]</option>
+                        </th:block>
+                    </select>
+                </th><!-- 最終更新者 -->
+                <th></th><!-- 最終更新日 -->
             </tr>
             <tr class="title">
 <!--                <th class="text-center px-0"></th>-->
@@ -111,8 +144,8 @@
                 <th class="text-center">活用シーン</th>
                 <th class="text-center">公開区分</th>
                 <th class="text-center">顧客公開</th>
-                <th class="text-center">最終更新日時</th>
                 <th class="text-center">最終更新者</th>
+                <th class="text-center">最終更新日時</th>
             </tr>
             </thead>
             <tbody></tbody>
@@ -191,7 +224,7 @@ var pagechange = false;
             },
             {
               data: 'title',
-              render: $.fn.dataTable.render.text(),
+<!--              render: $.fn.dataTable.render.text(),-->
             },
             {
               data: 'versionNumber',
@@ -263,9 +296,13 @@ var pagechange = false;
             },
             {
               data: 'fileTypeLabel',
+              orderable: false,
+              searchable: false,
             },
             {
               data: 'filesLabel',
+              orderable: false,
+              searchable: false,
             },
             {
               data: 'useStageLabel',
@@ -280,12 +317,12 @@ var pagechange = false;
               render: $.fn.dataTable.render.text(),
             },
             {
-              data: 'lastModifiedDate',
-              className: 'text-center',
-            },
-            {
               data: 'lastModifiedByLabel',
               render: $.fn.dataTable.render.text(),
+            },
+            {
+              data: 'lastModifiedDate',
+              className: 'text-center',
             },
           ],
 
@@ -340,13 +377,39 @@ var pagechange = false;
 <!--          table.draw();-->
 <!--        }-->
 
-        // 列の並び替えと表示／非表示を操作するテスト
-        $('#reverse').click( function (e) {
-            table.columns( [10, 11] ).visible( false );
-            table.colReorder.order( [0, 1, 2, 3, 5, 6, 7, 8, 4, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21], true );
+        // 区分別
+        $('#filter1').click( function (e) {
+            reset(table);
+            table.columns( [5, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 27, 28] ).visible( false );
+            table.colReorder.order( [0, 1, 2, 6, 7, 3, 4, 5, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], true );
+        });
+
+        // サービス別
+        $('#filter2').click( function (e) {
+            reset(table);
+            table.columns( [5, 6, 7, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 27, 28] ).visible( false );
+            table.colReorder.order( [0, 1, 2, 8, 9, 10, 3, 4, 5, 6, 7, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], true );
+        });
+
+        // 日付・部門
+        $('#filter3').click( function (e) {
+            reset(table);
+            table.columns( [6, 7, 8, 9, 10, 11, 24, 25, 26, 27, 28] ).visible( false );
+            table.colReorder.order( [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], true );
+        });
+
+        // リセット
+        $('#filter9').click( function (e) {
+            reset(table);
         });
 
       });
+
+  function reset(table) {
+            table.columns( [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28] ).visible( true );
+            table.colReorder.order( [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], true );
+  }
+
 
   function myflatten(params, settings) {
     params = flatten(params, settings);

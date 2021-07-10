@@ -158,6 +158,22 @@ public class DocumentServiceImpl extends AbstractNodeRevService<Document, Docume
         return new ArrayList<>();
     }
 
+    @Override
+    protected boolean isFilterINClause(String fieldName) {
+
+        if ("status".equals(convertColumnName(fieldName))) {
+            return true;
+        }
+        else if ("publicScope".equals(convertColumnName(fieldName))) {
+            return true;
+        }
+        else if ("customerPublic".equals(convertColumnName(fieldName))) {
+            return true;
+        }
+
+        return super.isFilterINClause(fieldName);
+    }
+
     /**
      * Document -> DocumentIdx にマップ
      *
