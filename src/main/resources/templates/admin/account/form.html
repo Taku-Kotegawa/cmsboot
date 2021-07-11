@@ -59,10 +59,10 @@
             </div>
             <div class="row">
                 <div class="col-6">
-                    <div th:replace="~{/fragments/field::input('firstName', '姓 *', 'account.firstName', '')}"></div>
+                    <div th:replace="~{/fragments/field::input('lastName', '姓 *', 'account.lastName', '')}"></div>
                 </div>
                 <div class="col-6">
-                    <div th:replace="~{/fragments/field::input('lastName', '名 *', 'account.lastName', '')}"></div>
+                    <div th:replace="~{/fragments/field::input('firstName', '名 *', 'account.firstName', '')}"></div>
                 </div>
             </div>
             <div class="row">
@@ -89,7 +89,7 @@
                 <div class="ml-1">新規は必須、変更は必要な場合のみ</div>
             </div>
             <div class="row">
-                <div class="col-12">
+                <div class="col-36">
                     <div th:replace="~{/fragments/field::checkbox('roles', 'ロール', 'account.roles', '', '@CL_ROLE.asMap()')}"></div>
                 </div>
             </div>
