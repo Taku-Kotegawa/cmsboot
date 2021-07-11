@@ -17,6 +17,7 @@ import jp.co.stnet.cms.sales.domain.model.document.Document;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.annotations.QueryHints;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -33,6 +34,7 @@ import javax.persistence.*;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.ParameterizedType;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Transactional
@@ -228,12 +230,14 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
         TypedQuery typedQuery;
         if (!count) {
             // 通常は１ページに必要な範囲を抽出する。
-            typedQuery = entityManager.createQuery(sql, clazz);
-            typedQuery.setFirstResult(input.getStart()); //開始行数
-            typedQuery.setMaxResults(input.getLength()); //取得件数
+            typedQuery = entityManager.createQuery(sql, clazz)
+                    .setHint(QueryHints.READ_ONLY, true)
+                    .setFirstResult(input.getStart()) //開始行数
+                    .setMaxResults(input.getLength()); //取得件数
         } else {
             // 件数を取得する場合は、データの範囲を指定しない。
-            typedQuery = entityManager.createQuery(sql, Long.class);
+            typedQuery = entityManager.createQuery(sql, Long.class)
+                    .setHint(QueryHints.READ_ONLY, true);
         }
 
         // パラメータ値設定(フィールドフィルタ)
@@ -350,17 +354,30 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
     protected StringBuilder getLeftOuterJoinClause(DataTablesInput input) {
         StringBuilder sql = new StringBuilder();
         // @OneToOne etc, @ElementCollection フィールドのための結合
+
+
+        Set<String> relationEntities = new LinkedHashSet<>();
+        // 重複除去
+        for (Column column : input.getColumns()) {
+            String relationEntity = getRelationEntity(column.getData());
+            if (relationEntity != null) {
+                relationEntities.add(relationEntity);
+            }
+        }
+
+        for (String relationEntity : relationEntities) {
+            sql.append(" LEFT JOIN c.");
+            sql.append(relationEntity);
+        }
+
         for (Column column : input.getColumns()) {
             String originalColumnName = column.getData();
             String convertedColumnName = convertColumnName(originalColumnName);
 
-            if (isCollectionElement(convertedColumnName)) {
+            if (isCollectionElement(convertedColumnName) && getRelationEntity(originalColumnName) == null) {
                 sql.append(" LEFT JOIN c.");
                 sql.append(convertedColumnName);
                 sql.append(" " + convertedColumnName);
-            } else if (getRelationEntity(originalColumnName) != null) {
-                sql.append(" LEFT JOIN c.");
-                sql.append(getRelationEntity(originalColumnName));
             }
         }
         return sql;

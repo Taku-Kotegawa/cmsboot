@@ -134,8 +134,7 @@ public class Document extends AbstractEntity<Long> implements Serializable, Stat
     /**
      * 活用シーン
      */
-//    @ElementCollection(fetch = FetchType.EAGER)
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> useStage = new HashSet<>();
 
     /**
