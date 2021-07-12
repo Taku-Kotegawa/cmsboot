@@ -4,7 +4,6 @@ import com.github.dozermapper.core.Mapper;
 import jp.co.stnet.cms.base.application.service.codelist.CodeListService;
 import jp.co.stnet.cms.base.application.service.filemanage.FileManagedSharedService;
 import jp.co.stnet.cms.base.application.service.variable.VariableService;
-import jp.co.stnet.cms.base.application.service.variable.VariableSharedService;
 import jp.co.stnet.cms.base.domain.model.authentication.LoggedInUser;
 import jp.co.stnet.cms.base.domain.model.common.Status;
 import jp.co.stnet.cms.base.domain.model.filemanage.FileManaged;
@@ -66,9 +65,6 @@ public class VariableController {
 
     @Autowired
     VariableService variableService;
-
-    @Autowired
-    VariableSharedService variableSharedService;
 
     @Autowired
     FileManagedSharedService fileManagedSharedService;
