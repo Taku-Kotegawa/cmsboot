@@ -46,9 +46,7 @@
                         <div th:replace="~{/fragments/label::m('reasonForChange', '変更理由')}"></div>
                     </div>
                     <div class="col-33">
-                        <div
-                            th:replace="~{/fragments/field::input('reasonForChange', '', 'document.reasonForChange', '')}">
-                        </div>
+                        <div th:replace="~{/fragments/field::textarea('reasonForChange', '', 'document.reasonForChange', '', '2')}"></div>
                     </div>
                 </div>
                 <hr>
