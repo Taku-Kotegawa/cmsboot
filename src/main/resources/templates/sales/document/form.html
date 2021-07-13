@@ -504,11 +504,9 @@
             }
         }
 
-
-
-
-
-
+        /**
+         * ダイアログ画面の選択ボタン押下時の動作
+         */
         function select(e) {
             var code = e.dataset.code;
             var id = e.dataset.id;
@@ -519,16 +517,19 @@
             $('.modal').modal('hide');
         }
 
+        /**
+         * 区分選択ダイアログ起動ボタン押下時の操作
+         */
         $("#docCategory-dialog-button").on("click", function () {
             openDialog('区分選択', '/sales/document/docCategoryDialog');
         });
 
+        /**
+         * サービス選択ダイアログ起動ボタン押下時の操作
+         */
         $("#docService-dialog-button").on("click", function () {
             openDialog('サービス選択', '/sales/document/docServiceDialog');
         });
-
-
-
 
 </script>
 
