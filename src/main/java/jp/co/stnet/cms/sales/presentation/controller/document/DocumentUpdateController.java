@@ -93,11 +93,6 @@ public class DocumentUpdateController {
         }
     }
 
-    @ModelAttribute
-    DocumentForm setUp() {
-        return new DocumentForm();
-    }
-
     /**
      * 編集画面を開く
      */
@@ -114,10 +109,10 @@ public class DocumentUpdateController {
         // 初回表示(入力チェックエラー時の再表示でない場合)
         if (form.getVersion() == null) {
             beanMapper.map(document, form);
+            form.setSaveRevision(true);
         }
 
         setFileManaged(form.getFiles(), fileManagedSharedService);
-        form.setSaveRevision(false);
 
         model.addAttribute("document", document);
         model.addAttribute("buttonState", helper.getButtonStateMap(Constants.OPERATION.UPDATE, document, form).asMap());
