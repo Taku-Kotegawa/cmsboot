@@ -253,8 +253,11 @@
 
                 <!-- 本文 -->
                 <div class="row mt-3">
-                    <div class="col-36">
-                        <div th:replace="~{/fragments/field::summernote('body', '本文', 'document.body', '', '8')}"></div>
+                    <div class="col-3">
+                        <div th:replace="~{/fragments/label::m('body', '本文')}"></div>
+                    </div>
+                    <div class="col-33">
+                        <div th:replace="~{/fragments/field::summernote('body', '', 'document.body', '', '8')}"></div>
                     </div>
                 </div>
 
