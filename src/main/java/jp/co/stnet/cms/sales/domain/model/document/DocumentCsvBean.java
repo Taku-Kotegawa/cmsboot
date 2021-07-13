@@ -22,7 +22,7 @@ public class DocumentCsvBean implements Serializable {
      * ItemStreamReader用のフィールド名定義(ImportDocumentTaskletで使用)
      * フィールド変更時に修正要
      */
-    public static String[] columns = {"id","status","statusLabel","documentNumber","title","versionNumber","docCategory","docCategoryValue1","docCategoryValue2","docService","docServiceValue1","docServiceValue2","docServiceValue3","publishedDate","lastRevisedDate","invalidationDate","announceDate","chargePersonForCreation","responsiblePersonForCreation","responsiblePersonForPublish","departmentForCreation","departmentForPublish","remark","reasonForChange","fileTypeLabel","filesLabel","pdfFilesLabel","useStage","useStageLabel","publicScope","publicScopeLabel","customerPublic","customerPublicLabel","body","lastModifiedDate","lastModifiedBy","lastModifiedByLabel"};
+    public static String[] columns = {"id","status","statusLabel","documentNumber","title","versionNumber","docCategory","docCategoryValue1","docCategoryValue2","docService","docServiceValue1","docServiceValue2","docServiceValue3","publishedDate","lastRevisedDate","invalidationDate","announceDate","chargePersonForCreation","chargePersonForPublish","responsiblePersonForPublish","departmentForCreation","departmentForPublish","remark","reasonForChange","fileTypeLabel","filesLabel","pdfFilesLabel","useStage","useStageLabel","publicScope","publicScopeLabel","customerPublic","customerPublicLabel","body","lastModifiedDate","lastModifiedBy","lastModifiedByLabel"};
 
 
     @Parseable(value = TO_LONG)
@@ -140,10 +140,10 @@ public class DocumentCsvBean implements Serializable {
     private String chargePersonForCreation;
 
     /**
-     * 作成責任者
+     * 発行担当者
      */
-    @CsvColumn(name = "responsiblePersonForCreation")
-    private String responsiblePersonForCreation;
+    @CsvColumn(name = "chargePersonForPublish")
+    private String chargePersonForPublish;
 
     /**
      * 発行責任者

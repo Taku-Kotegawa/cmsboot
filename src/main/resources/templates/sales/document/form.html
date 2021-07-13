@@ -38,9 +38,7 @@
 
             <!-- button -->
             <div th:replace="~{/fragments/button-area :: m(${id})}"></div>
-            <div
-                    th:replace="~{/fragments/field::checkbox-inline('saveRevision', '', 'document.saveRevision', '', '@CL_SAVE_REVISION.asMap()')}">
-            </div>
+            <div th:replace="~{/fragments/field::checkbox-inline('saveRevision', '', 'document.saveRevision', '', '@CL_SAVE_REVISION.asMap()')}"></div>
             <div class="row mt-3">
                 <div class="col-3">
                     <div th:replace="~{/fragments/label::m('reasonForChange', '変更理由')}"></div>
@@ -64,26 +62,21 @@
                     <div th:replace="~{/fragments/label::m('documentNumber', '文書番号')}"></div>
                 </div>
                 <div class="col-4">
-                    <div
-                            th:replace="~{/fragments/field::input('documentNumber', '', 'document.documentNumber', '')}">
-                    </div>
+                    <div th:replace="~{/fragments/field::input('documentNumber', '', 'document.documentNumber', '')}"></div>
                 </div>
 
                 <div class="col-2 offset-1">
                     <div th:replace="~{/fragments/label::m('versionNumber', '版数')}"></div>
                 </div>
                 <div class="col-2">
-                    <div th:replace="~{/fragments/field::input('versionNumber', '', 'document.versionNumber', '')}">
-                    </div>
+                    <div th:replace="~{/fragments/field::input('versionNumber', '', 'document.versionNumber', '')}"></div>
                 </div>
 
                 <div class="col-3 offset-2">
                     <div th:replace="~{/fragments/label::m('status', 'ステータス')}"></div>
                 </div>
                 <div class="col-2">
-                    <div
-                            th:replace="~{/fragments/view-select::m('status', '', 'document.status', '', '@CL_STATUS.asMap()')}">
-                    </div>
+                    <div th:replace="~{/fragments/view-select::m('status', '', 'document.status', '', '@CL_STATUS.asMap()')}"></div>
                 </div>
             </div>
 
@@ -92,9 +85,7 @@
                     <div th:replace="~{/fragments/label::m('docCategory', '文書区分')}"></div>
                 </div>
                 <div class="col-33">
-                    <div
-                            th:replace="~{/fragments/field::select-dialog('docCategory', '', 'document.docCategory', '', '@CL_DOC_CATEGORY.asMap()')}">
-                    </div>
+                    <div th:replace="~{/fragments/field::select-dialog('docCategory', '', 'document.docCategory', '', '@CL_DOC_CATEGORY.asMap()')}"></div>
                 </div>
             </div>
 
@@ -103,9 +94,7 @@
                     <div th:replace="~{/fragments/label::m('docService', 'サービス')}"></div>
                 </div>
                 <div class="col-33">
-                    <div
-                            th:replace="~{/fragments/field::select-dialog('docService', '', 'document.docService', '', '@CL_DOC_SERVICE.asMap()')}">
-                    </div>
+                    <div th:replace="~{/fragments/field::select-dialog('docService', '', 'document.docService', '', '@CL_DOC_SERVICE.asMap()')}"></div>
                 </div>
             </div>
 
@@ -114,17 +103,13 @@
                     <div th:replace="~{/fragments/label::m('customerPublic', '顧客公開')}"></div>
                 </div>
                 <div class="col-6">
-                    <div
-                            th:replace="~{/fragments/field::radio('customerPublic', '', 'document.customerPublic', '', '@CL_CUSTOMER_PUBLIC.asMap()')}">
-                    </div>
+                    <div th:replace="~{/fragments/field::radio('customerPublic', '', 'document.customerPublic', '', '@CL_CUSTOMER_PUBLIC.asMap()')}"></div>
                 </div>
                 <div class="col-4">
                     <div th:replace="~{/fragments/label::m('customerPublic', '活用シーン')}"></div>
                 </div>
                 <div class="col-18">
-                    <div
-                            th:replace="~{/fragments/field::checkbox('useStage', '', 'document.useStage', '', '@CL_DOC_STAGE.asMap()')}">
-                    </div>
+                    <div th:replace="~{/fragments/field::checkbox('useStage', '', 'document.useStage', '', '@CL_DOC_STAGE.asMap()')}"></div>
                 </div>
             </div>
 
@@ -148,9 +133,10 @@
                             <td class="row">
                                 <div class="col-14">
                                     <input class="form-control form-control-file file-managed"
-                                           data-file-type="document_file" th:id="|files[__${status.index}__].file|"
-                                           th:style="*{files[__${status.index}__].fileUuid} ? 'display:none' : 'display:block'"
+                                           data-file-type="document_file"
                                            th:disabled="${fieldState.files_fileUuid__disabled}"
+                                           th:id="|files[__${status.index}__].file|"
+                                           th:style="*{files[__${status.index}__].fileUuid} ? 'display:none' : 'display:block'"
                                            type="file"/>
                                     <span class="invalid-feedback whitespace-nowrap"
                                           th:errors="*{files[__${status.index}__].fileUuid}"
@@ -175,9 +161,10 @@
                                 </div>
                                 <div class="col-14">
                                     <input class="form-control form-control-file file-managed"
-                                           data-file-type="document_file" th:id="|files[__${status.index}__].pdf|"
-                                           th:style="*{files[__${status.index}__].pdfUuid} ? 'display:none' : 'display:block'"
+                                           data-file-type="document_file"
                                            th:disabled="${fieldState.files_pdfUuid__disabled}"
+                                           th:id="|files[__${status.index}__].pdf|"
+                                           th:style="*{files[__${status.index}__].pdfUuid} ? 'display:none' : 'display:block'"
                                            type="file"/>
                                     <span class="invalid-feedback whitespace-nowrap"
                                           th:errors="*{files[__${status.index}__].pdfUuid}"
@@ -201,9 +188,9 @@
                                     </th:block>
                                 </div>
                                 <div class="col-6">
-                                    <input class="form-control" th:errorclass="is-invalid"
+                                    <input class="form-control" th:disabled="${fieldState.files_memo__disabled}"
+                                           th:errorclass="is-invalid"
                                            th:field="*{files[__${status.index}__].memo}"
-                                           th:disabled="${fieldState.files_memo__disabled}"
                                            type="text">
                                     <span class="invalid-feedback whitespace-nowrap"
                                           th:errors="*{files[__${status.index}__].memo}"
@@ -272,27 +259,14 @@
                     <div th:replace="~{/fragments/label::m('departmentForCreation', '作成部門')}"></div>
                 </div>
                 <div class="col-13">
-                    <div
-                            th:replace="~{/fragments/field::input-combobox('departmentForCreation', '', 'document.departmentForCreation', '', '@CL_DEPARTMENT.asMap()')}">
-                    </div>
+                    <div th:replace="~{/fragments/field::input-combobox('departmentForCreation', '', 'document.departmentForCreation', '', '@CL_DEPARTMENT.asMap()')}"></div>
                 </div>
 
                 <div class="col-3 offset-1">
                     <div th:replace="~{/fragments/label::m('chargePersonForCreation', '作成担当者')}"></div>
                 </div>
                 <div class="col-6">
-                    <div
-                            th:replace="~{/fragments/field::input-combobox('chargePersonForCreation', '', 'document.chargePersonForCreation', '', '@CL_EMPLOYEE.asMap()')}">
-                    </div>
-                </div>
-
-                <div class="col-3 offset-1">
-                    <div th:replace="~{/fragments/label::m('responsiblePersonForCreation', '作成責任者')}"></div>
-                </div>
-                <div class="col-6">
-                    <div
-                            th:replace="~{/fragments/field::input-combobox('responsiblePersonForCreation', '', 'document.responsiblePersonForCreation', '', '@CL_EMPLOYEE.asMap()')}">
-                    </div>
+                    <div th:replace="~{/fragments/field::input-combobox('chargePersonForCreation', '', 'document.chargePersonForCreation', '', '@CL_EMPLOYEE.asMap()')}"></div>
                 </div>
             </div>
 
@@ -301,18 +275,21 @@
                     <div th:replace="~{/fragments/label::m('departmentForPublish', '発行部門')}"></div>
                 </div>
                 <div class="col-13">
-                    <div
-                            th:replace="~{/fragments/field::input-combobox('departmentForPublish', '', 'document.departmentForPublish', '', '@CL_DEPARTMENT.asMap()')}">
-                    </div>
+                    <div th:replace="~{/fragments/field::input-combobox('departmentForPublish', '', 'document.departmentForPublish', '', '@CL_DEPARTMENT.asMap()')}"></div>
+                </div>
+
+                <div class="col-3 offset-1">
+                    <div th:replace="~{/fragments/label::m('chargePersonForPublish', '発行担当者')}"></div>
+                </div>
+                <div class="col-6">
+                    <div th:replace="~{/fragments/field::input-combobox('chargePersonForPublish', '', 'document.chargePersonForPublish', '', '@CL_EMPLOYEE.asMap()')}"></div>
                 </div>
 
                 <div class="col-3 offset-1">
                     <div th:replace="~{/fragments/label::m('responsiblePersonForPublish', '発行責任者')}"></div>
                 </div>
                 <div class="col-6">
-                    <div
-                            th:replace="~{/fragments/field::input-combobox('responsiblePersonForPublish', '', 'document.responsiblePersonForPublish', '', '@CL_EMPLOYEE.asMap()')}">
-                    </div>
+                    <div th:replace="~{/fragments/field::input-combobox('responsiblePersonForPublish', '', 'document.responsiblePersonForPublish', '', '@CL_EMPLOYEE.asMap()')}"></div>
                 </div>
             </div>
 
@@ -321,31 +298,25 @@
                     <div th:replace="~{/fragments/label::m('publishedDate', '発行日')}"></div>
                 </div>
                 <div class="col-5">
-                    <div th:replace="~{/fragments/field::date('publishedDate', '', 'document.publishedDate', '')}">
-                    </div>
+                    <div th:replace="~{/fragments/field::date('publishedDate', '', 'document.publishedDate', '')}"></div>
                 </div>
                 <div class="col-3 offset-1">
                     <div th:replace="~{/fragments/label::m('lastRevisedDate', '改訂日')}"></div>
                 </div>
                 <div class="col-5">
-                    <div
-                            th:replace="~{/fragments/field::date('lastRevisedDate', '', 'document.lastRevisedDate', '')}">
-                    </div>
+                    <div th:replace="~{/fragments/field::date('lastRevisedDate', '', 'document.lastRevisedDate', '')}"></div>
                 </div>
                 <div class="col-3 offset-1">
                     <div th:replace="~{/fragments/label::m('invalidationDate', '廃止日')}"></div>
                 </div>
                 <div class="col-5">
-                    <div
-                            th:replace="~{/fragments/field::date('invalidationDate', '', 'document.invalidationDate', '')}">
-                    </div>
+                    <div th:replace="~{/fragments/field::date('invalidationDate', '', 'document.invalidationDate', '')}"></div>
                 </div>
                 <div class="col-3 offset-1">
                     <div th:replace="~{/fragments/label::m('announceDate', '周知日')}"></div>
                 </div>
                 <div class="col-5">
-                    <div th:replace="~{/fragments/field::date('announceDate', '', 'document.announceDate', '')}">
-                    </div>
+                    <div th:replace="~{/fragments/field::date('announceDate', '', 'document.announceDate', '')}"></div>
                 </div>
             </div>
 
@@ -355,9 +326,7 @@
                     <div th:replace="~{/fragments/label::m('publicScope', '公開範囲')}"></div>
                 </div>
                 <div class="col-14">
-                    <div
-                            th:replace="~{/fragments/field::radio('publicScope', '', 'document.publicScope', '', '@CL_DOC_PUBLIC_SCOPE.asMap()')}">
-                    </div>
+                    <div th:replace="~{/fragments/field::radio('publicScope', '', 'document.publicScope', '', '@CL_DOC_PUBLIC_SCOPE.asMap()')}"></div>
                 </div>
             </div>
 
@@ -367,17 +336,13 @@
                     <div th:replace="~{/fragments/label::m('lastModifiedDate', '最終日時')}"></div>
                 </div>
                 <div class="col-6">
-                    <div
-                            th:replace="~{/fragments/field::datetime('lastModifiedDate', '', 'document.lastModifiedDate', '')}">
-                    </div>
+                    <div th:replace="~{/fragments/field::datetime('lastModifiedDate', '', 'document.lastModifiedDate', '')}"></div>
                 </div>
                 <div class="col-3 offset-1">
                     <div th:replace="~{/fragments/label::m('lastModifiedBy', '最終更新者')}"></div>
                 </div>
                 <div class="col-6">
-                    <div
-                            th:replace="~{/fragments/field::select('lastModifiedBy', '', 'document.lastModifiedBy', '', '@CL_ACCOUNT_FULLNAME.asMap()')}">
-                    </div>
+                    <div th:replace="~{/fragments/field::select('lastModifiedBy', '', 'document.lastModifiedBy', '', '@CL_ACCOUNT_FULLNAME.asMap()')}"></div>
                 </div>
             </div>
 
@@ -561,6 +526,8 @@
         $("#docService-dialog-button").on("click", function () {
             openDialog('サービス選択', '/sales/document/docServiceDialog');
         });
+
+
 
 
 </script>
