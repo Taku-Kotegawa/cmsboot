@@ -106,6 +106,12 @@
         });
 
         var table = $('#acountlist').DataTable({
+
+          'ajax': {
+              'url': 'list/json',
+              'data': flatten
+          },
+
           // 一覧に表示する項目とJSONの項目にマッピング
           'columns': [{
               data: 'username',

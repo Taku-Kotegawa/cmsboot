@@ -19,7 +19,7 @@ public interface VariableRepository extends JpaRepository<Variable, Long> {
      * @param type タイプ
      * @return ヒットしたデータのリスト
      */
-    List<Variable> findByType(String type);
+    List<Variable> findAllByType(String type);
 
     /**
      * タイプとコードで検索する。

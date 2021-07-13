@@ -1,383 +1,575 @@
 <!DOCTYPE html>
 <html th:replace="~{/layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <!-- ページタイトルを記入 -->
     <title>ドキュメント</title>
 </head>
-<body>
 
-<section class="content-header">
-    <div class="container"> <!-- -fluidを外すと横幅が狭くなる-->
-        <div class="row">
-            <div class="col-18 mb-3">
-                <!-- ページタイトルを記入 -->
-                <h4>ドキュメント</h4>
-            </div>
-            <div class="col-18 text-right">
-                <!-- ページタイトル右の余白 -->
+<body>
+    <div th:replace="~{/layout/libraries :: datatables}"></div>
+
+    <section class="content-header">
+        <div class="container">
+            <!-- -fluidを外すと横幅が狭くなる-->
+            <div class="row">
+                <div class="col-18 mb-3">
+                    <!-- ページタイトルを記入 -->
+                    <h4>ドキュメント</h4>
+                </div>
+                <div class="col-18 text-right">
+                    <!-- ページタイトル右の余白 -->
+                </div>
             </div>
         </div>
-    </div>
-</section>
-<section class="content">
-    <div class="container">
-        <div th:replace="~{/fragments/message-panel :: message-panel}"></div>
-        <!-- ここより下にメインコンテンツを記入 -->
-        <form autocomplete="off" enctype="multipart/form-data" method="post" th:action
-              th:object="${documentForm}" th:with="id= ${document != null} ? ${document.id} : 0">
+    </section>
+    <section class="content">
+        <div class="container">
+            <div th:replace="~{/fragments/message-panel :: message-panel}"></div>
+            <!-- ここより下にメインコンテンツを記入 -->
+            <form autocomplete="off" enctype="multipart/form-data" method="post" th:action th:object="${documentForm}"
+                th:with="id= ${document != null} ? ${document.id} : 0">
 
-            <!-- EnterキーによるPOSTを無効化 -->
-            <input disabled style="display:none" type="submit"/>
+                <!-- EnterキーによるPOSTを無効化 -->
+                <input disabled style="display:none" type="submit" />
 
-            <!-- 隠しフィールド -->
-            <input th:field="*{version}" type="hidden"/>
+                <!-- 隠しフィールド -->
+                <input th:field="*{version}" type="hidden" />
 
-            <!-- button -->
-            <div th:replace="~{/fragments/button-area :: m(${id})}"></div>
-            <div th:replace="~{/fragments/field::checkbox-inline('saveRevision', '', 'document.saveRevision', '', '@CL_SAVE_REVISION.asMap()')}"></div>
-            <div class="row mt-3">
-                <div class="col-3">
-                    <div th:replace="~{/fragments/label::m('reasonForChange', '変更理由')}"></div>
+                <!-- button -->
+                <div th:replace="~{/fragments/button-area :: m(${id})}"></div>
+                <div
+                    th:replace="~{/fragments/field::checkbox-inline('saveRevision', '', 'document.saveRevision', '', '@CL_SAVE_REVISION.asMap()')}">
                 </div>
-                <div class="col-33">
-                    <div th:replace="~{/fragments/field::input('reasonForChange', '', 'document.reasonForChange', '')}"></div>
+                <div class="row mt-3">
+                    <div class="col-3">
+                        <div th:replace="~{/fragments/label::m('reasonForChange', '変更理由')}"></div>
+                    </div>
+                    <div class="col-33">
+                        <div
+                            th:replace="~{/fragments/field::input('reasonForChange', '', 'document.reasonForChange', '')}">
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <hr>
+                <hr>
 
-            <!-- Input -->
-            <div class="row">
-                <div class="col-3">
-                    <div th:replace="~{/fragments/label::m('title', '文書タイトル')}"></div>
-                </div>
-                <div class="col-14">
-                    <div th:replace="~{/fragments/field::input('title', '', 'document.title', '')}"></div>
-                </div>
+                <!-- Input -->
+                <div class="row">
+                    <div class="col-3">
+                        <div th:replace="~{/fragments/label::m('title', '文書タイトル')}"></div>
+                    </div>
+                    <div class="col-14">
+                        <div th:replace="~{/fragments/field::input('title', '', 'document.title', '')}"></div>
+                    </div>
 
-                <div class="col-2 offset-1">
-                    <div th:replace="~{/fragments/label::m('documentNumber', '文書番号')}"></div>
-                </div>
-                <div class="col-4">
-                    <div th:replace="~{/fragments/field::input('documentNumber', '', 'document.documentNumber', '')}"></div>
-                </div>
-
-                <div class="col-2 offset-1">
-                    <div th:replace="~{/fragments/label::m('versionNumber', '版数')}"></div>
-                </div>
-                <div class="col-2">
-                    <div th:replace="~{/fragments/field::input('versionNumber', '', 'document.versionNumber', '')}"></div>
-                </div>
-
-                <div class="col-3 offset-2">
-                    <div th:replace="~{/fragments/label::m('status', 'ステータス')}"></div>
-                </div>
-                <div class="col-2">
-                    <div th:replace="~{/fragments/view-select::m('status', '', 'document.status', '', '@CL_STATUS.asMap()')}"></div>
-                </div>
-            </div>
-
-            <div class="row mt-3">
-                <div class="col-3">
-                    <div th:replace="~{/fragments/label::m('docCategory', '文書区分')}"></div>
-                </div>
-                <div class="col-33">
-                    <div th:replace="~{/fragments/field::select2('docCategory', '', 'document.docCategory', '', '@CL_DOC_CATEGORY.asMap()')}"></div>
-                </div>
-            </div>
-
-            <div class="row mt-3">
-                <div class="col-3">
-                    <div th:replace="~{/fragments/label::m('docService', 'サービス')}"></div>
-                </div>
-                <div class="col-33">
-                    <div th:replace="~{/fragments/field::select2('docService', '', 'document.docService', '', '@CL_DOC_SERVICE.asMap()')}"></div>
-                </div>
-            </div>
-
-            <div class="row mt-3">
-                <div class="col-3">
-                    <div th:replace="~{/fragments/label::m('customerPublic', '顧客公開')}"></div>
-                </div>
-                <div class="col-6">
-                    <div th:replace="~{/fragments/field::radio('customerPublic', '', 'document.customerPublic', '', '@CL_CUSTOMER_PUBLIC.asMap()')}"></div>
-                </div>
-                <div class="col-4">
-                    <div th:replace="~{/fragments/label::m('customerPublic', '活用シーン')}"></div>
-                </div>
-                <div class="col-18">
-                    <div th:replace="~{/fragments/field::checkbox('useStage', '', 'document.useStage', '', '@CL_DOC_STAGE.asMap()')}"></div>
-                </div>
-            </div>
-
-            <!-- ファイル設定エリア -->
-            <div class="row mt-3">
-                <div class="col-36">
-                    <table class="table-sm" id="filesArea">
-                        <thead>
-                        <tr>
-                            <td class="row">
-                                <div class="col-6">文書種類</div>
-                                <div class="col-14">ファイル</div>
-                                <div class="col-14">ファイル(PDF)</div>
-                                <div class="col-2"></div>
-                            </td>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <!-- 編集 -->
-                        <tr th:each="item, status : *{files}">
-                            <td class="row">
-                                <div class="col-6">
-                                    <select class="form-control" th:errorclass="is-invalid"
-                                            th:field="*{files[__${status.index}__].type}">
-                                        <option label="--Select--" value=""/>
-                                        <option th:each="item : ${@CL_DOC_TYPE.asMap()}"
-                                                th:text="${item.value}"
-                                                th:value="${item.key}"></option>
-                                    </select>
-                                    <span class="invalid-feedback whitespace-nowrap"
-                                          th:errors="*{files[__${status.index}__].type}"
-                                          th:id="files.type-error"></span>
-                                </div>
-                                <div class="col-14">
-                                    <input class="form-control form-control-file file-managed"
-                                           data-file-type="document_file"
-                                           th:id="|files[__${status.index}__].file|"
-                                           th:style="*{files[__${status.index}__].fileUuid} ? 'display:none' : 'display:block'"
-                                           type="file"/>
-                                    <span class="invalid-feedback whitespace-nowrap"
-                                          th:errors="*{files[__${status.index}__].fileUuid}"
-                                          th:id="file.fileUuid-error"></span>
-
-                                    <th:block th:if="*{files[__${status.index}__].fileManaged}">
-                                        <div class="input-group" th:id="|files[${status.index}].file__attached-block|">
-                                          <span>
-                                            <i class="far fa-file ml-2"></i>
-                                            <a class="link-attached"
-                                               target="_blank"
-                                               th:href="|${op.getViewUrl(id)}/file/files_file/${status.index}|"
-                                               th:with="uuid = *{files[__${status.index}__].fileUuid}">[[*{files[__${status.index}__].fileManaged.originalFilename}]]</a>
-                                                  <i class="far fa-trash-alt" style="color: brown;"
-                                                     th:onclick="|file_detach('files[${status.index}].file')|"></i>
-                                            <input th:field="*{files[__${status.index}__].fileUuid}" type="hidden"/>
-                                          </span>
-                                        </div>
-                                    </th:block>
-                                </div>
-                                <div class="col-14">
-                                    <input class="form-control form-control-file file-managed"
-                                           data-file-type="document_file"
-                                           th:id="|files[__${status.index}__].pdf|"
-                                           th:style="*{files[__${status.index}__].pdfUuid} ? 'display:none' : 'display:block'"
-                                           type="file"/>
-                                    <span class="invalid-feedback whitespace-nowrap"
-                                          th:errors="*{files[__${status.index}__].pdfUuid}"
-                                          th:id="file.pdfUuid-error"></span>
-
-                                    <th:block th:if="*{files[__${status.index}__].pdfManaged}">
-                                        <div class="input-group" th:id="|files[${status.index}].pdf__attached-block|">
-                                          <span>
-                                            <i class="far fa-file ml-2"></i>
-                                            <a class="link-attached"
-                                               target="_blank"
-                                               th:href="|${op.getViewUrl(id)}/file/files_pdf/${status.index}|"
-                                               th:with="uuid = *{files[__${status.index}__].pdfUuid}">[[*{files[__${status.index}__].pdfManaged.originalFilename}]]</a>
-                                                  <i class="far fa-trash-alt" style="color: brown;"
-                                                     th:onclick="|file_detach('files[${status.index}].pdf')|"></i>
-                                            <input th:field="*{files[__${status.index}__].pdfUuid}" type="hidden"/>
-                                          </span>
-                                        </div>
-                                    </th:block>
-                                </div>
-                                <div class="col-2 text-center">
-                                    <button class="btn-button" onclick="lineDelete(this)" type="button">削除</button>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <!-- 参照用 -->
-                        <th:block th:if="${fieldState.files_type__view}">
-                            <tr th:each="item, status : ${document.files}">
-                                <td class="row">
-                                    <div class="col-6">
-                                        <div th:replace="~{/fragments/view-select::m('files_type', '', 'item.type', '', '@CL_DOC_TYPE.asMap()')}"></div>
-                                    </div>
-                                    <div class="col-14">
-                                        <div th:replace="~{/fragments/view-file-document::m('files_file', '', 'item.fileManaged', '')}"></div>
-                                    </div>
-                                    <div class="col-14">
-                                        <div th:replace="~{/fragments/view-file-document::m('files_pdf', '', 'item.pdfManaged', '')}"></div>
-                                    </div>
-                                </td>
-                            </tr>
-
-                        </th:block>
-                        </tbody>
-                    </table>
-
-                    <div class="row" th:if="${buttonState.addItem__view}">
-                        <div class="col-36">
-                            <button class="btn-button" formaction="#addLinebutton" id="addLinebutton"
-                                    name="addlineitem">行追加
-                            </button>
+                    <div class="col-2 offset-1">
+                        <div th:replace="~{/fragments/label::m('documentNumber', '文書番号')}"></div>
+                    </div>
+                    <div class="col-4">
+                        <div
+                            th:replace="~{/fragments/field::input('documentNumber', '', 'document.documentNumber', '')}">
                         </div>
                     </div>
 
-                </div>
-            </div>
+                    <div class="col-2 offset-1">
+                        <div th:replace="~{/fragments/label::m('versionNumber', '版数')}"></div>
+                    </div>
+                    <div class="col-2">
+                        <div th:replace="~{/fragments/field::input('versionNumber', '', 'document.versionNumber', '')}">
+                        </div>
+                    </div>
 
-            <!-- 本文 -->
-            <div class="row mt-3">
-                <div class="col-36">
-                    <div th:replace="~{/fragments/field::summernote('body', '本文', 'document.body', '', '8')}"></div>
-                </div>
-            </div>
-
-            <div class="row mt-1">
-                <div class="col-3">
-                    <div th:replace="~{/fragments/label::m('remark', '備考')}"></div>
-                </div>
-                <div class="col-33">
-                    <div th:replace="~{/fragments/field::input('remark', '', 'document.remark', '')}"></div>
-                </div>
-            </div>
-
-            <div class="row mt-5">
-                <div class="col-3">
-                    <div th:replace="~{/fragments/label::m('departmentForCreation', '作成部門')}"></div>
-                </div>
-                <div class="col-13">
-                    <div th:replace="~{/fragments/field::input-combobox('departmentForCreation', '', 'document.departmentForCreation', '', '@CL_DEPARTMENT.asMap()')}"></div>
+                    <div class="col-3 offset-2">
+                        <div th:replace="~{/fragments/label::m('status', 'ステータス')}"></div>
+                    </div>
+                    <div class="col-2">
+                        <div
+                            th:replace="~{/fragments/view-select::m('status', '', 'document.status', '', '@CL_STATUS.asMap()')}">
+                        </div>
+                    </div>
                 </div>
 
-                <div class="col-3 offset-1">
-                    <div th:replace="~{/fragments/label::m('chargePersonForCreation', '作成担当者')}"></div>
-                </div>
-                <div class="col-6">
-                    <div th:replace="~{/fragments/field::input-combobox('chargePersonForCreation', '', 'document.chargePersonForCreation', '', '@CL_EMPLOYEE.asMap()')}"></div>
-                </div>
-
-                <div class="col-3 offset-1">
-                    <div th:replace="~{/fragments/label::m('responsiblePersonForCreation', '作成責任者')}"></div>
-                </div>
-                <div class="col-6">
-                    <div th:replace="~{/fragments/field::input-combobox('responsiblePersonForCreation', '', 'document.responsiblePersonForCreation', '', '@CL_EMPLOYEE.asMap()')}"></div>
-                </div>
-            </div>
-
-            <div class="row mt-3">
-                <div class="col-3">
-                    <div th:replace="~{/fragments/label::m('departmentForPublish', '発行部門')}"></div>
-                </div>
-                <div class="col-13">
-                    <div th:replace="~{/fragments/field::input-combobox('departmentForPublish', '', 'document.departmentForPublish', '', '@CL_DEPARTMENT.asMap()')}"></div>
+                <div class="row mt-3">
+                    <div class="col-3">
+                        <div th:replace="~{/fragments/label::m('docCategory', '文書区分')}"></div>
+                    </div>
+                    <div class="col-33">
+                        <div
+                            th:replace="~{/fragments/field::select-dialog('docCategory', '', 'document.docCategory', '', '@CL_DOC_CATEGORY.asMap()')}">
+                        </div>
+                    </div>
                 </div>
 
-                <div class="col-3 offset-1">
-                    <div th:replace="~{/fragments/label::m('responsiblePersonForPublish', '発行責任者')}"></div>
+                <div class="row mt-3">
+                    <div class="col-3">
+                        <div th:replace="~{/fragments/label::m('docService', 'サービス')}"></div>
+                    </div>
+                    <div class="col-33">
+                        <div
+                            th:replace="~{/fragments/field::select-dialog('docService', '', 'document.docService', '', '@CL_DOC_SERVICE.asMap()')}">
+                        </div>
+                    </div>
                 </div>
-                <div class="col-6">
-                    <div th:replace="~{/fragments/field::input-combobox('responsiblePersonForPublish', '', 'document.responsiblePersonForPublish', '', '@CL_EMPLOYEE.asMap()')}"></div>
-                </div>
-            </div>
 
-            <div class="row mt-3">
-                <div class="col-3">
-                    <div th:replace="~{/fragments/label::m('publishedDate', '発行日')}"></div>
+                <div class="row mt-3">
+                    <div class="col-3">
+                        <div th:replace="~{/fragments/label::m('customerPublic', '顧客公開')}"></div>
+                    </div>
+                    <div class="col-6">
+                        <div
+                            th:replace="~{/fragments/field::radio('customerPublic', '', 'document.customerPublic', '', '@CL_CUSTOMER_PUBLIC.asMap()')}">
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div th:replace="~{/fragments/label::m('customerPublic', '活用シーン')}"></div>
+                    </div>
+                    <div class="col-18">
+                        <div
+                            th:replace="~{/fragments/field::checkbox('useStage', '', 'document.useStage', '', '@CL_DOC_STAGE.asMap()')}">
+                        </div>
+                    </div>
                 </div>
-                <div class="col-5">
-                    <div th:replace="~{/fragments/field::date('publishedDate', '', 'document.publishedDate', '')}"></div>
+
+                <!-- ファイル設定エリア -->
+                <div class="row mt-3">
+                    <div class="col-36">
+                        <table class="table-sm" id="filesArea">
+                            <thead>
+                                <tr>
+                                    <td class="row">
+                                        <div class="col-6">文書種類</div>
+                                        <div class="col-14">ファイル</div>
+                                        <div class="col-14">ファイル(PDF)</div>
+                                        <div class="col-2"></div>
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- 編集 -->
+                                <tr th:each="item, status : *{files}">
+                                    <td class="row">
+                                        <div class="col-6">
+                                            <select class="form-control" th:errorclass="is-invalid"
+                                                th:field="*{files[__${status.index}__].type}">
+                                                <option label="--Select--" value="" />
+                                                <option th:each="item : ${@CL_DOC_TYPE.asMap()}" th:text="${item.value}"
+                                                    th:value="${item.key}"></option>
+                                            </select>
+                                            <span class="invalid-feedback whitespace-nowrap"
+                                                th:errors="*{files[__${status.index}__].type}"
+                                                th:id="files.type-error"></span>
+                                        </div>
+                                        <div class="col-14">
+                                            <input class="form-control form-control-file file-managed"
+                                                data-file-type="document_file" th:id="|files[__${status.index}__].file|"
+                                                th:style="*{files[__${status.index}__].fileUuid} ? 'display:none' : 'display:block'"
+                                                type="file" />
+                                            <span class="invalid-feedback whitespace-nowrap"
+                                                th:errors="*{files[__${status.index}__].fileUuid}"
+                                                th:id="file.fileUuid-error"></span>
+
+                                            <th:block th:if="*{files[__${status.index}__].fileManaged}">
+                                                <div class="input-group"
+                                                    th:id="|files[${status.index}].file__attached-block|">
+                                                    <span>
+                                                        <i class="far fa-file ml-2"></i>
+                                                        <a class="link-attached" target="_blank"
+                                                            th:href="|${op.getViewUrl(id)}/file/files_file/${status.index}|"
+                                                            th:with="uuid = *{files[__${status.index}__].fileUuid}">[[*{files[__${status.index}__].fileManaged.originalFilename}]]</a>
+                                                        <i class="far fa-trash-alt" style="color: brown;"
+                                                            th:onclick="|file_detach('files[${status.index}].file')|"></i>
+                                                        <input th:field="*{files[__${status.index}__].fileUuid}"
+                                                            type="hidden" />
+                                                    </span>
+                                                </div>
+                                            </th:block>
+                                        </div>
+                                        <div class="col-14">
+                                            <input class="form-control form-control-file file-managed"
+                                                data-file-type="document_file" th:id="|files[__${status.index}__].pdf|"
+                                                th:style="*{files[__${status.index}__].pdfUuid} ? 'display:none' : 'display:block'"
+                                                type="file" />
+                                            <span class="invalid-feedback whitespace-nowrap"
+                                                th:errors="*{files[__${status.index}__].pdfUuid}"
+                                                th:id="file.pdfUuid-error"></span>
+
+                                            <th:block th:if="*{files[__${status.index}__].pdfManaged}">
+                                                <div class="input-group"
+                                                    th:id="|files[${status.index}].pdf__attached-block|">
+                                                    <span>
+                                                        <i class="far fa-file ml-2"></i>
+                                                        <a class="link-attached" target="_blank"
+                                                            th:href="|${op.getViewUrl(id)}/file/files_pdf/${status.index}|"
+                                                            th:with="uuid = *{files[__${status.index}__].pdfUuid}">[[*{files[__${status.index}__].pdfManaged.originalFilename}]]</a>
+                                                        <i class="far fa-trash-alt" style="color: brown;"
+                                                            th:onclick="|file_detach('files[${status.index}].pdf')|"></i>
+                                                        <input th:field="*{files[__${status.index}__].pdfUuid}"
+                                                            type="hidden" />
+                                                    </span>
+                                                </div>
+                                            </th:block>
+                                        </div>
+                                        <div class="col-2 text-center">
+                                            <button class="btn-button" onclick="lineDelete(this)"
+                                                type="button">削除</button>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- 参照用 -->
+                                <th:block th:if="${fieldState.files_type__view}">
+                                    <tr th:each="item, status : ${document.files}">
+                                        <td class="row">
+                                            <div class="col-6">
+                                                <div
+                                                    th:replace="~{/fragments/view-select::m('files_type', '', 'item.type', '', '@CL_DOC_TYPE.asMap()')}">
+                                                </div>
+                                            </div>
+                                            <div class="col-14">
+                                                <div
+                                                    th:replace="~{/fragments/view-file-document::m('files_file', '', 'item.fileManaged', '')}">
+                                                </div>
+                                            </div>
+                                            <div class="col-14">
+                                                <div
+                                                    th:replace="~{/fragments/view-file-document::m('files_pdf', '', 'item.pdfManaged', '')}">
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                </th:block>
+                            </tbody>
+                        </table>
+
+                        <div class="row" th:if="${buttonState.addItem__view}">
+                            <div class="col-36">
+                                <button class="btn-button" formaction="#addLinebutton" id="addLinebutton"
+                                    name="addlineitem">行追加
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
-                <div class="col-3 offset-1">
-                    <div th:replace="~{/fragments/label::m('lastRevisedDate', '改訂日')}"></div>
+
+                <!-- 本文 -->
+                <div class="row mt-3">
+                    <div class="col-36">
+                        <div th:replace="~{/fragments/field::summernote('body', '本文', 'document.body', '', '8')}"></div>
+                    </div>
                 </div>
-                <div class="col-5">
-                    <div th:replace="~{/fragments/field::date('lastRevisedDate', '', 'document.lastRevisedDate', '')}"></div>
+
+                <div class="row mt-1">
+                    <div class="col-3">
+                        <div th:replace="~{/fragments/label::m('remark', '備考')}"></div>
+                    </div>
+                    <div class="col-33">
+                        <div th:replace="~{/fragments/field::input('remark', '', 'document.remark', '')}"></div>
+                    </div>
                 </div>
-                <div class="col-3 offset-1">
-                    <div th:replace="~{/fragments/label::m('invalidationDate', '廃止日')}"></div>
+
+                <div class="row mt-5">
+                    <div class="col-3">
+                        <div th:replace="~{/fragments/label::m('departmentForCreation', '作成部門')}"></div>
+                    </div>
+                    <div class="col-13">
+                        <div
+                            th:replace="~{/fragments/field::input-combobox('departmentForCreation', '', 'document.departmentForCreation', '', '@CL_DEPARTMENT.asMap()')}">
+                        </div>
+                    </div>
+
+                    <div class="col-3 offset-1">
+                        <div th:replace="~{/fragments/label::m('chargePersonForCreation', '作成担当者')}"></div>
+                    </div>
+                    <div class="col-6">
+                        <div
+                            th:replace="~{/fragments/field::input-combobox('chargePersonForCreation', '', 'document.chargePersonForCreation', '', '@CL_EMPLOYEE.asMap()')}">
+                        </div>
+                    </div>
+
+                    <div class="col-3 offset-1">
+                        <div th:replace="~{/fragments/label::m('responsiblePersonForCreation', '作成責任者')}"></div>
+                    </div>
+                    <div class="col-6">
+                        <div
+                            th:replace="~{/fragments/field::input-combobox('responsiblePersonForCreation', '', 'document.responsiblePersonForCreation', '', '@CL_EMPLOYEE.asMap()')}">
+                        </div>
+                    </div>
                 </div>
-                <div class="col-5">
-                    <div th:replace="~{/fragments/field::date('invalidationDate', '', 'document.invalidationDate', '')}"></div>
+
+                <div class="row mt-3">
+                    <div class="col-3">
+                        <div th:replace="~{/fragments/label::m('departmentForPublish', '発行部門')}"></div>
+                    </div>
+                    <div class="col-13">
+                        <div
+                            th:replace="~{/fragments/field::input-combobox('departmentForPublish', '', 'document.departmentForPublish', '', '@CL_DEPARTMENT.asMap()')}">
+                        </div>
+                    </div>
+
+                    <div class="col-3 offset-1">
+                        <div th:replace="~{/fragments/label::m('responsiblePersonForPublish', '発行責任者')}"></div>
+                    </div>
+                    <div class="col-6">
+                        <div
+                            th:replace="~{/fragments/field::input-combobox('responsiblePersonForPublish', '', 'document.responsiblePersonForPublish', '', '@CL_EMPLOYEE.asMap()')}">
+                        </div>
+                    </div>
                 </div>
-                <div class="col-3 offset-1">
-                    <div th:replace="~{/fragments/label::m('announceDate', '周知日')}"></div>
+
+                <div class="row mt-3">
+                    <div class="col-3">
+                        <div th:replace="~{/fragments/label::m('publishedDate', '発行日')}"></div>
+                    </div>
+                    <div class="col-5">
+                        <div th:replace="~{/fragments/field::date('publishedDate', '', 'document.publishedDate', '')}">
+                        </div>
+                    </div>
+                    <div class="col-3 offset-1">
+                        <div th:replace="~{/fragments/label::m('lastRevisedDate', '改訂日')}"></div>
+                    </div>
+                    <div class="col-5">
+                        <div
+                            th:replace="~{/fragments/field::date('lastRevisedDate', '', 'document.lastRevisedDate', '')}">
+                        </div>
+                    </div>
+                    <div class="col-3 offset-1">
+                        <div th:replace="~{/fragments/label::m('invalidationDate', '廃止日')}"></div>
+                    </div>
+                    <div class="col-5">
+                        <div
+                            th:replace="~{/fragments/field::date('invalidationDate', '', 'document.invalidationDate', '')}">
+                        </div>
+                    </div>
+                    <div class="col-3 offset-1">
+                        <div th:replace="~{/fragments/label::m('announceDate', '周知日')}"></div>
+                    </div>
+                    <div class="col-5">
+                        <div th:replace="~{/fragments/field::date('announceDate', '', 'document.announceDate', '')}">
+                        </div>
+                    </div>
                 </div>
-                <div class="col-5">
-                    <div th:replace="~{/fragments/field::date('announceDate', '', 'document.announceDate', '')}"></div>
-                </div>
-            </div>
 
 
 
-            <div class="row mt-3">
-                <div class="col-3">
-                    <div th:replace="~{/fragments/label::m('publicScope', '公開範囲')}"></div>
+                <div class="row mt-3">
+                    <div class="col-3">
+                        <div th:replace="~{/fragments/label::m('publicScope', '公開範囲')}"></div>
+                    </div>
+                    <div class="col-14">
+                        <div
+                            th:replace="~{/fragments/field::radio('publicScope', '', 'document.publicScope', '', '@CL_DOC_PUBLIC_SCOPE.asMap()')}">
+                        </div>
+                    </div>
                 </div>
-                <div class="col-14">
-                    <div th:replace="~{/fragments/field::radio('publicScope', '', 'document.publicScope', '', '@CL_DOC_PUBLIC_SCOPE.asMap()')}"></div>
+
+
+                <div class="row mt-3">
+                    <div class="col-3">
+                        <div th:replace="~{/fragments/label::m('lastModifiedDate', '最終日時')}"></div>
+                    </div>
+                    <div class="col-6">
+                        <div
+                            th:replace="~{/fragments/field::datetime('lastModifiedDate', '', 'document.lastModifiedDate', '')}">
+                        </div>
+                    </div>
+                    <div class="col-3 offset-1">
+                        <div th:replace="~{/fragments/label::m('lastModifiedBy', '最終更新者')}"></div>
+                    </div>
+                    <div class="col-6">
+                        <div
+                            th:replace="~{/fragments/field::select('lastModifiedBy', '', 'document.lastModifiedBy', '', '@CL_ACCOUNT_FULLNAME.asMap()')}">
+                        </div>
+                    </div>
                 </div>
-            </div>
 
+                <br>
 
-            <div class="row mt-3">
-                <div class="col-3">
-                    <div th:replace="~{/fragments/label::m('lastModifiedDate', '最終日時')}"></div>
-                </div>
-                <div class="col-6">
-                    <div th:replace="~{/fragments/field::datetime('lastModifiedDate', '', 'document.lastModifiedDate', '')}"></div>
-                </div>
-                <div class="col-3 offset-1">
-                    <div th:replace="~{/fragments/label::m('lastModifiedBy', '最終更新者')}"></div>
-                </div>
-                <div class="col-6">
-                    <div th:replace="~{/fragments/field::select('lastModifiedBy', '', 'document.lastModifiedBy', '', '@CL_ACCOUNT_FULLNAME.asMap()')}"></div>
-                </div>
-            </div>
+            </form>
+            <!-- ここより上にメインコンテンツを記入 -->
+        </div>
+    </section>
 
-            <br>
+    <!-- summernoteに必要なライブラリの読み込み -->
+    <link rel="stylesheet" th:href="@{/plugins/summernote/summernote-bs4.min.css}">
+    <script th:src="@{/plugins/summernote/summernote-bs4.min.js}"></script>
+    <script th:src="@{/plugins/summernote/lang/summernote-ja-JP.min.js}"></script>
 
-        </form>
-        <!-- ここより上にメインコンテンツを記入 -->
-    </div>
-</section>
+    <script>
+        $(document).ready(function () {
 
-<link rel="stylesheet" th:href="@{/plugins/summernote/summernote-bs4.min.css}">
-<script th:src="@{/plugins/summernote/summernote-bs4.min.js}"></script>
-<script th:src="@{/plugins/summernote/lang/summernote-ja-JP.min.js}"></script>
+            // summernoteの有効化
+            $.when(
+                $('.summernote').summernote({
+                    height: 105,
+                    // fontNames: ["Meiryo"],
+                    // fontNamesIgnoreCheck: ["Meiryo"],
+                    // lang: "ja-JP",
+                })
+                .summernote("fontName", "Meiryo")
 
-<script>
-  function lineDelete(e) {
-    let table = e.closest('table')
-<!--    if (table.rows.length == 2) {-->
-<!--      alert('全ての行は削除できません。');-->
-<!--      return false;-->
-<!--    }-->
-    let tr = e.closest('tr').remove();
-  }
+            ).done(function () {
+                var note_image_input = $('.note-image-input');
+                if (note_image_input[0] !== undefined) {
+                    note_image_input[0].name = 'summernote-files';
+                }
+            });
 
-$(document).ready(function() {
+        });
 
-      $.when(
-          $('.summernote').summernote({
-                height: 105,
-<!--                fontNames: ["Meiryo"],-->
-<!--                fontNamesIgnoreCheck: ["Meiryo"],-->
-                lang: "ja-JP",
-              })
-<!--              .summernote("fontName", "Meiryo")-->
+        /**
+         * 選択ダイアログを開く(eModalを使って、Bootstrap Modalを開く) 
+         */
+        function openDialog(title, url) {
+            var options = {
+                url: url,
+                title: title,
+                size: eModal.size.lg,
+            };
+            eModal.ajax(options);
+        }
 
-      ).done(function() {
-            var note_image_input = $('.note-image-input');
-            if (note_image_input[0] !== undefined) {
-                note_image_input[0].name = 'summernote-files';
+        /**
+         * 選択ダイアログ(Bootstrap Modal)が開いた際の動作
+         */
+        $(document).on('shown.bs.modal', function (event) {
+
+            // フィールド選択エリアの作成
+            var startcolnum = 0;
+            $('tr.filter th').each(function () {
+                var idx = $(this).index();
+                if (startcolnum <= idx && $(this).data("filter") != 'disable') {
+                    $(this).html('<input type="text" id="col_filter_' + idx + '" data-column="' + idx +
+                        '" class="dataTables_column_filter form-control" />');
+                }
+            });
+
+            openDocCategoryDialog();
+
+            openDocServiceDialog();
+
+        });
+
+        /**
+         * 文書区分選択ダイアログのDataTablesの起動
+         */
+        function openDocCategoryDialog() {
+
+            var dialog = document.getElementById('docCategoryDialog');
+            if (dialog != undefined) {
+                var table = $(dialog).DataTable({
+                    "scrollY": "400px",
+                    "scrollCollapse": true,
+                    "paging": false,
+                    'serverSide': false,
+                    'ajax': {
+                        'url': '/sales/document/variableDialog/DOC_CATEGORY/json'
+                    },
+                    'columns': [{
+                            data: 'code',
+                            className: 'text-center',
+                            render: function (data, type) {
+                                return '<button type="button" class="btn btn-button" onclick="select(this)" data-id="#docCategory" data-code="' +
+                                    data + '">選択</button>';
+                            }
+                        },
+                        {
+                            data: 'code',
+                            render: $.fn.dataTable.render.text(),
+                        },
+                        {
+                            data: 'value1',
+                            render: $.fn.dataTable.render.text(),
+                        },
+                        {
+                            data: 'value2',
+                            render: $.fn.dataTable.render.text(),
+                        }
+                    ],
+                    'order': [
+                        [1, 'asc']
+                    ],
+                    'buttons': [],
+                });
+                addFieldFilter2(table);
             }
-    });
-});
+        }
+
+        /**
+         * サービス選択ダイアログのDataTablesの起動
+         */
+        function openDocServiceDialog() {
+
+            var dialog = document.getElementById('docServiceDialog');
+            if (dialog != undefined) {
+                var table2 = $(dialog).DataTable({
+                    "scrollY": "400px",
+                    "scrollCollapse": true,
+                    "paging": false,
+                    'serverSide': false,
+                    'ajax': {
+                        'url': '/sales/document/variableDialog/DOC_SERVICE/json'
+                    },
+                    'columns': [{
+                            data: 'code',
+                            className: 'text-center',
+                            render: function (data, type) {
+                                return '<button type="button" class="btn btn-button" onclick="select(this)" data-id="#docService" data-code="' +
+                                    data + '">選択</button>';
+                            }
+                        },
+                        {
+                            data: 'code',
+                            render: $.fn.dataTable.render.text(),
+                        },
+                        {
+                            data: 'value1',
+                            render: $.fn.dataTable.render.text(),
+                        },
+                        {
+                            data: 'value2',
+                            render: $.fn.dataTable.render.text(),
+                        },
+                        {
+                            data: 'value3',
+                            render: $.fn.dataTable.render.text(),
+                        }
+
+                    ],
+                    'order': [
+                        [1, 'asc']
+                    ],
+                    'buttons': [],
+                });
+                addFieldFilter2(table2);
+            }
+        }
 
 
 
-</script>
+
+
+
+        function select(e) {
+            var code = e.dataset.code;
+            var id = e.dataset.id;
+            // select2の場合はこちら
+            // var select2 = $('#docCategory').select2();
+            // select2.val(code).trigger('change');
+            $(id).val(code);
+            $('.modal').modal('hide');
+        }
+
+        $("#docCategory-dialog-button").on("click", function () {
+            openDialog('区分選択', '/sales/document/docCategoryDialog');
+        });
+
+        $("#docService-dialog-button").on("click", function () {
+            openDialog('サービス選択', '/sales/document/docServiceDialog');
+        });
+    </script>
 
 </body>
+
 </html>

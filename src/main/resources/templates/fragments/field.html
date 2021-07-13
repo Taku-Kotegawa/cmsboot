@@ -95,6 +95,13 @@
     <div th:replace="~{/fragments/view-select-multi :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
 </th:block>
 
+<th:block th:fragment="select-dialog(field_id, label, value, placeholder, items)">
+    <div th:replace="~{/fragments/label :: m(${field_id}, ${label})}"></div>
+    <div th:replace="~{/fragments/select-dialog :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
+    <div th:replace="~{/fragments/hidden :: m(${field_id})}"></div>
+    <div th:replace="~{/fragments/view-select :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
+</th:block>
+
 <th:block th:fragment="select2(field_id, label, value, placeholder, items)">
     <div th:replace="~{/fragments/label :: m(${field_id}, ${label})}"></div>
     <div th:replace="~{/fragments/select2 :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>

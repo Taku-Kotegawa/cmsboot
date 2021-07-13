@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>入力フィールドの部品(select-map)</title>
+</head>
+<body>
+
+<th:block th:fragment="m(field_id, label, value, placeholder, items)">
+
+    <!--/* 入力 */-->
+    <th:block th:if="${fieldState.__${field_id}____input}">
+        <div class="dropdown input-group">
+            <select class="form-control" th:errorclass="is-invalid" th:field="*{__${field_id}__}"
+                    th:placeholder="${placeholder}">
+                <option label="--Select--" value=""/>
+                <option th:each="item : ${__${items}__}"
+                        th:text="${item.value}"
+                        th:value="${item.key}"></option>
+            </select>
+            <div class="input-group-append" data-toggle="dropdown">
+                <div class="input-group-text" th:id="__${field_id}__-dialog-button"><i class="fas fa-list"></i></div>
+            </div>
+        </div>
+        <span class="invalid-feedback whitespace-nowrap" th:errors="*{__${field_id}__}" th:id="__${field_id}__-error"></span>
+    </th:block>
+
+</th:block>
+</body>
+</html>

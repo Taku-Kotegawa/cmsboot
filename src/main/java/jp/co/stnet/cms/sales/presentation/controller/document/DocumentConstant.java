@@ -9,6 +9,8 @@ public class DocumentConstant {
     static final String TEMPLATE_FORM = BASE_PATH + "/form";
     static final String TEMPLATE_UPLOAD_FORM = BASE_PATH + "/uploadform";
     static final String TEMPLATE_UPLOAD_COMPLETE = "common/upload/complete";
+    static final String TEMPLATE_DOC_CATEGORY_DIALOG = BASE_PATH + "/docCategoryDialog";
+    static final String TEMPLATE_DOC_SERVICE_DIALOG = BASE_PATH + "/docServiceDialog";
 
     // CSV/TSVのファイル名(拡張子除く)
     static final String DOWNLOAD_FILENAME = "document";

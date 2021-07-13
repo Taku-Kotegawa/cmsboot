@@ -62,8 +62,6 @@ public class VariableServiceImpl extends AbstractNodeService<Variable, Long> imp
         return "";
     }
 
-
-
     @Override
     protected JpaRepository<Variable, Long> getRepository() {
         return variableRepository;
@@ -79,5 +77,10 @@ public class VariableServiceImpl extends AbstractNodeService<Variable, Long> imp
     @Override
     public List<Variable> findAllByTypeAndCode(String type, String code) {
         return variableRepository.findAllByTypeAndCode(type, code);
+    }
+
+    @Override
+    public List<Variable> findAllByType(String type) {
+        return variableRepository.findAllByType(type);
     }
 }

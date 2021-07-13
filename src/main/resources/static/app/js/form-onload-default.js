@@ -28,3 +28,5 @@
     var target = $(this).data('target');
     $('input[name="' + target + '"]').val(text);
   });
+
+

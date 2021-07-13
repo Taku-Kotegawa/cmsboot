@@ -18,10 +18,10 @@ $.extend($.fn.dataTable.defaults, {
 
     // データ取得先のURLの初期値設定
     // flattenはSpringMVCでデータを受け取るためのクエリパラメータの変換処理
-    'ajax': {
-        'url': 'list/json',
-        'data': flatten
-    },
+//    'ajax': {
+//        'url': 'list/json',
+//        'data': flatten
+//    },
 
     // 検索条件・並び順などの状態をLocalStorageに保存し、再表示時に復元
     'stateSave': true,
