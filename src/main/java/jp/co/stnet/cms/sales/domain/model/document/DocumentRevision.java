@@ -51,6 +51,7 @@ public class DocumentRevision extends AbstractRevisionEntity implements Serializ
     /**
      * 本文
      */
+    @Column(columnDefinition = "TEXT")
     private String body;
 
     /**

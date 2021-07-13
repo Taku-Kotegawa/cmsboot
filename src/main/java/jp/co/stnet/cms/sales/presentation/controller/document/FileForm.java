@@ -24,4 +24,5 @@ public class FileForm implements Serializable {
 
     private FileManaged pdfManaged;
 
+    private String memo;
 }
