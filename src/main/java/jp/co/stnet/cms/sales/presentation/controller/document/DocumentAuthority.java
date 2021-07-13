@@ -5,6 +5,7 @@ import jp.co.stnet.cms.base.domain.model.authentication.Permission;
 import jp.co.stnet.cms.common.constant.Constants;
 import jp.co.stnet.cms.sales.domain.model.document.DocPublicScope;
 import jp.co.stnet.cms.sales.domain.model.document.Document;
+import lombok.NonNull;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.core.GrantedAuthority;
@@ -30,8 +31,8 @@ public class DocumentAuthority {
             Constants.OPERATION.UPLOAD,
             Constants.OPERATION.VIEW,
             Constants.OPERATION.LIST,
-            "SEARCH_LIST",
-            "SEARCH_FULLTEXT"
+            "SEARCH_LIST", //検索一覧
+            "SEARCH_FULLTEXT" //全文検索
     );
 
     /**
@@ -41,6 +42,8 @@ public class DocumentAuthority {
      * @param loggedInUser ログインユーザ情報
      * @return true=操作する権限を持つ, false=操作する権限なし
      * @throws AccessDeniedException @PostAuthorizeを用いてfalse時にスロー
+     * @throws IllegalArgumentException 不正なOperationが指定された場合
+     * @throws NullPointerException operation, loggedInUser がnullの場合
      */
     @PostAuthorize("returnObject == true")
     public Boolean hasAuthority(String operation, LoggedInUser loggedInUser) {
@@ -48,20 +51,40 @@ public class DocumentAuthority {
     }
 
     /**
-     * 権限チェックを行う。
+     * 権限チェックを行い、権限がない場合はAccessDeniedExceptionをスローする
      *
      * @param operation    操作の種類(Constants.OPERATIONに登録された値)
      * @param loggedInUser ログインユーザ情報
      * @param document     ドキュメントエンティティ
-     * @return true=操作する権限を持つ, false=操作する権限なし
-     * @throws AccessDeniedException @PostAuthorizeを用いてfalse時にスロー
+     * @return true=操作する権限を持つ, 例外=権限を持たない場合
+     * @throws AccessDeniedException 権限がない場合(@PostAuthorizeを用いて戻り値false時にスロー)
+     * @throws IllegalArgumentException 不正なOperationが指定された場合
+     * @throws NullPointerException operation, loggedInUser がnullの場合
      */
     @PostAuthorize("returnObject == true")
     public Boolean hasAuthority(String operation, LoggedInUser loggedInUser, Document document) {
+        return hasAuthorityWOException(operation, loggedInUser, document);
+    }
+
+    /**
+     * 権限の有無チェック
+     *
+     * @param operation    操作の種類(Constants.OPERATIONに登録された値)
+     * @param loggedInUser ログインユーザ情報
+     * @param document     ドキュメントエンティティ
+     * @return true=操作する権限を持つ, false=権限を持たない
+     * @throws IllegalArgumentException 不正なOperationが指定された場合
+     * @throws NullPointerException operation, loggedInUser がnullの場合
+     */
+    public Boolean hasAuthorityWOException(@NonNull String operation, @NonNull LoggedInUser loggedInUser, Document document) {
+
         // 入力チェック
         validate(operation);
 
         Collection<GrantedAuthority> authorities = loggedInUser.getAuthorities();
+        if (authorities == null) {
+            return false;
+        }
 
         // 新規登録
         if (Constants.OPERATION.CREATE.equals(operation)) {
@@ -159,6 +182,7 @@ public class DocumentAuthority {
         return false;
     }
 
+
     /**
      * 公開区分によるアクセス権をチェック
      *
@@ -169,6 +193,10 @@ public class DocumentAuthority {
     private boolean checkPublicScope(Collection<GrantedAuthority> authorities, Document document) {
 
         if (document == null) {
+            return false;
+        }
+
+        if (authorities == null) {
             return false;
         }
 
@@ -192,7 +220,6 @@ public class DocumentAuthority {
 
         return false;
     }
-
 
     /**
      * 許可されたOperationか
