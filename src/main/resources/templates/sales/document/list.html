@@ -74,7 +74,7 @@ div#list_filter {
                 <th></th><!-- 廃止日 -->
                 <th></th><!-- 周知日 -->
                 <th></th><!-- 作成担当者 -->
-                <th></th><!-- 作成責任者 -->
+                <th></th><!-- 発行担当者 -->
                 <th></th><!-- 発行責任者 -->
                 <th></th><!-- 作成部門 -->
                 <th></th><!-- 発行部門 -->
@@ -133,7 +133,7 @@ div#list_filter {
                 <th class="text-center">廃止日</th>
                 <th class="text-center">周知日</th>
                 <th class="text-center">作成担当者</th>
-                <th class="text-center">作成責任者</th>
+                <th class="text-center">発行担当者</th>
                 <th class="text-center">発行責任者</th>
                 <th class="text-center">作成部門</th>
                 <th class="text-center">発行部門</th>
@@ -271,7 +271,7 @@ var pagechange = false;
               render: $.fn.dataTable.render.text(),
             },
             {
-              data: 'responsiblePersonForCreation',
+              data: 'chargePersonForPublish',
               render: $.fn.dataTable.render.text(),
             },
             {
