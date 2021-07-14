@@ -29,7 +29,7 @@ public class DocumentListBean extends Document {
 
     private String pdfFilesLabel;
 
-    private String fileTypeLabel;
+    private String fileMemo;
 
     private String publicScopeLabel;
 

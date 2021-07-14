@@ -80,8 +80,8 @@ div#list_filter {
                 <th></th><!-- 発行部門 -->
                 <th></th><!-- 備考 -->
                 <th></th><!-- 変更理由 -->
-                <th data-filter="disable"></th><!-- 文書種類 -->
                 <th data-filter="disable"></th><!-- ファイル -->
+                <th data-filter="disable"></th><!-- ファイルメモ -->
                 <th data-filter="disable"><!-- 活用シーン -->
                     <select id="col_filter_11" data-column="11" class="dataTables_column_filter form-control multiple-select" multiple="multiple" data-container=".content">
 <!--                        <option value="">&nbsp;</option>-->
@@ -139,8 +139,8 @@ div#list_filter {
                 <th class="text-center">発行部門</th>
                 <th class="text-center">備考</th>
                 <th class="text-center">変更理由</th>
-                <th class="text-center">文書種類</th>
                 <th class="text-center">ファイル</th>
+                <th class="text-center">ファイルメモ</th>
                 <th class="text-center">活用シーン</th>
                 <th class="text-center">公開区分</th>
                 <th class="text-center">顧客公開</th>
@@ -295,12 +295,12 @@ var pagechange = false;
               render: $.fn.dataTable.render.text(),
             },
             {
-              data: 'fileTypeLabel',
+              data: 'filesLabel',
               orderable: false,
               searchable: false,
             },
             {
-              data: 'filesLabel',
+              data: 'fileMemo',
               orderable: false,
               searchable: false,
             },

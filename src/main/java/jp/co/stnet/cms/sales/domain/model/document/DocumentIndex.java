@@ -247,9 +247,12 @@ public class DocumentIndex implements Serializable, StatusInterface {
     @JoinColumn(name = "pdfUuid", referencedColumnName = "uuid", unique = false, insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
     private FileManaged pdfManaged;
 
+    private String fileMemo;
+
     @FullTextField(analyzer = "japanese")
     @Column(columnDefinition = "LONGTEXT")
     private String content;
+
 
 
     /**

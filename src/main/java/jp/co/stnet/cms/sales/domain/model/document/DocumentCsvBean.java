@@ -22,7 +22,7 @@ public class DocumentCsvBean implements Serializable {
      * ItemStreamReader用のフィールド名定義(ImportDocumentTaskletで使用)
      * フィールド変更時に修正要
      */
-    public static String[] columns = {"id","status","statusLabel","documentNumber","title","versionNumber","docCategory","docCategoryValue1","docCategoryValue2","docService","docServiceValue1","docServiceValue2","docServiceValue3","publishedDate","lastRevisedDate","invalidationDate","announceDate","chargePersonForCreation","chargePersonForPublish","responsiblePersonForPublish","departmentForCreation","departmentForPublish","remark","reasonForChange","fileTypeLabel","filesLabel","pdfFilesLabel","useStage","useStageLabel","publicScope","publicScopeLabel","customerPublic","customerPublicLabel","body","lastModifiedDate","lastModifiedBy","lastModifiedByLabel"};
+    public static String[] columns = {"id","status","statusLabel","documentNumber","title","versionNumber","docCategory","docCategoryValue1","docCategoryValue2","docService","docServiceValue1","docServiceValue2","docServiceValue3","publishedDate","lastRevisedDate","invalidationDate","announceDate","chargePersonForCreation","chargePersonForPublish","responsiblePersonForPublish","departmentForCreation","departmentForPublish","remark","reasonForChange","filesLabel","pdfFilesLabel","fileMemo","useStage","useStageLabel","publicScope","publicScopeLabel","customerPublic","customerPublicLabel","body","lastModifiedDate","lastModifiedBy","lastModifiedByLabel"};
 
 
     @Parseable(value = TO_LONG)
@@ -176,11 +176,6 @@ public class DocumentCsvBean implements Serializable {
     private String reasonForChange;
 
     /**
-     * 文書種類
-     */
-    @CsvColumn(name = "fileTypeLabel")
-    private String fileTypeLabel;
-    /**
      * ファイル名
      */
     @CsvColumn(name = "filesLabel")
@@ -191,6 +186,12 @@ public class DocumentCsvBean implements Serializable {
      */
     @CsvColumn(name = "pdfFilesLabel")
     private String pdfFilesLabel;
+
+    /**
+     * 文書種類
+     */
+    @CsvColumn(name = "fileMemo")
+    private String fileMemo;
 
     /**
      * 活用シーン
