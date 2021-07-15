@@ -2,15 +2,17 @@ package jp.co.stnet.cms.sales.presentation.controller.document;
 
 import com.github.dozermapper.core.Mapper;
 import jp.co.stnet.cms.base.application.service.filemanage.FileManagedSharedService;
+import jp.co.stnet.cms.base.application.service.variable.VariableService;
 import jp.co.stnet.cms.base.domain.model.authentication.LoggedInUser;
 import jp.co.stnet.cms.base.domain.model.common.Status;
+import jp.co.stnet.cms.base.domain.model.variable.Variable;
+import jp.co.stnet.cms.base.domain.model.variable.VariableType;
+import jp.co.stnet.cms.base.presentation.dto.SelectItem;
 import jp.co.stnet.cms.common.constant.Constants;
 import jp.co.stnet.cms.common.datatables.OperationsUtil;
 import jp.co.stnet.cms.common.message.MessageKeys;
 import jp.co.stnet.cms.sales.application.service.document.DocumentService;
 import jp.co.stnet.cms.sales.domain.model.document.Document;
-import jp.co.stnet.cms.sales.domain.model.document.File;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -25,8 +27,8 @@ import org.terasoluna.gfw.web.token.transaction.TransactionTokenCheck;
 import org.terasoluna.gfw.web.token.transaction.TransactionTokenType;
 
 import javax.validation.groups.Default;
-
-import java.util.Iterator;
+import java.util.ArrayList;
+import java.util.List;
 
 import static jp.co.stnet.cms.sales.presentation.controller.document.DocumentConstant.BASE_PATH;
 import static jp.co.stnet.cms.sales.presentation.controller.document.DocumentConstant.TEMPLATE_FORM;
@@ -49,6 +51,9 @@ public class DocumentCreateController {
 
     @Autowired
     FileManagedSharedService fileManagedSharedService;
+
+    @Autowired
+    VariableService variableService;
 
     @Autowired
     Mapper beanMapper;
@@ -104,7 +109,7 @@ public class DocumentCreateController {
                          @RequestParam(value = "saveDraft", required = false) boolean saveDraft,
                          @AuthenticationPrincipal LoggedInUser loggedInUser) {
 
-        documentService.hasAuthority(Constants.OPERATION.CREATE, loggedInUser);
+        authority.hasAuthority(Constants.OPERATION.CREATE, loggedInUser);
 
         if (bindingResult.hasErrors()) {
             return createForm(form, model, loggedInUser, null);
@@ -141,10 +146,38 @@ public class DocumentCreateController {
                                     @RequestParam(value = "saveDraft", required = false) String saveDraft) {
 
         addFilesItem(form);
-
         return createForm(form, model, loggedInUser, null);
 
     }
 
 
+    @ResponseBody
+    @GetMapping(value = "doc_category2/json", params = "selected_value")
+    public List<SelectItem> docCategory2Json(@RequestParam(value = "selected_value", required = false) String selected_value) {
+        List<SelectItem> list = new ArrayList<>();
+        for (Variable variable : variableService.findAllByTypeAndValueX(VariableType.DOC_CATEGORY2.name(), 2, selected_value)) {
+            list.add(new SelectItem(variable.getCode(), variable.getValue1()));
+        }
+        return list;
+    }
+
+    @ResponseBody
+    @GetMapping(value = "doc_service2/json", params = "selected_value")
+    public List<SelectItem> docService2Json(@RequestParam(value = "selected_value", required = false) String selected_value) {
+        List<SelectItem> list = new ArrayList<>();
+        for (Variable variable : variableService.findAllByTypeAndValueX(VariableType.DOC_SERVICE2.name(), 2, selected_value)) {
+            list.add(new SelectItem(variable.getCode(), variable.getValue1()));
+        }
+        return list;
+    }
+
+    @ResponseBody
+    @GetMapping(value = "doc_service3/json", params = "selected_value")
+    public List<SelectItem> docService3Json(@RequestParam(value = "selected_value", required = false) String selected_value) {
+        List<SelectItem> list = new ArrayList<>();
+        for (Variable variable : variableService.findAllByTypeAndValueX(VariableType.DOC_SERVICE3.name(), 2, selected_value)) {
+            list.add(new SelectItem(variable.getCode(), variable.getValue1()));
+        }
+        return list;
+    }
 }

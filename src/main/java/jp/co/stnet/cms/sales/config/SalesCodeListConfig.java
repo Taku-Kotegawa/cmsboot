@@ -80,4 +80,48 @@ public class SalesCodeListConfig {
         return jdbcCodeList;
     }
 
+    @Bean("CL_DOC_CATEGORY1")
+    public JdbcCodeList docCategory1() {
+        JdbcCodeList jdbcCodeList = getJdbcCodeListBase();
+        jdbcCodeList.setQuerySql("SELECT CODE, CONCAT(VALUE1, case when STATUS = '2' then '(無効)' else '' end) as VALUE1 FROM VARIABLE WHERE TYPE = 'DOC_CATEGORY1' ORDER BY STATUS, VALINT1, CODE");
+        jdbcCodeList.setValueColumn("CODE");
+        jdbcCodeList.setLabelColumn("VALUE1");
+        return jdbcCodeList;
+    }
+
+    @Bean("CL_DOC_CATEGORY2")
+    public JdbcCodeList docCategory2() {
+        JdbcCodeList jdbcCodeList = getJdbcCodeListBase();
+        jdbcCodeList.setQuerySql("SELECT CODE, CONCAT(VALUE1, case when STATUS = '2' then '(無効)' else '' end) as VALUE1 FROM VARIABLE WHERE TYPE = 'DOC_CATEGORY2' ORDER BY STATUS, VALINT1, CODE");
+        jdbcCodeList.setValueColumn("CODE");
+        jdbcCodeList.setLabelColumn("VALUE1");
+        return jdbcCodeList;
+    }
+
+    @Bean("CL_DOC_SERVICE1")
+    public JdbcCodeList docService1() {
+        JdbcCodeList jdbcCodeList = getJdbcCodeListBase();
+        jdbcCodeList.setQuerySql("SELECT CODE, CONCAT(VALUE1, case when STATUS = '2' then '(無効)' else '' end) as VALUE1 FROM VARIABLE WHERE TYPE = 'DOC_SERVICE1' ORDER BY STATUS, VALINT1, CODE");
+        jdbcCodeList.setValueColumn("CODE");
+        jdbcCodeList.setLabelColumn("VALUE1");
+        return jdbcCodeList;
+    }
+
+    @Bean("CL_DOC_SERVICE2")
+    public JdbcCodeList docService2() {
+        JdbcCodeList jdbcCodeList = getJdbcCodeListBase();
+        jdbcCodeList.setQuerySql("SELECT CODE, CONCAT(VALUE1, case when STATUS = '2' then '(無効)' else '' end) as VALUE1 FROM VARIABLE WHERE TYPE = 'DOC_SERVICE2' ORDER BY STATUS, VALINT1, CODE");
+        jdbcCodeList.setValueColumn("CODE");
+        jdbcCodeList.setLabelColumn("VALUE1");
+        return jdbcCodeList;
+    }
+
+    @Bean("CL_DOC_SERVICE3")
+    public JdbcCodeList docService3() {
+        JdbcCodeList jdbcCodeList = getJdbcCodeListBase();
+        jdbcCodeList.setQuerySql("SELECT CODE, CONCAT(VALUE1, case when STATUS = '2' then '(無効)' else '' end) as VALUE1 FROM VARIABLE WHERE TYPE = 'DOC_SERVICE3' ORDER BY STATUS, VALINT1, CODE");
+        jdbcCodeList.setValueColumn("CODE");
+        jdbcCodeList.setLabelColumn("VALUE1");
+        return jdbcCodeList;
+    }
 }

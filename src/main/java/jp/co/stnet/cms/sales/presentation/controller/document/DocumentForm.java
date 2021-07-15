@@ -107,15 +107,31 @@ public class DocumentForm implements Serializable {
     private Set<String> useStage;
 
     /**
-     * 区分
+     * 区分1
      */
     @NotNull
-    private Long docCategory;
+    private Long docCategory1;
 
     /**
-     * サービス
+     * 区分2
      */
-    private Long docService;
+    @NotNull
+    private Long docCategory2;
+
+    /**
+     * サービス-事業領域
+     */
+    private Long docService1;
+
+    /**
+     * サービス-サービス種別
+     */
+    private Long docService2;
+
+    /**
+     * サービス-サービス
+     */
+    private Long docService3;
 
     /**
      * ファイル

@@ -117,18 +117,24 @@ public class Documents {
             documentCsvBean.setStatusLabel(getStatusLabel(document.getStatus()));
 
             // 区分
-            if (document.getDocCategoryVariable() != null) {
-                documentCsvBean.setDocCategory(document.getDocCategoryVariable().getCode());
-                documentCsvBean.setDocCategoryValue1(document.getDocCategoryVariable().getValue1());
-                documentCsvBean.setDocCategoryValue2(document.getDocCategoryVariable().getValue2());
+            if (document.getDocCategoryVariable2() != null) {
+                documentCsvBean.setDocCategory(document.getDocCategoryVariable2().getCode());
+                documentCsvBean.setDocCategoryValue1(document.getDocCategoryVariable1().getValue1());
+                documentCsvBean.setDocCategoryValue2(document.getDocCategoryVariable2().getValue1());
             }
 
             // サービス
-            if (document.getDocServiceVariable() != null) {
-                documentCsvBean.setDocService(document.getDocServiceVariable().getCode());
-                documentCsvBean.setDocServiceValue1(document.getDocServiceVariable().getValue1());
-                documentCsvBean.setDocServiceValue2(document.getDocServiceVariable().getValue2());
-                documentCsvBean.setDocServiceValue3(document.getDocServiceVariable().getValue3());
+            if (document.getDocServiceVariable1() != null) {
+                documentCsvBean.setDocServiceValue1(document.getDocServiceVariable1().getValue1());
+            }
+
+            if (document.getDocServiceVariable2() != null) {
+                documentCsvBean.setDocServiceValue2(document.getDocServiceVariable2().getValue1());
+            }
+
+            if (document.getDocServiceVariable3() != null) {
+                documentCsvBean.setDocService(document.getDocServiceVariable3().getCode());
+                documentCsvBean.setDocServiceValue3(document.getDocServiceVariable3().getValue1());
             }
 
             // 活用シーン

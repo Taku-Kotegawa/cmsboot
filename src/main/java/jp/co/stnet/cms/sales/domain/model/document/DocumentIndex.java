@@ -221,13 +221,94 @@ public class DocumentIndex implements Serializable, StatusInterface {
     })
     private Variable docServiceVariable;
 
+
+
+    /**
+     * 区分1
+     */
+    private Long docCategory1;
+
+    /**
+     * 区分1(Variable)
+     */
+    @ManyToOne
+    @NotFound(action = NotFoundAction.IGNORE)
+    @JoinColumnsOrFormulas({
+            @JoinColumnOrFormula(formula = @JoinFormula(value = "'DOC_CATEGORY1'", referencedColumnName = "type")),
+            @JoinColumnOrFormula(column = @JoinColumn(name = "docCategory1", referencedColumnName = "code", unique = false, insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT)))
+    })
+    private Variable docCategoryVariable1;
+
+    /**
+     * 区分2
+     */
+    private Long docCategory2;
+
+    /**
+     * 区分2(Variable)
+     */
+    @ManyToOne
+    @NotFound(action = NotFoundAction.IGNORE)
+    @JoinColumnsOrFormulas({
+            @JoinColumnOrFormula(formula = @JoinFormula(value = "'DOC_CATEGORY2'", referencedColumnName = "type")),
+            @JoinColumnOrFormula(column = @JoinColumn(name = "docCategory2", referencedColumnName = "code", unique = false, insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT)))
+    })
+    private Variable docCategoryVariable2;
+
+    /**
+     * サービス-事業領域
+     */
+    private Long docService1;
+
+    /**
+     * サービス-事業領域(Variable)
+     */
+    @ManyToOne
+    @NotFound(action = NotFoundAction.IGNORE)
+    @JoinColumnsOrFormulas({
+            @JoinColumnOrFormula(formula = @JoinFormula(value = "'DOC_SERVICE1'", referencedColumnName = "type")),
+            @JoinColumnOrFormula(column = @JoinColumn(name = "docService1", referencedColumnName = "code", unique = false, insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT)))
+    })
+    private Variable docServiceVariable1;
+
+    /**
+     * サービス-サービス種別
+     */
+    private Long docService2;
+
+    /**
+     * サービス-サービス種別(Variable)
+     */
+    @ManyToOne
+    @NotFound(action = NotFoundAction.IGNORE)
+    @JoinColumnsOrFormulas({
+            @JoinColumnOrFormula(formula = @JoinFormula(value = "'DOC_SERVICE1'", referencedColumnName = "type")),
+            @JoinColumnOrFormula(column = @JoinColumn(name = "docService2", referencedColumnName = "code", unique = false, insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT)))
+    })
+    private Variable docServiceVariable2;
+
+    /**
+     * サービス-サービス
+     */
+    private Long docService3;
+
+    /**
+     * サービス-サービス(Variable)
+     */
+    @ManyToOne
+    @NotFound(action = NotFoundAction.IGNORE)
+    @JoinColumnsOrFormulas({
+            @JoinColumnOrFormula(formula = @JoinFormula(value = "'DOC_SERVICE3'", referencedColumnName = "type")),
+            @JoinColumnOrFormula(column = @JoinColumn(name = "docService3", referencedColumnName = "code", unique = false, insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT)))
+    })
+    private Variable docServiceVariable3;
+
 //    /**
 //     * ファイル
 //     */
 //    @IndexedEmbedded
 //    @ElementCollection(fetch = FetchType.EAGER)
 //    private List<File> files;
-
 
     private String type;
 

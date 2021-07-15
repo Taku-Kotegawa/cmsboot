@@ -12,7 +12,7 @@
     <th:block th:if="${fieldState.__${field_id}____input}">
         <select class="form-control" th:errorclass="is-invalid" th:field="*{__${field_id}__}"
                 th:placeholder="${placeholder}">
-            <option label="--Select--" value=""/>
+            <option label="" value=""/>
             <option th:each="item : ${__${items}__}"
                     th:text="${item.value}"
                     th:value="${item.key}"></option>

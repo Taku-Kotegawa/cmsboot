@@ -80,21 +80,57 @@
                 </div>
             </div>
 
-            <div class="row mt-3">
-                <div class="col-3">
-                    <div th:replace="~{/fragments/label::m('docCategory', '文書区分')}"></div>
-                </div>
-                <div class="col-33">
-                    <div th:replace="~{/fragments/field::select-dialog('docCategory', '', 'document.docCategory', '', '@CL_DOC_CATEGORY.asMap()')}"></div>
-                </div>
-            </div>
+<!--            <div class="row mt-3">-->
+<!--                <div class="col-3">-->
+<!--                    <div th:replace="~{/fragments/label::m('docCategory', '文書区分')}"></div>-->
+<!--                </div>-->
+<!--                <div class="col-33">-->
+<!--                    <div th:replace="~{/fragments/field::select-dialog('docCategory', '', 'document.docCategory', '', '@CL_DOC_CATEGORY.asMap()')}"></div>-->
+<!--                </div>-->
+<!--            </div>-->
 
             <div class="row mt-3">
                 <div class="col-3">
-                    <div th:replace="~{/fragments/label::m('docService', 'サービス')}"></div>
+                    <div th:replace="~{/fragments/label::m('docCategory1', '文書区分1')}"></div>
                 </div>
-                <div class="col-33">
-                    <div th:replace="~{/fragments/field::select-dialog('docService', '', 'document.docService', '', '@CL_DOC_SERVICE.asMap()')}"></div>
+                <div class="col-8">
+                    <div th:replace="~{/fragments/field::select('docCategory1', '', 'document.docCategory1', '', '@CL_DOC_CATEGORY1.asMap()')}"></div>
+                </div>
+                <div class="col-3 offset-1">
+                    <div th:replace="~{/fragments/label::m('docCategory1', '文書区分2')}"></div>
+                </div>
+                <div class="col-8">
+                    <div th:replace="~{/fragments/field::select('docCategory2', '', 'document.docCategory2', '', '@CL_DOC_CATEGORY2.asMap()')}"></div>
+                </div>
+            </div>
+
+<!--            <div class="row mt-3">-->
+<!--                <div class="col-3">-->
+<!--                    <div th:replace="~{/fragments/label::m('docService', 'サービス')}"></div>-->
+<!--                </div>-->
+<!--                <div class="col-33">-->
+<!--                    <div th:replace="~{/fragments/field::select-dialog('docService', '', 'document.docService', '', '@CL_DOC_SERVICE.asMap()')}"></div>-->
+<!--                </div>-->
+<!--            </div>-->
+
+            <div class="row mt-3">
+                <div class="col-3">
+                    <div th:replace="~{/fragments/label::m('docService1', '事業領域')}"></div>
+                </div>
+                <div class="col-8">
+                    <div th:replace="~{/fragments/field::select('docService1', '', 'document.docService1', '', '@CL_DOC_SERVICE1.asMap()')}"></div>
+                </div>
+                <div class="col-3 offset-1">
+                    <div th:replace="~{/fragments/label::m('docService2', 'サービス種別')}"></div>
+                </div>
+                <div class="col-8">
+                    <div th:replace="~{/fragments/field::select('docService2', '', 'document.docService2', '', '@CL_DOC_SERVICE2.asMap()')}"></div>
+                </div>
+                <div class="col-3 offset-1">
+                    <div th:replace="~{/fragments/label::m('docService3', 'サービス')}"></div>
+                </div>
+                <div class="col-8">
+                    <div th:replace="~{/fragments/field::select('docService3', '', 'document.docService3', '', '@CL_DOC_SERVICE3.asMap()')}"></div>
                 </div>
             </div>
 
@@ -359,177 +395,203 @@
 <script th:src="@{/plugins/summernote/lang/summernote-ja-JP.min.js}"></script>
 
 <script>
-        $(document).ready(function () {
+    $(document).ready(function () {
 
-            // summernoteの有効化
-            $.when(
-                $('.summernote').summernote({
-                    height: 105,
-                })
+        // summernoteの有効化
+        $.when(
+            $('.summernote').summernote({
+                height: 105,
+            })
 
-            ).done(function () {
-                var note_image_input = $('.note-image-input');
-                if (note_image_input[0] !== undefined) {
-                    note_image_input[0].name = 'summernote-files';
-                }
-            });
-
-        });
-
-        /**
-         * 選択ダイアログを開く(eModalを使って、Bootstrap Modalを開く) 
-         */
-        function openDialog(title, url) {
-            var options = {
-                url: url,
-                title: title,
-                size: eModal.size.lg,
-            };
-            eModal.ajax(options);
-        }
-
-        /**
-         * 選択ダイアログ(Bootstrap Modal)が開いた際の動作
-         */
-        $(document).on('shown.bs.modal', function (event) {
-
-            // フィールド選択エリアの作成
-            var startcolnum = 0;
-            $('tr.filter th').each(function () {
-                var idx = $(this).index();
-                if (startcolnum <= idx && $(this).data("filter") != 'disable') {
-                    $(this).html('<input type="text" id="col_filter_' + idx + '" data-column="' + idx +
-                        '" class="dataTables_column_filter form-control" />');
-                }
-            });
-
-            openDocCategoryDialog();
-
-            openDocServiceDialog();
-
-        });
-
-        /**
-         * 文書区分選択ダイアログのDataTablesの起動
-         */
-        function openDocCategoryDialog() {
-
-            var dialog = document.getElementById('docCategoryDialog');
-            if (dialog != undefined) {
-                var table = $(dialog).DataTable({
-                    "scrollY": "400px",
-                    "scrollCollapse": true,
-                    "paging": false,
-                    'serverSide': false,
-                    'ajax': {
-                        'url': '/sales/document/variableDialog/DOC_CATEGORY/json'
-                    },
-                    'columns': [{
-                            data: 'code',
-                            className: 'text-center',
-                            render: function (data, type) {
-                                return '<button type="button" class="btn btn-button" onclick="select(this)" data-id="#docCategory" data-code="' +
-                                    data + '">選択</button>';
-                            }
-                        },
-                        {
-                            data: 'code',
-                            render: $.fn.dataTable.render.text(),
-                        },
-                        {
-                            data: 'value1',
-                            render: $.fn.dataTable.render.text(),
-                        },
-                        {
-                            data: 'value2',
-                            render: $.fn.dataTable.render.text(),
-                        }
-                    ],
-                    'order': [
-                        [1, 'asc']
-                    ],
-                    'buttons': [],
-                });
-                addFieldFilter2(table);
+        ).done(function () {
+            var note_image_input = $('.note-image-input');
+            if (note_image_input[0] !== undefined) {
+                note_image_input[0].name = 'summernote-files';
             }
-        }
+        });
 
-        /**
-         * サービス選択ダイアログのDataTablesの起動
-         */
-        function openDocServiceDialog() {
+        // 階層Selectを発火
+        $('#docCategory1').trigger('change');
+        $('#docService1').trigger('change');
 
-            var dialog = document.getElementById('docServiceDialog');
-            if (dialog != undefined) {
-                var table2 = $(dialog).DataTable({
-                    "scrollY": "400px",
-                    "scrollCollapse": true,
-                    "paging": false,
-                    'serverSide': false,
-                    'ajax': {
-                        'url': '/sales/document/variableDialog/DOC_SERVICE/json'
-                    },
-                    'columns': [{
-                            data: 'code',
-                            className: 'text-center',
-                            render: function (data, type) {
-                                return '<button type="button" class="btn btn-button" onclick="select(this)" data-id="#docService" data-code="' +
-                                    data + '">選択</button>';
-                            }
-                        },
-                        {
-                            data: 'code',
-                            render: $.fn.dataTable.render.text(),
-                        },
-                        {
-                            data: 'value1',
-                            render: $.fn.dataTable.render.text(),
-                        },
-                        {
-                            data: 'value2',
-                            render: $.fn.dataTable.render.text(),
-                        },
-                        {
-                            data: 'value3',
-                            render: $.fn.dataTable.render.text(),
-                        }
+    });
 
-                    ],
-                    'order': [
-                        [1, 'asc']
-                    ],
-                    'buttons': [],
-                });
-                addFieldFilter2(table2);
+    /**
+     * 選択ダイアログを開く(eModalを使って、Bootstrap Modalを開く)
+     */
+    function openDialog(title, url) {
+        var options = {
+            url: url,
+            title: title,
+            size: eModal.size.lg,
+        };
+        eModal.ajax(options);
+    }
+
+    /**
+     * 選択ダイアログ(Bootstrap Modal)が開いた際の動作
+     */
+    $(document).on('shown.bs.modal', function (event) {
+
+        // フィールド選択エリアの作成
+        var startcolnum = 0;
+        $('tr.filter th').each(function () {
+            var idx = $(this).index();
+            if (startcolnum <= idx && $(this).data("filter") != 'disable') {
+                $(this).html('<input type="text" id="col_filter_' + idx + '" data-column="' + idx +
+                    '" class="dataTables_column_filter form-control" />');
             }
-        }
-
-        /**
-         * ダイアログ画面の選択ボタン押下時の動作
-         */
-        function select(e) {
-            var code = e.dataset.code;
-            var id = e.dataset.id;
-            // select2の場合はこちら
-            // var select2 = $('#docCategory').select2();
-            // select2.val(code).trigger('change');
-            $(id).val(code);
-            $('.modal').modal('hide');
-        }
-
-        /**
-         * 区分選択ダイアログ起動ボタン押下時の操作
-         */
-        $("#docCategory-dialog-button").on("click", function () {
-            openDialog('区分選択', '/sales/document/docCategoryDialog');
         });
 
-        /**
-         * サービス選択ダイアログ起動ボタン押下時の操作
-         */
-        $("#docService-dialog-button").on("click", function () {
-            openDialog('サービス選択', '/sales/document/docServiceDialog');
-        });
+        openDocCategoryDialog();
+
+        openDocServiceDialog();
+
+    });
+
+    /**
+     * 文書区分選択ダイアログのDataTablesの起動
+     */
+    function openDocCategoryDialog() {
+
+        var dialog = document.getElementById('docCategoryDialog');
+        if (dialog != undefined) {
+            var table = $(dialog).DataTable({
+                "scrollY": "400px",
+                "scrollCollapse": true,
+                "paging": false,
+                'serverSide': false,
+                'ajax': {
+                    'url': '/sales/document/variableDialog/DOC_CATEGORY/json'
+                },
+                'columns': [{
+                        data: 'code',
+                        className: 'text-center',
+                        render: function (data, type) {
+                            return '<button type="button" class="btn btn-button" onclick="select(this)" data-id="#docCategory" data-code="' +
+                                data + '">選択</button>';
+                        }
+                    },
+                    {
+                        data: 'code',
+                        render: $.fn.dataTable.render.text(),
+                    },
+                    {
+                        data: 'value1',
+                        render: $.fn.dataTable.render.text(),
+                    },
+                    {
+                        data: 'value2',
+                        render: $.fn.dataTable.render.text(),
+                    }
+                ],
+                'order': [
+                    [1, 'asc']
+                ],
+                'buttons': [],
+            });
+            addFieldFilter2(table);
+        }
+    }
+
+    /**
+     * サービス選択ダイアログのDataTablesの起動
+     */
+    function openDocServiceDialog() {
+
+        var dialog = document.getElementById('docServiceDialog');
+        if (dialog != undefined) {
+            var table2 = $(dialog).DataTable({
+                "scrollY": "400px",
+                "scrollCollapse": true,
+                "paging": false,
+                'serverSide': false,
+                'ajax': {
+                    'url': '/sales/document/variableDialog/DOC_SERVICE/json'
+                },
+                'columns': [{
+                        data: 'code',
+                        className: 'text-center',
+                        render: function (data, type) {
+                            return '<button type="button" class="btn btn-button" onclick="select(this)" data-id="#docService" data-code="' +
+                                data + '">選択</button>';
+                        }
+                    },
+                    {
+                        data: 'code',
+                        render: $.fn.dataTable.render.text(),
+                    },
+                    {
+                        data: 'value1',
+                        render: $.fn.dataTable.render.text(),
+                    },
+                    {
+                        data: 'value2',
+                        render: $.fn.dataTable.render.text(),
+                    },
+                    {
+                        data: 'value3',
+                        render: $.fn.dataTable.render.text(),
+                    }
+
+                ],
+                'order': [
+                    [1, 'asc']
+                ],
+                'buttons': [],
+            });
+            addFieldFilter2(table2);
+        }
+    }
+
+    /**
+     * ダイアログ画面の選択ボタン押下時の動作
+     */
+    function select(e) {
+        var code = e.dataset.code;
+        var id = e.dataset.id;
+        // select2の場合はこちら
+        // var select2 = $('#docCategory').select2();
+        // select2.val(code).trigger('change');
+        $(id).val(code);
+        $('.modal').modal('hide');
+    }
+
+    /**
+     * 区分選択ダイアログ起動ボタン押下時の操作
+     */
+    $("#docCategory-dialog-button").on("click", function () {
+        openDialog('区分選択', '/sales/document/docCategoryDialog');
+    });
+
+    /**
+     * サービス選択ダイアログ起動ボタン押下時の操作
+     */
+    $("#docService-dialog-button").on("click", function () {
+        openDialog('サービス選択', '/sales/document/docServiceDialog');
+    });
+
+
+    /**
+     * 区分１が変更された際の動作（区分２の選択肢を更新）
+     */
+    $('#docCategory1').on('change', function () {
+        ajaxSelectList('/sales/document/doc_category2/json', $(this).val(), 'docCategory2', true, true);
+    });
+
+    /**
+     * 事業領域が変更された際の動作（サービス種別とサービスの選択肢を更新）
+     */
+    $('#docService1').on('change', function () {
+        ajaxSelectList('/sales/document/doc_service2/json', $(this).val(), 'docService2', true, true);
+    });
+
+    /**
+     * サービスが変更された際の動作（サービスの選択肢を更新）
+     */
+    $('#docService2').on('change', function () {
+        ajaxSelectList('/sales/document/doc_service3/json', $(this).val(), 'docService3', true, true);
+    });
 
 </script>
 

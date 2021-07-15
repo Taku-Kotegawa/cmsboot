@@ -7,7 +7,6 @@ import jp.co.stnet.cms.base.domain.model.common.YesNo;
 import jp.co.stnet.cms.base.domain.model.filemanage.FileStatus;
 import jp.co.stnet.cms.base.domain.model.filemanage.FileType;
 import jp.co.stnet.cms.base.domain.model.variable.VariableType;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +15,8 @@ import org.terasoluna.gfw.common.codelist.EnumCodeList;
 import org.terasoluna.gfw.common.codelist.JdbcCodeList;
 
 import javax.sql.DataSource;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 @Configuration
 public class CodeListConfig {
@@ -26,6 +27,10 @@ public class CodeListConfig {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
+    @Bean("EMPTY_MAP")
+    public Map<String, String> emptyMap() {
+        return new LinkedHashMap<>();
+    }
 
     @Bean("CL_STATUS")
     public EnumCodeList status() {
@@ -76,7 +81,7 @@ public class CodeListConfig {
         jdbcCodeList.setQuerySql("SELECT CODE, CONCAT(VALUE1, case when STATUS = '2' then '(無効)' else '' end) as VALUE1 FROM VARIABLE WHERE TYPE = 'SAMPLE_CODELIST' ORDER BY STATUS, CODE");
         jdbcCodeList.setValueColumn("CODE");
         jdbcCodeList.setLabelColumn("VALUE1");
-        return  jdbcCodeList;
+        return jdbcCodeList;
     }
 
     @Bean("CL_EMPLOYEE")
@@ -85,7 +90,7 @@ public class CodeListConfig {
         jdbcCodeList.setQuerySql("SELECT CODE, CONCAT(VALUE1, case when STATUS = '2' then '(退職)' else '' end) as VALUE1 FROM VARIABLE WHERE TYPE = 'EMPLOYEE' ORDER BY STATUS, VALINT1, CODE");
         jdbcCodeList.setValueColumn("CODE");
         jdbcCodeList.setLabelColumn("VALUE1");
-        return  jdbcCodeList;
+        return jdbcCodeList;
     }
 
     @Bean("CL_DEPARTMENT")
@@ -94,7 +99,7 @@ public class CodeListConfig {
         jdbcCodeList.setQuerySql("SELECT CODE, CONCAT(VALUE1, case when STATUS = '2' then '(無効)' else '' end) as VALUE1 FROM VARIABLE WHERE TYPE = 'DEPARTMENT' ORDER BY STATUS, VALINT1, CODE");
         jdbcCodeList.setValueColumn("CODE");
         jdbcCodeList.setLabelColumn("VALUE1");
-        return  jdbcCodeList;
+        return jdbcCodeList;
     }
 
     @Bean("CL_ACCOUNT_FULLNAME")
@@ -103,9 +108,8 @@ public class CodeListConfig {
         jdbcCodeList.setQuerySql("SELECT USERNAME, TRIM(CONCAT(LAST_NAME, ' ', FIRST_NAME)) AS FULL_NAME FROM ACCOUNT ORDER BY USERNAME");
         jdbcCodeList.setValueColumn("USERNAME");
         jdbcCodeList.setLabelColumn("FULL_NAME");
-        return  jdbcCodeList;
+        return jdbcCodeList;
     }
-
 
 
 }

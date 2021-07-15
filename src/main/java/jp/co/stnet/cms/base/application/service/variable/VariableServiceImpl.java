@@ -18,6 +18,7 @@ import org.terasoluna.gfw.common.query.QueryEscapeUtils;
 
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -77,6 +78,49 @@ public class VariableServiceImpl extends AbstractNodeService<Variable, Long> imp
     @Override
     public List<Variable> findAllByTypeAndCode(String type, String code) {
         return variableRepository.findAllByTypeAndCode(type, code);
+    }
+
+    @Override
+    public List<Variable> findAllByTypeAndValueX(String type, int i, String value) {
+
+        if ( i < 1 && 10 < i ) {
+            throw new IllegalArgumentException("i must 1 - 10.");
+        }
+
+        switch (i) {
+            case 1:
+                return variableRepository.findAllByTypeAndValue1(type, value);
+
+            case 2:
+                return variableRepository.findAllByTypeAndValue2(type, value);
+
+            case 3:
+                return variableRepository.findAllByTypeAndValue3(type, value);
+
+            case 4:
+                return variableRepository.findAllByTypeAndValue4(type, value);
+
+            case 5:
+                return variableRepository.findAllByTypeAndValue5(type, value);
+
+            case 6:
+                return variableRepository.findAllByTypeAndValue6(type, value);
+
+            case 7:
+                return variableRepository.findAllByTypeAndValue7(type, value);
+
+            case 8:
+                return variableRepository.findAllByTypeAndValue8(type, value);
+
+            case 9:
+                return variableRepository.findAllByTypeAndValue9(type, value);
+
+            case 10:
+                return variableRepository.findAllByTypeAndValue10(type, value);
+
+        }
+
+        return new ArrayList<Variable>();
     }
 
     @Override
