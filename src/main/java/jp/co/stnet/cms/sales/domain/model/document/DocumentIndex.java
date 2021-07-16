@@ -2,13 +2,14 @@ package jp.co.stnet.cms.sales.domain.model.document;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jp.co.stnet.cms.base.domain.model.StatusInterface;
-import jp.co.stnet.cms.base.domain.model.authentication.FailedPasswordReissuePK;
 import jp.co.stnet.cms.base.domain.model.filemanage.FileManaged;
 import jp.co.stnet.cms.base.domain.model.variable.Variable;
 import lombok.*;
 import org.hibernate.annotations.*;
 import org.hibernate.search.engine.backend.types.Aggregable;
 import org.hibernate.search.mapper.pojo.automaticindexing.ReindexOnUpdate;
+
+import org.hibernate.search.mapper.pojo.bridge.mapping.annotation.IdentifierBridgeRef;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.*;
 
 import javax.persistence.*;
@@ -27,7 +28,6 @@ import java.util.Set;
 @NoArgsConstructor
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = false)
-@IdClass(DocumentIndexPK.class)
 public class DocumentIndex implements Serializable, StatusInterface {
 
     /**
@@ -62,16 +62,21 @@ public class DocumentIndex implements Serializable, StatusInterface {
     @Column(nullable = false)
     private LocalDateTime lastModifiedDate;
 
+    @EmbeddedId
+    @DocumentId(
+            identifierBridge = @IdentifierBridgeRef(type = DocumentIndexPKBridge.class)
+    )
+    private DocumentIndexPK pk;
+
     /**
      * 内部ID
      */
-    @Id
-    @DocumentId
-    private Long id;
+//    private Long id;
 
-    @Id
-    @DocumentId
-    private Integer no;
+    /**
+     *
+     */
+//    private Integer no;
 
     /**
      * ステータス
