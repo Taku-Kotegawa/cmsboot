@@ -52142,7 +52142,7 @@ a.text-muted:hover {
   border: 1px solid #b8b8b8;
   border-top-color: #999;
   border-radius: 2px;
-  background: #fcfcfa;
+  background: #fffff2;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.125);
 }
 
@@ -52159,7 +52159,7 @@ a.text-muted:hover {
   color: #595959;
   border: 1px solid #b8b8b8;
   border-top-color: #999;
-  background-color: #fcfcfa;
+  background-color: #fffff2;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.125);
 }
 
