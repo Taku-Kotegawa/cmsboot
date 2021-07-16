@@ -1,10 +1,9 @@
 package jp.co.stnet.cms.sales.presentation.controller.document;
 
-import com.github.dozermapper.core.Mapper;
-import jp.co.stnet.cms.base.application.service.filemanage.FileManagedSharedService;
 import jp.co.stnet.cms.base.domain.model.authentication.LoggedInUser;
 import jp.co.stnet.cms.common.datatables.DataTablesInputDraft;
 import jp.co.stnet.cms.common.util.CsvUtils;
+import jp.co.stnet.cms.sales.application.service.document.DocumentAccessService;
 import jp.co.stnet.cms.sales.application.service.document.DocumentService;
 import jp.co.stnet.cms.sales.domain.model.document.Document;
 import jp.co.stnet.cms.sales.domain.model.document.DocumentCsvBean;
@@ -37,10 +36,7 @@ public class DocumentDownloadController {
     DocumentService documentService;
 
     @Autowired
-    Mapper beanMapper;
-
-    @Autowired
-    FileManagedSharedService fileManagedSharedService;
+    DocumentAccessService documentAccessService;
 
     @Autowired
     Documents documents;
@@ -49,7 +45,7 @@ public class DocumentDownloadController {
     /**
      * CSVファイルダウンロード
      */
-    @GetMapping(value = "/list/csv")
+    @GetMapping("/list/csv")
     public String listCsv(@Validated DataTablesInputDraft input, Model model, @AuthenticationPrincipal LoggedInUser loggedInUser) {
 
         authority.hasAuthority(OPERATION.LIST, loggedInUser);
@@ -64,7 +60,7 @@ public class DocumentDownloadController {
     /**
      * TSVファイルダウンロード
      */
-    @GetMapping(value = "/list/tsv")
+    @GetMapping("/list/tsv")
     public String listTsv(@Validated DataTablesInputDraft input, Model model, @AuthenticationPrincipal LoggedInUser loggedInUser) {
 
         authority.hasAuthority(OPERATION.LIST, loggedInUser);
@@ -121,6 +117,8 @@ public class DocumentDownloadController {
         } else {
             throw new ResourceNotFoundException("file not found.");
         }
+
+        documentAccessService.save(id, loggedInUser.getUsername());
 
         return "fileManagedDownloadView";
     }

@@ -15,15 +15,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
-
-import static org.apache.commons.text.StringEscapeUtils.escapeHtml4;
 
 @Service
 @Transactional
@@ -40,10 +34,6 @@ public class DocumentServiceImpl extends AbstractNodeRevService<Document, Docume
 
     @Autowired
     FileManagedSharedService fileManagedSharedService;
-
-    @PersistenceContext
-    EntityManager entityManager;
-
 
     protected DocumentServiceImpl() {
         super(Document.class, DocumentRevision.class, DocumentMaxRev.class);
@@ -64,8 +54,6 @@ public class DocumentServiceImpl extends AbstractNodeRevService<Document, Docume
         return true;
     }
 
-    // FileManagedの永続化処理を追加
-
     @Override
     public Document save(Document document) {
         removeNullFile(document.getFiles());
@@ -79,7 +67,7 @@ public class DocumentServiceImpl extends AbstractNodeRevService<Document, Docume
         }
 
         List<DocumentIndex> documentIndices = mapDocumentIndex(saved);
-        documentIndexRepository.deleteById(saved.getId());
+        documentIndexRepository.deleteByPkId(saved.getId());
         documentIndexRepository.saveAll(documentIndices);
 
         return saved;
@@ -103,7 +91,7 @@ public class DocumentServiceImpl extends AbstractNodeRevService<Document, Docume
     @Override
     public Document invalid(Long id) {
         Document saved = super.invalid(id);
-        documentIndexRepository.deleteById(id);
+        documentIndexRepository.deleteByPkId(id);
         return saved;
     }
 
@@ -111,7 +99,7 @@ public class DocumentServiceImpl extends AbstractNodeRevService<Document, Docume
     public Document valid(Long id) {
         Document saved = super.valid(id);
         List<DocumentIndex> documentIndices = mapDocumentIndex(saved);
-        documentIndexRepository.deleteById(saved.getId());
+        documentIndexRepository.deleteByPkId(saved.getId());
         documentIndexRepository.saveAll(documentIndices);
         return saved;
     }
@@ -127,9 +115,7 @@ public class DocumentServiceImpl extends AbstractNodeRevService<Document, Docume
         }
 
         super.delete(id);
-
-        documentIndexRepository.deleteById(id);
-
+        documentIndexRepository.deleteByPkId(id);
     }
 
     @Override
@@ -141,33 +127,20 @@ public class DocumentServiceImpl extends AbstractNodeRevService<Document, Docume
      * フィールドがnullのFileを除去
      *
      * @param files Fileのリスト
-     * @return Fileのリスト
      */
-    private List<File> removeNullFile(List<File> files) {
+    private void removeNullFile(List<File> files) {
         if (files != null) {
-            Iterator<File> iterator = files.iterator();
-            while (iterator.hasNext()) {
-                File file = iterator.next();
-                if (StringUtils.isAllBlank(file.getType(), file.getFileUuid(), file.getPdfUuid())) {
-                    iterator.remove();
-                }
-            }
-            return files;
+            files.removeIf(file -> StringUtils.isAllBlank(file.getType(), file.getFileUuid(), file.getPdfUuid()));
         }
-
-        return new ArrayList<>();
     }
 
     @Override
     protected boolean isFilterINClause(String fieldName) {
-
         if ("status".equals(convertColumnName(fieldName))) {
             return true;
-        }
-        else if ("publicScope".equals(convertColumnName(fieldName))) {
+        } else if ("publicScope".equals(convertColumnName(fieldName))) {
             return true;
-        }
-        else if ("customerPublic".equals(convertColumnName(fieldName))) {
+        } else if ("customerPublic".equals(convertColumnName(fieldName))) {
             return true;
         }
 
@@ -182,21 +155,29 @@ public class DocumentServiceImpl extends AbstractNodeRevService<Document, Docume
      */
     private List<DocumentIndex> mapDocumentIndex(Document document) {
 
+        final int NO_CASE_NOFILE = 9999;
+
         if (document == null) {
             throw new IllegalArgumentException("document must not be null.");
         }
 
         List<DocumentIndex> documentIndices = new ArrayList<>();
 
-        for (int i = 0; i < document.getFiles().size(); i++) {
-            File file = document.getFiles().get(i);
-            DocumentIndex documentIndex = beanMapper.map(file, DocumentIndex.class);
-            beanMapper.map(document, documentIndex);
-            documentIndex.setNo(i);
-
-            documentIndex.setContent(getContent(documentIndex.getFileUuid()));
-
+        if (document.getFiles().isEmpty()) {
+            DocumentIndex documentIndex = beanMapper.map(document, DocumentIndex.class);
+//            documentIndex.setNo(NO_CASE_NOFILE);
+            documentIndex.setPk(new DocumentIndexPK(document.getId(), NO_CASE_NOFILE));
             documentIndices.add(documentIndex);
+        } else {
+            for (int i = 0; i < document.getFiles().size(); i++) {
+                File file = document.getFiles().get(i);
+                DocumentIndex documentIndex = beanMapper.map(file, DocumentIndex.class);
+                beanMapper.map(document, documentIndex);
+//                documentIndex.setNo(i);
+                documentIndex.setPk(new DocumentIndexPK(document.getId(), i));
+                documentIndex.setContent(getContent(documentIndex.getFileUuid()));
+                documentIndices.add(documentIndex);
+            }
         }
 
         return documentIndices;
@@ -205,6 +186,7 @@ public class DocumentServiceImpl extends AbstractNodeRevService<Document, Docume
 
     /**
      * uuidに基づくファイルの中身を取得。既に取得済みの場合は以前取得した値を再利用。
+     *
      * @param uuid 中身を取得したいファイルUuid
      * @return ファイルの中身
      */
@@ -218,7 +200,6 @@ public class DocumentServiceImpl extends AbstractNodeRevService<Document, Docume
         if (before != null && StringUtils.isNotBlank(before.getContent())) {
             return before.getContent();
         }
-
 
         try {
             String content = fileManagedSharedService.getContent(uuid);

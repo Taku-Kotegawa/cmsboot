@@ -10,7 +10,7 @@ import java.util.Optional;
 @Repository
 public interface DocumentIndexRepository extends JpaRepository<DocumentIndex, DocumentIndexPK> {
 
-    void deleteById(Long id);
+    void deleteByPkId(Long id);
 
     Optional<DocumentIndex> findByFileUuid(String fileUuid);
 
