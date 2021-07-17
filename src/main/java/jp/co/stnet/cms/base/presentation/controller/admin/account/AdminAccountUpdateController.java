@@ -1,7 +1,6 @@
 package jp.co.stnet.cms.base.presentation.controller.admin.account;
 
 import com.github.dozermapper.core.Mapper;
-
 import jp.co.stnet.cms.base.application.service.authentication.AccountService;
 import jp.co.stnet.cms.base.application.service.authentication.UnlockService;
 import jp.co.stnet.cms.base.application.service.filemanage.FileManagedSharedService;
@@ -25,13 +24,13 @@ import org.terasoluna.gfw.common.message.ResultMessages;
 import org.terasoluna.gfw.web.token.transaction.TransactionTokenCheck;
 import org.terasoluna.gfw.web.token.transaction.TransactionTokenType;
 
-import static jp.co.stnet.cms.base.presentation.controller.admin.account.AccountForm.Update;
-import static jp.co.stnet.cms.base.presentation.controller.admin.account.AdminAccountConstant.BASE_PATH;
-import static jp.co.stnet.cms.base.presentation.controller.admin.account.AdminAccountConstant.TEMPLATE_FORM;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.validation.groups.Default;
+
+import static jp.co.stnet.cms.base.presentation.controller.admin.account.AccountForm.Update;
+import static jp.co.stnet.cms.base.presentation.controller.admin.account.AdminAccountConstant.BASE_PATH;
+import static jp.co.stnet.cms.base.presentation.controller.admin.account.AdminAccountConstant.TEMPLATE_FORM;
 
 @Controller
 @RequestMapping(BASE_PATH)
@@ -43,6 +42,9 @@ public class AdminAccountUpdateController {
 
     @Autowired
     AccountService accountService;
+
+    @Autowired
+    AdminAccountAuthority authority;
 
     @Autowired
     FileManagedSharedService fileManagedSharedService;
@@ -73,7 +75,7 @@ public class AdminAccountUpdateController {
                              @PathVariable("username") String username) {
 
         // 実行権限が無い場合、AccessDeniedExceptionをスローし、キャッチしないと権限エラー画面に遷移
-        accountService.hasAuthority(Constants.OPERATION.UPDATE, loggedInUser);
+        authority.hasAuthority(Constants.OPERATION.UPDATE, loggedInUser);
 
         Account account = accountService.findById(username);
 
@@ -108,7 +110,7 @@ public class AdminAccountUpdateController {
                          @PathVariable("username") String username) {
 
         // 実行権限が無い場合、AccessDeniedExceptionをスローし、キャッチしないと権限エラー画面に遷移
-        accountService.hasAuthority(Constants.OPERATION.UPDATE, loggedInUser);
+        authority.hasAuthority(Constants.OPERATION.UPDATE, loggedInUser);
 
         if (bindingResult.hasErrors()) {
             return updateForm(form, model, loggedInUser, username);
@@ -176,7 +178,7 @@ public class AdminAccountUpdateController {
                           @PathVariable("username") String username) {
 
         // 実行権限が無い場合、AccessDeniedExceptionをスローし、キャッチしないと権限エラー画面に遷移
-        accountService.hasAuthority(Constants.OPERATION.INVALID, loggedInUser);
+        authority.hasAuthority(Constants.OPERATION.INVALID, loggedInUser);
 
         try {
             accountService.invalid(username);
@@ -196,10 +198,10 @@ public class AdminAccountUpdateController {
     @GetMapping(value = "{username}/valid")
     @TransactionTokenCheck(type = TransactionTokenType.BEGIN)
     public String valid(Model model, RedirectAttributes redirect, @AuthenticationPrincipal LoggedInUser loggedInUser,
-                          @PathVariable("username") String username) {
+                        @PathVariable("username") String username) {
 
         // 実行権限が無い場合、AccessDeniedExceptionをスローし、キャッチしないと権限エラー画面に遷移
-        accountService.hasAuthority(Constants.OPERATION.VALID, loggedInUser);
+        authority.hasAuthority(Constants.OPERATION.VALID, loggedInUser);
 
         try {
             accountService.valid(username);
@@ -224,7 +226,7 @@ public class AdminAccountUpdateController {
                          @PathVariable("username") String username) {
 
         // 実行権限が無い場合、AccessDeniedExceptionをスローし、キャッチしないと権限エラー画面に遷移
-        accountService.hasAuthority(Constants.OPERATION.UPDATE, loggedInUser);
+        authority.hasAuthority(Constants.OPERATION.UPDATE, loggedInUser);
 
         // 存在しなければ例外
         Account account = accountService.findById(username);
@@ -252,7 +254,7 @@ public class AdminAccountUpdateController {
 
     @GetMapping("{username}/deleteapikey")
     public String deleteApiKey(Model model, @PathVariable("username") String username,
-                                 RedirectAttributes redirect, @AuthenticationPrincipal LoggedInUser loggedInUser) {
+                               RedirectAttributes redirect, @AuthenticationPrincipal LoggedInUser loggedInUser) {
 
         accountService.deleteApiKey(username);
 

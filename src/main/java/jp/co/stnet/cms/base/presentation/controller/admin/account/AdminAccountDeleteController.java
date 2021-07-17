@@ -26,6 +26,9 @@ public class AdminAccountDeleteController {
     @Autowired
     AccountService accountService;
 
+    @Autowired
+    AdminAccountAuthority authority;
+
     /**
      * 削除
      */
@@ -33,7 +36,7 @@ public class AdminAccountDeleteController {
     public String delete(Model model, RedirectAttributes redirect, @AuthenticationPrincipal LoggedInUser loggedInUser,
                          @PathVariable("username") String username) {
 
-        accountService.hasAuthority(Constants.OPERATION.DELETE, loggedInUser);
+        authority.hasAuthority(Constants.OPERATION.DELETE, loggedInUser);
 
         try {
             accountService.delete(username);

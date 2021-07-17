@@ -67,6 +67,9 @@ public class VariableController {
     VariableService variableService;
 
     @Autowired
+    VariableAuthority authority;
+
+    @Autowired
     FileManagedSharedService fileManagedSharedService;
 
     @Autowired
@@ -91,7 +94,9 @@ public class VariableController {
      * 一覧画面の表示
      */
     @GetMapping(value = "list")
-    public String list(Model model, RedirectAttributes redirectAttributes) {
+    public String list(Model model, RedirectAttributes redirectAttributes, @AuthenticationPrincipal LoggedInUser loggedInUser) {
+
+        authority.hasAuthority(Constants.OPERATION.LIST, loggedInUser);
 
         for (VariableType v : VariableType.values()) {
             redirectAttributes.addFlashAttribute("stateSaveClear", "true");
@@ -105,7 +110,9 @@ public class VariableController {
      * 一覧画面の表示
      */
     @GetMapping(value = "list", params = "type")
-    public String listByType(Model model, @RequestParam(value = "type", required = false) String type) {
+    public String listByType(Model model, @RequestParam(value = "type", required = false) String type, @AuthenticationPrincipal LoggedInUser loggedInUser) {
+
+        authority.hasAuthority(Constants.OPERATION.LIST, loggedInUser);
 
         VariableType variableType = null;
         if (type != null && VariableType.valueOf(type) != null) {
@@ -164,7 +171,9 @@ public class VariableController {
      */
     @ResponseBody
     @GetMapping(value = "/list/json")
-    public DataTablesOutput<VariableListRow> listJson(@Validated() DataTablesInputDraft input) {
+    public DataTablesOutput<VariableListRow> listJson(@Validated() DataTablesInputDraft input, @AuthenticationPrincipal LoggedInUser loggedInUser) {
+
+        authority.hasAuthority(Constants.OPERATION.LIST, loggedInUser);
 
         OperationsUtil op = new OperationsUtil(null);
 
@@ -207,7 +216,10 @@ public class VariableController {
     }
 
     @GetMapping(value = "/list/csv")
-    public String listCsv(@Validated DataTablesInputDraft input, Model model) {
+    public String listCsv(@Validated DataTablesInputDraft input, Model model, @AuthenticationPrincipal LoggedInUser loggedInUser) {
+
+        authority.hasAuthority(Constants.OPERATION.LIST, loggedInUser);
+
         setModelForCsv(input, model);
         model.addAttribute("csvConfig", CsvUtils.getCsvDefault());
         model.addAttribute("csvFileName", "Variable.csv");
@@ -216,7 +228,10 @@ public class VariableController {
     }
 
     @GetMapping(value = "/list/tsv")
-    public String listTsv(@Validated DataTablesInputDraft input, Model model) {
+    public String listTsv(@Validated DataTablesInputDraft input, Model model, @AuthenticationPrincipal LoggedInUser loggedInUser) {
+
+        authority.hasAuthority(Constants.OPERATION.LIST, loggedInUser);
+
         setModelForCsv(input, model);
         model.addAttribute("csvConfig", CsvUtils.getTsvDefault());
         model.addAttribute("csvFileName", "Variable.tsv");
@@ -291,8 +306,7 @@ public class VariableController {
                              @RequestParam(value = "copy", required = false) Long copy,
                              @RequestParam(value = "variable_type", required = false) String variableType) {
 
-        variableService.hasAuthority(Constants.OPERATION.CREATE, loggedInUser);
-
+        authority.hasAuthority(Constants.OPERATION.CREATE, loggedInUser);
 
         if (copy != null) {
             Variable source = variableService.findById(copy);
@@ -332,7 +346,7 @@ public class VariableController {
                          @AuthenticationPrincipal LoggedInUser loggedInUser,
                          @RequestParam(value = "saveDraft", required = false) String saveDraft) {
 
-        variableService.hasAuthority(Constants.OPERATION.CREATE, loggedInUser);
+        authority.hasAuthority(Constants.OPERATION.CREATE, loggedInUser);
 
         if (bindingResult.hasErrors()) {
             return createForm(form, model, loggedInUser, null, form.getType());
@@ -367,7 +381,7 @@ public class VariableController {
                              @AuthenticationPrincipal LoggedInUser loggedInUser,
                              @PathVariable("id") Long id) {
 
-        variableService.hasAuthority(Constants.OPERATION.UPDATE, loggedInUser);
+        authority.hasAuthority(Constants.OPERATION.UPDATE, loggedInUser);
 
         Variable variable = variableService.findById(id);
 
@@ -408,7 +422,7 @@ public class VariableController {
                          @PathVariable("id") Long id,
                          @RequestParam(value = "saveDraft", required = false) String saveDraft) {
 
-        variableService.hasAuthority(Constants.OPERATION.UPDATE, loggedInUser);
+        authority.hasAuthority(Constants.OPERATION.UPDATE, loggedInUser);
 
         if (bindingResult.hasErrors()) {
             return updateForm(form, model, loggedInUser, id);
@@ -440,7 +454,7 @@ public class VariableController {
     public String delete(Model model, RedirectAttributes redirect, @AuthenticationPrincipal LoggedInUser loggedInUser,
                          @PathVariable("id") Long id) {
 
-        variableService.hasAuthority(Constants.OPERATION.DELETE, loggedInUser);
+        authority.hasAuthority(Constants.OPERATION.DELETE, loggedInUser);
 
         try {
             variableService.delete(id);
@@ -460,7 +474,7 @@ public class VariableController {
     public String invalid(Model model, RedirectAttributes redirect, @AuthenticationPrincipal LoggedInUser loggedInUser,
                           @PathVariable("id") Long id) {
 
-        variableService.hasAuthority(Constants.OPERATION.INVALID, loggedInUser);
+        authority.hasAuthority(Constants.OPERATION.INVALID, loggedInUser);
 
         Variable entity = variableService.findById(id);
 
@@ -483,7 +497,7 @@ public class VariableController {
     public String valid(Model model, RedirectAttributes redirect, @AuthenticationPrincipal LoggedInUser loggedInUser,
                         @PathVariable("id") Long id) {
 
-        variableService.hasAuthority(Constants.OPERATION.VALID, loggedInUser);
+        authority.hasAuthority(Constants.OPERATION.VALID, loggedInUser);
 
         Variable entity = variableService.findById(id);
 
@@ -533,7 +547,7 @@ public class VariableController {
                        @PathVariable("id") Long id,
                        @RequestParam(value = "rev", required = false) Long rev) {
 
-        variableService.hasAuthority(Constants.OPERATION.VIEW, loggedInUser);
+        authority.hasAuthority(Constants.OPERATION.VIEW, loggedInUser);
 
         Variable variable = null;
 //        if (rev == null) {
@@ -572,7 +586,7 @@ public class VariableController {
             @PathVariable("uuid") String uuid,
             @AuthenticationPrincipal LoggedInUser loggedInUser) {
 
-        variableService.hasAuthority(Constants.OPERATION.DOWNLOAD, loggedInUser);
+        authority.hasAuthority(Constants.OPERATION.DOWNLOAD, loggedInUser);
 
         model.addAttribute(fileManagedSharedService.findByUuid(uuid));
         return "fileManagedDownloadView";
@@ -586,7 +600,7 @@ public class VariableController {
                              @RequestParam(value = "variable_type", required = false) String variableType,
                              @AuthenticationPrincipal LoggedInUser loggedInUser) {
 
-        variableService.hasAuthority(Constants.OPERATION.UPLOAD, loggedInUser);
+        authority.hasAuthority(Constants.OPERATION.UPLOAD, loggedInUser);
 
         form.setJobName(UPLOAD_JOB_ID);
 
@@ -611,6 +625,8 @@ public class VariableController {
                          @RequestParam(value = "variable_type", required = false) String variableType,
                          RedirectAttributes redirectAttributes,
                          @AuthenticationPrincipal LoggedInUser loggedInUser) {
+
+        authority.hasAuthority(Constants.OPERATION.UPLOAD, loggedInUser);
 
         final String jobName = UPLOAD_JOB_ID;
 
@@ -654,7 +670,6 @@ public class VariableController {
         return JSP_UPLOAD_COMPLETE;
     }
 
-
     /**
      * コードリスト更新
      * @param model
@@ -666,6 +681,8 @@ public class VariableController {
     @GetMapping("refresh")
     public String refresh(Model model, RedirectAttributes redirect, @RequestParam(value = "type") String type,
                           @AuthenticationPrincipal LoggedInUser loggedInUser) {
+
+        authority.hasAuthority(Constants.OPERATION.UPDATE, loggedInUser);
 
         codeListService.refresh(type);
 

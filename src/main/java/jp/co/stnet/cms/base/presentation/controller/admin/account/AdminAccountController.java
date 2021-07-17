@@ -31,6 +31,9 @@ public class AdminAccountController {
     @Autowired
     AccountSharedService accountSharedService;
 
+    @Autowired
+    AdminAccountAuthority authority;
+
     @ModelAttribute
     AccountForm setUp() {
         return new AccountForm();
@@ -44,7 +47,7 @@ public class AdminAccountController {
                        @PathVariable("username") String username) {
 
         // 権限チェック
-        accountService.hasAuthority(Constants.OPERATION.VIEW, loggedInUser);
+        authority.hasAuthority(Constants.OPERATION.VIEW, loggedInUser);
 
         // データ取得
         Account account = accountService.findById(username);

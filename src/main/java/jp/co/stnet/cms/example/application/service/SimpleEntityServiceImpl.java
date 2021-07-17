@@ -68,11 +68,6 @@ public class SimpleEntityServiceImpl extends AbstractNodeRevService<SimpleEntity
     }
 
     @Override
-    public Boolean hasAuthority(String operation, LoggedInUser loggedInUser) {
-        return true;
-    }
-
-    @Override
     public boolean equalsEntity(SimpleEntity entity, SimpleEntity currentCopy) {
         currentCopy.setAttachedFile01Managed(null);
         return Objects.equals(entity, currentCopy);

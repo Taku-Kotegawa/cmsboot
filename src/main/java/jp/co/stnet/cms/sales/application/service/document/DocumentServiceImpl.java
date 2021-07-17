@@ -50,11 +50,6 @@ public class DocumentServiceImpl extends AbstractNodeRevService<Document, Docume
     }
 
     @Override
-    public Boolean hasAuthority(String operation, LoggedInUser loggedInUser) {
-        return true;
-    }
-
-    @Override
     public Document save(Document document) {
         removeNullFile(document.getFiles());
         Document saved = super.save(document);

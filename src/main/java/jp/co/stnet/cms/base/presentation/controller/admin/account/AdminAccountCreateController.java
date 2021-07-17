@@ -49,6 +49,10 @@ public class AdminAccountCreateController {
     @Autowired
     FileManagedSharedService fileManagedSharedService;
 
+    @Autowired
+    AdminAccountAuthority authority;
+
+
     @ModelAttribute
     AccountForm setUp() {
         return new AccountForm();
@@ -64,7 +68,7 @@ public class AdminAccountCreateController {
                              @AuthenticationPrincipal LoggedInUser loggedInUser,
                              @RequestParam(value = "copy", required = false) String copy) {
 
-        accountService.hasAuthority(Constants.OPERATION.CREATE, loggedInUser);
+        authority.hasAuthority(Constants.OPERATION.CREATE, loggedInUser);
 
         if (isNotEmpty(copy)) {
             Account source = accountService.findById(copy);
@@ -95,7 +99,7 @@ public class AdminAccountCreateController {
                          RedirectAttributes redirect,
                          @AuthenticationPrincipal LoggedInUser loggedInUser) {
 
-        accountService.hasAuthority(Constants.OPERATION.CREATE, loggedInUser);
+        authority.hasAuthority(Constants.OPERATION.CREATE, loggedInUser);
 
         if (bindingResult.hasErrors()) {
             return createForm(form, model, loggedInUser, null);

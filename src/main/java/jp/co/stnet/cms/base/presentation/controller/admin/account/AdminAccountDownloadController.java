@@ -36,6 +36,9 @@ public class AdminAccountDownloadController {
     AccountService accountService;
 
     @Autowired
+    AdminAccountAuthority authority;
+
+    @Autowired
     FileManagedSharedService fileManagedSharedService;
 
     @Autowired
@@ -48,7 +51,7 @@ public class AdminAccountDownloadController {
     @GetMapping(value = "/list/csv")
     public String listCsv(@Validated DataTablesInputDraft input, Model model, @AuthenticationPrincipal LoggedInUser loggedInUser) {
 
-        accountService.hasAuthority(Constants.OPERATION.UPDATE, loggedInUser);
+        authority.hasAuthority(Constants.OPERATION.LIST, loggedInUser);
 
         setModelForCsv(input, model);
         model.addAttribute("csvConfig", CsvUtils.getCsvDefault());
@@ -62,7 +65,7 @@ public class AdminAccountDownloadController {
     @GetMapping(value = "/list/tsv")
     public String listTsv(@Validated DataTablesInputDraft input, Model model, @AuthenticationPrincipal LoggedInUser loggedInUser) {
 
-        accountService.hasAuthority(Constants.OPERATION.UPDATE, loggedInUser);
+        authority.hasAuthority(Constants.OPERATION.LIST, loggedInUser);
 
         setModelForCsv(input, model);
         model.addAttribute("csvConfig", CsvUtils.getTsvDefault());
@@ -105,7 +108,7 @@ public class AdminAccountDownloadController {
             @PathVariable("uuid") String uuid,
             @AuthenticationPrincipal LoggedInUser loggedInUser) {
 
-        accountService.hasAuthority(Constants.OPERATION.UPDATE, loggedInUser);
+        authority.hasAuthority(Constants.OPERATION.UPDATE, loggedInUser);
 
         FileManaged fileManaged = fileManagedSharedService.findByUuid(uuid);
         model.addAttribute(fileManaged);

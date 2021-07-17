@@ -32,10 +32,13 @@ import static jp.co.stnet.cms.base.presentation.controller.admin.account.AdminAc
 public class AdminAccountUploadController {
 
     @Autowired
-    FileManagedSharedService fileManagedSharedService;
+    AccountService accountService;
 
     @Autowired
-    AccountService accountService;
+    AdminAccountAuthority authority;
+
+    @Autowired
+    FileManagedSharedService fileManagedSharedService;
 
     @Autowired
     JobStarter jobStarter;
@@ -45,9 +48,9 @@ public class AdminAccountUploadController {
      */
     @GetMapping(value = "upload", params = "form")
     public String uploadForm(@ModelAttribute UploadForm form, Model model,
-                                                          @AuthenticationPrincipal LoggedInUser loggedInUser) {
+                             @AuthenticationPrincipal LoggedInUser loggedInUser) {
 
-        accountService.hasAuthority(Constants.OPERATION.UPLOAD, loggedInUser);
+        authority.hasAuthority(Constants.OPERATION.UPLOAD, loggedInUser);
 
         form.setJobName(UPLOAD_JOB_ID);
 
@@ -68,10 +71,10 @@ public class AdminAccountUploadController {
      */
     @PostMapping(value = "upload")
     public String upload(@Validated UploadForm form, BindingResult result, Model model,
-                                                  RedirectAttributes redirectAttributes,
+                         RedirectAttributes redirectAttributes,
                          @AuthenticationPrincipal LoggedInUser loggedInUser) {
 
-        accountService.hasAuthority(Constants.OPERATION.UPLOAD, loggedInUser);
+        authority.hasAuthority(Constants.OPERATION.UPLOAD, loggedInUser);
 
         final String jobName = UPLOAD_JOB_ID;
 
@@ -114,5 +117,5 @@ public class AdminAccountUploadController {
         model.addAttribute("jobExecutionId", params.get("jobExecutionId"));
         return TEMPLATE_UPLOAD_COMPLETE;
     }
-    
+
 }

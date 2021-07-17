@@ -45,12 +45,6 @@ public class AccountServiceImpl extends AbstractNodeService<Account, String> imp
     }
 
     @Override
-    @PostAuthorize("returnObject == true")
-    public Boolean hasAuthority(String operation, LoggedInUser loggedInUser) {
-        return loggedInUser.getAuthorities().contains(new SimpleGrantedAuthority(Permission.ADMIN_USER.name()));
-    }
-
-    @Override
     protected void afterSave(Account entity, Account current) {
         super.afterSave(entity, current);
         accountFullNameCodeList.refresh();

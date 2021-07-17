@@ -5,13 +5,16 @@ import jp.co.stnet.cms.base.application.service.authentication.AccountService;
 import jp.co.stnet.cms.base.application.service.authentication.AccountSharedService;
 import jp.co.stnet.cms.base.application.service.message.MailSendService;
 import jp.co.stnet.cms.base.domain.model.authentication.Account;
+import jp.co.stnet.cms.base.domain.model.authentication.LoggedInUser;
 import jp.co.stnet.cms.base.domain.model.common.Status;
 import jp.co.stnet.cms.base.domain.model.message.MailSendHistory;
+import jp.co.stnet.cms.common.constant.Constants;
 import jp.co.stnet.cms.common.datatables.DataTablesInput;
 import jp.co.stnet.cms.common.datatables.DataTablesOutput;
 import jp.co.stnet.cms.common.datatables.OperationsUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -34,6 +37,9 @@ public class AdminAccountListController {
     AccountService accountService;
 
     @Autowired
+    AdminAccountAuthority authority;
+
+    @Autowired
     AccountSharedService accountSharedService;
 
     @Autowired
@@ -46,7 +52,8 @@ public class AdminAccountListController {
      * 一覧画面の表示
      */
     @GetMapping(value = "list")
-    public String list(Model model) {
+    public String list(Model model, @AuthenticationPrincipal LoggedInUser loggedInUser) {
+        authority.hasAuthority(Constants.OPERATION.LIST, loggedInUser);
         return TEMPLATE_LIST;
     }
 
@@ -58,7 +65,9 @@ public class AdminAccountListController {
      */
     @ResponseBody
     @GetMapping(value = "/list/json")
-    public DataTablesOutput<AccountListBean> listJson(@Validated DataTablesInput input) {
+    public DataTablesOutput<AccountListBean> listJson(@Validated DataTablesInput input, @AuthenticationPrincipal LoggedInUser loggedInUser) {
+
+        authority.hasAuthority(Constants.OPERATION.LIST, loggedInUser);
 
         OperationsUtil op = new OperationsUtil(null);
 
@@ -94,6 +103,7 @@ public class AdminAccountListController {
 
     /**
      * 案内メール最終送信日時の取得
+     *
      * @param mailSendHistories
      * @param username
      * @return
@@ -109,6 +119,7 @@ public class AdminAccountListController {
 
     /**
      * 一覧画面のボタンHTMLの準備
+     *
      * @param id
      * @param op
      * @return

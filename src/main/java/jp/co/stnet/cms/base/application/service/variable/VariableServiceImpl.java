@@ -69,13 +69,6 @@ public class VariableServiceImpl extends AbstractNodeService<Variable, Long> imp
     }
 
     @Override
-    public Boolean hasAuthority(String operation, LoggedInUser loggedInUser) {
-
-        // TODO 権限チェックの追加
-        return true;
-    }
-
-    @Override
     public List<Variable> findAllByTypeAndCode(String type, String code) {
         return variableRepository.findAllByTypeAndCode(type, code);
     }

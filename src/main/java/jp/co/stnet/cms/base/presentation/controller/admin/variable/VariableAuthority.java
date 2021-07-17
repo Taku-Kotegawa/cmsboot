@@ -1,8 +1,9 @@
-package jp.co.stnet.cms.base.presentation.controller.admin.account;
+package jp.co.stnet.cms.base.presentation.controller.admin.variable;
 
 import jp.co.stnet.cms.base.domain.model.authentication.LoggedInUser;
 import jp.co.stnet.cms.base.domain.model.authentication.Permission;
 import jp.co.stnet.cms.common.constant.Constants;
+import lombok.NonNull;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.core.GrantedAuthority;
@@ -13,7 +14,8 @@ import java.util.Collection;
 import java.util.Set;
 
 @Component
-public class AdminAccountAuthority {
+public class VariableAuthority {
+
 
     // 許可されたOperation
     private static final Set<String> allowedOperation = Set.of(
@@ -36,16 +38,16 @@ public class AdminAccountAuthority {
      * @param operation    操作の種類(Constants.OPERATIONに登録された値)
      * @param loggedInUser ログインユーザ情報
      * @return true=操作する権限を持つ, false=操作する権限なし
-     * @throws AccessDeniedException @PostAuthorizeを用いてfalse時にスロー
+     * @throws AccessDeniedException    @PostAuthorizeを用いてfalse時にスロー
      * @throws IllegalArgumentException 不正なOperationが指定された場合
-     * @throws NullPointerException operation, loggedInUser がnullの場合
+     * @throws NullPointerException     operation, loggedInUser がnullの場合
      */
     @PostAuthorize("returnObject == true")
     public Boolean hasAuthority(String operation, LoggedInUser loggedInUser) {
         return hasAuthorityWOException(operation, loggedInUser);
     }
 
-    private Boolean hasAuthorityWOException(String operation, LoggedInUser loggedInUser) {
+    private Boolean hasAuthorityWOException(@NonNull String operation, @NonNull LoggedInUser loggedInUser) {
 
         // 入力チェック
         validate(operation);
@@ -55,7 +57,7 @@ public class AdminAccountAuthority {
             return false;
         }
 
-        return authorities.contains(new SimpleGrantedAuthority(Permission.ADMIN_USER.name()));
+        return authorities.contains(new SimpleGrantedAuthority(Permission.ADMIN_VARIABLE.name()));
 
     }
 
@@ -69,5 +71,6 @@ public class AdminAccountAuthority {
             throw new IllegalArgumentException("Operation not allowed.");
         }
     }
+
 
 }

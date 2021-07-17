@@ -74,15 +74,15 @@ public interface NodeIService<T extends AbstractEntity<ID>, ID> {
      */
     void delete(Iterable<T> entities);
 
-    /**
-     * 権限チェックを行う。
-     * @param operation 操作の種類(Constants.OPERATIONに登録された値)
-     * @param loggedInUser ログインユーザ情報
-     * @return true=操作する権限を持つ, false=操作する権限なし
-     * @throws AccessDeniedException @PostAuthorizeを用いてfalse時にスロー
-     */
-    @Deprecated
-    Boolean hasAuthority(String operation, LoggedInUser loggedInUser);
+//    /**
+//     * 権限チェックを行う。
+//     * @param operation 操作の種類(Constants.OPERATIONに登録された値)
+//     * @param loggedInUser ログインユーザ情報
+//     * @return true=操作する権限を持つ, false=操作する権限なし
+//     * @throws AccessDeniedException @PostAuthorizeを用いてfalse時にスロー
+//     */
+//    @Deprecated
+//    Boolean hasAuthority(String operation, LoggedInUser loggedInUser);
 
 
     /**

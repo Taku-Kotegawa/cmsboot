@@ -74,6 +74,9 @@ public class SimpleEntityController {
     FileManagedSharedService fileManagedSharedService;
 
     @Autowired
+    SimpleEntityAuthority authority;
+
+    @Autowired
     JobOperator jobOperator;
 
     @Autowired
@@ -95,7 +98,8 @@ public class SimpleEntityController {
      * 一覧画面の表示
      */
     @GetMapping(value = "list")
-    public String list(Model model) {
+    public String list(Model model, @AuthenticationPrincipal LoggedInUser loggedInUser) {
+        authority.hasAuthority(Constants.OPERATION.LIST, loggedInUser);
         return JSP_LIST;
     }
 
@@ -107,7 +111,10 @@ public class SimpleEntityController {
      */
     @ResponseBody
     @GetMapping(value = "/list/json")
-    public DataTablesOutput<SimpleEntityListRow> listJson(@Validated DataTablesInputDraft input) {
+    public DataTablesOutput<SimpleEntityListRow> listJson(@Validated DataTablesInputDraft input,
+                                                          @AuthenticationPrincipal LoggedInUser loggedInUser) {
+
+        authority.hasAuthority(Constants.OPERATION.LIST, loggedInUser);
 
         List<SimpleEntityListRow> listRows = new ArrayList<>();
         List<SimpleEntity> simpleEntityList = new ArrayList<>();
@@ -152,7 +159,10 @@ public class SimpleEntityController {
      * @return ファイルダウンロード用View
      */
     @GetMapping(value = "/list/csv")
-    public String listCsv(@Validated DataTablesInputDraft input, Model model) {
+    public String listCsv(@Validated DataTablesInputDraft input, Model model, @AuthenticationPrincipal LoggedInUser loggedInUser) {
+
+        authority.hasAuthority(Constants.OPERATION.LIST, loggedInUser);
+
         input.setStart(0);
         input.setLength(Constants.CSV.MAX_LENGTH);
         setModelForCsv(input, model);
@@ -169,7 +179,10 @@ public class SimpleEntityController {
      * @return ファイルダウンロード用View
      */
     @GetMapping(value = "/list/tsv")
-    public String listTsv(@Validated DataTablesInputDraft input, Model model) {
+    public String listTsv(@Validated DataTablesInputDraft input, Model model, @AuthenticationPrincipal LoggedInUser loggedInUser) {
+
+        authority.hasAuthority(Constants.OPERATION.LIST, loggedInUser);
+
         input.setStart(0);
         input.setLength(Constants.CSV.MAX_LENGTH);
         setModelForCsv(input, model);
@@ -186,7 +199,10 @@ public class SimpleEntityController {
      * @return ファイルダウンロード用View
      */
     @GetMapping(value = "/list/excel")
-    public String listExcel(@Validated DataTablesInputDraft input, Model model) {
+    public String listExcel(@Validated DataTablesInputDraft input, Model model, @AuthenticationPrincipal LoggedInUser loggedInUser) {
+
+        authority.hasAuthority(Constants.OPERATION.LIST, loggedInUser);
+
         input.setStart(0);
         input.setLength(Constants.EXCEL.MAX_LENGTH);
         // TODO: 汎用的な仕組みに改造が必要
@@ -396,7 +412,7 @@ public class SimpleEntityController {
             @PathVariable("uuid") String uuid,
             @AuthenticationPrincipal LoggedInUser loggedInUser) {
 
-        simpleEntityService.hasAuthority(Constants.OPERATION.DOWNLOAD, loggedInUser);
+        authority.hasAuthority(Constants.OPERATION.DOWNLOAD, loggedInUser);
 
         // TODO 厳密な権限チェック
 
@@ -410,7 +426,7 @@ public class SimpleEntityController {
     @PostMapping("bulk_delete")
     public String bulkDelete(Model model, String selectedKey, RedirectAttributes redirect, @AuthenticationPrincipal LoggedInUser loggedInUser) {
 
-        simpleEntityService.hasAuthority(Constants.OPERATION.BULK_DELETE, loggedInUser);
+        authority.hasAuthority(Constants.OPERATION.BULK_DELETE, loggedInUser);
 
         String[] strKeys = selectedKey.split(",");
         List<SimpleEntity> deleteEntities = new ArrayList<>();
@@ -433,7 +449,7 @@ public class SimpleEntityController {
     @PostMapping("bulk_invalid")
     public String bulkInvalid(Model model, String selectedKey, RedirectAttributes redirect, @AuthenticationPrincipal LoggedInUser loggedInUser) {
 
-        simpleEntityService.hasAuthority(Constants.OPERATION.BULK_INVALID, loggedInUser);
+        authority.hasAuthority(Constants.OPERATION.BULK_INVALID, loggedInUser);
 
         String[] strKeys = selectedKey.split(",");
         List<Long> ids = new ArrayList<>();
@@ -457,7 +473,7 @@ public class SimpleEntityController {
     @PostMapping("bulk_valid")
     public String bulkValid(Model model, String selectedKey, RedirectAttributes redirect, @AuthenticationPrincipal LoggedInUser loggedInUser) {
 
-        simpleEntityService.hasAuthority(Constants.OPERATION.BULK_VALID, loggedInUser);
+        authority.hasAuthority(Constants.OPERATION.BULK_VALID, loggedInUser);
 
         String[] strKeys = selectedKey.split(",");
         List<Long> ids = new ArrayList<>();
@@ -485,7 +501,7 @@ public class SimpleEntityController {
                              @AuthenticationPrincipal LoggedInUser loggedInUser,
                              @RequestParam(value = "copy", required = false) Long copy) {
 
-        simpleEntityService.hasAuthority(Constants.OPERATION.CREATE, loggedInUser);
+        authority.hasAuthority(Constants.OPERATION.CREATE, loggedInUser);
 
         if (copy != null) {
             SimpleEntity source = simpleEntityService.findById(copy);
@@ -575,7 +591,7 @@ public class SimpleEntityController {
                          @AuthenticationPrincipal LoggedInUser loggedInUser,
                          @RequestParam(value = "saveDraft", required = false) String saveDraft) {
 
-        simpleEntityService.hasAuthority(Constants.OPERATION.CREATE, loggedInUser);
+        authority.hasAuthority(Constants.OPERATION.CREATE, loggedInUser);
 
         if (bindingResult.hasErrors()) {
             return createForm(form, model, loggedInUser, null);
@@ -610,7 +626,7 @@ public class SimpleEntityController {
                              @AuthenticationPrincipal LoggedInUser loggedInUser,
                              @PathVariable("id") Long id) {
 
-        simpleEntityService.hasAuthority(Constants.OPERATION.UPDATE, loggedInUser);
+        authority.hasAuthority(Constants.OPERATION.UPDATE, loggedInUser);
 
         SimpleEntity simpleEntity = simpleEntityService.findById(id);
         model.addAttribute("simpleEntity", simpleEntity);
@@ -670,7 +686,7 @@ public class SimpleEntityController {
                          @PathVariable("id") Long id,
                          @RequestParam(value = "saveDraft", required = false) String saveDraft) {
 
-        simpleEntityService.hasAuthority(Constants.OPERATION.UPDATE, loggedInUser);
+        authority.hasAuthority(Constants.OPERATION.UPDATE, loggedInUser);
 
         if (bindingResult.hasErrors()) {
             return updateForm(form, model, loggedInUser, id);
@@ -702,7 +718,7 @@ public class SimpleEntityController {
     public String delete(Model model, RedirectAttributes redirect, @AuthenticationPrincipal LoggedInUser loggedInUser,
                          @PathVariable("id") Long id) {
 
-        simpleEntityService.hasAuthority(Constants.OPERATION.DELETE, loggedInUser);
+        authority.hasAuthority(Constants.OPERATION.DELETE, loggedInUser);
 
         try {
             simpleEntityService.delete(id);
@@ -722,7 +738,7 @@ public class SimpleEntityController {
     public String invalid(Model model, RedirectAttributes redirect, @AuthenticationPrincipal LoggedInUser loggedInUser,
                           @PathVariable("id") Long id) {
 
-        simpleEntityService.hasAuthority(Constants.OPERATION.INVALID, loggedInUser);
+        authority.hasAuthority(Constants.OPERATION.INVALID, loggedInUser);
 
         SimpleEntity entity = simpleEntityService.findById(id);
 
@@ -745,7 +761,7 @@ public class SimpleEntityController {
     public String valid(Model model, RedirectAttributes redirect, @AuthenticationPrincipal LoggedInUser loggedInUser,
                         @PathVariable("id") Long id) {
 
-        simpleEntityService.hasAuthority(Constants.OPERATION.VALID, loggedInUser);
+        authority.hasAuthority(Constants.OPERATION.VALID, loggedInUser);
 
         // 存在チェックを兼ねる
         SimpleEntity entity = simpleEntityService.findById(id);
@@ -769,7 +785,7 @@ public class SimpleEntityController {
     public String cancelDraft(Model model, RedirectAttributes redirect, @AuthenticationPrincipal LoggedInUser loggedInUser,
                               @PathVariable("id") Long id) {
 
-        simpleEntityService.hasAuthority(Constants.OPERATION.CANCEL_DRAFT, loggedInUser);
+        authority.hasAuthority(Constants.OPERATION.CANCEL_DRAFT, loggedInUser);
 
         // 存在チェックを兼ねる
         SimpleEntity entity = simpleEntityService.findById(id);
@@ -798,7 +814,7 @@ public class SimpleEntityController {
                        @PathVariable("id") Long id,
                        @RequestParam(value = "rev", required = false) Long rev) {
 
-        simpleEntityService.hasAuthority(Constants.OPERATION.VIEW, loggedInUser);
+        authority.hasAuthority(Constants.OPERATION.VIEW, loggedInUser);
 
         // SimpleEntity simpleEntity = simpleEntityService.findById(id);　// TODO: リビジョン管理がない場合はシンプルにできる
 

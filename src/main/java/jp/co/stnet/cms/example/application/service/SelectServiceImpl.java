@@ -39,8 +39,4 @@ public class SelectServiceImpl extends AbstractNodeRevService<Select, SelectRevi
         return this.selectRepository;
     }
 
-    @Override
-    public Boolean hasAuthority(String operation, LoggedInUser loggedInUser) {
-        return true;
-    }
 }
