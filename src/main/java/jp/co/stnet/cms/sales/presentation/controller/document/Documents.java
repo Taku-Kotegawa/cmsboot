@@ -118,7 +118,7 @@ public class Documents {
 
             // 区分
             if (document.getDocCategoryVariable2() != null) {
-                documentCsvBean.setDocCategory(document.getDocCategoryVariable2().getCode());
+
                 documentCsvBean.setDocCategoryValue1(document.getDocCategoryVariable1().getValue1());
                 documentCsvBean.setDocCategoryValue2(document.getDocCategoryVariable2().getValue1());
             }
@@ -133,7 +133,6 @@ public class Documents {
             }
 
             if (document.getDocServiceVariable3() != null) {
-                documentCsvBean.setDocService(document.getDocServiceVariable3().getCode());
                 documentCsvBean.setDocServiceValue3(document.getDocServiceVariable3().getValue1());
             }
 

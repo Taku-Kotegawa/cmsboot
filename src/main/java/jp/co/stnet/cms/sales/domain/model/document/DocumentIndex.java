@@ -188,49 +188,9 @@ public class DocumentIndex implements Serializable, StatusInterface {
     private Set<String> useStage;
 
     /**
-     * 区分
-     */
-    @GenericField(aggregable = Aggregable.YES)
-    private Long docCategory;
-
-    /**
-     * 区分(Variable)
-     */
-    @IndexedEmbedded
-    @IndexingDependency(reindexOnUpdate = ReindexOnUpdate.SHALLOW)
-    @ManyToOne
-    @NotFound(action = NotFoundAction.IGNORE)
-//    @JoinColumn(name = "docCategory", referencedColumnName = "id", unique = false, insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
-    @JoinColumnsOrFormulas({
-            @JoinColumnOrFormula(formula = @JoinFormula(value = "'DOC_CATEGORY'", referencedColumnName = "type")),
-            @JoinColumnOrFormula(column = @JoinColumn(name = "docCategory", referencedColumnName = "code", unique = false, insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT)))
-    })
-    private Variable docCategoryVariable;
-
-    /**
-     * サービス
-     */
-    private Long docService;
-
-    /**
-     * サービス(Variable)
-     */
-    @IndexedEmbedded
-    @IndexingDependency(reindexOnUpdate = ReindexOnUpdate.SHALLOW)
-    @ManyToOne
-    @NotFound(action = NotFoundAction.IGNORE)
-//    @JoinColumn(name = "docService", referencedColumnName = "code", unique = false, insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
-    @JoinColumnsOrFormulas({
-            @JoinColumnOrFormula(formula = @JoinFormula(value = "'DOC_SERVICE'", referencedColumnName = "type")),
-            @JoinColumnOrFormula(column = @JoinColumn(name = "docService", referencedColumnName = "code", unique = false, insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT)))
-    })
-    private Variable docServiceVariable;
-
-
-
-    /**
      * 区分1
      */
+    @GenericField(aggregable = Aggregable.YES)
     private Long docCategory1;
 
     /**
@@ -247,6 +207,7 @@ public class DocumentIndex implements Serializable, StatusInterface {
     /**
      * 区分2
      */
+    @GenericField(aggregable = Aggregable.YES)
     private Long docCategory2;
 
     /**
@@ -263,6 +224,7 @@ public class DocumentIndex implements Serializable, StatusInterface {
     /**
      * サービス-事業領域
      */
+    @GenericField(aggregable = Aggregable.YES)
     private Long docService1;
 
     /**
@@ -279,6 +241,7 @@ public class DocumentIndex implements Serializable, StatusInterface {
     /**
      * サービス-サービス種別
      */
+    @GenericField(aggregable = Aggregable.YES)
     private Long docService2;
 
     /**
@@ -295,6 +258,7 @@ public class DocumentIndex implements Serializable, StatusInterface {
     /**
      * サービス-サービス
      */
+    @GenericField(aggregable = Aggregable.YES)
     private Long docService3;
 
     /**

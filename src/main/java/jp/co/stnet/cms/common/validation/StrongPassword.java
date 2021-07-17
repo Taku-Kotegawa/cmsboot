@@ -32,6 +32,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 @Repeatable(StrongPassword.List.class)
 public @interface StrongPassword {
+
     String message() default "{com.example.app.common.validation.StrongPassword.message}";
 
     Class<?>[] groups() default {};

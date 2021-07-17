@@ -22,8 +22,7 @@ public class DocumentCsvBean implements Serializable {
      * ItemStreamReader用のフィールド名定義(ImportDocumentTaskletで使用)
      * フィールド変更時に修正要
      */
-    public static String[] columns = {"id","status","statusLabel","documentNumber","title","versionNumber","docCategory","docCategoryValue1","docCategoryValue2","docService","docServiceValue1","docServiceValue2","docServiceValue3","publishedDate","lastRevisedDate","invalidationDate","announceDate","chargePersonForCreation","chargePersonForPublish","responsiblePersonForPublish","departmentForCreation","departmentForPublish","remark","reasonForChange","filesLabel","pdfFilesLabel","fileMemo","useStage","useStageLabel","publicScope","publicScopeLabel","customerPublic","customerPublicLabel","body","lastModifiedDate","lastModifiedBy","lastModifiedByLabel"};
-
+    public static String[] columns = {"id","status","statusLabel","documentNumber","title","versionNumber","docCategory1","docCategoryValue1","docCategory2", "docCategoryValue2","docService1","docServiceValue1","docService2","docServiceValue2","docService3","docServiceValue3","publishedDate","lastRevisedDate","invalidationDate","announceDate","chargePersonForCreation","chargePersonForPublish","responsiblePersonForPublish","departmentForCreation","departmentForPublish","remark","reasonForChange","filesLabel","pdfFilesLabel","fileMemo","useStage","useStageLabel","publicScope","publicScopeLabel","customerPublic","customerPublicLabel","body","lastModifiedDate","lastModifiedBy","lastModifiedByLabel"};
 
     @Parseable(value = TO_LONG)
     @CsvColumn(name = "id")
@@ -62,17 +61,23 @@ public class DocumentCsvBean implements Serializable {
     private String versionNumber;
 
     /**
-     * 区分 - コード
+     * 区分 - 区分1コード
      */
-    @ExistInCodeList(codeListId = "CL_DOC_CATEGORY")
-    @CsvColumn(name = "docCategory")
-    private String docCategory;
+    @ExistInCodeList(codeListId = "CL_DOC_CATEGORY1")
+    @CsvColumn(name = "docCategory1")
+    private String docCategory1;
 
     /**
      * 区分 - 区分1
      */
     @CsvColumn(name = "docCategoryValue1")
     private String docCategoryValue1;
+    /**
+     * 区分 - 区分1コード
+     */
+    @ExistInCodeList(codeListId = "CL_DOC_CATEGORY2")
+    @CsvColumn(name = "docCategory2")
+    private String docCategory2;
 
     /**
      * 区分 - 区分2
@@ -81,11 +86,11 @@ public class DocumentCsvBean implements Serializable {
     private String docCategoryValue2;
 
     /**
-     * サービス - コード
+     * サービス - 事業コード
      */
-    @ExistInCodeList(codeListId = "CL_DOC_SERVICE")
-    @CsvColumn(name = "docService")
-    private String docService;
+    @ExistInCodeList(codeListId = "CL_DOC_SERVICE1")
+    @CsvColumn(name = "docService1")
+    private String docService1;
 
     /**
      * サービス - 事業
@@ -94,10 +99,24 @@ public class DocumentCsvBean implements Serializable {
     private String docServiceValue1;
 
     /**
+     * サービス - サービス種別コード
+     */
+    @ExistInCodeList(codeListId = "CL_DOC_SERVICE2")
+    @CsvColumn(name = "docService2")
+    private String docService2;
+
+    /**
      * サービス - サービス種別
      */
     @CsvColumn(name = "docServiceValue2")
     private String docServiceValue2;
+
+    /**
+     * サービス - サービスコード
+     */
+    @ExistInCodeList(codeListId = "CL_DOC_SERVICE3")
+    @CsvColumn(name = "docService3")
+    private String docService3;
 
     /**
      * サービス - サービス
