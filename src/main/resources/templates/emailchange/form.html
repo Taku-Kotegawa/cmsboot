@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html th:replace="~{/layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
+<html th:replace="~{layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
 <head>
     <!-- ページタイトルを記入 -->
     <title>Change E-mail</title>
@@ -21,7 +21,7 @@
 </section>
 <section class="content">
     <div class="container">
-        <div th:replace="~{/fragments/message-panel :: message-panel}"></div>
+        <div th:replace="~{fragments/message-panel :: message-panel}"></div>
         <!-- ここより下にメインコンテンツを記入 -->
         <form autocomplete="off" enctype="multipart/form-data" method="post" th:action="@{/emailchange}"
               th:object="${emailChangeForm}" >

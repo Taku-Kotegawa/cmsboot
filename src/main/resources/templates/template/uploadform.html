@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html th:replace="~{/layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
+<html th:replace="~{layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
 <head>
     <!-- ページタイトルを記入 -->
     <title>Page Title</title>
@@ -22,9 +22,9 @@
 
 <section class="content">
     <div class="container">
-        <div th:replace="~{/fragments/message-panel :: message-panel}"></div>
+        <div th:replace="~{fragments/message-panel :: message-panel}"></div>
         <!-- ここより下にメインコンテンツを記入 -->
-        <div th:replace="~{/fragments/include-upload :: include-upload}"></div>
+        <div th:replace="~{fragments/include-upload :: include-upload}"></div>
 
         <!-- アップロードファイルの仕様説明 -->
         <caption>ファイルレイアウト</caption>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html th:replace="~{/layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
+<html th:replace="~{layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
 <head>
     <!-- ページタイトルを記入 -->
     <title>メールアドレスの変更(暗証番号の入力)</title>
@@ -21,7 +21,7 @@
 </section>
 <section class="content">
     <div class="container">
-        <div th:replace="~{/fragments/message-panel :: message-panel}"></div>
+        <div th:replace="~{fragments/message-panel :: message-panel}"></div>
         <!-- ここより下にメインコンテンツを記入 -->
 
         <p>

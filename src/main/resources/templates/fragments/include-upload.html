@@ -17,14 +17,14 @@
         <div>
             <div class="row">
                 <div class="col-12">
-                    <div th:replace="~{/fragments/label :: m('uploadFileUuid', 'インポートファイル *')}"></div>
-                    <div th:replace="~{/fragments/file :: m('uploadFile', 'uploadFileUuid', 'uploadFileManaged', '', 'uploadFile', '')}"></div>
+                    <div th:replace="~{fragments/label :: m('uploadFileUuid', 'インポートファイル *')}"></div>
+                    <div th:replace="~{fragments/file :: m('uploadFile', 'uploadFileUuid', 'uploadFileManaged', '', 'uploadFile', '')}"></div>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-12">
-                    <div th:replace="~{/fragments/label :: m('fileType', 'ファイル形式 *')}"></div>
+                    <div th:replace="~{fragments/label :: m('fileType', 'ファイル形式 *')}"></div>
                     <select class="form-control" th:errorclass="is-invalid" th:field="*{fileType}">
                         <option label="CSV(カンマ区切り, ダブルクォーテーション括り)" value="CSV"/>
                         <option label="TSV(タブ区切り)" value="TSV"/>
@@ -36,7 +36,7 @@
             <div class="row">
                 <div class="col-12">
                     <!-- ラベル -->
-                    <div th:replace="~{/fragments/label :: m('encoding', '文字コード *')}"></div>
+                    <div th:replace="~{fragments/label :: m('encoding', '文字コード *')}"></div>
                     <!-- 入力 -->
                     <select class="form-control" th:errorclass="is-invalid" th:field="*{encoding}">
                         <option label="UTF-8" value="UTF-8"/>

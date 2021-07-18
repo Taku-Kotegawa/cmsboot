@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html th:replace="~{/layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
+<html th:replace="~{layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
 <head>
     <!-- ページタイトルを記入 -->
     <title>Permission</title>
@@ -36,7 +36,7 @@
 
 <section class="content">
     <div class="container">
-        <div th:replace="~{/fragments/message-panel :: message-panel}"></div>
+        <div th:replace="~{fragments/message-panel :: message-panel}"></div>
         <!-- ここより下にメインコンテンツを記入 -->
         <p>
             ロールとパーミッションの組み合わせを設定します。<br>

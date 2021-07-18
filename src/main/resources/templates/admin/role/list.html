@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html th:replace="~{/layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
+<html th:replace="~{layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
 <head>
     <!-- ページタイトルを記入 -->
     <title>Role</title>
@@ -36,7 +36,7 @@
 
 <section class="content">
     <div class="container">
-        <div th:replace="~{/fragments/message-panel :: message-panel}"></div>
+        <div th:replace="~{fragments/message-panel :: message-panel}"></div>
         <!-- ここより下にメインコンテンツを記入 -->
         <p>ロールとパーミッションを用いてセキュリティの細かな調整を行えます。ロールは特定のパーミッションの組み合わせを定義するために使われます。<br>
             <a th:href="@{/admin/permission/list}">パーミッション</a>ページで、ロートとパーミッションの組み合わせを設定できます。

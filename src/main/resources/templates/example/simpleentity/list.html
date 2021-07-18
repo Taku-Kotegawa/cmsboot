@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html th:replace="~{/layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
+<html th:replace="~{layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
 <head>
     <!-- ページタイトルを記入 -->
     <title>Simple Entity List</title>
 </head>
 <body>
-<div th:replace="~{/fragments/include-datatables :: include-datatables}"></div>
+<div th:replace="~{fragments/include-datatables :: include-datatables}"></div>
 <section class="content-header">
     <div class="container-fluid">
         <div class="row px-5">
@@ -22,7 +22,7 @@
 
 <section class="content">
     <div class="container-fluid"><!-- -fluidを外すと横幅が狭くなる-->
-        <div th:replace="~{/fragments/message-panel :: message-panel}"></div>
+        <div th:replace="~{fragments/message-panel :: message-panel}"></div>
         <!-- ここより下にメインコンテンツを記入 -->
         <p>
             fixedColumnsやScroll-Xを利用することで、大きな一覧表を表示する例。<br>

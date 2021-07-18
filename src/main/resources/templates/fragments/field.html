@@ -7,141 +7,141 @@
 <body>
 
 <th:block th:fragment="input(field_id, label, value, placeholder)">
-    <div th:replace="~{/fragments/label :: m(${field_id}, ${label})}"></div>
-    <div th:replace="~{/fragments/input :: m(${field_id}, ${label}, ${value}, ${placeholder})}"></div>
-    <div th:replace="~{/fragments/hidden :: m(${field_id})}"></div>
-    <div th:replace="~{/fragments/view :: m(${field_id}, ${label}, ${value}, ${placeholder})}"></div>
+    <div th:replace="~{fragments/label :: m(${field_id}, ${label})}"></div>
+    <div th:replace="~{fragments/input :: m(${field_id}, ${label}, ${value}, ${placeholder})}"></div>
+    <div th:replace="~{fragments/hidden :: m(${field_id})}"></div>
+    <div th:replace="~{fragments/view :: m(${field_id}, ${label}, ${value}, ${placeholder})}"></div>
 </th:block>
 
 <th:block th:fragment="input-password(field_id, label, value, placeholder)">
-    <div th:replace="~{/fragments/label :: m(${field_id}, ${label})}"></div>
-    <div th:replace="~{/fragments/input-password :: m(${field_id}, ${label}, ${value}, ${placeholder})}"></div>
+    <div th:replace="~{fragments/label :: m(${field_id}, ${label})}"></div>
+    <div th:replace="~{fragments/input-password :: m(${field_id}, ${label}, ${value}, ${placeholder})}"></div>
 </th:block>
 
 <th:block th:fragment="input-integer(field_id, label, value, placeholder)">
-    <div th:replace="~{/fragments/label :: m(${field_id}, ${label})}"></div>
-    <div th:replace="~{/fragments/input :: m(${field_id}, ${label}, ${value}, ${placeholder})}"></div>
-    <div th:replace="~{/fragments/hidden :: m(${field_id})}"></div>
-    <div th:replace="~{/fragments/view-integer :: m(${field_id}, ${label}, ${value}, ${placeholder})}"></div>
+    <div th:replace="~{fragments/label :: m(${field_id}, ${label})}"></div>
+    <div th:replace="~{fragments/input :: m(${field_id}, ${label}, ${value}, ${placeholder})}"></div>
+    <div th:replace="~{fragments/hidden :: m(${field_id})}"></div>
+    <div th:replace="~{fragments/view-integer :: m(${field_id}, ${label}, ${value}, ${placeholder})}"></div>
 </th:block>
 
 <th:block th:fragment="input-decimal(field_id, label, value, placeholder)">
-    <div th:replace="~{/fragments/label :: m(${field_id}, ${label})}"></div>
-    <div th:replace="~{/fragments/input :: m(${field_id}, ${label}, ${value}, ${placeholder})}"></div>
-    <div th:replace="~{/fragments/hidden :: m(${field_id})}"></div>
-    <div th:replace="~{/fragments/view-decimal :: m(${field_id}, ${label}, ${value}, ${placeholder})}"></div>
+    <div th:replace="~{fragments/label :: m(${field_id}, ${label})}"></div>
+    <div th:replace="~{fragments/input :: m(${field_id}, ${label}, ${value}, ${placeholder})}"></div>
+    <div th:replace="~{fragments/hidden :: m(${field_id})}"></div>
+    <div th:replace="~{fragments/view-decimal :: m(${field_id}, ${label}, ${value}, ${placeholder})}"></div>
 </th:block>
 
 <th:block th:fragment="radio(field_id, label, value, placeholder, items)">
-    <div th:replace="~{/fragments/label :: m(${field_id}, ${label})}"></div>
-    <div th:replace="~{/fragments/radio :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
-    <div th:replace="~{/fragments/hidden :: m(${field_id})}"></div>
-    <div th:replace="~{/fragments/view-radio :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
+    <div th:replace="~{fragments/label :: m(${field_id}, ${label})}"></div>
+    <div th:replace="~{fragments/radio :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
+    <div th:replace="~{fragments/hidden :: m(${field_id})}"></div>
+    <div th:replace="~{fragments/view-radio :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
 </th:block>
 
 <th:block th:fragment="checkbox(field_id, label, value, placeholder, items)">
-    <div th:replace="~{/fragments/label :: m(${field_id}, ${label})}"></div>
-    <div th:replace="~{/fragments/checkbox :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
-    <div th:replace="~{/fragments/hidden :: m(${field_id})}"></div>
-    <div th:replace="~{/fragments/view-checkbox :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
+    <div th:replace="~{fragments/label :: m(${field_id}, ${label})}"></div>
+    <div th:replace="~{fragments/checkbox :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
+    <div th:replace="~{fragments/hidden :: m(${field_id})}"></div>
+    <div th:replace="~{fragments/view-checkbox :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
 </th:block>
 
 <th:block th:fragment="checkbox-inline(field_id, label, value, placeholder, items)">
-<!--    <div th:replace="~{/fragments/label :: m(${field_id}, ${label})}"></div>-->
-    <div th:replace="~{/fragments/checkbox-inline :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
-    <div th:replace="~{/fragments/hidden :: m(${field_id})}"></div>
-    <div th:replace="~{/fragments/view-checkbox :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
+<!--    <div th:replace="~{fragments/label :: m(${field_id}, ${label})}"></div>-->
+    <div th:replace="~{fragments/checkbox-inline :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
+    <div th:replace="~{fragments/hidden :: m(${field_id})}"></div>
+    <div th:replace="~{fragments/view-checkbox :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
 </th:block>
 
 <th:block th:fragment="textarea(field_id, label, value, placeholder, rows)">
-    <div th:replace="~{/fragments/label :: m(${field_id}, ${label})}"></div>
-    <div th:replace="~{/fragments/textarea :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${rows})}"></div>
-    <div th:replace="~{/fragments/hidden :: m(${field_id})}"></div>
-    <div th:replace="~{/fragments/view-textarea :: m(${field_id}, ${label}, ${value}, ${placeholder})}"></div>
+    <div th:replace="~{fragments/label :: m(${field_id}, ${label})}"></div>
+    <div th:replace="~{fragments/textarea :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${rows})}"></div>
+    <div th:replace="~{fragments/hidden :: m(${field_id})}"></div>
+    <div th:replace="~{fragments/view-textarea :: m(${field_id}, ${label}, ${value}, ${placeholder})}"></div>
 </th:block>
 
 <th:block th:fragment="summernote(field_id, label, value, placeholder, rows)">
-    <div th:replace="~{/fragments/label :: m(${field_id}, ${label})}"></div>
-    <div th:replace="~{/fragments/summernote :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${rows})}"></div>
-    <div th:replace="~{/fragments/hidden :: m(${field_id})}"></div>
-    <div th:replace="~{/fragments/view-textarea :: m(${field_id}, ${label}, ${value}, ${placeholder})}"></div>
+    <div th:replace="~{fragments/label :: m(${field_id}, ${label})}"></div>
+    <div th:replace="~{fragments/summernote :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${rows})}"></div>
+    <div th:replace="~{fragments/hidden :: m(${field_id})}"></div>
+    <div th:replace="~{fragments/view-textarea :: m(${field_id}, ${label}, ${value}, ${placeholder})}"></div>
 </th:block>
 
 <th:block th:fragment="date(field_id, label, value, placeholder)">
-    <div th:replace="~{/fragments/label :: m(${field_id}, ${label})}"></div>
-    <div th:replace="~{/fragments/input-date :: m(${field_id}, ${label}, ${value}, ${placeholder})}"></div>
-    <div th:replace="~{/fragments/hidden :: m(${field_id})}"></div>
-    <div th:replace="~{/fragments/view-date :: m(${field_id}, ${label}, ${value}, ${placeholder})}"></div>
+    <div th:replace="~{fragments/label :: m(${field_id}, ${label})}"></div>
+    <div th:replace="~{fragments/input-date :: m(${field_id}, ${label}, ${value}, ${placeholder})}"></div>
+    <div th:replace="~{fragments/hidden :: m(${field_id})}"></div>
+    <div th:replace="~{fragments/view-date :: m(${field_id}, ${label}, ${value}, ${placeholder})}"></div>
 </th:block>
 
 <th:block th:fragment="datetime(field_id, label, value, placeholder)">
-    <div th:replace="~{/fragments/label :: m(${field_id}, ${label})}"></div>
-    <div th:replace="~{/fragments/input-datetime :: m(${field_id}, ${label}, ${value}, ${placeholder})}"></div>
-    <div th:replace="~{/fragments/hidden :: m(${field_id})}"></div>
-    <div th:replace="~{/fragments/view-datetime :: m(${field_id}, ${label}, ${value}, ${placeholder})}"></div>
+    <div th:replace="~{fragments/label :: m(${field_id}, ${label})}"></div>
+    <div th:replace="~{fragments/input-datetime :: m(${field_id}, ${label}, ${value}, ${placeholder})}"></div>
+    <div th:replace="~{fragments/hidden :: m(${field_id})}"></div>
+    <div th:replace="~{fragments/view-datetime :: m(${field_id}, ${label}, ${value}, ${placeholder})}"></div>
 </th:block>
 
 <th:block th:fragment="select(field_id, label, value, placeholder, items)">
-    <div th:replace="~{/fragments/label :: m(${field_id}, ${label})}"></div>
-    <div th:replace="~{/fragments/select :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
-    <div th:replace="~{/fragments/hidden :: m(${field_id})}"></div>
-    <div th:replace="~{/fragments/view-select :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
+    <div th:replace="~{fragments/label :: m(${field_id}, ${label})}"></div>
+    <div th:replace="~{fragments/select :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
+    <div th:replace="~{fragments/hidden :: m(${field_id})}"></div>
+    <div th:replace="~{fragments/view-select :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
 </th:block>
 
 <th:block th:fragment="select-multi(field_id, label, value, placeholder, items)">
-    <div th:replace="~{/fragments/label :: m(${field_id}, ${label})}"></div>
-    <div th:replace="~{/fragments/select-multi :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
-    <div th:replace="~{/fragments/hidden :: m(${field_id})}"></div>
-    <div th:replace="~{/fragments/view-select-multi :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
+    <div th:replace="~{fragments/label :: m(${field_id}, ${label})}"></div>
+    <div th:replace="~{fragments/select-multi :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
+    <div th:replace="~{fragments/hidden :: m(${field_id})}"></div>
+    <div th:replace="~{fragments/view-select-multi :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
 </th:block>
 
 <th:block th:fragment="select-dialog(field_id, label, value, placeholder, items)">
-    <div th:replace="~{/fragments/label :: m(${field_id}, ${label})}"></div>
-    <div th:replace="~{/fragments/select-dialog :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
-    <div th:replace="~{/fragments/hidden :: m(${field_id})}"></div>
-    <div th:replace="~{/fragments/view-select :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
+    <div th:replace="~{fragments/label :: m(${field_id}, ${label})}"></div>
+    <div th:replace="~{fragments/select-dialog :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
+    <div th:replace="~{fragments/hidden :: m(${field_id})}"></div>
+    <div th:replace="~{fragments/view-select :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
 </th:block>
 
 <th:block th:fragment="select2(field_id, label, value, placeholder, items)">
-    <div th:replace="~{/fragments/label :: m(${field_id}, ${label})}"></div>
-    <div th:replace="~{/fragments/select2 :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
-    <div th:replace="~{/fragments/hidden :: m(${field_id})}"></div>
-    <div th:replace="~{/fragments/view-select :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
+    <div th:replace="~{fragments/label :: m(${field_id}, ${label})}"></div>
+    <div th:replace="~{fragments/select2 :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
+    <div th:replace="~{fragments/hidden :: m(${field_id})}"></div>
+    <div th:replace="~{fragments/view-select :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
 </th:block>
 
 <th:block th:fragment="select2-multi(field_id, label, value, placeholder, items)">
-    <div th:replace="~{/fragments/label :: m(${field_id}, ${label})}"></div>
-    <div th:replace="~{/fragments/select2-multi :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
-    <div th:replace="~{/fragments/hidden :: m(${field_id})}"></div>
-    <div th:replace="~{/fragments/view-select-multi :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
+    <div th:replace="~{fragments/label :: m(${field_id}, ${label})}"></div>
+    <div th:replace="~{fragments/select2-multi :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
+    <div th:replace="~{fragments/hidden :: m(${field_id})}"></div>
+    <div th:replace="~{fragments/view-select-multi :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
 </th:block>
 
 <th:block th:fragment="input-combobox(field_id, label, value, placeholder, items)">
-    <div th:replace="~{/fragments/label :: m(${field_id}, ${label})}"></div>
-    <div th:replace="~{/fragments/input-combobox :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
-    <div th:replace="~{/fragments/hidden :: m(${field_id})}"></div>
-    <div th:replace="~{/fragments/view :: m(${field_id}, ${label}, ${value}, ${placeholder})}"></div>
+    <div th:replace="~{fragments/label :: m(${field_id}, ${label})}"></div>
+    <div th:replace="~{fragments/input-combobox :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
+    <div th:replace="~{fragments/hidden :: m(${field_id})}"></div>
+    <div th:replace="~{fragments/view :: m(${field_id}, ${label}, ${value}, ${placeholder})}"></div>
 </th:block>
 
 <th:block th:fragment="select2-tags(field_id, label, value, placeholder, items)">
-    <div th:replace="~{/fragments/label :: m(${field_id}, ${label})}"></div>
-    <div th:replace="~{/fragments/select2-tags :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
-    <div th:replace="~{/fragments/hidden :: m(${field_id})}"></div>
-    <div th:replace="~{/fragments/view-select :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
+    <div th:replace="~{fragments/label :: m(${field_id}, ${label})}"></div>
+    <div th:replace="~{fragments/select2-tags :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
+    <div th:replace="~{fragments/hidden :: m(${field_id})}"></div>
+    <div th:replace="~{fragments/view-select :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
 </th:block>
 
 <th:block th:fragment="select2-tags-multi(field_id, label, value, placeholder, items)">
-    <div th:replace="~{/fragments/label :: m(${field_id}, ${label})}"></div>
-    <div th:replace="~{/fragments/select2-tags-multi :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
-    <div th:replace="~{/fragments/hidden :: m(${field_id})}"></div>
-    <div th:replace="~{/fragments/view-select-multi :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
+    <div th:replace="~{fragments/label :: m(${field_id}, ${label})}"></div>
+    <div th:replace="~{fragments/select2-tags-multi :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
+    <div th:replace="~{fragments/hidden :: m(${field_id})}"></div>
+    <div th:replace="~{fragments/view-select-multi :: m(${field_id}, ${label}, ${value}, ${placeholder}, ${items})}"></div>
 </th:block>
 
 <th:block th:fragment="file(field_id, label, value, placeholder, data_file_type, file_managed)">
-    <div th:replace="~{/fragments/label :: m(|${field_id}Uuid|, ${label})}"></div>
-    <div th:replace="~{/fragments/file :: m(${field_id}, |${field_id}Uuid|, |${field_id}Managed|, ${placeholder}, ${data_file_type}, '${value}')}"></div>
-    <div th:replace="~{/fragments/hidden :: m(|${field_id}Uuid|)}"></div>
-    <div th:replace="~{/fragments/view-file :: m(${field_id}, ${label}, ${value}, ${placeholder})}"></div>
+    <div th:replace="~{fragments/label :: m(|${field_id}Uuid|, ${label})}"></div>
+    <div th:replace="~{fragments/file :: m(${field_id}, |${field_id}Uuid|, |${field_id}Managed|, ${placeholder}, ${data_file_type}, '${value}')}"></div>
+    <div th:replace="~{fragments/hidden :: m(|${field_id}Uuid|)}"></div>
+    <div th:replace="~{fragments/view-file :: m(${field_id}, ${label}, ${value}, ${placeholder})}"></div>
 </th:block>
 
 </body>

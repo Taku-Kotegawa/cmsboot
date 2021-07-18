@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html th:replace="~{/layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
+<html th:replace="~{layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
 <head>
     <!-- ページタイトルを記入 -->
     <title>Variable</title>
@@ -21,7 +21,7 @@
 </section>
 <section class="content">
     <div class="container">
-        <div th:replace="~{/fragments/message-panel :: message-panel}"></div>
+        <div th:replace="~{fragments/message-panel :: message-panel}"></div>
         <!-- ここより下にメインコンテンツを記入 -->
         <form autocomplete="off" enctype="multipart/form-data" method="post" th:action
               th:object="${variableForm}" th:with="id= ${variable != null} ? ${variable.id} : 0">
@@ -34,14 +34,14 @@
             <input th:field="*{version}" type="hidden"/>
 
             <!-- button -->
-            <div th:replace="~{/fragments/button-area :: m(${id})}"></div>
+            <div th:replace="~{fragments/button-area :: m(${id})}"></div>
             <hr>
 
             <!-- Input -->
             <div class="row">
                 <div class="col-6">
                     <!-- TODO 式を含むフォールドの表示方法の部品化-->
-                    <div th:replace="~{/fragments/label::m('status', 'ステータス')}"></div>
+                    <div th:replace="~{fragments/label::m('status', 'ステータス')}"></div>
                     <div class="form-control form-control__view" th:if="${fieldState.status__view}">
                         [[${variable != null} ? ${@CL_STATUS.asMap()[variable.status]}]]
                     </div>
@@ -51,114 +51,114 @@
 
             <div class="row">
                 <div class="col-8">
-<!--                    <div th:replace="~{/fragments/field::select('type', 'タイプ', 'variable.type', '', '@CL_VARIABLETYPE.asMap()')}"></div>-->
-                    <div th:replace="~{/fragments/field::input('type', 'タイプ', '@CL_VARIABLETYPE.asMap()[variable.type]', '')}"></div>
+<!--                    <div th:replace="~{fragments/field::select('type', 'タイプ', 'variable.type', '', '@CL_VARIABLETYPE.asMap()')}"></div>-->
+                    <div th:replace="~{fragments/field::input('type', 'タイプ', '@CL_VARIABLETYPE.asMap()[variable.type]', '')}"></div>
                 </div>
                 <div class="col-12">
-                    <div th:replace="~{/fragments/field::input('code', 'コード', 'variable.code', '')}"></div>
+                    <div th:replace="~{fragments/field::input('code', 'コード', 'variable.code', '')}"></div>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-12">
-                    <div th:replace="~{/fragments/field::input('value1', '${fieldLabel.value1}', 'variable.value1', '')}"></div>
+                    <div th:replace="~{fragments/field::input('value1', '${fieldLabel.value1}', 'variable.value1', '')}"></div>
                 </div>
                 <div class="col-12">
-                    <div th:replace="~{/fragments/field::input('value2', '${fieldLabel.value2}', 'variable.value2', '')}"></div>
+                    <div th:replace="~{fragments/field::input('value2', '${fieldLabel.value2}', 'variable.value2', '')}"></div>
                 </div>
                 <div class="col-12">
-                    <div th:replace="~{/fragments/field::input('value3', '${fieldLabel.value3}', 'variable.value3', '')}"></div>
+                    <div th:replace="~{fragments/field::input('value3', '${fieldLabel.value3}', 'variable.value3', '')}"></div>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-12">
-                    <div th:replace="~{/fragments/field::input('value4', '${fieldLabel.value4}', 'variable.value4', '')}"></div>
+                    <div th:replace="~{fragments/field::input('value4', '${fieldLabel.value4}', 'variable.value4', '')}"></div>
                 </div>
                 <div class="col-12">
-                    <div th:replace="~{/fragments/field::input('value5', '${fieldLabel.value5}', 'variable.value5', '')}"></div>
+                    <div th:replace="~{fragments/field::input('value5', '${fieldLabel.value5}', 'variable.value5', '')}"></div>
                 </div>
                 <div class="col-12">
-                    <div th:replace="~{/fragments/field::input('value6', '${fieldLabel.value6}', 'variable.value6', '')}"></div>
+                    <div th:replace="~{fragments/field::input('value6', '${fieldLabel.value6}', 'variable.value6', '')}"></div>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-12">
-                    <div th:replace="~{/fragments/field::input('value7', '${fieldLabel.value7}', 'variable.value7', '')}"></div>
+                    <div th:replace="~{fragments/field::input('value7', '${fieldLabel.value7}', 'variable.value7', '')}"></div>
                 </div>
                 <div class="col-12">
-                    <div th:replace="~{/fragments/field::input('value8', '${fieldLabel.value8}', 'variable.value8', '')}"></div>
+                    <div th:replace="~{fragments/field::input('value8', '${fieldLabel.value8}', 'variable.value8', '')}"></div>
                 </div>
                 <div class="col-12">
-                    <div th:replace="~{/fragments/field::input('value9', '${fieldLabel.value9}', 'variable.value9', '')}"></div>
+                    <div th:replace="~{fragments/field::input('value9', '${fieldLabel.value9}', 'variable.value9', '')}"></div>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-12">
-                    <div th:replace="~{/fragments/field::input('value10', '${fieldLabel.value10}', 'variable.value10', '')}"></div>
+                    <div th:replace="~{fragments/field::input('value10', '${fieldLabel.value10}', 'variable.value10', '')}"></div>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-7">
-                    <div th:replace="~{/fragments/field::date('date1', '${fieldLabel.date1}', 'variable.date1', '')}"></div>
+                    <div th:replace="~{fragments/field::date('date1', '${fieldLabel.date1}', 'variable.date1', '')}"></div>
                 </div>
                 <div class="col-7">
-                    <div th:replace="~{/fragments/field::date('date2', '${fieldLabel.date2}', 'variable.date2', '')}"></div>
+                    <div th:replace="~{fragments/field::date('date2', '${fieldLabel.date2}', 'variable.date2', '')}"></div>
                 </div>
                 <div class="col-7">
-                    <div th:replace="~{/fragments/field::date('date3', '${fieldLabel.date3}', 'variable.date3', '')}"></div>
+                    <div th:replace="~{fragments/field::date('date3', '${fieldLabel.date3}', 'variable.date3', '')}"></div>
                 </div>
                 <div class="col-7">
-                    <div th:replace="~{/fragments/field::date('date4', '${fieldLabel.date4}', 'variable.date4', '')}"></div>
+                    <div th:replace="~{fragments/field::date('date4', '${fieldLabel.date4}', 'variable.date4', '')}"></div>
                 </div>
                 <div class="col-7">
-                    <div th:replace="~{/fragments/field::date('date5', '${fieldLabel.date5}', 'variable.date5', '')}"></div>
+                    <div th:replace="~{fragments/field::date('date5', '${fieldLabel.date5}', 'variable.date5', '')}"></div>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-7">
-                    <div th:replace="~{/fragments/field::input-integer('valint1', '${fieldLabel.valint1}', 'variable.valint1', '')}"></div>
+                    <div th:replace="~{fragments/field::input-integer('valint1', '${fieldLabel.valint1}', 'variable.valint1', '')}"></div>
                 </div>
                 <div class="col-7">
-                    <div th:replace="~{/fragments/field::input-integer('valint2', '${fieldLabel.valint2}', 'variable.valint2', '')}"></div>
+                    <div th:replace="~{fragments/field::input-integer('valint2', '${fieldLabel.valint2}', 'variable.valint2', '')}"></div>
                 </div>
                 <div class="col-7">
-                    <div th:replace="~{/fragments/field::input-integer('valint3', '${fieldLabel.valint3}', 'variable.valint3', '')}"></div>
+                    <div th:replace="~{fragments/field::input-integer('valint3', '${fieldLabel.valint3}', 'variable.valint3', '')}"></div>
                 </div>
                 <div class="col-7">
-                    <div th:replace="~{/fragments/field::input-integer('valint4', '${fieldLabel.valint4}', 'variable.valint4', '')}"></div>
+                    <div th:replace="~{fragments/field::input-integer('valint4', '${fieldLabel.valint4}', 'variable.valint4', '')}"></div>
                 </div>
                 <div class="col-7">
-                    <div th:replace="~{/fragments/field::input-integer('valint5', '${fieldLabel.valint5}', 'variable.valint5', '')}"></div>
+                    <div th:replace="~{fragments/field::input-integer('valint5', '${fieldLabel.valint5}', 'variable.valint5', '')}"></div>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-36">
-                    <div th:replace="~{/fragments/field::textarea('textarea', '${fieldLabel.textarea}', 'variable.textarea', '', '6')}"></div>
+                    <div th:replace="~{fragments/field::textarea('textarea', '${fieldLabel.textarea}', 'variable.textarea', '', '6')}"></div>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-18">
-                    <div th:replace="~{/fragments/field::file('file1', '${fieldLabel.file1Uuid}', 'variable.file1Managed', '', 'variable', '')}"></div>
+                    <div th:replace="~{fragments/field::file('file1', '${fieldLabel.file1Uuid}', 'variable.file1Managed', '', 'variable', '')}"></div>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-36">
-                    <div th:replace="~{/fragments/field::textarea('remark', '${fieldLabel.remark}', 'variable.remark', '', '2')}"></div>
+                    <div th:replace="~{fragments/field::textarea('remark', '${fieldLabel.remark}', 'variable.remark', '', '2')}"></div>
                 </div>
             </div>
 
             <!-- button -->
             <br>
             <hr>
-            <div th:replace="~{/fragments/button-area :: m(${id})}"></div>
+            <div th:replace="~{fragments/button-area :: m(${id})}"></div>
 
         </form>
         <!-- ここより上にメインコンテンツを記入 -->

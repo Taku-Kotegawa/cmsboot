@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html th:replace="~{/layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
+<html th:replace="~{layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
 <head>
     <!-- ページタイトルを記入 -->
     <title>Document List</title>
 </head>
 <body>
-<div th:replace="~{/layout/libraries :: datatables}"></div>
-<div th:replace="~{/layout/libraries :: multiple-select}"></div>
+<div th:replace="~{layout/libraries :: datatables}"></div>
+<div th:replace="~{layout/libraries :: multiple-select}"></div>
 
 <section class="content-header">
     <div class="container-fluid">
@@ -30,7 +30,7 @@ div#list_filter {
 
 <section class="content">
     <div class="container-fluid"><!-- -fluidを外すと横幅が狭くなる-->
-        <div th:replace="~{/fragments/message-panel :: message-panel}"></div>
+        <div th:replace="~{fragments/message-panel :: message-panel}"></div>
         <!-- ここより下にメインコンテンツを記入 -->
 
         <div class="row mb-3">

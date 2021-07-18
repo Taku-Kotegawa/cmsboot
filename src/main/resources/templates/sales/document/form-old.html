@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html th:replace="~{/layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
+<html th:replace="~{layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
 <head>
     <!-- ページタイトルを記入 -->
     <title>ドキュメント</title>
@@ -21,7 +21,7 @@
 </section>
 <section class="content">
     <div class="container">
-        <div th:replace="~{/fragments/message-panel :: message-panel}"></div>
+        <div th:replace="~{fragments/message-panel :: message-panel}"></div>
         <!-- ここより下にメインコンテンツを記入 -->
         <form autocomplete="off" enctype="multipart/form-data" method="post" th:action
               th:object="${documentForm}" th:with="id= ${document != null} ? ${document.id} : 0">
@@ -33,35 +33,35 @@
             <input th:field="*{version}" type="hidden"/>
 
             <!-- button -->
-            <div th:replace="~{/fragments/button-area :: m(${id})}"></div>
-            <div th:replace="~{/fragments/field::checkbox-inline('saveRevision', '', 'document.saveRevision', '', '@CL_SAVE_REVISION.asMap()')}"></div>
+            <div th:replace="~{fragments/button-area :: m(${id})}"></div>
+            <div th:replace="~{fragments/field::checkbox-inline('saveRevision', '', 'document.saveRevision', '', '@CL_SAVE_REVISION.asMap()')}"></div>
             <hr>
 
             <!-- Input -->
             <div class="row">
                 <div class="col-24">
-                    <div th:replace="~{/fragments/field::input('title', '文書タイトル', 'document.title', '')}"></div>
+                    <div th:replace="~{fragments/field::input('title', '文書タイトル', 'document.title', '')}"></div>
                 </div>
                 <div class="col-11 offset-1 p-0">
-                    <div th:replace="~{/fragments/label::m('status', 'ステータス')}"></div>
-                    <div th:replace="~{/fragments/view-select::m('status', '', 'document.status', '', '@CL_STATUS.asMap()')}"></div>
-                    <!--                    <div th:replace="~{/fragments/label::m('status', 'ステータス')}"></div>-->
+                    <div th:replace="~{fragments/label::m('status', 'ステータス')}"></div>
+                    <div th:replace="~{fragments/view-select::m('status', '', 'document.status', '', '@CL_STATUS.asMap()')}"></div>
+                    <!--                    <div th:replace="~{fragments/label::m('status', 'ステータス')}"></div>-->
                     <!--                    <div class="form-control form-control__view" th:if="${fieldState.status__view}">-->
                     <!--                        [[${document != null} ? ${@CL_STATUS.asMap()[document.status]}]]-->
                     <!--                    </div>-->
                 </div>
                 <!-- 行区切り -->
                 <div class="col-24">
-                    <div th:replace="~{/fragments/field::select2('docCategory', '文書区分', 'document.docCategory', '', '@CL_DOC_CATEGORY.asMap()')}"></div>
-                    <div th:replace="~{/fragments/field::select2('docService', 'サービス', 'document.docService', '', '@CL_DOC_SERVICE.asMap()')}"></div>
+                    <div th:replace="~{fragments/field::select2('docCategory', '文書区分', 'document.docCategory', '', '@CL_DOC_CATEGORY.asMap()')}"></div>
+                    <div th:replace="~{fragments/field::select2('docService', 'サービス', 'document.docService', '', '@CL_DOC_SERVICE.asMap()')}"></div>
                 </div>
                 <div class="col-12"></div>
                 <!-- 行区切り -->
                 <div class="col-6">
-                    <div th:replace="~{/fragments/field::radio('customerPublic', '顧客公開', 'document.customerPublic', '', '@CL_CUSTOMER_PUBLIC.asMap()')}"></div>
+                    <div th:replace="~{fragments/field::radio('customerPublic', '顧客公開', 'document.customerPublic', '', '@CL_CUSTOMER_PUBLIC.asMap()')}"></div>
                 </div>
                 <div class="col-24">
-                    <div th:replace="~{/fragments/field::checkbox('useStage', '活用シーン', 'document.useStage', '', '@CL_DOC_STAGE.asMap()')}"></div>
+                    <div th:replace="~{fragments/field::checkbox('useStage', '活用シーン', 'document.useStage', '', '@CL_DOC_STAGE.asMap()')}"></div>
                 </div>
                 <!-- 行区切り -->
             </div>
@@ -156,13 +156,13 @@
                             <tr th:each="item, status : ${document.files}">
                                 <td class="row">
                                     <div class="col-6">
-                                        <div th:replace="~{/fragments/view-select::m('files_type', '', 'item.type', '', '@CL_DOC_TYPE.asMap()')}"></div>
+                                        <div th:replace="~{fragments/view-select::m('files_type', '', 'item.type', '', '@CL_DOC_TYPE.asMap()')}"></div>
                                     </div>
                                     <div class="col-14">
-                                        <div th:replace="~{/fragments/view-file-document::m('files_file', '', 'item.fileManaged', '')}"></div>
+                                        <div th:replace="~{fragments/view-file-document::m('files_file', '', 'item.fileManaged', '')}"></div>
                                     </div>
                                     <div class="col-14">
-                                        <div th:replace="~{/fragments/view-file-document::m('files_pdf', '', 'item.pdfManaged', '')}"></div>
+                                        <div th:replace="~{fragments/view-file-document::m('files_pdf', '', 'item.pdfManaged', '')}"></div>
                                     </div>
                                 </td>
                             </tr>
@@ -185,8 +185,8 @@
             <!-- 本文 -->
             <div class="row">
                 <div class="col-36">
-                    <div th:replace="~{/fragments/field::summernote('body', '本文', 'document.body', '', '8')}"></div>
-                    <div th:replace="~{/fragments/field::input('reasonForChange', '変更理由', 'document.reasonForChange', '')}"></div>
+                    <div th:replace="~{fragments/field::summernote('body', '本文', 'document.body', '', '8')}"></div>
+                    <div th:replace="~{fragments/field::input('reasonForChange', '変更理由', 'document.reasonForChange', '')}"></div>
                 </div>
             </div>
 
@@ -194,29 +194,29 @@
             <!-- 行区切り -->
             <div class="row">
                 <div class="col-12">
-                    <div th:replace="~{/fragments/field::input('chargeDepartment', '管理部門', 'document.chargeDepartment', '')}"></div>
+                    <div th:replace="~{fragments/field::input('chargeDepartment', '管理部門', 'document.chargeDepartment', '')}"></div>
                 </div>
                 <div class="col-10 offset-1">
-                    <div th:replace="~{/fragments/field::input('chargePerson', '管理担当者', 'document.chargePerson', '')}"></div>
+                    <div th:replace="~{fragments/field::input('chargePerson', '管理担当者', 'document.chargePerson', '')}"></div>
                 </div>
             </div>
             <!-- 行区切り -->
             <div class="row">
                 <div class="col-14">
-                    <div th:replace="~{/fragments/field::radio('publicScope', '公開区分', 'document.publicScope', '', '@CL_DOC_PUBLIC_SCOPE.asMap()')}"></div>
+                    <div th:replace="~{fragments/field::radio('publicScope', '公開区分', 'document.publicScope', '', '@CL_DOC_PUBLIC_SCOPE.asMap()')}"></div>
                 </div>
             </div>
 
             <!-- 予備 -->
 <!--            <div class="row">-->
 <!--                <div class="col-36">-->
-<!--                    <div th:replace="~{/fragments/field::input('intendedReader', '想定読者', 'document.intendedReader', '')}"></div>-->
-<!--                    <div th:replace="~{/fragments/field::textarea('summary', '概要', 'document.summary', '', '3')}"></div>-->
-<!--                    <div th:replace="~{/fragments/field::input('documentNumber', '管理番号', 'document.documentNumber', '')}"></div>-->
-<!--                    <div th:replace="~{/fragments/field::date('enactmentDate', '制定日', 'document.enactmentDate', '')}"></div>-->
-<!--                    <div th:replace="~{/fragments/field::date('lastRevisedDate', '最終改定日', 'document.lastRevisedDate', '')}"></div>-->
-<!--                    <div th:replace="~{/fragments/field::date('implementationDate', '実施日', 'document.implementationDate', '')}"></div>-->
-<!--                    <div th:replace="~{/fragments/field::input('enactmentDepartment', '制定箇所', 'document.enactmentDepartment', '')}"></div>-->
+<!--                    <div th:replace="~{fragments/field::input('intendedReader', '想定読者', 'document.intendedReader', '')}"></div>-->
+<!--                    <div th:replace="~{fragments/field::textarea('summary', '概要', 'document.summary', '', '3')}"></div>-->
+<!--                    <div th:replace="~{fragments/field::input('documentNumber', '管理番号', 'document.documentNumber', '')}"></div>-->
+<!--                    <div th:replace="~{fragments/field::date('enactmentDate', '制定日', 'document.enactmentDate', '')}"></div>-->
+<!--                    <div th:replace="~{fragments/field::date('lastRevisedDate', '最終改定日', 'document.lastRevisedDate', '')}"></div>-->
+<!--                    <div th:replace="~{fragments/field::date('implementationDate', '実施日', 'document.implementationDate', '')}"></div>-->
+<!--                    <div th:replace="~{fragments/field::input('enactmentDepartment', '制定箇所', 'document.enactmentDepartment', '')}"></div>-->
 <!--                </div>-->
 <!--            </div>-->
 

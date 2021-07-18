@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html th:replace="~{/layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
+<html th:replace="~{layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
 <head>
     <!-- ページタイトルを記入 -->
     <title>アカウント登録・編集(管理者)</title>
@@ -21,7 +21,7 @@
 </section>
 <section class="content">
     <div class="container">
-        <div th:replace="~{/fragments/message-panel :: message-panel}"></div>
+        <div th:replace="~{fragments/message-panel :: message-panel}"></div>
         <!-- ここより下にメインコンテンツを記入 -->
 
         <form autocomplete="off" enctype="multipart/form-data" method="post" th:action
@@ -35,7 +35,7 @@
 
             <!-- button -->
             <div class="row">
-                <div th:replace="~{/fragments/button-area :: m(${id})}"></div>
+                <div th:replace="~{fragments/button-area :: m(${id})}"></div>
                 <!-- Switch User -->
             </div>
             <hr>
@@ -43,7 +43,7 @@
             <!-- Input -->
             <div class="row">
                 <div class="col-4">
-                    <div th:replace="~{/fragments/field::input('username', 'ユーザ名 *', 'account.username', '')}"></div>
+                    <div th:replace="~{fragments/field::input('username', 'ユーザ名 *', 'account.username', '')}"></div>
                 </div>
                 <div class="col-12 offset-2">
                     <!-- ステータスは新規登録時非表示、それ以外は常に表示のみ -->
@@ -59,30 +59,30 @@
             </div>
             <div class="row">
                 <div class="col-6">
-                    <div th:replace="~{/fragments/field::input('lastName', '姓 *', 'account.lastName', '')}"></div>
+                    <div th:replace="~{fragments/field::input('lastName', '姓 *', 'account.lastName', '')}"></div>
                 </div>
                 <div class="col-6">
-                    <div th:replace="~{/fragments/field::input('firstName', '名 *', 'account.firstName', '')}"></div>
+                    <div th:replace="~{fragments/field::input('firstName', '名 *', 'account.firstName', '')}"></div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-12">
-                    <div th:replace="~{/fragments/field::input('department', '所属', 'account.department', '')}"></div>
+                    <div th:replace="~{fragments/field::input('department', '所属', 'account.department', '')}"></div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-8">
-                    <div th:replace="~{/fragments/field::input('email', 'E-Mail *', 'account.email', '')}"></div>
+                    <div th:replace="~{fragments/field::input('email', 'E-Mail *', 'account.email', '')}"></div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-8">
-                    <div th:replace="~{/fragments/field::input('url', 'URL', 'account.url', '')}"></div>
+                    <div th:replace="~{fragments/field::input('url', 'URL', 'account.url', '')}"></div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-4">
-                    <div th:replace="~{/fragments/field::input-password('password', 'パスワード', '', '')}"></div>
+                    <div th:replace="~{fragments/field::input-password('password', 'パスワード', '', '')}"></div>
                 </div>
             </div>
             <div class="row" th:if="${fieldState.password__input}">
@@ -90,22 +90,22 @@
             </div>
             <div class="row">
                 <div class="col-36">
-                    <div th:replace="~{/fragments/field::checkbox('roles', 'ロール', 'account.roles', '', '@CL_ROLE.asMap()')}"></div>
+                    <div th:replace="~{fragments/field::checkbox('roles', 'ロール', 'account.roles', '', '@CL_ROLE.asMap()')}"></div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-12">
-                    <div th:replace="~{/fragments/field::textarea('profile', 'プロフィール', 'account.profile', '', 4)}"></div>
+                    <div th:replace="~{fragments/field::textarea('profile', 'プロフィール', 'account.profile', '', 4)}"></div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-12">
-                    <div th:replace="~{/fragments/field::file('image', '画像', 'account.imageManaged', '', 'account', '')}"></div>
+                    <div th:replace="~{fragments/field::file('image', '画像', 'account.imageManaged', '', 'account', '')}"></div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-12">
-                    <div th:replace="~{/fragments/label :: m('apiKey', 'API KEY')}"></div>
+                    <div th:replace="~{fragments/label :: m('apiKey', 'API KEY')}"></div>
 
                     <th:block th:if="${fieldState.apiKey__input}">
                         <div class="input-group">
@@ -132,13 +132,13 @@
                         </div>
                     </th:block>
 
-                    <div th:replace="~{/fragments/hidden :: m('apiKey')}"></div>
-                    <div th:replace="~{/fragments/view :: m('apiKey', 'API KEY', 'account.apiKey', '')}"></div>
+                    <div th:replace="~{fragments/hidden :: m('apiKey')}"></div>
+                    <div th:replace="~{fragments/view :: m('apiKey', 'API KEY', 'account.apiKey', '')}"></div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-12">
-                    <div th:replace="~{/fragments/field::textarea('allowedIp', 'ログイン許可IPアドレス', 'account.allowedIp', 'ex: 192.168.100.0/24, 10.200.10.0/32 (カンマで複数指定)', 2)}"></div>
+                    <div th:replace="~{fragments/field::textarea('allowedIp', 'ログイン許可IPアドレス', 'account.allowedIp', 'ex: 192.168.100.0/24, 10.200.10.0/32 (カンマで複数指定)', 2)}"></div>
                 </div>
             </div>
         </form>

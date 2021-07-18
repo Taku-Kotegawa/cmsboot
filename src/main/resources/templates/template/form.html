@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html th:replace="~{/layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
+<html th:replace="~{layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
 <head>
     <!-- ページタイトルを記入 -->
     <title>Page Title</title>
@@ -21,7 +21,7 @@
 </section>
 <section class="content">
     <div class="container">
-        <div th:replace="~{/fragments/message-panel :: message-panel}"></div>
+        <div th:replace="~{fragments/message-panel :: message-panel}"></div>
         <!-- ここより下にメインコンテンツを記入 -->
         <form autocomplete="off" enctype="multipart/form-data" method="post" th:action
               th:object="${***FormBean***}" th:with="id= ${***参照用Bean*** != null} ? ${***参照用Bean***.id} : 0">
@@ -35,14 +35,14 @@
 
 
             <!-- button -->
-            <div th:replace="~{/fragments/button-area :: m(${id})}"></div>
+            <div th:replace="~{fragments/button-area :: m(${id})}"></div>
             <hr>
 
             <!-- Input -->
             <div class="row">
                 <div class="col-6">
                     <!-- TODO 式を含むフォールドの表示方法の部品化-->
-                    <div th:replace="~{/fragments/label::m('status', 'ステータス')}"></div>
+                    <div th:replace="~{fragments/label::m('status', 'ステータス')}"></div>
                     <div class="form-control form-control__view" th:if="${fieldState.status__view}">
                         [[${simpleEntity != null} ? ${@CL_STATUS.asMap()[simpleEntity.status]}]]
                     </div>
@@ -57,7 +57,7 @@
             <!-- button -->
             <br>
             <hr>
-            <div th:replace="~{/fragments/button-area :: m(${id})}"></div>
+            <div th:replace="~{fragments/button-area :: m(${id})}"></div>
 
         </form>
         <!-- ここより上にメインコンテンツを記入 -->

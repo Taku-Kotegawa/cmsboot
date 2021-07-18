@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html th:replace="~{/layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
+<html th:replace="~{layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
 <head>
     <!-- ページタイトルを記入 -->
     <title>Access Counter</title>
@@ -21,7 +21,7 @@
 </section>
 <section class="content">
     <div class="container">
-        <div th:replace="~{/fragments/message-panel :: message-panel}"></div>
+        <div th:replace="~{fragments/message-panel :: message-panel}"></div>
         <!-- ここより下にメインコンテンツを記入 -->
         <form autocomplete="off" enctype="multipart/form-data" method="post" th:action
               th:object="${accessCounterForm}" th:with="id= ${accessCounter != null} ? ${accessCounter.id} : 0">
@@ -35,13 +35,13 @@
 
 
             <!-- button -->
-            <div th:replace="~{/fragments/button-area :: m(${id})}"></div>
+            <div th:replace="~{fragments/button-area :: m(${id})}"></div>
             <hr>
 
             <!-- Input -->
             <div class="row">
                 <div class="col-4">
-                    <div th:replace="~{/fragments/label::m('status', 'ステータス')}"></div>
+                    <div th:replace="~{fragments/label::m('status', 'ステータス')}"></div>
                     <div class="form-control form-control__view" th:if="${fieldState.status__view}">
                         [[${accessCounter != null} ? ${@CL_STATUS.asMap()[accessCounter.status]}]]
                     </div>
@@ -50,20 +50,20 @@
 
             <div class="row">
                 <div class="col-18">
-                    <div th:replace="~{/fragments/field::input('url', 'URL', 'accessCounter.url', '')}"></div>
+                    <div th:replace="~{fragments/field::input('url', 'URL', 'accessCounter.url', '')}"></div>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-6">
-                    <div th:replace="~{/fragments/field::input-integer('count', 'アクセス数', 'accessCounter.count', '')}"></div>
+                    <div th:replace="~{fragments/field::input-integer('count', 'アクセス数', 'accessCounter.count', '')}"></div>
                 </div>
             </div>
 
             <!-- button -->
             <br>
             <hr>
-            <div th:replace="~{/fragments/button-area :: m(${id})}"></div>
+            <div th:replace="~{fragments/button-area :: m(${id})}"></div>
 
         </form>
         <!-- ここより上にメインコンテンツを記入 -->

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html th:replace="~{/layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
+<html th:replace="~{layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
 <head>
     <!-- ページタイトルを記入 -->
     <title>SimpleEntity</title>
@@ -21,7 +21,7 @@
 </section>
 <section class="content">
     <div class="container">
-        <div th:replace="~{/fragments/message-panel :: message-panel}"></div>
+        <div th:replace="~{fragments/message-panel :: message-panel}"></div>
         <!-- ここより下にメインコンテンツを記入 -->
 
         <form autocomplete="off" enctype="multipart/form-data" method="post" th:action
@@ -35,7 +35,7 @@
             <input th:field="*{version}" type="hidden"/>
 
             <!-- button -->
-            <div th:replace="~{/fragments/button-area :: m(${id})}"></div>
+            <div th:replace="~{fragments/button-area :: m(${id})}"></div>
             <hr>
 
             <!-- Input -->
@@ -43,50 +43,50 @@
                 <div class="col-18">
 
                     <!-- TODO 式を含むフォールドの表示方法の部品化-->
-                    <div th:replace="~{/fragments/label::m('status', 'ステータス')}"></div>
+                    <div th:replace="~{fragments/label::m('status', 'ステータス')}"></div>
                     <div class="form-control form-control__view" th:if="${fieldState.status__view}">
                         [[${simpleEntity != null} ? ${@CL_STATUS.asMap()[simpleEntity.status]}]]
                     </div>
 
-                    <div th:replace="~{/fragments/field::input('text01', 'テキストフィールド', 'simpleEntity.text01', 'テキストを入力して下さい')}"></div>
+                    <div th:replace="~{fragments/field::input('text01', 'テキストフィールド', 'simpleEntity.text01', 'テキストを入力して下さい')}"></div>
 
-                    <div th:replace="~{/fragments/field::input-integer('text02', 'テキストフィールド(数値・整数)', 'simpleEntity.text02', 'テキストを入力して下さい')}"></div>
+                    <div th:replace="~{fragments/field::input-integer('text02', 'テキストフィールド(数値・整数)', 'simpleEntity.text02', 'テキストを入力して下さい')}"></div>
 
-                    <div th:replace="~{/fragments/field::input-decimal('text03', 'テキストフィールド(数値・小数あり)', 'simpleEntity.text03', 'テキストを入力して下さい')}"></div>
+                    <div th:replace="~{fragments/field::input-decimal('text03', 'テキストフィールド(数値・小数あり)', 'simpleEntity.text03', 'テキストを入力して下さい')}"></div>
 
-                    <div th:replace="~{/fragments/field::input('text04', 'テキストフィールド(真偽値)', 'simpleEntity.text04', 'テキストを入力して下さい')}"></div>
+                    <div th:replace="~{fragments/field::input('text04', 'テキストフィールド(真偽値)', 'simpleEntity.text04', 'テキストを入力して下さい')}"></div>
 
-                    <div th:replace="~{/fragments/field::input('text05', 'テキストフィールド(複数の値)', 'simpleEntityBean.text05Label', 'テキストを入力して下さい')}"></div>
+                    <div th:replace="~{fragments/field::input('text05', 'テキストフィールド(複数の値)', 'simpleEntityBean.text05Label', 'テキストを入力して下さい')}"></div>
 
-                    <div th:replace="~{/fragments/field::radio('radio01', 'ラジオボタン(真偽値)', 'simpleEntity.radio01', 'テキストを入力して下さい', '@CL_YESNO.asMap()')}"></div>
+                    <div th:replace="~{fragments/field::radio('radio01', 'ラジオボタン(真偽値)', 'simpleEntity.radio01', 'テキストを入力して下さい', '@CL_YESNO.asMap()')}"></div>
 
-                    <div th:replace="~{/fragments/field::radio('radio02', 'ラジオボタン(文字列)', 'simpleEntity.radio02', 'テキストを入力して下さい', '@CL_STATUS.asMap()')}"></div>
+                    <div th:replace="~{fragments/field::radio('radio02', 'ラジオボタン(文字列)', 'simpleEntity.radio02', 'テキストを入力して下さい', '@CL_STATUS.asMap()')}"></div>
 
-                    <div th:replace="~{/fragments/field::checkbox('checkbox01', 'チェックボックス(文字列)', 'simpleEntity.checkbox01', 'テキストを入力して下さい', '@CL_EXAMPLE_AGREEMENT.asMap()')}"></div>
+                    <div th:replace="~{fragments/field::checkbox('checkbox01', 'チェックボックス(文字列)', 'simpleEntity.checkbox01', 'テキストを入力して下さい', '@CL_EXAMPLE_AGREEMENT.asMap()')}"></div>
 
-                    <div th:replace="~{/fragments/field::checkbox('checkbox02', 'チェックボックス(複数の値)', 'simpleEntity.checkbox02', 'テキストを入力して下さい', '@CL_STATUS.asMap()')}"></div>
+                    <div th:replace="~{fragments/field::checkbox('checkbox02', 'チェックボックス(複数の値)', 'simpleEntity.checkbox02', 'テキストを入力して下さい', '@CL_STATUS.asMap()')}"></div>
 
-                    <div th:replace="~{/fragments/field::textarea('textarea01', 'テキストエリア', 'simpleEntity.textarea01', 'テキストを入力して下さい', '4')}"></div>
+                    <div th:replace="~{fragments/field::textarea('textarea01', 'テキストエリア', 'simpleEntity.textarea01', 'テキストを入力して下さい', '4')}"></div>
 
-                    <div th:replace="~{/fragments/field::date('date01', '日付', 'simpleEntity.date01', 'テキストを入力して下さい')}"></div>
+                    <div th:replace="~{fragments/field::date('date01', '日付', 'simpleEntity.date01', 'テキストを入力して下さい')}"></div>
 
-                    <div th:replace="~{/fragments/field::datetime('datetime01', '日付時刻', 'simpleEntity.datetime01', 'テキストを入力して下さい')}"></div>
+                    <div th:replace="~{fragments/field::datetime('datetime01', '日付時刻', 'simpleEntity.datetime01', 'テキストを入力して下さい')}"></div>
 
-                    <div th:replace="~{/fragments/field::select('select01', 'select', 'simpleEntity.select01', '', '@CL_STATUS.asMap()')}"></div>
+                    <div th:replace="~{fragments/field::select('select01', 'select', 'simpleEntity.select01', '', '@CL_STATUS.asMap()')}"></div>
 
-                    <div th:replace="~{/fragments/field::select-multi('select02', 'select(Multi)', 'simpleEntity.select02', '', '@CL_STATUS.asMap()')}"></div>
+                    <div th:replace="~{fragments/field::select-multi('select02', 'select(Multi)', 'simpleEntity.select02', '', '@CL_STATUS.asMap()')}"></div>
 
-                    <div th:replace="~{/fragments/field::select2('select03', 'select2', 'simpleEntity.select03', '', '@CL_STATUS.asMap()')}"></div>
+                    <div th:replace="~{fragments/field::select2('select03', 'select2', 'simpleEntity.select03', '', '@CL_STATUS.asMap()')}"></div>
 
-                    <div th:replace="~{/fragments/field::select2-multi('select04', 'select2-multi', 'simpleEntity.select04', '', '@CL_STATUS.asMap()')}"></div>
+                    <div th:replace="~{fragments/field::select2-multi('select04', 'select2-multi', 'simpleEntity.select04', '', '@CL_STATUS.asMap()')}"></div>
 
-                    <div th:replace="~{/fragments/field::input-combobox('combobox01', 'コンボボックス', 'simpleEntity.combobox01', 'テキストを入力して下さい', '@CL_STATUS.asMap()')}"></div>
+                    <div th:replace="~{fragments/field::input-combobox('combobox01', 'コンボボックス', 'simpleEntity.combobox01', 'テキストを入力して下さい', '@CL_STATUS.asMap()')}"></div>
 
-                    <div th:replace="~{/fragments/field::select2-tags('combobox02', 'コンボボックス(select2-tags)', 'simpleEntity.combobox02', 'テキストを入力して下さい', '@CL_STATUS.asMap()')}"></div>
+                    <div th:replace="~{fragments/field::select2-tags('combobox02', 'コンボボックス(select2-tags)', 'simpleEntity.combobox02', 'テキストを入力して下さい', '@CL_STATUS.asMap()')}"></div>
 
-                    <div th:replace="~{/fragments/field::select2-tags-multi('combobox03', 'コンボボックス(select2-tags-multi)', 'simpleEntity.combobox03', 'テキストを入力して下さい', '@CL_STATUS.asMap()')}"></div>
+                    <div th:replace="~{fragments/field::select2-tags-multi('combobox03', 'コンボボックス(select2-tags-multi)', 'simpleEntity.combobox03', 'テキストを入力して下さい', '@CL_STATUS.asMap()')}"></div>
 
-                    <div th:replace="~{/fragments/field::file('attachedFile01', '画像 *', 'simpleEntity.attachedFile01Managed', 'テキストを入力して下さい', 'simpleentity', '')}"></div>
+                    <div th:replace="~{fragments/field::file('attachedFile01', '画像 *', 'simpleEntity.attachedFile01Managed', 'テキストを入力して下さい', 'simpleentity', '')}"></div>
 
                 </div>
 
@@ -143,7 +143,7 @@
 
             <br>
             <hr>
-            <div th:replace="~{/fragments/button-area :: m(${id})}"></div>
+            <div th:replace="~{fragments/button-area :: m(${id})}"></div>
 
         </form>
         <!-- ここより上にメインコンテンツを記入 -->
