@@ -159,15 +159,17 @@ public class DocumentServiceImpl extends AbstractNodeRevService<Document, Docume
 
         List<DocumentIndex> documentIndices = new ArrayList<>();
 
-        DocumentIndex documentIndex = beanMapper.map(document, DocumentIndex.class);
-        documentIndex.setBodyPlane(getBodyPlane(document.getBody()));
 
         if (document.getFiles().isEmpty()) {
+            DocumentIndex documentIndex = beanMapper.map(document, DocumentIndex.class);
+            documentIndex.setBodyPlane(getBodyPlane(document.getBody()));
             documentIndex.setPk(new DocumentIndexPK(document.getId(), NO_CASE_NOFILE));
             documentIndices.add(documentIndex);
         } else {
             for (int i = 0; i < document.getFiles().size(); i++) {
                 File file = document.getFiles().get(i);
+                DocumentIndex documentIndex = beanMapper.map(document, DocumentIndex.class);
+                documentIndex.setBodyPlane(getBodyPlane(document.getBody()));
                 beanMapper.map(document, documentIndex);
                 documentIndex.setPk(new DocumentIndexPK(document.getId(), i));
                 documentIndex.setContent(getContent(documentIndex.getFileUuid()));
