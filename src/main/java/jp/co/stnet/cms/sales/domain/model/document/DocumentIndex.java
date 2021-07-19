@@ -98,9 +98,14 @@ public class DocumentIndex implements Serializable, StatusInterface {
     /**
      * 本文
      */
+    private String body;
+
+    /**
+     * 本文
+     */
     @FullTextField(analyzer = "japanese")
     @Column(columnDefinition = "TEXT")
-    private String body;
+    private String bodyPlane;
 
     /**
      * 公開区分
@@ -119,7 +124,6 @@ public class DocumentIndex implements Serializable, StatusInterface {
      */
     @KeywordField
     private String versionNumber;
-
 
     /**
      * 作成部門

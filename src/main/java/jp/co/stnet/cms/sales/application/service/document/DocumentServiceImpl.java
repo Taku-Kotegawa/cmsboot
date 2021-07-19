@@ -10,6 +10,7 @@ import jp.co.stnet.cms.sales.application.repository.document.DocumentRevisionRep
 import jp.co.stnet.cms.sales.domain.model.document.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.tika.exception.TikaException;
+import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
@@ -158,17 +159,16 @@ public class DocumentServiceImpl extends AbstractNodeRevService<Document, Docume
 
         List<DocumentIndex> documentIndices = new ArrayList<>();
 
+        DocumentIndex documentIndex = beanMapper.map(document, DocumentIndex.class);
+        documentIndex.setBodyPlane(getBodyPlane(document.getBody()));
+
         if (document.getFiles().isEmpty()) {
-            DocumentIndex documentIndex = beanMapper.map(document, DocumentIndex.class);
-//            documentIndex.setNo(NO_CASE_NOFILE);
             documentIndex.setPk(new DocumentIndexPK(document.getId(), NO_CASE_NOFILE));
             documentIndices.add(documentIndex);
         } else {
             for (int i = 0; i < document.getFiles().size(); i++) {
                 File file = document.getFiles().get(i);
-                DocumentIndex documentIndex = beanMapper.map(file, DocumentIndex.class);
                 beanMapper.map(document, documentIndex);
-//                documentIndex.setNo(i);
                 documentIndex.setPk(new DocumentIndexPK(document.getId(), i));
                 documentIndex.setContent(getContent(documentIndex.getFileUuid()));
                 documentIndices.add(documentIndex);
@@ -176,6 +176,15 @@ public class DocumentServiceImpl extends AbstractNodeRevService<Document, Docume
         }
 
         return documentIndices;
+    }
+
+    /**
+     * HTMLをテキストに変換
+     * @param html HTML
+     * @return テキスト
+     */
+    private String getBodyPlane(String html) {
+        return Jsoup.parse(html).text();
     }
 
 
