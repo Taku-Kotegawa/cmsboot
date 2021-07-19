@@ -58,6 +58,7 @@ public class DocumentIndex implements Serializable, StatusInterface {
     /**
      * 最終更新日時
      */
+    @GenericField(aggregable = Aggregable.YES)
     @JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss")
     @Column(nullable = false)
     private LocalDateTime lastModifiedDate;
@@ -153,31 +154,31 @@ public class DocumentIndex implements Serializable, StatusInterface {
     /**
      * 発行日
      */
-    @GenericField(aggregable = Aggregable.YES)
+    @GenericField
     private LocalDate publishedDate;
 
     /**
      * 改定日
      */
-    @GenericField(aggregable = Aggregable.YES)
+    @GenericField
     private LocalDate lastRevisedDate;
 
     /**
      * 廃止日
      */
-    @GenericField(aggregable = Aggregable.YES)
+    @GenericField
     private LocalDate invalidationDate;
 
     /**
      * 周知日
      */
-    @GenericField(aggregable = Aggregable.YES)
+    @GenericField
     private LocalDate announceDate;
 
     /**
      * 変更理由
      */
-    @KeywordField(aggregable = Aggregable.YES)
+    @KeywordField
     private String reasonForChange;
 
     /**
@@ -190,8 +191,8 @@ public class DocumentIndex implements Serializable, StatusInterface {
     /**
      * 区分1
      */
-    @GenericField(aggregable = Aggregable.YES)
-    private Long docCategory1;
+    @KeywordField(aggregable = Aggregable.YES)
+    private String docCategory1;
 
     /**
      * 区分1(Variable)
@@ -207,8 +208,8 @@ public class DocumentIndex implements Serializable, StatusInterface {
     /**
      * 区分2
      */
-    @GenericField(aggregable = Aggregable.YES)
-    private Long docCategory2;
+    @KeywordField(aggregable = Aggregable.YES)
+    private String docCategory2;
 
     /**
      * 区分2(Variable)
@@ -224,8 +225,8 @@ public class DocumentIndex implements Serializable, StatusInterface {
     /**
      * サービス-事業領域
      */
-    @GenericField(aggregable = Aggregable.YES)
-    private Long docService1;
+    @KeywordField(aggregable = Aggregable.YES)
+    private String docService1;
 
     /**
      * サービス-事業領域(Variable)
@@ -241,8 +242,8 @@ public class DocumentIndex implements Serializable, StatusInterface {
     /**
      * サービス-サービス種別
      */
-    @GenericField(aggregable = Aggregable.YES)
-    private Long docService2;
+    @KeywordField(aggregable = Aggregable.YES)
+    private String docService2;
 
     /**
      * サービス-サービス種別(Variable)
@@ -258,8 +259,8 @@ public class DocumentIndex implements Serializable, StatusInterface {
     /**
      * サービス-サービス
      */
-    @GenericField(aggregable = Aggregable.YES)
-    private Long docService3;
+    @KeywordField(aggregable = Aggregable.YES)
+    private String docService3;
 
     /**
      * サービス-サービス(Variable)
@@ -303,16 +304,16 @@ public class DocumentIndex implements Serializable, StatusInterface {
     @Column(columnDefinition = "LONGTEXT")
     private String content;
 
-
-
     /**
      * 備考
      */
+    @FullTextField(analyzer = "japanese")
     private String remark;
 
     /**
      * 顧客公開区分
      */
+    @KeywordField(aggregable = Aggregable.YES)
     private String customerPublic;
 
 }

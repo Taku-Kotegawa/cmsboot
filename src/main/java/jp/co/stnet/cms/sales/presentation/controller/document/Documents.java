@@ -91,11 +91,6 @@ public class Documents {
             // 不要な情報をクリア
             documentListBean.setFiles(new ArrayList<>());
 
-            // null対策
-            if (documentListBean.getDocServiceVariable() == null) {
-                documentListBean.setDocServiceVariable(new Variable());
-            }
-
             list.add(documentListBean);
         }
 

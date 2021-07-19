@@ -113,28 +113,28 @@ public class DocumentForm implements Serializable {
      * 区分1
      */
     @NotNull
-    private Long docCategory1;
+    private String docCategory1;
 
     /**
      * 区分2
      */
     @NotNull
-    private Long docCategory2;
+    private String docCategory2;
 
     /**
      * サービス-事業領域
      */
-    private Long docService1;
+    private String docService1;
 
     /**
      * サービス-サービス種別
      */
-    private Long docService2;
+    private String docService2;
 
     /**
      * サービス-サービス
      */
-    private Long docService3;
+    private String docService3;
 
     /**
      * ファイル

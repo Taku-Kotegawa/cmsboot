@@ -137,42 +137,42 @@ public class Document extends AbstractEntity<Long> implements Serializable, Stat
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> useStage = new HashSet<>();
 
-    /**
-     * 区分
-     */
-    private Long docCategory;
+//    /**
+//     * 区分
+//     */
+//    private Long docCategory;
 
-    /**
-     * 区分(Variable)
-     */
-    @ManyToOne
-    @NotFound(action = NotFoundAction.IGNORE)
-    @JoinColumnsOrFormulas({
-            @JoinColumnOrFormula(formula = @JoinFormula(value = "'DOC_CATEGORY'", referencedColumnName = "type")),
-            @JoinColumnOrFormula(column = @JoinColumn(name = "docCategory", referencedColumnName = "code", unique = false, insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT)))
-    })
-    private Variable docCategoryVariable;
+//    /**
+//     * 区分(Variable)
+//     */
+//    @ManyToOne
+//    @NotFound(action = NotFoundAction.IGNORE)
+//    @JoinColumnsOrFormulas({
+//            @JoinColumnOrFormula(formula = @JoinFormula(value = "'DOC_CATEGORY'", referencedColumnName = "type")),
+//            @JoinColumnOrFormula(column = @JoinColumn(name = "docCategory", referencedColumnName = "code", unique = false, insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT)))
+//    })
+//    private Variable docCategoryVariable;
 
-    /**
-     * サービス
-     */
-    private Long docService;
+//    /**
+//     * サービス
+//     */
+//    private Long docService;
 
-    /**
-     * サービス(Variable)
-     */
-    @ManyToOne
-    @NotFound(action = NotFoundAction.IGNORE)
-    @JoinColumnsOrFormulas({
-            @JoinColumnOrFormula(formula = @JoinFormula(value = "'DOC_SERVICE'", referencedColumnName = "type")),
-            @JoinColumnOrFormula(column = @JoinColumn(name = "docService", referencedColumnName = "code", unique = false, insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT)))
-    })
-    private Variable docServiceVariable;
+//    /**
+//     * サービス(Variable)
+//     */
+//    @ManyToOne
+//    @NotFound(action = NotFoundAction.IGNORE)
+//    @JoinColumnsOrFormulas({
+//            @JoinColumnOrFormula(formula = @JoinFormula(value = "'DOC_SERVICE'", referencedColumnName = "type")),
+//            @JoinColumnOrFormula(column = @JoinColumn(name = "docService", referencedColumnName = "code", unique = false, insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT)))
+//    })
+//    private Variable docServiceVariable;
 
     /**
      * 区分1
      */
-    private Long docCategory1;
+    private String docCategory1;
 
     /**
      * 区分1(Variable)
@@ -188,7 +188,7 @@ public class Document extends AbstractEntity<Long> implements Serializable, Stat
     /**
      * 区分2
      */
-    private Long docCategory2;
+    private String docCategory2;
 
     /**
      * 区分2(Variable)
@@ -204,7 +204,7 @@ public class Document extends AbstractEntity<Long> implements Serializable, Stat
     /**
      * サービス-事業領域
      */
-    private Long docService1;
+    private String docService1;
 
     /**
      * サービス-事業領域(Variable)
@@ -220,7 +220,7 @@ public class Document extends AbstractEntity<Long> implements Serializable, Stat
     /**
      * サービス-サービス種別
      */
-    private Long docService2;
+    private String docService2;
 
     /**
      * サービス-サービス種別(Variable)
@@ -236,7 +236,7 @@ public class Document extends AbstractEntity<Long> implements Serializable, Stat
     /**
      * サービス-サービス
      */
-    private Long docService3;
+    private String docService3;
 
     /**
      * サービス-サービス(Variable)
