@@ -186,9 +186,11 @@ public class DocumentServiceImpl extends AbstractNodeRevService<Document, Docume
      * @return テキスト
      */
     private String getBodyPlane(String html) {
-        return Jsoup.parse(html).text();
+        if (html != null) {
+            return Jsoup.parse(html).text();
+        }
+        return null;
     }
-
 
     /**
      * uuidに基づくファイルの中身を取得。既に取得済みの場合は以前取得した値を再利用。

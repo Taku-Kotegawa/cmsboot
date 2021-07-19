@@ -57,11 +57,13 @@ public class DocumentForm implements Serializable {
     /**
      * 作成部門
      */
+    @NotNull
     private String departmentForCreation;
 
     /**
      * 作成担当者
      */
+    @NotNull
     private String chargePersonForCreation;
 
     /**
