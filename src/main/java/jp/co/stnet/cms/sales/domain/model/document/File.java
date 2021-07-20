@@ -45,5 +45,5 @@ public class File implements Serializable {
 //    @Column(columnDefinition = "TEXT")
 //    private String content;
 
-    private String memo;
+    private String fileMemo;
 }

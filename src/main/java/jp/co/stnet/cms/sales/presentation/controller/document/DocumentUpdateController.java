@@ -67,7 +67,7 @@ public class DocumentUpdateController {
         }
 
         form.getFiles().removeIf(fileForm
-                -> StringUtils.isAllBlank(fileForm.getType(), fileForm.getFileUuid(), fileForm.getPdfUuid()));
+                -> StringUtils.isAllBlank(fileForm.getFileUuid(), fileForm.getPdfUuid(), fileForm.getFileMemo()));
 
         for (FileForm fileForm : form.getFiles()) {
             if (fileForm.getFileUuid() == null) {

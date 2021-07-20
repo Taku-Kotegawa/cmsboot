@@ -7,6 +7,7 @@ import jp.co.stnet.cms.base.domain.model.variable.Variable;
 import lombok.*;
 import org.hibernate.annotations.*;
 import org.hibernate.search.engine.backend.types.Aggregable;
+import org.hibernate.search.engine.backend.types.Sortable;
 import org.hibernate.search.mapper.pojo.automaticindexing.ReindexOnUpdate;
 
 import org.hibernate.search.mapper.pojo.bridge.mapping.annotation.IdentifierBridgeRef;
@@ -58,7 +59,7 @@ public class DocumentIndex implements Serializable, StatusInterface {
     /**
      * 最終更新日時
      */
-    @GenericField(aggregable = Aggregable.YES)
+    @GenericField(aggregable = Aggregable.YES, sortable = Sortable.YES)
     @JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss")
     @Column(nullable = false)
     private LocalDateTime lastModifiedDate;

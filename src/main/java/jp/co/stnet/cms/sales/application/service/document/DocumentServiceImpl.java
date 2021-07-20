@@ -24,6 +24,28 @@ import java.util.List;
 @Transactional
 public class DocumentServiceImpl extends AbstractNodeRevService<Document, DocumentRevision, DocumentMaxRev, Long> implements DocumentService {
 
+    @Override
+    protected String orderByFieldName(String fieldName) {
+
+        if ("docCategoryVariable1.value1".equals(fieldName)) {
+            return "docCategoryVariable1.code";
+        }
+        else if ("docCategoryVariable2.value1".equals(fieldName)) {
+            return "docCategoryVariable2.code";
+        }
+        else if ("docServiceVariable1.value1".equals(fieldName)) {
+            return "docServiceVariable1.code";
+        }
+        else if ("docServiceVariable2.value1".equals(fieldName)) {
+            return "docServiceVariable2.code";
+        }
+        else if ("docServiceVariable3.value1".equals(fieldName)) {
+            return "docServiceVariable3.code";
+        }
+
+        return super.orderByFieldName(fieldName);
+    }
+
     @Autowired
     DocumentRepository documentRepository;
 
@@ -170,7 +192,7 @@ public class DocumentServiceImpl extends AbstractNodeRevService<Document, Docume
                 File file = document.getFiles().get(i);
                 DocumentIndex documentIndex = beanMapper.map(document, DocumentIndex.class);
                 documentIndex.setBodyPlane(getBodyPlane(document.getBody()));
-                beanMapper.map(document, documentIndex);
+                beanMapper.map(file, documentIndex);
                 documentIndex.setPk(new DocumentIndexPK(document.getId(), i));
                 documentIndex.setContent(getContent(documentIndex.getFileUuid()));
                 documentIndices.add(documentIndex);

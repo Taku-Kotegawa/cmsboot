@@ -3,7 +3,6 @@ package jp.co.stnet.cms.sales.presentation.controller.document;
 import com.github.dozermapper.core.Mapper;
 import jp.co.stnet.cms.base.application.service.authentication.AccountService;
 import jp.co.stnet.cms.base.domain.model.common.Status;
-import jp.co.stnet.cms.base.domain.model.variable.Variable;
 import jp.co.stnet.cms.common.datatables.OperationsUtil;
 import jp.co.stnet.cms.common.util.StringUtils;
 import jp.co.stnet.cms.sales.domain.model.document.*;
@@ -187,8 +186,8 @@ public class Documents {
     protected String getMemo(List<File> files, String delimiter) {
         List<String> memo = new ArrayList<>();
         for (File file : files) {
-            if (file.getMemo() != null) {
-                        memo.add(file.getMemo());
+            if (file.getFileMemo() != null) {
+                        memo.add(file.getFileMemo());
             }
         }
         return String.join(delimiter, memo);

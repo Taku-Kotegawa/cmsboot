@@ -84,6 +84,8 @@ public class DocumentCreateController {
             beanMapper.map(source, form);
             form.setId(null);
             form.setVersion(null);
+            form.setFiles(new ArrayList<>());
+            form.setTitle(source.getTitle() + " のコピー");
         }
 
         setFileManaged(form.getFiles(), fileManagedSharedService);

@@ -355,7 +355,6 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
         StringBuilder sql = new StringBuilder();
         // @OneToOne etc, @ElementCollection フィールドのための結合
 
-
         Set<String> relationEntities = new LinkedHashSet<>();
         // 重複除去
         for (Column column : input.getColumns()) {
@@ -394,13 +393,13 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
         List<String> orderClauses = new ArrayList<>();
         for (Order order : input.getOrder()) {
             String originalFiledName = input.getColumns().get(order.getColumn()).getData();
-            String convertColumnName = convertColumnName(originalFiledName);
+            String convertColumnName = convertColumnName(orderByFieldName(originalFiledName));
 
             String orderClause;
             if (isCollection(convertColumnName)) {
                 orderClause = convertColumnName + " " + order.getDir();
             } else if (isRelation(originalFiledName)) {
-                orderClause = "c." + originalFiledName + " " + order.getDir();
+                orderClause = "c." + convertColumnName + " " + order.getDir();
             } else {
                 orderClause = "c." + convertColumnName + " " + order.getDir();
             }
@@ -413,6 +412,13 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
         }
 
         return sql;
+    }
+
+    /**
+     * Order By 句でフィールド名の変換用
+     */
+    protected String orderByFieldName(String fieldName) {
+        return fieldName;
     }
 
     /**

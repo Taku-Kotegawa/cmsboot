@@ -5,16 +5,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class FileForm implements Serializable {
-
-    // TODO type と fileUuid は両方セットでなければならない入力チェックの追加
-
-    private String type;
 
     private String fileUuid;
 
@@ -24,5 +21,5 @@ public class FileForm implements Serializable {
 
     private FileManaged pdfManaged;
 
-    private String memo;
+    private String fileMemo;
 }
