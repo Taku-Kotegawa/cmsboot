@@ -9,6 +9,7 @@ import jp.co.stnet.cms.sales.application.repository.document.DocumentRepository;
 import jp.co.stnet.cms.sales.application.repository.document.DocumentRevisionRepository;
 import jp.co.stnet.cms.sales.domain.model.document.*;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.text.StringEscapeUtils;
 import org.apache.tika.exception.TikaException;
 import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
