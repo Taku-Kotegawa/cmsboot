@@ -9,15 +9,15 @@ import java.io.Serializable;
 
 /**
  * アクセスカウンター管理の編集画面のBean
- * @author Automatically generated
  *
+ * @author Automatically generated
  */
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class AccessCounterForm implements Serializable {
- 
+
     /**
      * Serial Version UID
      */

@@ -16,7 +16,6 @@
 package jp.co.stnet.cms.base.application.service.authentication;
 
 
-
 import jp.co.stnet.cms.base.domain.model.authentication.PasswordReissueInfo;
 
 import java.time.LocalDateTime;

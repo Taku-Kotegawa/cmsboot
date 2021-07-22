@@ -1,6 +1,5 @@
 package jp.co.stnet.cms.sales.presentation.controller.document;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jp.co.stnet.cms.sales.domain.model.document.CustomerPublic;
 import jp.co.stnet.cms.sales.domain.model.document.DocPublicScope;
 import jp.co.stnet.cms.sales.domain.validation.ValidService;
@@ -8,13 +7,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
 import javax.validation.Valid;
-import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor

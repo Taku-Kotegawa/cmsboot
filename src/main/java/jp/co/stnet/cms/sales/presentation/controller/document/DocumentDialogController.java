@@ -3,7 +3,6 @@ package jp.co.stnet.cms.sales.presentation.controller.document;
 import jp.co.stnet.cms.base.application.service.variable.VariableService;
 import jp.co.stnet.cms.base.domain.model.authentication.LoggedInUser;
 import jp.co.stnet.cms.base.domain.model.variable.Variable;
-import jp.co.stnet.cms.base.domain.model.variable.VariableType;
 import jp.co.stnet.cms.common.datatables.DataTablesOutput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -28,7 +27,7 @@ public class DocumentDialogController {
      */
     @ResponseBody
     @GetMapping("variableDialog/{type}/json")
-    public DataTablesOutput<Variable> variableDialogJson(@PathVariable("type") String type,  @AuthenticationPrincipal LoggedInUser loggedInUser) {
+    public DataTablesOutput<Variable> variableDialogJson(@PathVariable("type") String type, @AuthenticationPrincipal LoggedInUser loggedInUser) {
 
         // TODO 権限チェック
 
@@ -40,7 +39,7 @@ public class DocumentDialogController {
 
 
     @GetMapping("docCategoryDialog")
-    public String docCategoryDialog(Model model, @AuthenticationPrincipal LoggedInUser loggedInUser){
+    public String docCategoryDialog(Model model, @AuthenticationPrincipal LoggedInUser loggedInUser) {
 
         // TODO 権限チェック
 
@@ -48,7 +47,7 @@ public class DocumentDialogController {
     }
 
     @GetMapping("docServiceDialog")
-    public String docServiceDialog(Model model, @AuthenticationPrincipal LoggedInUser loggedInUser){
+    public String docServiceDialog(Model model, @AuthenticationPrincipal LoggedInUser loggedInUser) {
 
         // TODO 権限チェック
 

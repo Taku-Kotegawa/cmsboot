@@ -16,6 +16,7 @@ public interface PasswordHistoryRepository extends JpaRepository<PasswordHistory
 
     /**
      * ユーザ名で検索する。
+     *
      * @param username ユーザ名
      * @return パスワード履歴のリスト
      */
@@ -23,8 +24,9 @@ public interface PasswordHistoryRepository extends JpaRepository<PasswordHistory
 
     /**
      * 指定したユーザ名と一致し、利用開始日より新しいデータを検索する。
+     *
      * @param username ユーザ名
-     * @param useFrom 利用開始日
+     * @param useFrom  利用開始日
      * @return ヒットしたパスワード履歴のリスト
      */
     List<PasswordHistory> findByUsernameAndUseFromAfter(String username, LocalDateTime useFrom);

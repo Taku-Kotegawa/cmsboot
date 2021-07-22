@@ -4,7 +4,6 @@ package jp.co.stnet.cms.example.application.service;
 import jp.co.stnet.cms.base.application.repository.NodeRevRepository;
 import jp.co.stnet.cms.base.application.service.AbstractNodeRevService;
 import jp.co.stnet.cms.base.application.service.filemanage.FileManagedSharedService;
-import jp.co.stnet.cms.base.domain.model.authentication.LoggedInUser;
 import jp.co.stnet.cms.example.application.repository.simpleentity.SimpleEntityRepository;
 import jp.co.stnet.cms.example.application.repository.simpleentity.SimpleEntityRevisionRepository;
 import jp.co.stnet.cms.example.domain.model.simpleentity.SimpleEntity;
@@ -59,7 +58,7 @@ public class SimpleEntityServiceImpl extends AbstractNodeRevService<SimpleEntity
 
     @Override
     public SimpleEntity saveDraft(SimpleEntity entity) {
-        SimpleEntity simpleEntity =  super.saveDraft(entity);
+        SimpleEntity simpleEntity = super.saveDraft(entity);
 
         // 添付ファイル確定
         fileManagedSharedService.permanent(entity.getAttachedFile01Uuid());

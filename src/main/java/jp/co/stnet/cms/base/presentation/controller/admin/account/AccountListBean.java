@@ -42,7 +42,9 @@ public class AccountListBean extends Account {
 
     @Override
     @JsonIgnore
-    public String getPassword() { return null; }
+    public String getPassword() {
+        return null;
+    }
 
     private String statusLabel;
 

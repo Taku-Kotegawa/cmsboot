@@ -4,7 +4,10 @@ import jp.co.stnet.cms.common.mapper.NullBindBeanWrapperFieldSetMapper;
 import jp.co.stnet.cms.example.domain.model.simpleentity.SimpleEntityCsv;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
-import org.springframework.batch.core.configuration.annotation.*;
+import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
+import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
+import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
@@ -29,7 +32,7 @@ public class ImportSimpleEntityBatchConfig {
     @Autowired
     ImportSimpleEntityTasklet importSimpleEntityTasklet;
 
-    private final String[] columns = {"id","status","text01","text02","text03","text04","text05","radio01","radio02","checkbox01","checkbox02","textarea01","date01","datetime01","select01","select02","select03","select04","combobox01","combobox02","combobox03","attachedFile01Uuid"};
+    private final String[] columns = {"id", "status", "text01", "text02", "text03", "text04", "text05", "radio01", "radio02", "checkbox01", "checkbox02", "textarea01", "date01", "datetime01", "select01", "select02", "select03", "select04", "combobox01", "combobox02", "combobox03", "attachedFile01Uuid"};
 
     private final String jobId = "job03";
 

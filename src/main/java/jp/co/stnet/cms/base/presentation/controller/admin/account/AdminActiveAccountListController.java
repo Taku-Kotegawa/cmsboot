@@ -38,7 +38,7 @@ public class AdminActiveAccountListController {
 
         List<String> ids = new ArrayList<>();
 
-        for (Object principal: principals) {
+        for (Object principal : principals) {
             if (principal instanceof LoggedInUser) {
                 ids.add(((LoggedInUser) principal).getUsername());
             }

@@ -36,9 +36,9 @@ public class AdminAccountAuthority {
      * @param operation    操作の種類(Constants.OPERATIONに登録された値)
      * @param loggedInUser ログインユーザ情報
      * @return true=操作する権限を持つ, false=操作する権限なし
-     * @throws AccessDeniedException @PostAuthorizeを用いてfalse時にスロー
+     * @throws AccessDeniedException    @PostAuthorizeを用いてfalse時にスロー
      * @throws IllegalArgumentException 不正なOperationが指定された場合
-     * @throws NullPointerException operation, loggedInUser がnullの場合
+     * @throws NullPointerException     operation, loggedInUser がnullの場合
      */
     @PostAuthorize("returnObject == true")
     public Boolean hasAuthority(String operation, LoggedInUser loggedInUser) {

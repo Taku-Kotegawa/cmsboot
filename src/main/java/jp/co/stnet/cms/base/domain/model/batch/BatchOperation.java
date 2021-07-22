@@ -7,14 +7,14 @@ import lombok.Setter;
 @Setter
 public class BatchOperation {
 
-        private String jobName = null;
+    private String jobName = null;
 
-        private String jobParams = null;
+    private String jobParams = null;
 
-        private Long jobExecutionId = null;
+    private Long jobExecutionId = null;
 
-        private String errorMessage = null;
+    private String errorMessage = null;
 
-        private Exception error = null;
+    private Exception error = null;
 
 }

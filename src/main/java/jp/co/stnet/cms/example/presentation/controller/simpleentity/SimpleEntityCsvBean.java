@@ -83,13 +83,13 @@ public class SimpleEntityCsvBean implements Serializable {
     /**
      * 日付
      */
-    @CsvColumn(name = "日付", format="yyyy/MM/dd")
+    @CsvColumn(name = "日付", format = "yyyy/MM/dd")
     private Date date01;
 
     /**
      * 日付時刻
      */
-    @CsvColumn(name = "日付時刻", format="yyyy/MM/dd HH:mm:ss")
+    @CsvColumn(name = "日付時刻", format = "yyyy/MM/dd HH:mm:ss")
     private Date datetime01;
 
     /**

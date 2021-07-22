@@ -79,7 +79,7 @@ public class Person extends AbstractEntity<Long> implements Serializable, Status
      */
     @ManyToOne
     @NotFound(action = NotFoundAction.IGNORE)
-    @JoinColumn(name = "attachedFile01Uuid", referencedColumnName = "uuid", unique=true, insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
+    @JoinColumn(name = "attachedFile01Uuid", referencedColumnName = "uuid", unique = true, insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
     @IndexedEmbedded
     @IndexingDependency(reindexOnUpdate = ReindexOnUpdate.NO)
     private FileManaged attachedFile01Managed;

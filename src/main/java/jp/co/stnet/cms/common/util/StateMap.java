@@ -336,7 +336,7 @@ public class StateMap {
                     }
                     break;
 
-                    // LABELは、INPUT,VIEWに連動
+                // LABELは、INPUT,VIEWに連動
             }
         }
 
@@ -419,16 +419,12 @@ public class StateMap {
 
     /**
      * __input, __viewの状態から、field__label を設定する。
-
+     *
      * @param fieldName フィールド名
      * @return StateMap
      */
     private StateMap setLabelFromInputAndView(String fieldName) {
-        if (getStatus(fieldName, INPUT) || getStatus(fieldName, VIEW)) {
-            setAttribute(fieldName, LABEL, true);
-        } else {
-            setAttribute(fieldName, LABEL, false);
-        }
+        setAttribute(fieldName, LABEL, getStatus(fieldName, INPUT) || getStatus(fieldName, VIEW));
         return this;
     }
 

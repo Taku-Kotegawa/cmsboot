@@ -16,7 +16,6 @@
 package jp.co.stnet.cms.base.application.service.authentication;
 
 import com.github.dozermapper.core.Mapper;
-
 import jp.co.stnet.cms.base.application.repository.authentication.AccountRepository;
 import jp.co.stnet.cms.base.application.service.filemanage.FileManagedSharedService;
 import jp.co.stnet.cms.base.application.service.filemanage.FileUploadSharedService;
@@ -24,8 +23,8 @@ import jp.co.stnet.cms.base.domain.model.authentication.Account;
 import jp.co.stnet.cms.base.domain.model.authentication.FailedAuthentication;
 import jp.co.stnet.cms.base.domain.model.authentication.PasswordHistory;
 import jp.co.stnet.cms.base.domain.model.authentication.SuccessfulAuthentication;
-import jp.co.stnet.cms.base.domain.model.filemanage.FileManaged;
 import jp.co.stnet.cms.base.domain.model.common.Status;
+import jp.co.stnet.cms.base.domain.model.filemanage.FileManaged;
 import jp.co.stnet.cms.common.auditing.CustomDateFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.passay.CharacterRule;
@@ -46,7 +45,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static jp.co.stnet.cms.common.message.MessageKeys.*;
+import static jp.co.stnet.cms.common.message.MessageKeys.E_SL_FW_5001;
 
 @Slf4j
 @Service
@@ -173,11 +172,7 @@ public class AccountSharedServiceImpl implements AccountSharedService {
 
         // システム管理者がパスワードを変更した場合、初期パスワードと判定する
         String lastUpdatedBy = passwordHistories.get(0).getCreatedBy();
-        if (username.equals(lastUpdatedBy) || "unknown".equals(lastUpdatedBy)) {
-            return false;
-        } else {
-            return true;
-        }
+        return !username.equals(lastUpdatedBy) && !"unknown".equals(lastUpdatedBy);
 
     }
 
@@ -208,9 +203,9 @@ public class AccountSharedServiceImpl implements AccountSharedService {
 
         passwordHistorySharedService.insert(
                 PasswordHistory.builder()
-                .username(username)
-                .password(password)
-                .useFrom(dateFactory.newLocalDateTime()).build());
+                        .username(username)
+                        .password(password)
+                        .useFrom(dateFactory.newLocalDateTime()).build());
 
         return true;
     }

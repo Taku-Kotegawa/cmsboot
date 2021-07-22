@@ -1,7 +1,6 @@
 package jp.co.stnet.cms.base.application.service.workflow;
 
 
-
 import jp.co.stnet.cms.base.application.repository.workflow.StepInfo;
 import jp.co.stnet.cms.base.domain.model.workflow.Workflow;
 

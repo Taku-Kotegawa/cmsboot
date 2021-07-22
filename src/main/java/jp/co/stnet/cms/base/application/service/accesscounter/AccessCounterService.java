@@ -30,7 +30,7 @@ public interface AccessCounterService extends NodeIService<AccessCounter, Long> 
     /**
      * 権限が有無を確認する。(常にTrueを返す)
      *
-     * @param operation 操作
+     * @param operation    操作
      * @param loggedInUser ログインユーザ情報
      * @return true:権限あり,false:権限なし
      */

@@ -15,15 +15,15 @@ import java.util.Map;
 
 /**
  * 変数管理の一覧の行のBean
- * @author Automatically generated
  *
+ * @author Automatically generated
  */
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class VariableListRow implements Serializable {
- 
+
     /**
      * Serial Version UID
      */
@@ -148,31 +148,31 @@ public class VariableListRow implements Serializable {
     /**
      * 日付1
      */
-    @JsonFormat(pattern="yyyy/MM/dd")
+    @JsonFormat(pattern = "yyyy/MM/dd")
     private LocalDate date1;
 
     /**
      * 日付2
      */
-    @JsonFormat(pattern="yyyy/MM/dd")
+    @JsonFormat(pattern = "yyyy/MM/dd")
     private LocalDate date2;
 
     /**
      * 日付3
      */
-    @JsonFormat(pattern="yyyy/MM/dd")
+    @JsonFormat(pattern = "yyyy/MM/dd")
     private LocalDate date3;
 
     /**
      * 日付4
      */
-    @JsonFormat(pattern="yyyy/MM/dd")
+    @JsonFormat(pattern = "yyyy/MM/dd")
     private LocalDate date4;
 
     /**
      * 日付5
      */
-    @JsonFormat(pattern="yyyy/MM/dd")
+    @JsonFormat(pattern = "yyyy/MM/dd")
     private LocalDate date5;
 
     /**

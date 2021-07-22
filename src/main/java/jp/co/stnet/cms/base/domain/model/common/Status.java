@@ -30,6 +30,7 @@ public enum Status implements EnumCodeList.CodeListItem {
 
     /**
      * valueでEnumを取得
+     *
      * @param value 検索したいvalue
      * @return Enum, 指定したvalueが存在しない場合はnull.
      */

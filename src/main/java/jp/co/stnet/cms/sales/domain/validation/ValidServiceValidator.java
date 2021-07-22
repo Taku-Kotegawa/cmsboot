@@ -2,7 +2,6 @@ package jp.co.stnet.cms.sales.domain.validation;
 
 import jp.co.stnet.cms.base.application.service.variable.VariableService;
 import jp.co.stnet.cms.base.domain.model.variable.VariableType;
-import jp.co.stnet.cms.sales.application.service.document.DocumentService;
 import jp.co.stnet.cms.sales.presentation.controller.document.DocumentForm;
 import org.springframework.beans.factory.annotation.Autowired;
 

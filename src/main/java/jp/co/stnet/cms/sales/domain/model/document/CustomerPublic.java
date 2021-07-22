@@ -12,8 +12,7 @@ import org.terasoluna.gfw.common.codelist.EnumCodeList;
 public enum CustomerPublic implements EnumCodeList.CodeListItem {
 
     OPEN("1", "公開"),
-    CLOSE("0", "非公開")
-    ;
+    CLOSE("0", "非公開");
 
     private final String value;
     private final String label;
@@ -30,6 +29,7 @@ public enum CustomerPublic implements EnumCodeList.CodeListItem {
 
     /**
      * valueでEnumを取得
+     *
      * @param value 検索したいvalue
      * @return Enum, 指定したvalueが存在しない場合はnull.
      */

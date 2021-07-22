@@ -2,7 +2,6 @@ package jp.co.stnet.cms.example.application.service;
 
 import jp.co.stnet.cms.base.application.repository.NodeRevRepository;
 import jp.co.stnet.cms.base.application.service.AbstractNodeRevService;
-import jp.co.stnet.cms.base.domain.model.authentication.LoggedInUser;
 import jp.co.stnet.cms.example.application.repository.select.SelectRepository;
 import jp.co.stnet.cms.example.application.repository.select.SelectRevisionRepository;
 import jp.co.stnet.cms.example.domain.model.select.Select;

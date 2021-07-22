@@ -2,7 +2,6 @@ package jp.co.stnet.cms.config;
 
 
 import jp.co.stnet.cms.common.auditing.CustomDateFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.terasoluna.gfw.common.date.jodatime.DefaultJodaTimeDateFactory;

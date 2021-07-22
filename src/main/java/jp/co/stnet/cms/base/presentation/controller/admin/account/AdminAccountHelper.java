@@ -53,8 +53,8 @@ public class AdminAccountHelper {
      * 画面に応じたボタンの状態を定義
      *
      * @param operation 操作
-     * @param record DBから取り出したデータ
-     * @param form 画面から入力されたデータ
+     * @param record    DBから取り出したデータ
+     * @param form      画面から入力されたデータ
      * @return StateMap
      */
     StateMap getButtonStateMap(@NonNull String operation, Account record, AccountForm form) {
@@ -127,8 +127,8 @@ public class AdminAccountHelper {
      * 画面に応じたフィールドの状態を定義
      *
      * @param operation 操作
-     * @param record DBから取り出したデータ
-     * @param form 画面から入力されたデータ
+     * @param record    DBから取り出したデータ
+     * @param form      画面から入力されたデータ
      * @return StateMap
      */
     StateMap getFiledStateMap(String operation, Account record, AccountForm form) {

@@ -3,7 +3,6 @@ package jp.co.stnet.cms.common.util;
 
 import java.beans.Introspector;
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.*;
@@ -69,7 +68,7 @@ public class BeanUtils extends org.apache.commons.beanutils.BeanUtils {
 
                     if (PRIMITIVE.contains(c)) {
 
-                    } else  {
+                    } else {
                         try {
                             fieldsMap.putAll(getFields(Class.forName(c), fieldName));
                         } catch (ClassNotFoundException e) {
@@ -158,6 +157,7 @@ public class BeanUtils extends org.apache.commons.beanutils.BeanUtils {
     /**
      * シグネチャを取得する。(未使用)
      * https://stackoverflow.com/questions/45072268/how-can-i-get-the-signature-field-of-java-reflection-method-object
+     *
      * @param m メソッド
      * @return シグネチャ
      */
@@ -177,6 +177,7 @@ public class BeanUtils extends org.apache.commons.beanutils.BeanUtils {
 
     /**
      * "(Ljava/util/List<Ljava/lang/String;>;)V" から "java.lang.String" を取得する。。
+     *
      * @param sig sig
      * @return クラス名
      */
@@ -187,6 +188,7 @@ public class BeanUtils extends org.apache.commons.beanutils.BeanUtils {
     }
 
     // インスタンス化禁止
-    private BeanUtils() {}
+    private BeanUtils() {
+    }
 
 }

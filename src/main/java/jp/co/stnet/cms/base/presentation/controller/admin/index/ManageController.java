@@ -2,8 +2,6 @@ package jp.co.stnet.cms.base.presentation.controller.admin.index;
 
 
 import jp.co.stnet.cms.base.application.service.index.IndexSharedService;
-import jp.co.stnet.cms.example.application.service.PersonService;
-import org.springframework.batch.core.launch.JobOperator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;

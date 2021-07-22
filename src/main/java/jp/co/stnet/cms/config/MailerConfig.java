@@ -7,7 +7,6 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 
-
 @Configuration
 public class MailerConfig {
 
@@ -28,7 +27,7 @@ public class MailerConfig {
         JavaMailSenderImpl mailer = new JavaMailSenderImpl();
         mailer.setHost(host);
         mailer.setPort(port);
-        return  mailer;
+        return mailer;
     }
 
     @Bean

@@ -44,7 +44,7 @@ public class ExcelDownloadView extends AbstractFileDownloadView {
         for (int i = 0; i < list.size(); i++) {
             int j = startRow + i;
             if (sheet.getRow(j) == null) {
-                PoiUtils.copyRow(wb, sheet,startRow,j);
+                PoiUtils.copyRow(wb, sheet, startRow, j);
             }
             setValue(sheet.getRow(j), i, list.get(i));
         }

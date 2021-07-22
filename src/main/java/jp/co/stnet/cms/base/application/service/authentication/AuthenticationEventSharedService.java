@@ -16,8 +16,6 @@
 package jp.co.stnet.cms.base.application.service.authentication;
 
 
-
-
 import jp.co.stnet.cms.base.domain.model.authentication.FailedAuthentication;
 import jp.co.stnet.cms.base.domain.model.authentication.SuccessfulAuthentication;
 

@@ -3,7 +3,6 @@ package jp.co.stnet.cms.example.application.job.job01;
 import jp.co.stnet.cms.example.domain.model.job01.Employee;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
-import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
@@ -69,7 +68,7 @@ public class ImportEmployeeBatchConfig {
 
     public Step step1() {
         return stepBuilderFactory.get("step1")
-                .<Employee, Employee> chunk(10)
+                .<Employee, Employee>chunk(10)
                 .reader(reader())
                 .processor(processor())
                 .writer(writer())

@@ -11,7 +11,7 @@ import java.util.Map;
 public interface PermissionService {
 
     /**
-     *　全件取得する。
+     * 　全件取得する。
      *
      * @return マップ
      */

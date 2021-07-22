@@ -33,7 +33,7 @@ public class WorkflowSharedServiceImpl implements WorkflowSharedService {
 
 
     // ステータスの優先順位(2:完了->3:差戻->4:引戻->1:対応中->0:未対応)
-    private Map<Integer, Integer> STATUS_ORDER = new LinkedHashMap<Integer, Integer>() {{
+    private final Map<Integer, Integer> STATUS_ORDER = new LinkedHashMap<Integer, Integer>() {{
         put(STATUS_COMPLETE, 1);
         put(STATUS_REJECT, 2);
         put(STATUS_PULLBACK, 3);
@@ -174,7 +174,7 @@ public class WorkflowSharedServiceImpl implements WorkflowSharedService {
             List<Workflow> workflowList = workflowRepository.findAll(Example.of(Workflow.builder()
                     .entityType(entityType)
                     .entityId(entityId)
-                    .stepNo(stepInfo.getCurrentStepNo() -1)
+                    .stepNo(stepInfo.getCurrentStepNo() - 1)
                     .employeeId(employeeId)
                     .build()));
             workflowList.iterator().next().setStepStatus(STATUS_PULLBACK); //一件しかないはず
@@ -198,11 +198,6 @@ public class WorkflowSharedServiceImpl implements WorkflowSharedService {
     public Workflow getCurrentStepInfo(String entityType, Long entityId) {
 
 
-
-
-
-
-
         return null;
     }
 
@@ -218,9 +213,10 @@ public class WorkflowSharedServiceImpl implements WorkflowSharedService {
 
     /**
      * 授業員番号の初期値を求める
+     *
      * @param entityType エンティティタイプ
-     * @param entityId エンティティID
-     * @param step_no ステップ番号
+     * @param entityId   エンティティID
+     * @param step_no    ステップ番号
      * @return
      */
     protected Long getEmployeeIdByStep(String entityType, Long entityId, int step_no) {

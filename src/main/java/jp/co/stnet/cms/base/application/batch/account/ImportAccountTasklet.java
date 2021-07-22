@@ -39,7 +39,7 @@ public class ImportAccountTasklet implements Tasklet {
     private static final Logger log = LoggerFactory.getLogger("JobLogger");
 
     // インポートファイルのカラム定義
-    private final String[] columns = {"username","firstName","lastName","department","email","url","profile","roles","status","statusLabel","imageUuid","apiKey","allowedIp"};
+    private final String[] columns = {"username", "firstName", "lastName", "department", "email", "url", "profile", "roles", "status", "statusLabel", "imageUuid", "apiKey", "allowedIp"};
 
     @Autowired
     AccountService accountService;

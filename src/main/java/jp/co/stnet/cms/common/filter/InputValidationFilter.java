@@ -16,7 +16,6 @@
 package jp.co.stnet.cms.common.filter;
 
 import com.google.common.primitives.Chars;
-
 import jp.co.stnet.cms.common.exception.InvalidCharacterException;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;

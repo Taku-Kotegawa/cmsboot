@@ -3,13 +3,11 @@ package jp.co.stnet.cms.sales.application.service.document;
 import jp.co.stnet.cms.base.application.repository.NodeRevRepository;
 import jp.co.stnet.cms.base.application.service.AbstractNodeRevService;
 import jp.co.stnet.cms.base.application.service.filemanage.FileManagedSharedService;
-import jp.co.stnet.cms.base.domain.model.authentication.LoggedInUser;
 import jp.co.stnet.cms.sales.application.repository.document.DocumentIndexRepository;
 import jp.co.stnet.cms.sales.application.repository.document.DocumentRepository;
 import jp.co.stnet.cms.sales.application.repository.document.DocumentRevisionRepository;
 import jp.co.stnet.cms.sales.domain.model.document.*;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.text.StringEscapeUtils;
 import org.apache.tika.exception.TikaException;
 import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,42 +23,35 @@ import java.util.List;
 @Transactional
 public class DocumentServiceImpl extends AbstractNodeRevService<Document, DocumentRevision, DocumentMaxRev, Long> implements DocumentService {
 
-    @Override
-    protected String orderByFieldName(String fieldName) {
-
-        if ("docCategoryVariable1.value1".equals(fieldName)) {
-            return "docCategoryVariable1.code";
-        }
-        else if ("docCategoryVariable2.value1".equals(fieldName)) {
-            return "docCategoryVariable2.code";
-        }
-        else if ("docServiceVariable1.value1".equals(fieldName)) {
-            return "docServiceVariable1.code";
-        }
-        else if ("docServiceVariable2.value1".equals(fieldName)) {
-            return "docServiceVariable2.code";
-        }
-        else if ("docServiceVariable3.value1".equals(fieldName)) {
-            return "docServiceVariable3.code";
-        }
-
-        return super.orderByFieldName(fieldName);
-    }
-
     @Autowired
     DocumentRepository documentRepository;
-
     @Autowired
     DocumentRevisionRepository documentRevisionRepository;
-
     @Autowired
     DocumentIndexRepository documentIndexRepository;
-
     @Autowired
     FileManagedSharedService fileManagedSharedService;
 
     protected DocumentServiceImpl() {
         super(Document.class, DocumentRevision.class, DocumentMaxRev.class);
+    }
+
+    @Override
+    protected String orderByFieldName(String fieldName) {
+
+        if ("docCategoryVariable1.value1".equals(fieldName)) {
+            return "docCategoryVariable1.code";
+        } else if ("docCategoryVariable2.value1".equals(fieldName)) {
+            return "docCategoryVariable2.code";
+        } else if ("docServiceVariable1.value1".equals(fieldName)) {
+            return "docServiceVariable1.code";
+        } else if ("docServiceVariable2.value1".equals(fieldName)) {
+            return "docServiceVariable2.code";
+        } else if ("docServiceVariable3.value1".equals(fieldName)) {
+            return "docServiceVariable3.code";
+        }
+
+        return super.orderByFieldName(fieldName);
     }
 
     @Override
@@ -205,6 +196,7 @@ public class DocumentServiceImpl extends AbstractNodeRevService<Document, Docume
 
     /**
      * HTMLをテキストに変換
+     *
      * @param html HTML
      * @return テキスト
      */
@@ -233,12 +225,7 @@ public class DocumentServiceImpl extends AbstractNodeRevService<Document, Docume
         }
 
         try {
-            String content = fileManagedSharedService.getContent(uuid);
-
-            // 連続する空白文字を除去
-            content = content.replaceAll("[ |　|\t|\\n|\\r\\n|\\r]+", " ");
-
-            return content;
+            return fileManagedSharedService.escapeContent(fileManagedSharedService.getContent(uuid));
 
         } catch (IOException | TikaException e) {
             e.printStackTrace();

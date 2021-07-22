@@ -1,7 +1,6 @@
 package jp.co.stnet.cms.base.domain.validation.variable;
 
 
-
 import jp.co.stnet.cms.common.message.MessageKeys;
 
 import javax.validation.Constraint;

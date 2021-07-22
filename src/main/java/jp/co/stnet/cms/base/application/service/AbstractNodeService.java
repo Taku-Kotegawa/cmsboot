@@ -4,8 +4,8 @@ import com.github.dozermapper.core.Mapper;
 import jp.co.stnet.cms.base.domain.model.AbstractEntity;
 import jp.co.stnet.cms.base.domain.model.StatusInterface;
 import jp.co.stnet.cms.base.domain.model.common.Status;
-import jp.co.stnet.cms.common.datatables.DataTablesInput;
 import jp.co.stnet.cms.common.datatables.Column;
+import jp.co.stnet.cms.common.datatables.DataTablesInput;
 import jp.co.stnet.cms.common.datatables.Order;
 import jp.co.stnet.cms.common.exception.IllegalStateBusinessException;
 import jp.co.stnet.cms.common.exception.NoChangeBusinessException;
@@ -13,10 +13,7 @@ import jp.co.stnet.cms.common.exception.OptimisticLockingFailureBusinessExceptio
 import jp.co.stnet.cms.common.message.MessageKeys;
 import jp.co.stnet.cms.common.util.BeanUtils;
 import jp.co.stnet.cms.common.util.StringUtils;
-import jp.co.stnet.cms.sales.domain.model.document.Document;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.annotations.QueryHints;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -34,7 +31,6 @@ import javax.persistence.*;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.ParameterizedType;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Transactional
@@ -128,6 +124,7 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
 
     /**
      * エンティティの比較(オーバライトして利用する)
+     *
      * @param entity
      * @param currentCopy
      * @return
@@ -217,6 +214,7 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
 
     /**
      * JPQLQueryを作成する。
+     *
      * @param input DataTablesInput
      * @param count true: 件数を取得する, false: しない
      * @param clazz エンティティクラス
@@ -293,6 +291,7 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
 
     /**
      * SQL(JPQL)文を作成する。
+     *
      * @param input DataTablesInput
      * @param count true: 件数を取得する, false: しない
      * @param clazz エンティティクラス
@@ -347,6 +346,7 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
 
     /**
      * 外部結合(LEFT OUTER文)を作成する。
+     *
      * @param input DataTablesInput
      * @return 外部結合文字列
      */
@@ -428,6 +428,7 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
 
     /**
      * Where句を作成する。
+     *
      * @param input DataTablesInput
      * @return Where句文字列
      */
@@ -455,6 +456,7 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
 
     /**
      * グローバルフィルターのためのフィールド毎の等号文字列を作成する。
+     *
      * @param column Column
      * @return 等号文字列
      */
@@ -497,6 +499,7 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
 
     /**
      * フィールドフィルターのためのフィールド毎の等号文字列を作成する。
+     *
      * @param column Column
      * @return 等号文字列
      */
@@ -575,6 +578,7 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
 
     /**
      * フィールドフィルターの設定されている
+     *
      * @param input DataTablesInput
      * @return true:フィールドフィルタを設定あり, false:なし
      */
@@ -589,6 +593,7 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
 
     /**
      * 指定されたフィールド名がLocalDate型かどうか
+     *
      * @param fieldName フィールド名
      * @return true:LocalDate型である, false:ない
      */
@@ -598,6 +603,7 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
 
     /**
      * 指定されたフィールド名がLocalDateTIme型かどうか
+     *
      * @param fieldName フィールド名
      * @return true:LocalDateTIme型である, false:ない
      */
@@ -607,6 +613,7 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
 
     /**
      * 指定されたフィールド名がNumber型かどうか
+     *
      * @param fieldName フィールド名
      * @return true:Number型である, false:ない
      */
@@ -623,6 +630,7 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
 
     /**
      * 指定されたフィールド名がCollection型 or List型 かどうか
+     *
      * @param fieldName フィールド名
      * @return true:Collection型である, false:ない
      */
@@ -634,6 +642,7 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
 
     /**
      * 指定されたフィールド名がBooleanかどうか
+     *
      * @param fieldName フィールド名
      * @return true:Booleanである, false:ない
      */
@@ -643,6 +652,7 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
 
     /**
      * 指定されたフィールド名はEnumかどうか
+     *
      * @param fieldName フィールド名
      * @return true:Enumである, false:ない
      */
@@ -657,6 +667,7 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
 
     /**
      * 指定されたフィールド名に@IDが設定されている。
+     *
      * @param fieldName フィールド名
      * @return true:IDである, false:ない
      */
@@ -667,6 +678,7 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
 
     /**
      * 指定されたフィールド名に@IDが設定され、Integer型である。
+     *
      * @param fieldName フィールド名
      * @return true:Integer型のIDである, false:ない
      */
@@ -676,6 +688,7 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
 
     /**
      * 指定されたフィールド名に@IDが設定され、Long型である。
+     *
      * @param fieldName フィールド名
      * @return true:Long型のIDである, false:ない
      */
@@ -685,6 +698,7 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
 
     /**
      * 指定されたフィールド名に@IDが設定され、String型である。
+     *
      * @param fieldName フィールド名
      * @return true:String型のIDである, false:ない
      */
@@ -694,6 +708,7 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
 
     /**
      * 指定されたフィールド名がCollectionElementかどうか
+     *
      * @param fieldName フィールド名
      * @return true:CollectionElementである, false:ない
      */
@@ -703,6 +718,7 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
 
     /**
      * 指定したフィールドがリレーションかどうか
+     *
      * @param fieldName フィールド名
      * @return true:リレーションである, false:ない
      */

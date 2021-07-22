@@ -4,7 +4,9 @@ import com.github.dozermapper.core.DozerConverter;
 import com.github.dozermapper.core.Mapper;
 import com.github.dozermapper.core.MapperAware;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class SetToStringConverter extends DozerConverter<Set, String> implements MapperAware {
 

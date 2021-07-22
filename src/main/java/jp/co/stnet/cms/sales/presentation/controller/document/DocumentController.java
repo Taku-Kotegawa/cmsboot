@@ -1,13 +1,11 @@
 package jp.co.stnet.cms.sales.presentation.controller.document;
 
 import jp.co.stnet.cms.base.domain.model.authentication.LoggedInUser;
-
 import jp.co.stnet.cms.common.constant.Constants;
 import jp.co.stnet.cms.common.datatables.OperationsUtil;
 import jp.co.stnet.cms.sales.application.service.document.DocumentAccessService;
 import jp.co.stnet.cms.sales.application.service.document.DocumentService;
 import jp.co.stnet.cms.sales.domain.model.document.Document;
-import org.apache.commons.text.StringEscapeUtils;
 import org.owasp.html.HtmlPolicyBuilder;
 import org.owasp.html.PolicyFactory;
 import org.owasp.html.Sanitizers;
@@ -15,12 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.util.JavaScriptUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

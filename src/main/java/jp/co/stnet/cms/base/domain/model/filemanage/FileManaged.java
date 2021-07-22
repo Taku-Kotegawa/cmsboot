@@ -10,8 +10,8 @@ import org.springframework.http.MediaType;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 /**
  * ファイルマネージドエンティティ.
@@ -95,12 +95,7 @@ public class FileManaged extends AbstractEntity<Long> implements Serializable {
     public ContentDisposition getAttachmentContentDisposition() {
         if (originalFilename != null) {
             String encodedFilename = originalFilename;
-            try {
-                encodedFilename = URLEncoder.encode(originalFilename, "UTF-8").replace("+", "%20");
-            } catch (
-                    UnsupportedEncodingException e) {
-                encodedFilename = originalFilename;
-            }
+            encodedFilename = URLEncoder.encode(originalFilename, StandardCharsets.UTF_8).replace("+", "%20");
             if (isOpenWindows()) {
                 return ContentDisposition.builder("filename=\"" + encodedFilename + "\"").build();
             } else {

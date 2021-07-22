@@ -1,7 +1,6 @@
 package jp.co.stnet.cms.example.domain.model.person;
 
 
-
 import jp.co.stnet.cms.base.domain.model.AbstractEntity;
 import jp.co.stnet.cms.base.domain.model.StatusInterface;
 import lombok.*;

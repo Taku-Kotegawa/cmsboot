@@ -1,7 +1,5 @@
 package jp.co.stnet.cms.sales.domain.validation;
 
-import jp.co.stnet.cms.common.validation.DomainRestrictedEmail;
-
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.Documented;

@@ -1,14 +1,11 @@
 package jp.co.stnet.cms.sales.application.job.document;
 
-import com.orangesignal.csv.annotation.CsvColumn;
 import jp.co.stnet.cms.common.validation.IsDate;
 import jp.co.stnet.cms.common.validation.Parseable;
 import lombok.Data;
 import org.terasoluna.gfw.common.codelist.ExistInCodeList;
 
 import javax.validation.constraints.Pattern;
-
-import java.util.Date;
 
 import static jp.co.stnet.cms.common.validation.ParseableType.TO_INT;
 import static jp.co.stnet.cms.common.validation.ParseableType.TO_LONG;

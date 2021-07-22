@@ -14,7 +14,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.util.matcher.IpAddressMatcher;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
 
 public class CustomUsernamePasswordAuthenticationProvider extends DaoAuthenticationProvider {
 
@@ -44,7 +47,7 @@ public class CustomUsernamePasswordAuthenticationProvider extends DaoAuthenticat
             WebAuthenticationDetails details = (WebAuthenticationDetails) authentication.getDetails();
             String userIp = details.getRemoteAddress();
 
-            List<String> allowedIps = Arrays.asList(account.getAllowedIp().split(","));
+            String[] allowedIps = account.getAllowedIp().split(",");
             boolean userIpIsAllowed = false;
 
             for (String allowedIp : allowedIps) {

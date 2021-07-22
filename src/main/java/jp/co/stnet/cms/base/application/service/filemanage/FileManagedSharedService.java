@@ -49,7 +49,7 @@ public interface FileManagedSharedService {
     /**
      * ファイルを保存する。(一時保存)
      *
-     * @param file MultipartFile
+     * @param file     MultipartFile
      * @param fileType ファイルタイプ
      * @return FileManaged
      * @throws IOException ファイル操作例外
@@ -59,7 +59,7 @@ public interface FileManagedSharedService {
     /**
      * ファイルを保存する。(一時保存)
      *
-     * @param file File
+     * @param file     File
      * @param fileType ファイルタイプ
      * @return FileManaged
      * @throws IOException ファイル操作例外
@@ -106,7 +106,7 @@ public interface FileManagedSharedService {
      *
      * @param uuid UUID
      * @return ファイルの内容
-     * @throws IOException ファイルの読み込みに失敗する場合
+     * @throws IOException   ファイルの読み込みに失敗する場合
      * @throws TikaException Tikaでファイルの内容を読み込みに失敗する場合
      */
     String getContent(String uuid) throws IOException, TikaException;
@@ -126,5 +126,14 @@ public interface FileManagedSharedService {
      * @param uri URI
      */
     void deleteFile(String uri);
+
+    /**
+     * HTMLエスケープおよび連続する空白の除去
+     *
+     * @param rawContent 文字列
+     * @return エスケースされた文字列
+     */
+    String escapeContent(String rawContent);
+
 
 }

@@ -13,6 +13,7 @@ public interface AccountRepository extends JpaRepository<Account, String> {
 
     /**
      * APIキーでユーザアカウントを取得
+     *
      * @param apiKey APIキー
      * @return Account
      */

@@ -1,24 +1,12 @@
 package jp.co.stnet.cms.config;
 
 
-import jp.co.stnet.cms.common.auditing.CustomDateFactory;
-import jp.co.stnet.cms.common.auditing.DateTimeProviderImpl;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.support.ResourceBundleMessageSource;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import org.terasoluna.gfw.common.date.jodatime.DefaultJodaTimeDateFactory;
-import org.terasoluna.gfw.common.exception.ExceptionLogger;
-import org.terasoluna.gfw.common.exception.SimpleMappingExceptionCodeResolver;
-import org.terasoluna.gfw.web.exception.ExceptionLoggingFilter;
-
-import java.util.LinkedHashMap;
 
 @Configuration
-@EnableGlobalMethodSecurity(prePostEnabled=true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class Config {
 
     @Value("${app.security.prohibitedChars}")
@@ -72,7 +60,6 @@ public class Config {
 //        filter.setExceptionLogger(exceptionLogger());
 //        return filter;
 //    }
-
 
 
 }

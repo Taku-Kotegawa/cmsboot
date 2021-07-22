@@ -115,17 +115,16 @@ public class Account extends AbstractEntity<String> implements Serializable, Sta
 
     /**
      * フルネーム(姓 + 名、半角スペース区切り)
+     *
      * @return フルネーム
      */
     public String getFullName() {
 
         if (StringUtils.isAllBlank(lastName, firstName)) {
             return "";
-        }
-        else if (StringUtils.isAllBlank(lastName)) {
+        } else if (StringUtils.isAllBlank(lastName)) {
             return firstName;
-        }
-        else if (StringUtils.isAllBlank(firstName)) {
+        } else if (StringUtils.isAllBlank(firstName)) {
             return lastName;
         }
         return lastName + " " + firstName;

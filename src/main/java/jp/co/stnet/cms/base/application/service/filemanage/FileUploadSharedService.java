@@ -16,7 +16,6 @@
 package jp.co.stnet.cms.base.application.service.filemanage;
 
 
-
 import jp.co.stnet.cms.base.domain.model.filemanage.TempFile;
 
 import java.time.LocalDateTime;

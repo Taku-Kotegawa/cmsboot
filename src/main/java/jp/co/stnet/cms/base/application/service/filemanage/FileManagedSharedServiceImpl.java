@@ -312,7 +312,7 @@ public class FileManagedSharedServiceImpl implements FileManagedSharedService {
         return uploadDir;
     }
 
-    private String escapeContent(String rawContent) {
+    public String escapeContent(String rawContent) {
         rawContent = rawContent.replaceAll("[　]+", " ")
                 .replaceAll("[ ]+", " ")
                 .replaceAll("[\t]+", " ")

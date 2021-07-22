@@ -1,6 +1,5 @@
 package jp.co.stnet.cms.base.domain.model.authentication;
 
-import jp.co.stnet.cms.base.domain.model.authentication.CustomUsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -44,10 +43,7 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
     }
 
     protected Boolean obtainLoginAsAdministrator(HttpServletRequest request) {
-        if ("true".equals(request.getParameter("loginAsAdministrator"))) {
-            return true;
-        }
-        return false;
+        return "true".equals(request.getParameter("loginAsAdministrator"));
     }
 
 }

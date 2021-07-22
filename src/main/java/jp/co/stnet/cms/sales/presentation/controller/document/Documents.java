@@ -159,7 +159,7 @@ public class Documents {
 
     protected String getTitleLink(Long id, String value) {
         OperationsUtil op = new OperationsUtil(BASE_PATH);
-        return "<a href=\"" + op.getViewUrl(id.toString()) +  "\">" + value + "</a>";
+        return "<a href=\"" + op.getViewUrl(id.toString()) + "\">" + value + "</a>";
     }
 
 
@@ -187,7 +187,7 @@ public class Documents {
         List<String> memo = new ArrayList<>();
         for (File file : files) {
             if (file.getFileMemo() != null) {
-                        memo.add(file.getFileMemo());
+                memo.add(file.getFileMemo());
             }
         }
         return String.join(delimiter, memo);

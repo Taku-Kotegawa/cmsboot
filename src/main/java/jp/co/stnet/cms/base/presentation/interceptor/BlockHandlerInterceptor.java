@@ -2,12 +2,9 @@ package jp.co.stnet.cms.base.presentation.interceptor;
 
 
 import jp.co.stnet.cms.base.application.service.accesscounter.AccessCounterService;
-import jp.co.stnet.cms.base.domain.model.authentication.LoggedInUser;
 import jp.co.stnet.cms.sales.application.service.document.DocumentAccessService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 

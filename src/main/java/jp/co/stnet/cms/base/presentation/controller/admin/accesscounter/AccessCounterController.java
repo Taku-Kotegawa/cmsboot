@@ -118,7 +118,7 @@ public class AccessCounterController {
         }
 
         for (AccessCounterBean bean : getBeanList(accessCounterList)) {
-            AccessCounterListRow accessCounterListRow = beanMapper.map(bean,AccessCounterListRow.class);
+            AccessCounterListRow accessCounterListRow = beanMapper.map(bean, AccessCounterListRow.class);
 
             accessCounterListRow.setOperations(getToggleButton(bean.getId().toString(), op(null)));
             accessCounterListRow.setDT_RowId(bean.getId().toString());

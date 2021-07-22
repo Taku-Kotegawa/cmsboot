@@ -5,13 +5,10 @@ import jp.co.stnet.cms.base.domain.model.AbstractRevisionEntity;
 import jp.co.stnet.cms.base.domain.model.variable.Variable;
 import lombok.*;
 import org.hibernate.annotations.*;
-import org.hibernate.search.engine.backend.types.Aggregable;
-import org.hibernate.search.mapper.pojo.mapping.definition.annotation.GenericField;
-import org.hibernate.search.mapper.pojo.mapping.definition.annotation.KeywordField;
 
-import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;

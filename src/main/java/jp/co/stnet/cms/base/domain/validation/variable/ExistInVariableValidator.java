@@ -19,7 +19,7 @@ public class ExistInVariableValidator implements ConstraintValidator<ExistInVari
 
     @Override
     public void initialize(ExistInVariable constraintAnnotation) {
-          message = constraintAnnotation.message();
+        message = constraintAnnotation.message();
     }
 
     @Override

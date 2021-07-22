@@ -6,17 +6,13 @@ import jp.co.stnet.cms.base.domain.model.StatusInterface;
 import jp.co.stnet.cms.base.domain.model.variable.Variable;
 import lombok.*;
 import org.hibernate.annotations.*;
-import org.hibernate.annotations.CascadeType;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.*;
-import javax.validation.Valid;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;

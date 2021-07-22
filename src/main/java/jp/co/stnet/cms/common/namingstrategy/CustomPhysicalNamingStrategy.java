@@ -8,7 +8,7 @@ import org.hibernate.engine.jdbc.env.spi.JdbcEnvironment;
  * Spring Data JPA モデルからテーブルを生成する際のカスタマイズ命名規則(大文字のスネークケース)
  */
 public class CustomPhysicalNamingStrategy implements PhysicalNamingStrategy {
-    
+
     private Identifier convertToSnakeCase(final Identifier identifier) {
         final String regex = "([a-z])([A-Z])";
         final String replacement = "$1_$2";

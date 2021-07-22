@@ -15,6 +15,7 @@ public class GlobalInitBinderControllerAdvice {
 
     /**
      * フォームからポストされたデータが空文字列の場合、nullに置換してバインディングする
+     *
      * @param binder バインダー
      */
     @InitBinder

@@ -67,7 +67,6 @@ public class Workflow extends AbstractEntity<Long> implements Serializable {
 
     /**
      * 並び順(同一ステップに従業員が複数割り当てられた場合)
-     *
      */
     @Column(nullable = false, columnDefinition = "integer default 0")
     private int weight;

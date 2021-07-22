@@ -3,13 +3,14 @@ package jp.co.stnet.cms.example.domain.model.simpleentity;
 import lombok.Data;
 
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 
 /**
  * 明細データエンティティ
  */
 @Embeddable
 @Data
-public class LineItem {
+public class LineItem implements Serializable {
 
     /**
      * 明細番号

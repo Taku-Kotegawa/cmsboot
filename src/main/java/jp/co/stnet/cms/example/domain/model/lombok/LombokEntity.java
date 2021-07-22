@@ -67,7 +67,7 @@ public class LombokEntity extends AbstractLombokEntity {
         if (o == this) return true;
         if (!(o instanceof LombokEntity)) return false;
         final LombokEntity other = (LombokEntity) o;
-        if (!other.canEqual((Object) this)) return false;
+        if (!other.canEqual(this)) return false;
         final Object this$field101 = this.getField101();
         final Object other$field101 = other.getField101();
         if (this$field101 == null ? other$field101 != null : !this$field101.equals(other$field101)) return false;
@@ -86,9 +86,7 @@ public class LombokEntity extends AbstractLombokEntity {
             return false;
         final Object this$childList106 = this.getChildList106();
         final Object other$childList106 = other.getChildList106();
-        if (this$childList106 == null ? other$childList106 != null : !this$childList106.equals(other$childList106))
-            return false;
-        return true;
+        return this$childList106 == null ? other$childList106 == null : this$childList106.equals(other$childList106);
     }
 
     protected boolean canEqual(final Object other) {

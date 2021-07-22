@@ -23,7 +23,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.SmartValidator;
 
 import javax.validation.ValidationException;
-
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Objects;
@@ -201,21 +200,20 @@ public class ImportDocumentTasklet implements Tasklet {
             return null;
         }
 
-            return documentRepository.findById(id).orElse(null);
+        return documentRepository.findById(id).orElse(null);
     }
 
     private Document map(DocumentCsvBean csv) {
         final String jobUser = "job_user";
 
         Document v = beanMapper.map(csv, Document.class);
-        v.setUseStage(new HashSet( Arrays.asList( csv.getUseStage().split(",", 0) ) ));
+        v.setUseStage(new HashSet(Arrays.asList(csv.getUseStage().split(",", 0))));
         v.setCreatedDate(dateFactory.newLocalDateTime());
         v.setLastModifiedDate(dateFactory.newLocalDateTime());
         v.setCreatedBy(jobUser);
         v.setLastModifiedBy(jobUser);
         return v;
     }
-
 
 
 }

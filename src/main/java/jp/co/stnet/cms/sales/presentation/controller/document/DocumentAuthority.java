@@ -41,9 +41,9 @@ public class DocumentAuthority {
      * @param operation    操作の種類(Constants.OPERATIONに登録された値)
      * @param loggedInUser ログインユーザ情報
      * @return true=操作する権限を持つ, false=操作する権限なし
-     * @throws AccessDeniedException @PostAuthorizeを用いてfalse時にスロー
+     * @throws AccessDeniedException    @PostAuthorizeを用いてfalse時にスロー
      * @throws IllegalArgumentException 不正なOperationが指定された場合
-     * @throws NullPointerException operation, loggedInUser がnullの場合
+     * @throws NullPointerException     operation, loggedInUser がnullの場合
      */
     @PostAuthorize("returnObject == true")
     public Boolean hasAuthority(String operation, LoggedInUser loggedInUser) {
@@ -57,9 +57,9 @@ public class DocumentAuthority {
      * @param loggedInUser ログインユーザ情報
      * @param document     ドキュメントエンティティ
      * @return true=操作する権限を持つ, 例外=権限を持たない場合
-     * @throws AccessDeniedException 権限がない場合(@PostAuthorizeを用いて戻り値false時にスロー)
+     * @throws AccessDeniedException    権限がない場合(@PostAuthorizeを用いて戻り値false時にスロー)
      * @throws IllegalArgumentException 不正なOperationが指定された場合
-     * @throws NullPointerException operation, loggedInUser がnullの場合
+     * @throws NullPointerException     operation, loggedInUser がnullの場合
      */
     @PostAuthorize("returnObject == true")
     public Boolean hasAuthority(String operation, LoggedInUser loggedInUser, Document document) {
@@ -74,7 +74,7 @@ public class DocumentAuthority {
      * @param document     ドキュメントエンティティ
      * @return true=操作する権限を持つ, false=権限を持たない
      * @throws IllegalArgumentException 不正なOperationが指定された場合
-     * @throws NullPointerException operation, loggedInUser がnullの場合
+     * @throws NullPointerException     operation, loggedInUser がnullの場合
      */
     public Boolean hasAuthorityWOException(@NonNull String operation, @NonNull LoggedInUser loggedInUser, Document document) {
 

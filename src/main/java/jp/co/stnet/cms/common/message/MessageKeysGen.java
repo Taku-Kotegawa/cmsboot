@@ -28,7 +28,7 @@ public class MessageKeysGen {
 
             String line;
 
-            for(int i = 0; i < messageProperties.length ;i++) {
+            for (int i = 0; i < messageProperties.length; i++) {
 
                 InputStream inputStream = new FileInputStream(messageProperties[i]);
                 BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));

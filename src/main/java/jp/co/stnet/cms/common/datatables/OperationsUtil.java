@@ -455,7 +455,6 @@ public class OperationsUtil {
 //    }
 
     // ------ private function --------------------------------------
-
     private String convId(String template, String id) {
         return template.replace("{id}", id);
     }

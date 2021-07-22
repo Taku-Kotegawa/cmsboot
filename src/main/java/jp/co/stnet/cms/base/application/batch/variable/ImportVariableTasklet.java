@@ -25,7 +25,7 @@ import org.springframework.validation.SmartValidator;
 
 import java.util.List;
 
-import static java.lang.String.*;
+import static java.lang.String.format;
 
 @Component
 public class ImportVariableTasklet implements Tasklet {

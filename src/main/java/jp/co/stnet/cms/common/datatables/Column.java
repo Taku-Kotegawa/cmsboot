@@ -1,7 +1,6 @@
 package jp.co.stnet.cms.common.datatables;
 
 
-
 import jp.co.stnet.cms.common.util.StringUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
