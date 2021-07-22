@@ -307,7 +307,7 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
         sql.append(getSelectFromClause(clazz, count));
 
         // LEFT OUTER JOIN の追加
-        sql.append(getLeftOuterJoinClause(input));
+        sql.append(getLeftOuterJoinClause(input, count));
 
         // WHERE句の追加
         sql.append(getWhereClause(input));
@@ -317,7 +317,6 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
             sql.append(" group by c ");
             sql.append(getOrderClause(input));
         }
-
 
         return sql.toString();
     }
@@ -351,7 +350,7 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
      * @param input DataTablesInput
      * @return 外部結合文字列
      */
-    protected StringBuilder getLeftOuterJoinClause(DataTablesInput input) {
+    protected StringBuilder getLeftOuterJoinClause(DataTablesInput input, boolean isCount) {
         StringBuilder sql = new StringBuilder();
         // @OneToOne etc, @ElementCollection フィールドのための結合
 
@@ -365,8 +364,14 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
         }
 
         for (String relationEntity : relationEntities) {
-            sql.append(" LEFT JOIN c.");
+            if (!isCount) {
+                // パフォーマンス改善のため
+                sql.append(" LEFT JOIN FETCH c.");
+            } else {
+                sql.append(" LEFT JOIN c.");
+            }
             sql.append(relationEntity);
+            sql.append(" " + relationEntity);
         }
 
         for (Column column : input.getColumns()) {
