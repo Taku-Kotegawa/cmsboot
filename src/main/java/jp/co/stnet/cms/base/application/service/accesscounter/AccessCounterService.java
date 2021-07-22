@@ -1,7 +1,6 @@
 package jp.co.stnet.cms.base.application.service.accesscounter;
 
 import jp.co.stnet.cms.base.application.service.NodeIService;
-import jp.co.stnet.cms.base.domain.model.authentication.LoggedInUser;
 import jp.co.stnet.cms.base.domain.model.common.AccessCounter;
 
 import java.util.Optional;

@@ -21,7 +21,6 @@ public class AccessCounterServiceImpl extends AbstractNodeService<AccessCounter,
     AccessCounterRepository accessCounterRepository;
 
     @Override
-    @Transactional(readOnly = true)
     protected JpaRepository<AccessCounter, Long> getRepository() {
         return accessCounterRepository;
     }
