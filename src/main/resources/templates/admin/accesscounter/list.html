@@ -8,8 +8,8 @@
 <div th:replace="~{fragments/include-datatables :: include-datatables}"></div>
 
 <section class="content-header">
-    <div class="container-fluid">
-        <div class="row px-5">
+    <div class="container">
+        <div class="row">
             <div class="col-18 mb-3">
                 <!-- ページタイトルを記入 -->
                 <h4>Access Counter</h4>
@@ -22,14 +22,13 @@
 </section>
 
 <section class="content">
-    <div class="container-fluid"><!-- -fluidを外すと横幅が狭くなる-->
+    <div class="container"><!-- -fluidを外すと横幅が狭くなる-->
         <div th:replace="~{fragments/message-panel :: message-panel}"></div>
         <!-- ここより下にメインコンテンツを記入 -->
 
         <table class="table-sm table-striped" id="list">
             <thead>
             <tr class="filter">
-                <th class="text-center px-1" data-filter="disable"></th>
                 <th data-filter="disable"></th>
                 <th></th>
                 <th></th>
@@ -37,7 +36,6 @@
                 <th></th>
             </tr>
             <tr class="title">
-                <th class="text-center px-0"></th>
                 <th class="text-center">操作</th>
                 <th class="text-center">ID</th>
                 <th class="text-center">ステータス</th>
@@ -75,19 +73,11 @@
 
           'ajax': {
             'url': 'list/json',
-            'data': myflatten
+            'data': flatten
           },
 
           // 一覧に表示する項目とJSONの項目にマッピング
-          'columns': [{
-              data: 'id',
-              className: 'text-center',
-              orderable: false,
-              searchable: false,
-              checkboxes: {
-                selectRow: true
-              },
-            },
+          'columns': [
             {
               data: 'operations',
               orderable: false,
@@ -113,11 +103,11 @@
 
           // 初期ソート
           'order': [
-            [2, 'asc']
+            [1, 'asc']
           ],
 
           // ボタンの表示
-          'buttons': ['bulkdelete', 'bulkinvalid', 'bulkvalid','colvis', 'stateClear', 'csvdownload', 'tsvdownload', 'exceldownload', 'upload', 'createnew'],
+          'buttons': ['colvis', 'stateClear', 'csvdownload', 'tsvdownload'],
 
           // データロード後処理
           'initComplete': function (settings, json) {
@@ -152,12 +142,6 @@
         }
 
       });
-
-  function myflatten(params, settings) {
-    params = flatten(params, settings);
-    params.draft = true;
-    return params;
-  }
 
 </script>
 

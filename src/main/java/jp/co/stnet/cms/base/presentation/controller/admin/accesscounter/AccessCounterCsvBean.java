@@ -18,8 +18,6 @@ public class AccessCounterCsvBean implements Serializable {
      */
     private static final long serialVersionUID = 1396585187753711980L;
 
-    // TODO 項目のカスタマイズ
-
     /**
      * 内部ID
      */
@@ -33,7 +31,7 @@ public class AccessCounterCsvBean implements Serializable {
     /**
      * ステータス
      */
-    @CsvColumn(name = "ステータス")
+    @CsvColumn(name = "ステータスコード")
     private String status;
     /**
      * ステータス

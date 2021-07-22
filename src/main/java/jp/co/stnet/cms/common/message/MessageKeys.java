@@ -220,10 +220,7 @@ public class MessageKeys {
      * i.cm.fw.0006=下書きを取り消しました。
      */
     public static final String I_CM_FW_0006 = "i.cm.fw.0006";
-    /**
-     * i.cm.fw.0007=
-     */
-    public static final String I_CM_FW_0007 = "i.cm.fw.0007";
+
     /**
      * i.cm.fw.0008=無効データは編集できません。そのため参照モードで開きました。
      */

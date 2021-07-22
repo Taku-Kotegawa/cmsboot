@@ -726,7 +726,7 @@ public class SimpleEntityController {
             model.addAttribute(e.getResultMessages());
         }
 
-        redirect.addFlashAttribute(ResultMessages.info().add(MessageKeys.I_CM_FW_0007));
+        redirect.addFlashAttribute(ResultMessages.info().add(MessageKeys.I_CM_FW_0003));
 
         return "redirect:" + op().getListUrl();
     }

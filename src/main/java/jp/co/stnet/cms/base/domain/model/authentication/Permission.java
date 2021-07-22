@@ -18,6 +18,7 @@ public enum Permission implements EnumCodeList.CodeListItem {
     ADMIN_PERMISSION("パーミッションの管理", "ADMIN"),
     ADMIN_MENU("管理者メニューを開く", "ADMIN"),
     ADMIN_VARIABLE("バリアルブルの管理", "ADMIN"),
+    ADMIN_ACCESS_COUNTER("アクセスカウンタの管理", "ADMIN"),
     DOC_MAN_CREATE("新規登録", "DOC"),
     DOC_MAN_UPDATE("編集", "DOC"),
     DOC_MAN_SAVE_DRAFT("下書き保存/下書取消", "DOC"),

@@ -6,6 +6,11 @@ package jp.co.stnet.cms.common.constant;
 public final class Constants {
 
     /**
+     * リダイレクト
+     */
+    public static final String REDIRECT = "redirect:";
+
+    /**
      * 操作
      */
     public static final class OPERATION {
