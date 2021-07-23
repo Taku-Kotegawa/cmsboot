@@ -100,11 +100,11 @@ public class DocumentIndex implements Serializable, StatusInterface {
     private String body;
 
     /**
-     * 本文
+     * 本文(HTMLタグ除去)
      */
     @FullTextField(analyzer = "japanese")
     @Column(columnDefinition = "TEXT")
-    private String bodyPlane;
+    private String bodyPlain;
 
     /**
      * 公開区分
