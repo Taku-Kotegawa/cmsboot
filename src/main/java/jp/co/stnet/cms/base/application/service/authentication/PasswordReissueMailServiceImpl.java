@@ -12,7 +12,7 @@ import javax.inject.Named;
 @Slf4j
 @Service
 @Transactional
-public class PasswordReissueMailSharedServiceImpl implements PasswordReissueMailSharedService {
+public class PasswordReissueMailServiceImpl implements PasswordReissueMailService {
 
     @Autowired
     JavaMailSender mailSender;

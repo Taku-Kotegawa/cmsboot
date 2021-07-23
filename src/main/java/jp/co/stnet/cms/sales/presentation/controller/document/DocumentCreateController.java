@@ -1,7 +1,7 @@
 package jp.co.stnet.cms.sales.presentation.controller.document;
 
 import com.github.dozermapper.core.Mapper;
-import jp.co.stnet.cms.base.application.service.filemanage.FileManagedSharedService;
+import jp.co.stnet.cms.base.application.service.filemanage.FileManagedService;
 import jp.co.stnet.cms.base.application.service.variable.VariableService;
 import jp.co.stnet.cms.base.domain.model.authentication.LoggedInUser;
 import jp.co.stnet.cms.base.domain.model.common.Status;
@@ -50,7 +50,7 @@ public class DocumentCreateController {
     DocumentService documentService;
 
     @Autowired
-    FileManagedSharedService fileManagedSharedService;
+    FileManagedService fileManagedService;
 
     @Autowired
     VariableService variableService;
@@ -88,7 +88,7 @@ public class DocumentCreateController {
             form.setTitle(source.getTitle() + " のコピー");
         }
 
-        setFileManaged(form.getFiles(), fileManagedSharedService);
+        setFileManaged(form.getFiles(), fileManagedService);
         addFilesItem(form);
         form.getFiles().add(new FileForm());
 

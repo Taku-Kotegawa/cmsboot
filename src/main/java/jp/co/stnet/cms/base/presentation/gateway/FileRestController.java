@@ -1,6 +1,6 @@
 package jp.co.stnet.cms.base.presentation.gateway;
 
-import jp.co.stnet.cms.base.application.service.filemanage.FileManagedSharedService;
+import jp.co.stnet.cms.base.application.service.filemanage.FileManagedService;
 import jp.co.stnet.cms.base.domain.model.authentication.LoggedInUser;
 import jp.co.stnet.cms.base.domain.model.filemanage.FileManaged;
 import jp.co.stnet.cms.base.domain.model.filemanage.FileType;
@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 public class FileRestController {
 
     @Autowired
-    FileManagedSharedService fileManagedSharedService;
+    FileManagedService fileManagedService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
@@ -67,7 +67,7 @@ public class FileRestController {
                 }
             }
 
-            FileManaged fileManaged = fileManagedSharedService.store(multipartFile, type);
+            FileManaged fileManaged = fileManagedService.store(multipartFile, type);
 
             return UploadFileResult.builder()
                     .fid(fileManaged.getId())

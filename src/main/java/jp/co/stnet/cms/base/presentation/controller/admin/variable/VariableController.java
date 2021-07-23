@@ -2,7 +2,7 @@ package jp.co.stnet.cms.base.presentation.controller.admin.variable;
 
 import com.github.dozermapper.core.Mapper;
 import jp.co.stnet.cms.base.application.service.codelist.CodeListService;
-import jp.co.stnet.cms.base.application.service.filemanage.FileManagedSharedService;
+import jp.co.stnet.cms.base.application.service.filemanage.FileManagedService;
 import jp.co.stnet.cms.base.application.service.variable.VariableService;
 import jp.co.stnet.cms.base.domain.model.authentication.LoggedInUser;
 import jp.co.stnet.cms.base.domain.model.common.Status;
@@ -70,7 +70,7 @@ public class VariableController {
     VariableAuthority authority;
 
     @Autowired
-    FileManagedSharedService fileManagedSharedService;
+    FileManagedService fileManagedService;
 
     @Autowired
     CodeListService codeListService;
@@ -320,7 +320,7 @@ public class VariableController {
         form.setType(variableType);
 
         if (form.getFile1Uuid() != null) {
-            form.setFile1Managed(fileManagedSharedService.findByUuid(form.getFile1Uuid()));
+            form.setFile1Managed(fileManagedService.findByUuid(form.getFile1Uuid()));
         }
 
         Variable variable = beanMapper.map(form, Variable.class);
@@ -397,7 +397,7 @@ public class VariableController {
         }
 
         if (form.getFile1Uuid() != null) {
-            form.setFile1Managed(fileManagedSharedService.findByUuid(form.getFile1Uuid()));
+            form.setFile1Managed(fileManagedService.findByUuid(form.getFile1Uuid()));
         }
 
         model.addAttribute("variable", variable);
@@ -565,7 +565,7 @@ public class VariableController {
 
 
         if (variable.getFile1Uuid() != null) {
-            variable.setFile1Managed(fileManagedSharedService.findByUuid(variable.getFile1Uuid()));
+            variable.setFile1Managed(fileManagedService.findByUuid(variable.getFile1Uuid()));
         }
 
         model.addAttribute("variable", variable);
@@ -588,7 +588,7 @@ public class VariableController {
 
         authority.hasAuthority(Constants.OPERATION.DOWNLOAD, loggedInUser);
 
-        model.addAttribute(fileManagedSharedService.findByUuid(uuid));
+        model.addAttribute(fileManagedService.findByUuid(uuid));
         return "fileManagedDownloadView";
     }
 
@@ -605,7 +605,7 @@ public class VariableController {
         form.setJobName(UPLOAD_JOB_ID);
 
         if (form.getUploadFileUuid() != null) {
-            form.setUploadFileManaged(fileManagedSharedService.findByUuid(form.getUploadFileUuid()));
+            form.setUploadFileManaged(fileManagedService.findByUuid(form.getUploadFileUuid()));
         }
 
         model.addAttribute("pageTitle", "Import Variable");
@@ -636,8 +636,8 @@ public class VariableController {
             return uploadForm(form, model, variableType, loggedInUser);
         }
 
-        FileManaged uploadFile = fileManagedSharedService.findByUuid(form.getUploadFileUuid());
-        String uploadFileAbsolutePath = fileManagedSharedService.getFileStoreBaseDir() + uploadFile.getUri();
+        FileManaged uploadFile = fileManagedService.findByUuid(form.getUploadFileUuid());
+        String uploadFileAbsolutePath = fileManagedService.getFileStoreBaseDir() + uploadFile.getUri();
         String jobParams = "inputFile=" + uploadFileAbsolutePath;
         jobParams += ", encoding=" + form.getEncoding();
         jobParams += ", filetype=" + form.getFileType();

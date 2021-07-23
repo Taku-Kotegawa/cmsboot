@@ -1,6 +1,8 @@
 package jp.co.stnet.cms.common.util;
 
 
+import lombok.NonNull;
+
 import java.beans.Introspector;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -34,6 +36,10 @@ public class BeanUtils {
             "java.util.Collection"
     );
 
+    // インスタンス化禁止
+    private BeanUtils() {
+    }
+
     /**
      * クラスのフィールド一覧を取得する。(Map)
      *
@@ -41,11 +47,7 @@ public class BeanUtils {
      * @param parentClassName 親クラス名
      * @return Map(key : フィールド名, value : クラス名)
      */
-    public static Map<String, String> getFields(Class clazz, String parentClassName) {
-
-        if (clazz == null) {
-            throw new IllegalArgumentException();
-        }
+    public static Map<String, String> getFields(@NonNull Class clazz, String parentClassName) {
 
         Map<String, String> fieldsMap = new LinkedHashMap<>();
 
@@ -110,7 +112,6 @@ public class BeanUtils {
         return getFieldList(clazz, "");
     }
 
-
     /**
      * 指定したアノテーションが設定されているフィールドを取得する。
      *
@@ -119,18 +120,9 @@ public class BeanUtils {
      * @param annotationClass アノテーションクラス
      * @return フォールド名とアノテーションの組み合わせMap
      */
-    public static Map<String, Annotation> getFieldByAnnotation(Class clazz, String parentClassName, Class annotationClass) {
-
-        if (clazz == null) {
-            throw new IllegalArgumentException();
-        }
+    public static Map<String, Annotation> getFieldByAnnotation(@NonNull Class clazz, String parentClassName, Class annotationClass) {
 
         Map<String, Annotation> annotationMap = new LinkedHashMap<>();
-
-//        String prefix = "";
-//        if (parentClassName != null && !parentClassName.isEmpty()) {
-//            prefix = parentClassName + SEPARATOR;
-//        }
 
         Map<String, String> fields = getFields(clazz, parentClassName);
 
@@ -151,13 +143,13 @@ public class BeanUtils {
     }
 
     /**
-     * シグネチャを取得する。(未使用)
+     * シグネチャを取得する。
      * https://stackoverflow.com/questions/45072268/how-can-i-get-the-signature-field-of-java-reflection-method-object
      *
      * @param m メソッド
      * @return シグネチャ
      */
-    public static String getSignature(Method m) {
+    public static String getSignature(@NonNull Method m) {
         String sig;
         try {
             Field gSig = Method.class.getDeclaredField("signature");
@@ -181,10 +173,6 @@ public class BeanUtils {
         int start = sig.indexOf("<L");
         int end = sig.indexOf(";>");
         return sig.substring(start + 2, end).replace("/", ".");
-    }
-
-    // インスタンス化禁止
-    private BeanUtils() {
     }
 
 }

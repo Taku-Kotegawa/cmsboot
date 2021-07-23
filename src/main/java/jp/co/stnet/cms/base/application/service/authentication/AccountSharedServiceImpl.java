@@ -16,8 +16,8 @@
 package jp.co.stnet.cms.base.application.service.authentication;
 
 import com.github.dozermapper.core.Mapper;
-import jp.co.stnet.cms.base.application.repository.authentication.AccountRepository;
-import jp.co.stnet.cms.base.application.service.filemanage.FileManagedSharedService;
+import jp.co.stnet.cms.base.application.repository.account.AccountRepository;
+import jp.co.stnet.cms.base.application.service.filemanage.FileManagedService;
 import jp.co.stnet.cms.base.domain.model.authentication.Account;
 import jp.co.stnet.cms.base.domain.model.authentication.FailedAuthentication;
 import jp.co.stnet.cms.base.domain.model.authentication.PasswordHistory;
@@ -58,10 +58,10 @@ public class AccountSharedServiceImpl implements AccountSharedService {
     AccountRepository accountRepository;
 
     @Autowired
-    FileManagedSharedService fileManagedSharedService;
+    FileManagedService fileManagedService;
 
     @Autowired
-    AuthenticationEventSharedService authenticationEventSharedService;
+    AuthenticationEventService authenticationEventService;
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -70,7 +70,7 @@ public class AccountSharedServiceImpl implements AccountSharedService {
     PasswordGenerator passwordGenerator;
 
     @Autowired
-    PasswordHistorySharedService passwordHistorySharedService;
+    PasswordHistoryService passwordHistoryService;
 
     @Autowired
     CustomDateFactory dateFactory;
@@ -101,7 +101,7 @@ public class AccountSharedServiceImpl implements AccountSharedService {
     @Override
     public LocalDateTime getLastLoginDate(String username) {
 
-        List<SuccessfulAuthentication> events = authenticationEventSharedService
+        List<SuccessfulAuthentication> events = authenticationEventService
                 .findLatestSuccessEvents(username, 1);
 
         if (!events.isEmpty()) {
@@ -135,7 +135,7 @@ public class AccountSharedServiceImpl implements AccountSharedService {
 
     @Override
     public boolean isLocked(String username) {
-        List<FailedAuthentication> failureEvents = authenticationEventSharedService
+        List<FailedAuthentication> failureEvents = authenticationEventService
                 .findLatestFailureEvents(username, lockingThreshold);
 
         if (failureEvents.size() < lockingThreshold) {
@@ -150,7 +150,7 @@ public class AccountSharedServiceImpl implements AccountSharedService {
     @Override
     @Cacheable("isInitialPassword")
     public boolean isInitialPassword(String username) {
-        List<PasswordHistory> passwordHistories = passwordHistorySharedService
+        List<PasswordHistory> passwordHistories = passwordHistoryService
                 .findLatest(username, 1);
 
         if (passwordHistories.isEmpty()) {
@@ -166,7 +166,7 @@ public class AccountSharedServiceImpl implements AccountSharedService {
     @Override
     @Cacheable("isCurrentPasswordExpired")
     public boolean isCurrentPasswordExpired(String username) {
-        List<PasswordHistory> passwordHistories = passwordHistorySharedService
+        List<PasswordHistory> passwordHistories = passwordHistoryService
                 .findLatest(username, 1);
 
         if (passwordHistories.isEmpty()) {
@@ -188,7 +188,7 @@ public class AccountSharedServiceImpl implements AccountSharedService {
         account.setPassword(password);
         accountRepository.save(account);
 
-        passwordHistorySharedService.insert(
+        passwordHistoryService.insert(
                 PasswordHistory.builder()
                         .username(username)
                         .password(password)
@@ -217,7 +217,7 @@ public class AccountSharedServiceImpl implements AccountSharedService {
     public FileManaged getImage(String username) {
         Account account = accountRepository.findById(username)
                 .orElseThrow(() -> new ResourceNotFoundException(ResultMessages.error().add(E_SL_FW_5001, username)));
-        return fileManagedSharedService.findByUuid(account.getImageUuid());
+        return fileManagedService.findByUuid(account.getImageUuid());
     }
 
 }

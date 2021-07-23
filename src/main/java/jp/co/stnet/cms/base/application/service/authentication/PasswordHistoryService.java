@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * PasswordHistorySharedService
  */
-public interface PasswordHistorySharedService {
+public interface PasswordHistoryService {
 
     /**
      * 登録する。

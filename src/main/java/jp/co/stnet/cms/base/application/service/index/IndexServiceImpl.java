@@ -13,17 +13,16 @@ import javax.persistence.PersistenceContext;
 @Slf4j
 @Service
 @Transactional
-public class IndexSharedServiceImpl implements IndexSharedService {
+public class IndexServiceImpl implements IndexService {
+
+    private static final int BATCH_SIZE_TO_LOAD_OBJECTS = 25;
+    private static final int THREADS_TO_LOAD_OBJECTS = 7;
 
     @PersistenceContext
     EntityManager entityManager;
 
-    private final int BATCH_SIZE_TO_LOAD_OBJECTS = 25;
-
-    private final int THREADS_TO_LOAD_OBJECTS = 7;
-
     @Override
-    public void reindexing(String entityName) throws InterruptedException, ClassNotFoundException {
+    public void reindexing(String entityName) throws ClassNotFoundException {
 
         try {
             Class<?> clazz = Class.forName(entityName);

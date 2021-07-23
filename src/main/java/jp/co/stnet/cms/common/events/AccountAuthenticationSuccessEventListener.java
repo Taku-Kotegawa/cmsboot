@@ -15,7 +15,7 @@
  */
 package jp.co.stnet.cms.common.events;
 
-import jp.co.stnet.cms.base.application.service.authentication.AuthenticationEventSharedService;
+import jp.co.stnet.cms.base.application.service.authentication.AuthenticationEventService;
 import jp.co.stnet.cms.base.domain.model.authentication.LoggedInUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
@@ -29,12 +29,12 @@ import org.springframework.stereotype.Component;
 public class AccountAuthenticationSuccessEventListener {
 
     @Autowired
-    AuthenticationEventSharedService authenticationEventSharedService;
+    AuthenticationEventService authenticationEventService;
 
     @EventListener(AuthenticationSuccessEvent.class)
     public void onApplicationEvent(AuthenticationSuccessEvent event) {
         LoggedInUser details = (LoggedInUser) event.getAuthentication().getPrincipal();
-        authenticationEventSharedService.authenticationSuccess(details.getUsername());
+        authenticationEventService.authenticationSuccess(details.getUsername());
     }
 
 }

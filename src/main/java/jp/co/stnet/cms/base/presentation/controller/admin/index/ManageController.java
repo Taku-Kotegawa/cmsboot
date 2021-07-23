@@ -1,7 +1,7 @@
 package jp.co.stnet.cms.base.presentation.controller.admin.index;
 
 
-import jp.co.stnet.cms.base.application.service.index.IndexSharedService;
+import jp.co.stnet.cms.base.application.service.index.IndexService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class ManageController {
 
     @Autowired
-    IndexSharedService indexSharedService;
+    IndexService indexService;
 
     @GetMapping("manage")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -35,7 +35,7 @@ public class ManageController {
     public String reindexing(Model model, @PathVariable() String entityName) {
 
         try {
-            indexSharedService.reindexing(entityName);
+            indexService.reindexing(entityName);
         } catch (InterruptedException | ClassNotFoundException e) {
             e.printStackTrace();
             // TODO 例外処理

@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * AuthenticationEventSharedService
  */
-public interface AuthenticationEventSharedService {
+public interface AuthenticationEventService {
 
     /**
      * @param username

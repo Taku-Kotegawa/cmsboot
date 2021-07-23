@@ -1,6 +1,6 @@
 package jp.co.stnet.cms.base.presentation.controller.uploadfile;
 
-import jp.co.stnet.cms.base.application.service.filemanage.FileManagedSharedService;
+import jp.co.stnet.cms.base.application.service.filemanage.FileManagedService;
 import jp.co.stnet.cms.base.domain.model.authentication.LoggedInUser;
 import jp.co.stnet.cms.base.domain.model.filemanage.FileManaged;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 public class UploadFileController {
 
     @Autowired
-    FileManagedSharedService fileManagedSharedService;
+    FileManagedService fileManagedService;
 
     @ModelAttribute
     public UploadFileForm setUp() {
@@ -46,7 +46,7 @@ public class UploadFileController {
             @PathVariable("uuid") String uuid,
             @AuthenticationPrincipal LoggedInUser loggedInUser) {
 
-        FileManaged fileManaged = fileManagedSharedService.findByUuid(uuid);
+        FileManaged fileManaged = fileManagedService.findByUuid(uuid);
         model.addAttribute(fileManaged);
         return "fileManagedDownloadView";
     }

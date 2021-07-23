@@ -1,9 +1,9 @@
 package jp.co.stnet.cms.base.application.service.index;
 
 /**
- * IndexSharedService
+ * Lucene索引を操作する
  */
-public interface IndexSharedService {
+public interface IndexService {
 
     /**
      * Lucene索引を更新する(非同期処理)

@@ -18,7 +18,7 @@ package jp.co.stnet.cms.base.application.service.authentication;
 /**
  * PasswordReissueMailSharedService
  */
-public interface PasswordReissueMailSharedService {
+public interface PasswordReissueMailService {
 
     /**
      * パスワード再発行通知メールを送信する。

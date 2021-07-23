@@ -16,7 +16,7 @@ import java.util.List;
 @Slf4j
 @Service
 @Transactional
-public class PermissionRoleSharedServiceImpl implements PermissionRoleSharedService {
+public class PermissionRoleServiceImpl implements PermissionRoleService {
 
     @Autowired
     PermissionRoleRepository permissionRoleRepository;

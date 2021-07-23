@@ -6,7 +6,7 @@ import jp.co.stnet.cms.base.domain.model.filemanage.FileStatus;
 import jp.co.stnet.cms.common.auditing.CustomDateFactory;
 import jp.co.stnet.cms.common.message.MessageKeys;
 import jp.co.stnet.cms.common.util.MimeTypes;
-import jp.co.stnet.cms.common.util.StStringUtils;
+
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -33,7 +33,7 @@ import static org.apache.commons.text.StringEscapeUtils.escapeHtml4;
 @Slf4j
 @Service
 @Transactional
-public class FileManagedSharedServiceImpl implements FileManagedSharedService {
+public class FileManagedServiceImpl implements FileManagedService {
 
     @Autowired
     FileManagedRepository fileManagedRepository;
@@ -42,15 +42,15 @@ public class FileManagedSharedServiceImpl implements FileManagedSharedService {
     CustomDateFactory dateFactory;
 
     @Value("${file.store.basedir}")
-    private String STORE_BASEDIR;
+    String fileStoreBasedir;
 
     @Value("${file.store.default_file_type}")
-    private String DEFAULT_FILE_TYPE;
+    String fileStoreDefaultFileType;
 
     @Override
     @Transactional(readOnly = true)
     public byte[] getFile(Long id) {
-        String filePath = STORE_BASEDIR + findById(id).getUri();
+        String filePath = fileStoreBasedir + findById(id).getUri();
         try {
             return Files.readAllBytes(Paths.get(filePath));
         } catch (IOException e) {
@@ -58,11 +58,11 @@ public class FileManagedSharedServiceImpl implements FileManagedSharedService {
         }
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public byte[] getFile(String uuid) {
-        return getFile(findByUuid(uuid).getId());
-    }
+//    @Override
+//    @Transactional(readOnly = true)
+//    public byte[] getFile(String uuid) {
+//        return getFile(findByUuid(uuid).getId());
+//    }
 
     @Override
     @Transactional(readOnly = true)
@@ -84,23 +84,21 @@ public class FileManagedSharedServiceImpl implements FileManagedSharedService {
         }
 
         if (StringUtils.isEmpty(fileType)) {
-            fileType = DEFAULT_FILE_TYPE;
+            fileType = fileStoreDefaultFileType;
         }
 
         String uuid = UUID.randomUUID().toString();
 
-        String storeDir = STORE_BASEDIR
+        String storeDir = fileStoreBasedir
                 + File.separator + fileType
                 + File.separator + uuid.charAt(0);
 
         String storeFilePath = storeDir + File.separator + uuid;
 
-//        mkdirs(storeDir);
         Files.createDirectories(Path.of(storeDir));
 
         File storeFile = new File(storeFilePath);
-        String mimeType = "";
-        mimeType = MimeTypes.getMimeType(FilenameUtils.getExtension(file.getOriginalFilename()));
+        String mimeType = MimeTypes.getMimeType(FilenameUtils.getExtension(file.getOriginalFilename()));
 
         try (BufferedOutputStream fileStream = new BufferedOutputStream(new FileOutputStream(storeFile))) {
             fileStream.write(file.getBytes());
@@ -113,7 +111,7 @@ public class FileManagedSharedServiceImpl implements FileManagedSharedService {
                 .fileMime(mimeType)
                 .fileSize(file.getSize())
                 .status(FileStatus.TEMPORARY.getCodeValue())
-                .uri(storeFilePath.substring(STORE_BASEDIR.length()).replace('\\', '/'))
+                .uri(storeFilePath.substring(fileStoreBasedir.length()).replace('\\', '/'))
                 .build();
 
         // コマンドランチャーから実行した場合に、セットされない問題を回避する
@@ -233,7 +231,7 @@ public class FileManagedSharedServiceImpl implements FileManagedSharedService {
     @Override
     @Transactional(readOnly = true)
     public String getFileStoreBaseDir() {
-        return STORE_BASEDIR + "/";
+        return fileStoreBasedir + "/";
     }
 
     @Override
@@ -241,7 +239,7 @@ public class FileManagedSharedServiceImpl implements FileManagedSharedService {
     public String getContent(String uuid) throws IOException, TikaException {
         Tika tika = new Tika();
         tika.setMaxStringLength(1000 * 1000); // 1M
-        return tika.parseToString(new FileInputStream(new File(STORE_BASEDIR + findByUuid(uuid).getUri())));
+        return tika.parseToString(new FileInputStream(new File(fileStoreBasedir + findByUuid(uuid).getUri())));
     }
 
     @Override
@@ -253,17 +251,16 @@ public class FileManagedSharedServiceImpl implements FileManagedSharedService {
         }
 
         String uuid = UUID.randomUUID().toString();
-        String storeDir = STORE_BASEDIR
+        String storeDir = fileStoreBasedir
                 + File.separator + fileManaged.getFileType()
                 + File.separator + uuid.charAt(0);
 
         String storeFilePath = storeDir + File.separator + uuid;
 
 
-//        mkdirs(storeDir);
         Files.createDirectories(Path.of(storeDir));
 
-        String sourceDir = STORE_BASEDIR
+        String sourceDir = fileStoreBasedir
                 + File.separator + fileManaged.getFileType()
                 + File.separator + sourceUuid.charAt(0);
 
@@ -286,7 +283,7 @@ public class FileManagedSharedServiceImpl implements FileManagedSharedService {
                         .fileMime(fileManaged.getFileMime())
                         .fileSize(fileManaged.getFileSize())
                         .status(FileStatus.TEMPORARY.getCodeValue())
-                        .uri(storeFilePath.substring(STORE_BASEDIR.length()).replace('\\', '/'))
+                        .uri(storeFilePath.substring(fileStoreBasedir.length()).replace('\\', '/'))
                         .build());
 
     }
@@ -294,20 +291,18 @@ public class FileManagedSharedServiceImpl implements FileManagedSharedService {
     @Override
     public void deleteFile(String uri) {
         if (uri != null) {
-            File file = new File(STORE_BASEDIR + uri.replace('/', '\\'));
-            file.delete();
+            String filePath = fileStoreBasedir + uri.replace('/', '\\');
+            try {
+                Files.delete(Path.of(filePath));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     @Override
     public String escapeContent(String rawContent) {
-        rawContent = rawContent.replaceAll("[　]+", " ")
-                .replaceAll("[ ]+", " ")
-                .replaceAll("[\t]+", " ")
-                .replaceAll("[ |\t]+", " ")
-                .replaceAll("[\\n|\\r\\n|\\r]+", " ")
-                .replaceAll("\\n|\\r\\n|\\r", " ");
-
+        rawContent = rawContent.replaceAll("[ |　|\\n|\\r\\n|\\r|\t]+", " ");
         return escapeHtml4(rawContent);
     }
 

@@ -1,8 +1,8 @@
 package jp.co.stnet.cms.example.application.service;
 
 import jp.co.stnet.cms.base.application.service.AbstractNodeService;
-import jp.co.stnet.cms.base.application.service.filemanage.FileManagedSharedService;
-import jp.co.stnet.cms.common.util.StStringUtils;
+import jp.co.stnet.cms.base.application.service.filemanage.FileManagedService;
+
 import jp.co.stnet.cms.example.application.repository.person.PersonRepository;
 import jp.co.stnet.cms.example.domain.model.person.Person;
 import lombok.extern.slf4j.Slf4j;
@@ -55,7 +55,7 @@ public class PersonServiceImpl extends AbstractNodeService<Person, Long> impleme
     PersonRepository personRepository;
 
     @Autowired
-    FileManagedSharedService fileManagedSharedService;
+    FileManagedService fileManagedService;
 
     @Override
     protected JpaRepository<Person, Long> getRepository() {
@@ -76,7 +76,7 @@ public class PersonServiceImpl extends AbstractNodeService<Person, Long> impleme
             } else if (current == null || current.getAttachedFile01Uuid() == null
                     || !Objects.equals(entity.getAttachedFile01Uuid(), current.getAttachedFile01Uuid())) {
 
-                content = fileManagedSharedService.getContent(entity.getAttachedFile01Uuid());
+                content = fileManagedService.getContent(entity.getAttachedFile01Uuid());
                 content = content.replaceAll("[ |　|\t|\\n|\\r\\n|\\r]+", " ");
                 content = escapeHtml4(content);
             }
@@ -118,12 +118,12 @@ public class PersonServiceImpl extends AbstractNodeService<Person, Long> impleme
         // UUID変更されていた場合、以前のUUIDを物理削除
         if (current != null && current.getAttachedFile01Uuid() != null &&
                 !current.getAttachedFile01Uuid().equals(entity.getAttachedFile01Uuid())) {
-            fileManagedSharedService.delete(current.getAttachedFile01Uuid());
+            fileManagedService.delete(current.getAttachedFile01Uuid());
         }
 
         // 添付ファイル確定
         if (entity.getAttachedFile01Uuid() != null) {
-            fileManagedSharedService.permanent(entity.getAttachedFile01Uuid());
+            fileManagedService.permanent(entity.getAttachedFile01Uuid());
         }
     }
 
@@ -133,13 +133,13 @@ public class PersonServiceImpl extends AbstractNodeService<Person, Long> impleme
         // 添付ファイルURI取得
         String uri = null;
         if (findById(id).getAttachedFile01Uuid() != null) {
-            uri = fileManagedSharedService.findByUuid(findById(id).getAttachedFile01Uuid()).getUri();
+            uri = fileManagedService.findByUuid(findById(id).getAttachedFile01Uuid()).getUri();
         }
 
         super.delete(id);
 
         // 添付ファイル削除
-        fileManagedSharedService.deleteFile(uri);
+        fileManagedService.deleteFile(uri);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package jp.co.stnet.cms.sales.presentation.controller.document;
 
 import com.github.dozermapper.core.Mapper;
-import jp.co.stnet.cms.base.application.service.filemanage.FileManagedSharedService;
+import jp.co.stnet.cms.base.application.service.filemanage.FileManagedService;
 import jp.co.stnet.cms.base.domain.model.authentication.LoggedInUser;
 import jp.co.stnet.cms.base.domain.model.common.Status;
 import jp.co.stnet.cms.common.constant.Constants;
@@ -49,7 +49,7 @@ public class DocumentUpdateController {
     DocumentService documentService;
 
     @Autowired
-    FileManagedSharedService fileManagedSharedService;
+    FileManagedService fileManagedService;
 
     @Autowired
     Mapper beanMapper;
@@ -82,7 +82,7 @@ public class DocumentUpdateController {
      * @param fileForms ファイル設定行のフォーム
      * @param service   FileManagedSharedService
      */
-    static void setFileManaged(Collection<FileForm> fileForms, FileManagedSharedService service) {
+    static void setFileManaged(Collection<FileForm> fileForms, FileManagedService service) {
         for (FileForm fileForm : fileForms) {
             if (fileForm.getFileUuid() != null) {
                 fileForm.setFileManaged(service.findByUuid(fileForm.getFileUuid()));
@@ -112,7 +112,7 @@ public class DocumentUpdateController {
             form.setSaveRevision(true);
         }
 
-        setFileManaged(form.getFiles(), fileManagedSharedService);
+        setFileManaged(form.getFiles(), fileManagedService);
 
         model.addAttribute("document", document);
         model.addAttribute("buttonState", helper.getButtonStateMap(Constants.OPERATION.UPDATE, document, form).asMap());
@@ -254,7 +254,7 @@ public class DocumentUpdateController {
                                     RedirectAttributes redirect,
                                     @AuthenticationPrincipal LoggedInUser loggedInUser) {
 
-        setFileManaged(form.getFiles(), fileManagedSharedService);
+        setFileManaged(form.getFiles(), fileManagedService);
         addFilesItem(form);
         form.getFiles().add(new FileForm());
 

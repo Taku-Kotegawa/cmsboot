@@ -7,7 +7,7 @@ import java.util.Objects;
 /**
  * 文字列操作のユーティリティ
  */
-public class StStringUtils {
+public class StringUtils {
 
     /**
      * キャメルケースをスネークケース(小文字)に変換

@@ -1,7 +1,7 @@
-package jp.co.stnet.cms.base.application.service.authentication;
+package jp.co.stnet.cms.base.application.service.account;
 
 
-import jp.co.stnet.cms.base.application.repository.authentication.AccountRepository;
+import jp.co.stnet.cms.base.application.repository.account.AccountRepository;
 import jp.co.stnet.cms.base.application.service.AbstractNodeService;
 import jp.co.stnet.cms.base.domain.model.authentication.Account;
 import lombok.extern.slf4j.Slf4j;

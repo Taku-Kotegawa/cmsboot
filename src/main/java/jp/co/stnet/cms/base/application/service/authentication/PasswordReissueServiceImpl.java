@@ -32,10 +32,10 @@ import static jp.co.stnet.cms.common.message.MessageKeys.*;
 public class PasswordReissueServiceImpl implements PasswordReissueService {
 
     @Autowired
-    PasswordReissueFailureSharedService passwordReissueFailureSharedService;
+    PasswordReissueFailureService passwordReissueFailureService;
 
     @Autowired
-    PasswordReissueMailSharedService mailSharedService;
+    PasswordReissueMailService mailSharedService;
 
     @Autowired
     PasswordReissueInfoRepository passwordReissueInfoRepository;
@@ -132,7 +132,7 @@ public class PasswordReissueServiceImpl implements PasswordReissueService {
     public boolean resetPassword(String username, String token, String secret, String rawPassword) {
         PasswordReissueInfo info = this.findOne(token);
         if (!passwordEncoder.matches(secret, info.getSecret())) {
-            passwordReissueFailureSharedService.resetFailure(username, token);
+            passwordReissueFailureService.resetFailure(username, token);
             throw new BusinessException(ResultMessages.error().add(E_SL_PR_5003));
         }
         failedPasswordReissueRepository.deleteByToken(token);

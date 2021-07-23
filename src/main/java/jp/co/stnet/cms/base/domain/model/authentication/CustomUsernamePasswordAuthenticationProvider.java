@@ -1,6 +1,6 @@
 package jp.co.stnet.cms.base.domain.model.authentication;
 
-import jp.co.stnet.cms.base.application.service.authentication.PermissionRoleSharedService;
+import jp.co.stnet.cms.base.application.service.authentication.PermissionRoleService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -25,7 +25,7 @@ public class CustomUsernamePasswordAuthenticationProvider extends DaoAuthenticat
 //    AccountSharedService accountSharedService;
 
     @Autowired
-    PermissionRoleSharedService permissionRoleSharedService;
+    PermissionRoleService permissionRoleService;
 
     private boolean matches(String ip, String subnet) {
         if ("0:0:0:0:0:0:0:1".equals(ip) || "127.0.0.1".equals(ip)) {
@@ -107,7 +107,7 @@ public class CustomUsernamePasswordAuthenticationProvider extends DaoAuthenticat
             }
         }
 
-        for (PermissionRole permissionRole : permissionRoleSharedService.findAllByRole(roleIds)) {
+        for (PermissionRole permissionRole : permissionRoleService.findAllByRole(roleIds)) {
             authorities.add(new SimpleGrantedAuthority(permissionRole.getPermission().name()));
         }
 

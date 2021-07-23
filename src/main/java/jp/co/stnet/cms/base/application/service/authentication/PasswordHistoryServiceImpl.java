@@ -15,7 +15,7 @@ import java.util.List;
 @Slf4j
 @Service
 @Transactional
-public class PasswordHistorySharedServiceImpl implements PasswordHistorySharedService {
+public class PasswordHistoryServiceImpl implements PasswordHistoryService {
 
     @Autowired
     PasswordHistoryRepository passwordHistoryRepository;

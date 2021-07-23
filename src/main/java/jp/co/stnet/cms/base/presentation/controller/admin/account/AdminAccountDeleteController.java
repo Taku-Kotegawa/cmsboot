@@ -1,6 +1,6 @@
 package jp.co.stnet.cms.base.presentation.controller.admin.account;
 
-import jp.co.stnet.cms.base.application.service.authentication.AccountService;
+import jp.co.stnet.cms.base.application.service.account.AccountService;
 import jp.co.stnet.cms.base.domain.model.authentication.LoggedInUser;
 import jp.co.stnet.cms.common.constant.Constants;
 import jp.co.stnet.cms.common.datatables.OperationsUtil;

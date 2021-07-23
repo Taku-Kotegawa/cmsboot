@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * PermissionRoleSharedService
  */
-public interface PermissionRoleSharedService {
+public interface PermissionRoleService {
 
     /**
      * ロールのコレクションで検索する。

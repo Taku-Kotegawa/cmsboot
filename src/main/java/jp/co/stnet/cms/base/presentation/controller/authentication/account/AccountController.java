@@ -3,7 +3,7 @@ package jp.co.stnet.cms.base.presentation.controller.authentication.account;
 
 import com.github.dozermapper.core.Mapper;
 import jp.co.stnet.cms.base.application.service.authentication.AccountSharedService;
-import jp.co.stnet.cms.base.application.service.filemanage.FileManagedSharedService;
+import jp.co.stnet.cms.base.application.service.filemanage.FileManagedService;
 import jp.co.stnet.cms.base.application.service.filemanage.FileUploadSharedService;
 import jp.co.stnet.cms.base.domain.model.authentication.Account;
 import jp.co.stnet.cms.base.domain.model.authentication.LoggedInUser;
@@ -44,7 +44,7 @@ public final class AccountController {
     AccountSharedService accountSharedService;
 
     @Autowired
-    FileManagedSharedService fileManagedSharedService;
+    FileManagedService fileManagedService;
 
     @Value(value = "classpath:images/nobody.png")
     Resource nobodyImage;
@@ -80,7 +80,7 @@ public final class AccountController {
         if (fileManaged != null) {
             headers.setContentType(fileManaged.getMediaType());
             return new ResponseEntity<byte[]>(
-                    fileManagedSharedService.getFile(fileManaged.getId()),
+                    fileManagedService.getFile(fileManaged.getId()),
                     headers,
                     HttpStatus.OK);
         } else {

@@ -1,4 +1,4 @@
-package jp.co.stnet.cms.base.application.repository.authentication;
+package jp.co.stnet.cms.base.application.repository.account;
 
 
 import jp.co.stnet.cms.base.domain.model.authentication.Account;

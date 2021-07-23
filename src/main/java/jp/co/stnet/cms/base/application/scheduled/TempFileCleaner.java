@@ -16,7 +16,7 @@
 package jp.co.stnet.cms.base.application.scheduled;
 
 
-import jp.co.stnet.cms.base.application.service.filemanage.FileManagedSharedService;
+import jp.co.stnet.cms.base.application.service.filemanage.FileManagedService;
 import jp.co.stnet.cms.base.application.service.filemanage.FileUploadSharedService;
 import jp.co.stnet.cms.common.auditing.CustomDateFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,12 +60,12 @@ public class TempFileCleaner {
     FileUploadSharedService fileUploadSharedService;
 
     @Autowired
-    FileManagedSharedService fileManagedSharedService;
+    FileManagedService fileManagedService;
 
     public void cleanup() {
 //        fileUploadSharedService.cleanUp(LocalDateTime.now().minusSeconds(cleanupInterval));
 //        fileManagedSharedService.cleanup(LocalDateTime.now().minusSeconds(cleanupInterval));
         fileUploadSharedService.cleanUp(dateFactory.newLocalDateTime().minusSeconds(cleanupInterval));
-        fileManagedSharedService.cleanup(dateFactory.newLocalDateTime().minusSeconds(cleanupInterval));
+        fileManagedService.cleanup(dateFactory.newLocalDateTime().minusSeconds(cleanupInterval));
     }
 }

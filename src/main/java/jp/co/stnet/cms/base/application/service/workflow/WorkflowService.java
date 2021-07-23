@@ -6,7 +6,7 @@ import jp.co.stnet.cms.base.domain.model.workflow.Workflow;
 
 import java.util.List;
 
-public interface WorkflowSharedService {
+public interface WorkflowService {
 
     /**
      * ワークフローステップを初期化する.

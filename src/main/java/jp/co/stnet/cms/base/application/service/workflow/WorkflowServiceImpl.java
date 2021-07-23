@@ -14,7 +14,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class WorkflowSharedServiceImpl implements WorkflowSharedService {
+public class WorkflowServiceImpl implements WorkflowService {
 
     private static final int STATUS_INIT = 0; // 未処理
     private static final int STATUS_WORKING = 1; // 対応中

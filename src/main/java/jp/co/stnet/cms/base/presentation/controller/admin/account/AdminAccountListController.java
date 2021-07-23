@@ -1,7 +1,7 @@
 package jp.co.stnet.cms.base.presentation.controller.admin.account;
 
 import com.github.dozermapper.core.Mapper;
-import jp.co.stnet.cms.base.application.service.authentication.AccountService;
+import jp.co.stnet.cms.base.application.service.account.AccountService;
 import jp.co.stnet.cms.base.application.service.authentication.AccountSharedService;
 import jp.co.stnet.cms.base.application.service.message.MailSendService;
 import jp.co.stnet.cms.base.domain.model.authentication.Account;

@@ -11,11 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class UnlockServiceImpl implements UnlockService {
 
     @Autowired
-    AuthenticationEventSharedService authenticationEventSharedService;
+    AuthenticationEventService authenticationEventService;
 
     @Override
     public void unlock(String username) {
-        authenticationEventSharedService.deleteFailureEventByUsername(username);
+        authenticationEventService.deleteFailureEventByUsername(username);
     }
 
 }

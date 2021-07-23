@@ -1,9 +1,9 @@
 package jp.co.stnet.cms.base.domain.model.authentication;
 
 
-import jp.co.stnet.cms.base.application.service.authentication.AccountService;
+import jp.co.stnet.cms.base.application.service.account.AccountService;
 import jp.co.stnet.cms.base.application.service.authentication.AccountSharedService;
-import jp.co.stnet.cms.base.application.service.authentication.PermissionRoleSharedService;
+import jp.co.stnet.cms.base.application.service.authentication.PermissionRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
@@ -23,7 +23,7 @@ public class CustomAuthenticationUserDetailService implements AuthenticationUser
     AccountSharedService accountSharedService;
 
     @Autowired
-    PermissionRoleSharedService permissionRoleSharedService;
+    PermissionRoleService permissionRoleService;
 
     @Override
     public UserDetails loadUserDetails(PreAuthenticatedAuthenticationToken token) throws UsernameNotFoundException {
@@ -52,7 +52,7 @@ public class CustomAuthenticationUserDetailService implements AuthenticationUser
             roleIds.add(roleLabel);
         }
 
-        for (PermissionRole permissionRole : permissionRoleSharedService.findAllByRole(roleIds)) {
+        for (PermissionRole permissionRole : permissionRoleService.findAllByRole(roleIds)) {
             authorities.add(new SimpleGrantedAuthority(permissionRole.getPermission().name()));
         }
 

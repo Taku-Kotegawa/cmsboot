@@ -16,7 +16,7 @@
 package jp.co.stnet.cms.common.validation;
 
 import jp.co.stnet.cms.base.application.service.authentication.AccountSharedService;
-import jp.co.stnet.cms.base.application.service.authentication.PasswordHistorySharedService;
+import jp.co.stnet.cms.base.application.service.authentication.PasswordHistoryService;
 import jp.co.stnet.cms.base.domain.model.authentication.Account;
 import jp.co.stnet.cms.base.domain.model.authentication.PasswordHistory;
 import jp.co.stnet.cms.base.domain.model.authentication.Role;
@@ -44,7 +44,7 @@ public class NotReusedPasswordValidator implements
     AccountSharedService accountSharedService;
 
     @Inject
-    PasswordHistorySharedService passwordHistorySharedService;
+    PasswordHistoryService passwordHistoryService;
 
     @Inject
     PasswordEncoder passwordEncoder;
@@ -114,9 +114,9 @@ public class NotReusedPasswordValidator implements
                                             String newPassword, ConstraintValidatorContext context) {
         LocalDateTime useFrom = LocalDateTime.now()
                 .minusMinutes(passwordHistoricalCheckingPeriod);
-        List<PasswordHistory> historyByTime = passwordHistorySharedService
+        List<PasswordHistory> historyByTime = passwordHistoryService
                 .findHistoriesByUseFrom(username, useFrom);
-        List<PasswordHistory> historyByCount = passwordHistorySharedService
+        List<PasswordHistory> historyByCount = passwordHistoryService
                 .findLatest(username, passwordHistoricalCheckingCount);
         List<PasswordHistory> history = historyByCount.size() > historyByTime
                 .size() ? historyByCount : historyByTime;

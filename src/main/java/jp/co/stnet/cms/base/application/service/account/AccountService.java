@@ -1,4 +1,4 @@
-package jp.co.stnet.cms.base.application.service.authentication;
+package jp.co.stnet.cms.base.application.service.account;
 
 
 import jp.co.stnet.cms.base.application.service.NodeIService;

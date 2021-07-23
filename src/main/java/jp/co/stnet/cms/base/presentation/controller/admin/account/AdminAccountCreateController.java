@@ -1,8 +1,8 @@
 package jp.co.stnet.cms.base.presentation.controller.admin.account;
 
 import com.github.dozermapper.core.Mapper;
-import jp.co.stnet.cms.base.application.service.authentication.AccountService;
-import jp.co.stnet.cms.base.application.service.filemanage.FileManagedSharedService;
+import jp.co.stnet.cms.base.application.service.account.AccountService;
+import jp.co.stnet.cms.base.application.service.filemanage.FileManagedService;
 import jp.co.stnet.cms.base.domain.model.authentication.Account;
 import jp.co.stnet.cms.base.domain.model.authentication.LoggedInUser;
 import jp.co.stnet.cms.base.domain.model.common.Status;
@@ -47,7 +47,7 @@ public class AdminAccountCreateController {
     PasswordEncoder passwordEncoder;
 
     @Autowired
-    FileManagedSharedService fileManagedSharedService;
+    FileManagedService fileManagedService;
 
     @Autowired
     AdminAccountAuthority authority;
@@ -78,7 +78,7 @@ public class AdminAccountCreateController {
         }
 
         if (form.getImageUuid() != null) {
-            form.setImageManaged(fileManagedSharedService.findByUuid(form.getImageUuid()));
+            form.setImageManaged(fileManagedService.findByUuid(form.getImageUuid()));
         }
 
         model.addAttribute("buttonState", helper.getButtonStateMap(Constants.OPERATION.CREATE, null, form).asMap());

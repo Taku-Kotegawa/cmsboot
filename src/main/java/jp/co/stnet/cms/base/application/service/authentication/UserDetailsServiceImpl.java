@@ -27,7 +27,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     AccountSharedService accountSharedService;
 
     @Autowired
-    PermissionRoleSharedService permissionRoleSharedService;
+    PermissionRoleService permissionRoleService;
 
     @Override
     @Transactional(readOnly = true)
@@ -50,7 +50,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 }
             }
 
-            for (PermissionRole permissionRole : permissionRoleSharedService.findAllByRole(roleIds)) {
+            for (PermissionRole permissionRole : permissionRoleService.findAllByRole(roleIds)) {
                 authorities.add(new SimpleGrantedAuthority(permissionRole.getPermission().name()));
             }
 

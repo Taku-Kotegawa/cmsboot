@@ -15,7 +15,7 @@
  */
 package jp.co.stnet.cms.common.events;
 
-import jp.co.stnet.cms.base.application.service.authentication.AuthenticationEventSharedService;
+import jp.co.stnet.cms.base.application.service.authentication.AuthenticationEventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.authentication.event.AuthenticationFailureBadCredentialsEvent;
@@ -28,12 +28,12 @@ import org.springframework.stereotype.Component;
 public class AccountAuthenticationFailureBadCredentialsEventListener {
 
     @Autowired
-    AuthenticationEventSharedService authenticationEventSharedService;
+    AuthenticationEventService authenticationEventService;
 
     @EventListener(AuthenticationFailureBadCredentialsEvent.class)
     public void onApplicationEvent(AuthenticationFailureBadCredentialsEvent event) {
         String username = (String) event.getAuthentication().getPrincipal();
-        authenticationEventSharedService.authenticationFailure(username);
+        authenticationEventService.authenticationFailure(username);
     }
 
 }

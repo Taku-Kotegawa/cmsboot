@@ -2,9 +2,8 @@ package jp.co.stnet.cms.common.datatables;
 
 
 
-import jp.co.stnet.cms.common.util.StStringUtils;
+import jp.co.stnet.cms.common.util.StringUtils;
 import lombok.Data;
-import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
@@ -142,10 +141,10 @@ public class DataTablesInput {
         List<String> orderClause = new ArrayList<>();
         for (Order order : this.getOrder()) {
             orderClause.add(
-                    StStringUtils.toLowerSnakeCase(this.getColumns().get(order.getColumn()).getData())
+                    StringUtils.toLowerSnakeCase(this.getColumns().get(order.getColumn()).getData())
                             + " " + order.getDir());
         }
-        return StringUtils.join(orderClause, ',');
+        return org.apache.commons.lang3.StringUtils.join(orderClause, ',');
     }
 
 }

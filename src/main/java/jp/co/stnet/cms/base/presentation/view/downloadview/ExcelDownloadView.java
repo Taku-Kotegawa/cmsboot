@@ -2,7 +2,7 @@ package jp.co.stnet.cms.base.presentation.view.downloadview;
 
 
 import jp.co.stnet.cms.common.util.PoiUtils;
-import jp.co.stnet.cms.common.util.StStringUtils;
+import jp.co.stnet.cms.common.util.StringUtils;
 import jp.co.stnet.cms.example.domain.model.simpleentity.SimpleEntity;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -56,8 +56,8 @@ public class ExcelDownloadView extends AbstractFileDownloadView {
 
     private void setValue(Row row, int i, SimpleEntity entity) {
         row.getCell(0).setCellValue(entity.getId());
-        row.getCell(1).setCellValue(StStringUtils.nvl(entity.getText01()));
-        row.getCell(2).setCellValue(StStringUtils.nvl(entity.getDate01().toString()));
+        row.getCell(1).setCellValue(StringUtils.nvl(entity.getText01()));
+        row.getCell(2).setCellValue(StringUtils.nvl(entity.getDate01().toString()));
         // getRow/getCellを使う場合、値が入っていないセルを参照するとNullPointerExceptionが発生する。(参照先のセルに罫線を引いておけばOK)
     }
 

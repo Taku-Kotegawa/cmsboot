@@ -2,7 +2,7 @@ package jp.co.stnet.cms.sales.application.service.document;
 
 import jp.co.stnet.cms.base.application.repository.NodeRevRepository;
 import jp.co.stnet.cms.base.application.service.AbstractNodeRevService;
-import jp.co.stnet.cms.base.application.service.filemanage.FileManagedSharedService;
+import jp.co.stnet.cms.base.application.service.filemanage.FileManagedService;
 import jp.co.stnet.cms.sales.application.repository.document.DocumentIndexRepository;
 import jp.co.stnet.cms.sales.application.repository.document.DocumentRepository;
 import jp.co.stnet.cms.sales.application.repository.document.DocumentRevisionRepository;
@@ -30,7 +30,7 @@ public class DocumentServiceImpl extends AbstractNodeRevService<Document, Docume
     @Autowired
     DocumentIndexRepository documentIndexRepository;
     @Autowired
-    FileManagedSharedService fileManagedSharedService;
+    FileManagedService fileManagedService;
 
     protected DocumentServiceImpl() {
         super(Document.class, DocumentRevision.class, DocumentMaxRev.class);
@@ -71,8 +71,8 @@ public class DocumentServiceImpl extends AbstractNodeRevService<Document, Docume
 
         if (saved.getFiles() != null) {
             for (File file : saved.getFiles()) {
-                fileManagedSharedService.permanent(file.getFileUuid());
-                fileManagedSharedService.permanent(file.getPdfUuid());
+                fileManagedService.permanent(file.getFileUuid());
+                fileManagedService.permanent(file.getPdfUuid());
             }
         }
 
@@ -90,8 +90,8 @@ public class DocumentServiceImpl extends AbstractNodeRevService<Document, Docume
 
         if (saved.getFiles() != null) {
             for (File file : saved.getFiles()) {
-                fileManagedSharedService.permanent(file.getFileUuid());
-                fileManagedSharedService.permanent(file.getPdfUuid());
+                fileManagedService.permanent(file.getFileUuid());
+                fileManagedService.permanent(file.getPdfUuid());
             }
         }
 
@@ -119,8 +119,8 @@ public class DocumentServiceImpl extends AbstractNodeRevService<Document, Docume
         Document document = documentRepository.findById(id).orElse(null);
         if (document != null && document.getFiles() != null) {
             for (File file : document.getFiles()) {
-                fileManagedSharedService.permanent(file.getFileUuid());
-                fileManagedSharedService.permanent(file.getPdfUuid());
+                fileManagedService.permanent(file.getFileUuid());
+                fileManagedService.permanent(file.getPdfUuid());
             }
         }
 
@@ -225,7 +225,7 @@ public class DocumentServiceImpl extends AbstractNodeRevService<Document, Docume
         }
 
         try {
-            return fileManagedSharedService.escapeContent(fileManagedSharedService.getContent(uuid));
+            return fileManagedService.escapeContent(fileManagedService.getContent(uuid));
 
         } catch (IOException | TikaException e) {
             e.printStackTrace();

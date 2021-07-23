@@ -17,7 +17,7 @@ import java.util.List;
 @Slf4j
 @Service
 @Transactional
-public class AuthenticationEventSharedServiceImpl implements AuthenticationEventSharedService {
+public class AuthenticationEventServiceImpl implements AuthenticationEventService {
 
     @Autowired
     SuccessfulAuthenticationRepository successfulAuthenticationRepository;

@@ -2,7 +2,7 @@ package jp.co.stnet.cms.base.presentation.controller.admin.accesscounter;
 
 import com.github.dozermapper.core.Mapper;
 import jp.co.stnet.cms.base.application.service.accesscounter.AccessCounterService;
-import jp.co.stnet.cms.base.application.service.filemanage.FileManagedSharedService;
+import jp.co.stnet.cms.base.application.service.filemanage.FileManagedService;
 import jp.co.stnet.cms.base.domain.model.authentication.LoggedInUser;
 import jp.co.stnet.cms.base.domain.model.common.AccessCounter;
 import jp.co.stnet.cms.base.domain.model.common.Status;
@@ -52,7 +52,7 @@ public class AccessCounterController {
     AccessCounterService accessCounterService;
 
     @Autowired
-    FileManagedSharedService fileManagedSharedService;
+    FileManagedService fileManagedService;
 
     @Autowired
     AccessCounterAuthority authority;
@@ -210,7 +210,7 @@ public class AccessCounterController {
 
         authority.hasAuthority(Constants.OPERATION.DOWNLOAD, loggedInUser);
 
-        model.addAttribute(fileManagedSharedService.findByUuid(uuid));
+        model.addAttribute(fileManagedService.findByUuid(uuid));
         return "fileManagedDownloadView";
     }
 

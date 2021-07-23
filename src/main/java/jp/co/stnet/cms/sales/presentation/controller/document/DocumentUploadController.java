@@ -1,6 +1,6 @@
 package jp.co.stnet.cms.sales.presentation.controller.document;
 
-import jp.co.stnet.cms.base.application.service.filemanage.FileManagedSharedService;
+import jp.co.stnet.cms.base.application.service.filemanage.FileManagedService;
 import jp.co.stnet.cms.base.domain.model.authentication.LoggedInUser;
 import jp.co.stnet.cms.base.domain.model.filemanage.FileManaged;
 import jp.co.stnet.cms.base.presentation.controller.admin.upload.UploadForm;
@@ -36,7 +36,7 @@ public class DocumentUploadController {
     DocumentAuthority authority;
 
     @Autowired
-    FileManagedSharedService fileManagedSharedService;
+    FileManagedService fileManagedService;
 
     @Autowired
     JobStarter jobStarter;
@@ -57,7 +57,7 @@ public class DocumentUploadController {
         form.setJobName(UPLOAD_JOB_ID);
 
         if (form.getUploadFileUuid() != null) {
-            form.setUploadFileManaged(fileManagedSharedService.findByUuid(form.getUploadFileUuid()));
+            form.setUploadFileManaged(fileManagedService.findByUuid(form.getUploadFileUuid()));
         }
 
         model.addAttribute("pageTitle", "Import Document");
@@ -86,8 +86,8 @@ public class DocumentUploadController {
             return uploadForm(form, model, loggedInUser);
         }
 
-        FileManaged uploadFile = fileManagedSharedService.findByUuid(form.getUploadFileUuid());
-        String uploadFileAbsolutePath = fileManagedSharedService.getFileStoreBaseDir() + uploadFile.getUri();
+        FileManaged uploadFile = fileManagedService.findByUuid(form.getUploadFileUuid());
+        String uploadFileAbsolutePath = fileManagedService.getFileStoreBaseDir() + uploadFile.getUri();
         String jobParams = "inputFile=" + uploadFileAbsolutePath;
         jobParams += ", encoding=" + form.getEncoding();
         jobParams += ", filetype=" + form.getFileType();

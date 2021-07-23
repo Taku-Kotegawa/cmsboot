@@ -1,8 +1,8 @@
 package jp.co.stnet.cms.base.presentation.controller.admin.account;
 
 import com.github.dozermapper.core.Mapper;
-import jp.co.stnet.cms.base.application.service.authentication.AccountService;
-import jp.co.stnet.cms.base.application.service.filemanage.FileManagedSharedService;
+import jp.co.stnet.cms.base.application.service.account.AccountService;
+import jp.co.stnet.cms.base.application.service.filemanage.FileManagedService;
 import jp.co.stnet.cms.base.domain.model.authentication.Account;
 import jp.co.stnet.cms.base.domain.model.authentication.LoggedInUser;
 import jp.co.stnet.cms.base.domain.model.common.Status;
@@ -39,7 +39,7 @@ public class AdminAccountDownloadController {
     AdminAccountAuthority authority;
 
     @Autowired
-    FileManagedSharedService fileManagedSharedService;
+    FileManagedService fileManagedService;
 
     @Autowired
     Mapper beanMapper;
@@ -110,7 +110,7 @@ public class AdminAccountDownloadController {
 
         authority.hasAuthority(Constants.OPERATION.UPDATE, loggedInUser);
 
-        FileManaged fileManaged = fileManagedSharedService.findByUuid(uuid);
+        FileManaged fileManaged = fileManagedService.findByUuid(uuid);
         model.addAttribute(fileManaged);
         return "fileManagedDownloadView";
     }

@@ -5,14 +5,13 @@ import jp.co.stnet.cms.base.domain.model.filemanage.FileManaged;
 import org.apache.tika.exception.TikaException;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
 /**
- * FileManagedSharedService
+ * ファイルを操作するクラス
  */
-public interface FileManagedSharedService {
+public interface FileManagedService {
 
     /**
      * idでファイルを取得する。
@@ -22,13 +21,13 @@ public interface FileManagedSharedService {
      */
     byte[] getFile(Long id);
 
-    /**
-     * uuidでファイルを取得する。
-     *
-     * @param uuid uuid
-     * @return ファイル
-     */
-    byte[] getFile(String uuid);
+//    /**
+//     * uuidでファイルを取得する。
+//     *
+//     * @param uuid uuid
+//     * @return ファイル
+//     */
+//    byte[] getFile(String uuid);
 
     /**
      * idでFileManagedを検索する。

@@ -1,7 +1,7 @@
 package jp.co.stnet.cms.common.datatables;
 
 
-import jp.co.stnet.cms.common.util.StStringUtils;
+import jp.co.stnet.cms.common.util.StringUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -58,6 +58,6 @@ public class Column {
     }
 
     public String getDbname() {
-        return StStringUtils.toLowerSnakeCase(this.data);
+        return StringUtils.toLowerSnakeCase(this.data);
     }
 }

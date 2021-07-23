@@ -1,9 +1,9 @@
 package jp.co.stnet.cms.base.presentation.controller.admin.account;
 
 import com.github.dozermapper.core.Mapper;
-import jp.co.stnet.cms.base.application.service.authentication.AccountService;
+import jp.co.stnet.cms.base.application.service.account.AccountService;
 import jp.co.stnet.cms.base.application.service.authentication.UnlockService;
-import jp.co.stnet.cms.base.application.service.filemanage.FileManagedSharedService;
+import jp.co.stnet.cms.base.application.service.filemanage.FileManagedService;
 import jp.co.stnet.cms.base.domain.model.authentication.Account;
 import jp.co.stnet.cms.base.domain.model.authentication.LoggedInUser;
 import jp.co.stnet.cms.common.constant.Constants;
@@ -47,7 +47,7 @@ public class AdminAccountUpdateController {
     AdminAccountAuthority authority;
 
     @Autowired
-    FileManagedSharedService fileManagedSharedService;
+    FileManagedService fileManagedService;
 
     @Autowired
     UnlockService unlockService;
@@ -80,7 +80,7 @@ public class AdminAccountUpdateController {
         Account account = accountService.findById(username);
 
         if (form.getImageUuid() != null) {
-            form.setImageManaged(fileManagedSharedService.findByUuid(form.getImageUuid()));
+            form.setImageManaged(fileManagedService.findByUuid(form.getImageUuid()));
         }
 
         // 初回表示(入力チェックエラー時の再表示でない場合)

@@ -1,7 +1,7 @@
 package jp.co.stnet.cms.base.presentation.view.downloadview;
 
 
-import jp.co.stnet.cms.base.application.service.filemanage.FileManagedSharedService;
+import jp.co.stnet.cms.base.application.service.filemanage.FileManagedService;
 import jp.co.stnet.cms.base.domain.model.filemanage.FileManaged;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,7 +20,7 @@ import java.util.Map;
 public class FileManagedDownloadView extends AbstractFileDownloadView {
 
     @Autowired
-    FileManagedSharedService fileManagedSharedService;
+    FileManagedService fileManagedService;
     @Value("${file.store.basedir}")
     private String STORE_BASEDIR;
 

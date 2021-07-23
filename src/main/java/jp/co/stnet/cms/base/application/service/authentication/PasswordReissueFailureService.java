@@ -18,7 +18,7 @@ package jp.co.stnet.cms.base.application.service.authentication;
 /**
  * PasswordReissueFailureSharedService
  */
-public interface PasswordReissueFailureSharedService {
+public interface PasswordReissueFailureService {
 
     /**
      * ? パスワード変更認証の失敗を記録する。

@@ -1,7 +1,7 @@
 package jp.co.stnet.cms.example.presentation.controller.simpleentity;
 
 import com.github.dozermapper.core.Mapper;
-import jp.co.stnet.cms.base.application.service.filemanage.FileManagedSharedService;
+import jp.co.stnet.cms.base.application.service.filemanage.FileManagedService;
 import jp.co.stnet.cms.base.domain.model.authentication.LoggedInUser;
 import jp.co.stnet.cms.base.domain.model.common.Status;
 import jp.co.stnet.cms.base.domain.model.filemanage.FileManaged;
@@ -71,7 +71,7 @@ public class SimpleEntityController {
     SimpleEntityService simpleEntityService;
 
     @Autowired
-    FileManagedSharedService fileManagedSharedService;
+    FileManagedService fileManagedService;
 
     @Autowired
     SimpleEntityAuthority authority;
@@ -416,7 +416,7 @@ public class SimpleEntityController {
 
         // TODO 厳密な権限チェック
 
-        model.addAttribute(fileManagedSharedService.findByUuid(uuid));
+        model.addAttribute(fileManagedService.findByUuid(uuid));
         return "fileManagedDownloadView";
     }
 
@@ -511,7 +511,7 @@ public class SimpleEntityController {
 
             if (source.getAttachedFile01Uuid() != null) {
                 try {
-                    FileManaged file = fileManagedSharedService.copyFile(source.getAttachedFile01Uuid());
+                    FileManaged file = fileManagedService.copyFile(source.getAttachedFile01Uuid());
                     form.setAttachedFile01Uuid(file.getUuid());
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -546,7 +546,7 @@ public class SimpleEntityController {
     private void setFileManagedToForm(SimpleEntityForm form) {
         // TODO ファイルフィールドごとに調整
         if (form.getAttachedFile01Uuid() != null) {
-            form.setAttachedFile01Managed(fileManagedSharedService.findByUuid(form.getAttachedFile01Uuid()));
+            form.setAttachedFile01Managed(fileManagedService.findByUuid(form.getAttachedFile01Uuid()));
         }
     }
 
@@ -973,7 +973,7 @@ public class SimpleEntityController {
         form.setJobName("job03");
 
         if (form.getUploadFileUuid() != null) {
-            form.setUploadFileManaged(fileManagedSharedService.findByUuid(form.getUploadFileUuid()));
+            form.setUploadFileManaged(fileManagedService.findByUuid(form.getUploadFileUuid()));
         }
 
         model.addAttribute("pageTitle", "Import SimpleEntity");
@@ -1001,8 +1001,8 @@ public class SimpleEntityController {
             return uploadForm(form, model, loggedInUser);
         }
 
-        FileManaged uploadFile = fileManagedSharedService.findByUuid(form.getUploadFileUuid());
-        String uploadFileAbsolutePath = fileManagedSharedService.getFileStoreBaseDir() + uploadFile.getUri();
+        FileManaged uploadFile = fileManagedService.findByUuid(form.getUploadFileUuid());
+        String uploadFileAbsolutePath = fileManagedService.getFileStoreBaseDir() + uploadFile.getUri();
         String jobParams = "inputFile=" + uploadFileAbsolutePath;
         jobParams += ", encoding=" + form.getEncoding();
         jobParams += ", filetype=" + form.getFileType();
