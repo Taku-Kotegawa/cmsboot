@@ -17,12 +17,6 @@ import static jp.co.stnet.cms.common.validation.ParseableType.TO_LONG;
 @CsvEntity
 public class DocumentCsvBean implements Serializable {
 
-    /**
-     * ItemStreamReader用のフィールド名定義(ImportDocumentTaskletで使用)
-     * フィールド変更時に修正要
-     */
-    public static String[] columns = {"id", "status", "statusLabel", "documentNumber", "title", "versionNumber", "docCategory1", "docCategoryValue1", "docCategory2", "docCategoryValue2", "docService1", "docServiceValue1", "docService2", "docServiceValue2", "docService3", "docServiceValue3", "publishedDate", "lastRevisedDate", "invalidationDate", "announceDate", "chargePersonForCreation", "chargePersonForPublish", "responsiblePersonForPublish", "departmentForCreation", "departmentForPublish", "remark", "reasonForChange", "filesLabel", "pdfFilesLabel", "fileMemo", "useStage", "useStageLabel", "publicScope", "publicScopeLabel", "customerPublic", "customerPublicLabel", "body", "lastModifiedDate", "lastModifiedBy", "lastModifiedByLabel"};
-
     @Parseable(value = TO_LONG)
     @CsvColumn(name = "id")
     private String id;

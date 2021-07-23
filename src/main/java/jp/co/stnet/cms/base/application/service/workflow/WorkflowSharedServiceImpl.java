@@ -16,24 +16,24 @@ import java.util.Map;
 
 public class WorkflowSharedServiceImpl implements WorkflowSharedService {
 
-    private final int STATUS_INIT = 0; // 未処理
-    private final int STATUS_WORKING = 1; // 対応中
-    private final int STATUS_COMPLETE = 2; // 完了
-    private final int STATUS_REJECT = 3; // 差戻し
-    private final int STATUS_PULLBACK = 4; // 引戻し
+    private static final int STATUS_INIT = 0; // 未処理
+    private static final int STATUS_WORKING = 1; // 対応中
+    private static final int STATUS_COMPLETE = 2; // 完了
+    private static final int STATUS_REJECT = 3; // 差戻し
+    private static final int STATUS_PULLBACK = 4; // 引戻し
 
-    private final String GO_NEXT = "goNext";
-    private final String RETURN_PREV = "returnPrev";
-    private final String PULL_BACK = "pullBack";
-    private final String INITIALIZE = "initialize";
+    private static final String GO_NEXT = "goNext";
+    private static final String RETURN_PREV = "returnPrev";
+    private static final String PULL_BACK = "pullBack";
+    private static final String INITIALIZE = "initialize";
 
 
-    private final int FIRST_STEP_NO = 1;
-    private final int LAST_STEP_NO = 10;
+    private static final int FIRST_STEP_NO = 1;
+    private static final int LAST_STEP_NO = 10;
 
 
     // ステータスの優先順位(2:完了->3:差戻->4:引戻->1:対応中->0:未対応)
-    private final Map<Integer, Integer> STATUS_ORDER = new LinkedHashMap<Integer, Integer>() {{
+    private static final Map<Integer, Integer> STATUS_ORDER = new LinkedHashMap<Integer, Integer>() {{
         put(STATUS_COMPLETE, 1);
         put(STATUS_REJECT, 2);
         put(STATUS_PULLBACK, 3);
@@ -41,7 +41,7 @@ public class WorkflowSharedServiceImpl implements WorkflowSharedService {
         put(STATUS_INIT, 5);
     }};
 
-    private final List<String> OPERATIONS = new ArrayList<String>() {{
+    private static final List<String> OPERATIONS = new ArrayList<String>() {{
         add(GO_NEXT);
         add(RETURN_PREV);
         add(PULL_BACK);

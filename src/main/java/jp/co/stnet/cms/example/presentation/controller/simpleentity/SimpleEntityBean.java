@@ -4,8 +4,12 @@ package jp.co.stnet.cms.example.presentation.controller.simpleentity;
 import jp.co.stnet.cms.base.domain.model.filemanage.FileManaged;
 import jp.co.stnet.cms.example.domain.model.simpleentity.SimpleEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class SimpleEntityBean extends SimpleEntity {
 
     /**

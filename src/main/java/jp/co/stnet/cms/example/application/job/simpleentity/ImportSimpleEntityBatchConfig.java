@@ -32,9 +32,9 @@ public class ImportSimpleEntityBatchConfig {
     @Autowired
     ImportSimpleEntityTasklet importSimpleEntityTasklet;
 
-    private final String[] columns = {"id", "status", "text01", "text02", "text03", "text04", "text05", "radio01", "radio02", "checkbox01", "checkbox02", "textarea01", "date01", "datetime01", "select01", "select02", "select03", "select04", "combobox01", "combobox02", "combobox03", "attachedFile01Uuid"};
+    private static final String[] columns = {"id", "status", "text01", "text02", "text03", "text04", "text05", "radio01", "radio02", "checkbox01", "checkbox02", "textarea01", "date01", "datetime01", "select01", "select02", "select03", "select04", "combobox01", "combobox02", "combobox03", "attachedFile01Uuid"};
 
-    private final String jobId = "job03";
+    private static final String jobId = "job03";
 
     @Bean
     @StepScope

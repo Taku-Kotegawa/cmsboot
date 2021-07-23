@@ -17,9 +17,8 @@ public class MessageKeysGen {
                 + targetClazz.getName().replaceAll(Pattern.quote("."), "/")
                 + ".java");
         System.out.println("write " + output.getAbsolutePath());
-        PrintWriter pw = new PrintWriter(FileUtils.openOutputStream(output));
 
-        try {
+        try (PrintWriter pw = new PrintWriter(FileUtils.openOutputStream(output))) {
             pw.println("package " + targetClazz.getPackage().getName() + ";");
             pw.println("/**");
             pw.println(" * Message Id");
@@ -28,9 +27,9 @@ public class MessageKeysGen {
 
             String line;
 
-            for (int i = 0; i < messageProperties.length; i++) {
+            for (String messageProperty : messageProperties) {
 
-                InputStream inputStream = new FileInputStream(messageProperties[i]);
+                InputStream inputStream = new FileInputStream(messageProperty);
                 BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
 
                 while ((line = br.readLine()) != null) {
@@ -57,8 +56,6 @@ public class MessageKeysGen {
 
             pw.println("}");
             pw.flush();
-        } finally {
-            pw.close();
         }
     }
 }

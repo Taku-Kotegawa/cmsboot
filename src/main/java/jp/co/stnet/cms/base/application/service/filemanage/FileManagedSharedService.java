@@ -56,15 +56,15 @@ public interface FileManagedSharedService {
      */
     FileManaged store(MultipartFile file, String fileType) throws IOException;
 
-    /**
-     * ファイルを保存する。(一時保存)
-     *
-     * @param file     File
-     * @param fileType ファイルタイプ
-     * @return FileManaged
-     * @throws IOException ファイル操作例外
-     */
-    FileManaged store(File file, String fileType) throws IOException;
+//    /**
+//     * ファイルを保存する。(一時保存)
+//     *
+//     * @param file     File
+//     * @param fileType ファイルタイプ
+//     * @return FileManaged
+//     * @throws IOException ファイル操作例外
+//     */
+//    FileManaged store(File file, String fileType) throws IOException;
 
     /**
      * ファイルのステータスを一時保存から永久保存に変更する。

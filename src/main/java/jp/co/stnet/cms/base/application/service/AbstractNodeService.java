@@ -12,8 +12,9 @@ import jp.co.stnet.cms.common.exception.NoChangeBusinessException;
 import jp.co.stnet.cms.common.exception.OptimisticLockingFailureBusinessException;
 import jp.co.stnet.cms.common.message.MessageKeys;
 import jp.co.stnet.cms.common.util.BeanUtils;
-import jp.co.stnet.cms.common.util.StringUtils;
+
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.QueryHints;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -45,10 +46,10 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
     protected final Map<String, Annotation> relationFieldsMap;
 
     @Autowired
-    public Mapper beanMapper;
+    protected Mapper beanMapper;
 
     @PersistenceContext
-    EntityManager entityManager;
+    protected EntityManager entityManager;
 
     protected AbstractNodeService(Class<T> clazz) {
         this.clazz = clazz;
@@ -403,8 +404,6 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
             String orderClause;
             if (isCollection(convertColumnName)) {
                 orderClause = convertColumnName + " " + order.getDir();
-            } else if (isRelation(originalFiledName)) {
-                orderClause = "c." + convertColumnName + " " + order.getDir();
             } else {
                 orderClause = "c." + convertColumnName + " " + order.getDir();
             }
@@ -782,7 +781,7 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
 
         String entityName = null;
         if (fieldName != null && fieldName.contains(".")) {
-            entityName = fieldName.substring(0, fieldName.indexOf("."));
+            entityName = fieldName.substring(0, fieldName.indexOf('.'));
         }
 
         if (relationFieldsMap.containsKey(entityName)) {

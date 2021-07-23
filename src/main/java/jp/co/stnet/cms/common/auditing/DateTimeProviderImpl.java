@@ -1,6 +1,7 @@
 package jp.co.stnet.cms.common.auditing;
 
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.auditing.DateTimeProvider;
 

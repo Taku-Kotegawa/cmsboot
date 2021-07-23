@@ -1,7 +1,7 @@
 package jp.co.stnet.cms.base.domain.model.authentication;
 
 import jp.co.stnet.cms.base.application.service.authentication.PermissionRoleSharedService;
-import jp.co.stnet.cms.common.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

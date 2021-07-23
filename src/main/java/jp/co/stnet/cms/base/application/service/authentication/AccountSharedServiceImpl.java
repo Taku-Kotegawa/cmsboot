@@ -18,7 +18,6 @@ package jp.co.stnet.cms.base.application.service.authentication;
 import com.github.dozermapper.core.Mapper;
 import jp.co.stnet.cms.base.application.repository.authentication.AccountRepository;
 import jp.co.stnet.cms.base.application.service.filemanage.FileManagedSharedService;
-import jp.co.stnet.cms.base.application.service.filemanage.FileUploadSharedService;
 import jp.co.stnet.cms.base.domain.model.authentication.Account;
 import jp.co.stnet.cms.base.domain.model.authentication.FailedAuthentication;
 import jp.co.stnet.cms.base.domain.model.authentication.PasswordHistory;
@@ -57,9 +56,6 @@ public class AccountSharedServiceImpl implements AccountSharedService {
 
     @Autowired
     AccountRepository accountRepository;
-
-    @Autowired
-    FileUploadSharedService fileUploadSharedService;
 
     @Autowired
     FileManagedSharedService fileManagedSharedService;
@@ -129,15 +125,6 @@ public class AccountSharedServiceImpl implements AccountSharedService {
         account.setStatus(Status.INVALID.getCodeValue());
         accountRepository.save(account);
 
-//        if (imageId != null) {
-//            TempFile tempFile = fileUploadSharedService.findTempFile(imageId);
-//            AccountImage image = AccountImage.builder()
-//                    .username(account.getUsername())
-//                    .extension(StringUtils.getFilenameExtension(tempFile.getOriginalName()))
-//                    .body(tempFile.getBody()).build();
-//            accountImageRepository.save(image);
-//        }
-
         return rawPassword;
     }
 
@@ -199,7 +186,7 @@ public class AccountSharedServiceImpl implements AccountSharedService {
 
         Account account = findOne(username);
         account.setPassword(password);
-        account = accountRepository.save(account);
+        accountRepository.save(account);
 
         passwordHistorySharedService.insert(
                 PasswordHistory.builder()
@@ -215,7 +202,7 @@ public class AccountSharedServiceImpl implements AccountSharedService {
 
         Account account = findOne(username);
         account.setEmail(email);
-        account = accountRepository.save(account);
+        accountRepository.save(account);
 
         return true;
     }
@@ -223,14 +210,14 @@ public class AccountSharedServiceImpl implements AccountSharedService {
     @Override
     @CacheEvict(value = {"isInitialPassword", "isCurrentPasswordExpired"}, key = "#username")
     public void clearPasswordValidationCache(String username) {
+        return;
     }
 
     @Override
     public FileManaged getImage(String username) {
         Account account = accountRepository.findById(username)
                 .orElseThrow(() -> new ResourceNotFoundException(ResultMessages.error().add(E_SL_FW_5001, username)));
-        FileManaged fileManaged = fileManagedSharedService.findByUuid(account.getImageUuid());
-        return fileManaged;
+        return fileManagedSharedService.findByUuid(account.getImageUuid());
     }
 
 }

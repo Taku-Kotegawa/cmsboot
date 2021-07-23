@@ -25,7 +25,7 @@ public class RequestDataValueProcessorPostProcessor implements BeanDefinitionReg
 
         // (2)
         ConstructorArgumentValues cav = new ConstructorArgumentValues();
-        List<RequestDataValueProcessor> values = new ArrayList<RequestDataValueProcessor>();
+        List<RequestDataValueProcessor> values = new ArrayList<>();
         values.add(new TransactionTokenRequestDataValueProcessor());
         values.add(new CsrfRequestDataValueProcessor());
         cav.addGenericArgumentValue(values);

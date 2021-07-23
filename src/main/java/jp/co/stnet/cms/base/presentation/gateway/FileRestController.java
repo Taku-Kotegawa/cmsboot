@@ -40,7 +40,7 @@ public class FileRestController {
 
             // ファイルサイズのチェック
             if (fileType.getFileSize() != null && !fileType.getFileSize().isEmpty()) {
-                if (Integer.valueOf(fileType.getFileSize()) * 1024 * 1024 < multipartFile.getSize()) {
+                if (Long.parseLong(fileType.getFileSize()) * 1024 * 1024 < multipartFile.getSize()) {
                     return UploadFileResult.builder()
                             .message("Upload Fail. [ファイルが大きすぎます。(" + fileType.getFileSize() + "MBまで)]")
                             .build();

@@ -34,7 +34,6 @@ import java.util.Map;
 public class InputValidationFilter extends OncePerRequestFilter {
 
     private final List<Character> prohibitedChars;
-
     private final List<Character> prohibitedCharsForFileName;
 
     public InputValidationFilter(char[] prohibitedChars,
@@ -45,8 +44,7 @@ public class InputValidationFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response, FilterChain filterChain)
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         if (request != null) {
             validateRequestParams(request);
@@ -71,11 +69,12 @@ public class InputValidationFilter extends OncePerRequestFilter {
     }
 
     private void validateFileNames(MultipartRequest request) {
-        for (Map.Entry<String, MultipartFile> entry : request.getFileMap()
-                .entrySet()) {
-            String filename = new File(entry.getValue().getOriginalFilename())
-                    .getName();
-            validate(filename, prohibitedCharsForFileName);
+        for (Map.Entry<String, MultipartFile> entry : request.getFileMap().entrySet()) {
+            if (entry.getValue() != null && entry.getValue().getOriginalFilename() != null) {
+                String filename = new File(entry.getValue().getOriginalFilename())
+                        .getName();
+                validate(filename, prohibitedCharsForFileName);
+            }
         }
     }
 

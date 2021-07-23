@@ -4,8 +4,8 @@ import jp.co.stnet.cms.base.domain.model.authentication.Account;
 import jp.co.stnet.cms.base.domain.model.common.Status;
 import jp.co.stnet.cms.common.constant.Constants;
 import jp.co.stnet.cms.common.util.StateMap;
-import jp.co.stnet.cms.common.util.StringUtils;
 import lombok.NonNull;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import javax.validation.groups.Default;

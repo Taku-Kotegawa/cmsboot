@@ -35,7 +35,7 @@ public class FileNamePatternValidator implements
     @Override
     public boolean isValid(MultipartFile value,
                            ConstraintValidatorContext context) {
-        if (value == null) {
+        if (value == null || value.getOriginalFilename() == null) {
             return true;
         }
 

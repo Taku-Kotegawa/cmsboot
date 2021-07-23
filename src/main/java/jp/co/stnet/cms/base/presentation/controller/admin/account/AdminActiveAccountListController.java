@@ -19,8 +19,8 @@ import static jp.co.stnet.cms.base.presentation.controller.admin.account.AdminAc
 @RequestMapping(BASE_PATH)
 public class AdminActiveAccountListController {
 
-    private final String BASE_PATH = "admin/account";
-    private final String JSP_ACTIVE_LIST = BASE_PATH + "/activeList";
+    private static final String BASE_PATH = "admin/account";
+    private static final String JSP_ACTIVE_LIST = BASE_PATH + "/activeList";
 
     @Autowired
     AccountService accountService;

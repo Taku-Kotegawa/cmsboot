@@ -200,15 +200,6 @@ public class OperationsUtil {
         return baseUrl + convId(URL_DOWNLOAD, uuid);
     }
 
-    /**
-     * 「スイッチ」ボタンのURLを返す。
-     *
-     * @param id ID
-     * @return URL
-     */
-//    public String getSwitchUserUrl(String id) {
-//        return baseUrl + convId(URL_SWITCH_USER, id);
-//    }
 
     // ------ Link<A> -----------------------------------------------
 
@@ -322,15 +313,6 @@ public class OperationsUtil {
         return link(getDownloadUrl(id), LABEL_DOWNLOAD);
     }
 
-    /**
-     * 「スイッチ」ボタンのリンクのHTMLを返す。
-     *
-     * @param id データを一位に特定する内部ID番号
-     * @return リンクのHTML
-     */
-//    public String getSwitchUserLink(String id) {
-//        return link(getSwitchUserUrl(id), LABEL_SWITCH_USER);
-//    }
 
     // ------ Button Link<A> -----------------------------------------
 

@@ -25,7 +25,7 @@ public class ReaderFactory<T> {
      * @return ItemStreamReader
      */
     public ItemStreamReader<T> getItemStreamReader(String fileType, String inputFile, String encoding) {
-        FlatFileItemReader fileReader;
+        FlatFileItemReader<T> fileReader;
         if ("CSV".equals(fileType)) {
             fileReader = csvReader(inputFile, encoding);
         } else {
@@ -41,7 +41,7 @@ public class ReaderFactory<T> {
      * @param encoding  encoding
      * @return FlatFileItemReader
      */
-    public FlatFileItemReader csvReader(String inputFile, String encoding) {
+    public FlatFileItemReader<T> csvReader(String inputFile, String encoding) {
 
         DelimitedLineTokenizer delimitedLineTokenizer = new DelimitedLineTokenizer();
         delimitedLineTokenizer.setDelimiter(",");
@@ -51,8 +51,7 @@ public class ReaderFactory<T> {
         var nullBindBeanWrapperFieldSetMapper = new NullBindBeanWrapperFieldSetMapper();
         nullBindBeanWrapperFieldSetMapper.setTargetType(clazz);
 
-
-        var defaultLineMapper = new DefaultLineMapper();
+        var defaultLineMapper = new DefaultLineMapper<T>();
         defaultLineMapper.setLineTokenizer(delimitedLineTokenizer);
         defaultLineMapper.setFieldSetMapper(nullBindBeanWrapperFieldSetMapper);
 
@@ -74,7 +73,7 @@ public class ReaderFactory<T> {
      * @param encoding  encoding
      * @return FlatFileItemReader
      */
-    public FlatFileItemReader tsvReader(String inputFile, String encoding) {
+    public FlatFileItemReader<T> tsvReader(String inputFile, String encoding) {
 
         var delimitedLineTokenizer = new DelimitedLineTokenizer();
         delimitedLineTokenizer.setDelimiter(org.springframework.batch.item.file.transform.DelimitedLineTokenizer.DELIMITER_TAB);
@@ -83,8 +82,7 @@ public class ReaderFactory<T> {
         var nullBindBeanWrapperFieldSetMapper = new NullBindBeanWrapperFieldSetMapper();
         nullBindBeanWrapperFieldSetMapper.setTargetType(clazz);
 
-
-        var defaultLineMapper = new DefaultLineMapper();
+        var defaultLineMapper = new DefaultLineMapper<T>();
         defaultLineMapper.setLineTokenizer(delimitedLineTokenizer);
         defaultLineMapper.setFieldSetMapper(nullBindBeanWrapperFieldSetMapper);
 

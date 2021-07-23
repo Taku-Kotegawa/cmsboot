@@ -110,10 +110,10 @@ public class SpringSecurityConfig {
     @Configuration
     public static class FormLoginWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
 
-        private final int UPPERCASE_MIN_LENGTH = 1;
-        private final int LOWERCASE_MIN_LENGTH = 1;
-        private final int DIGIT_MIN_LENGTH = 1;
-        private final int SPECIAL_MIN_LENGTH = 1;
+        private static final int UPPERCASE_MIN_LENGTH = 1;
+        private static final int LOWERCASE_MIN_LENGTH = 1;
+        private static final int DIGIT_MIN_LENGTH = 1;
+        private static final int SPECIAL_MIN_LENGTH = 1;
 
         // @see https://www.passay.org/
         @Autowired

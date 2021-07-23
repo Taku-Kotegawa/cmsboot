@@ -36,7 +36,7 @@ public class ImportDocumentTasklet implements Tasklet {
     private static final Logger log = LoggerFactory.getLogger("JobLogger");
 
     // インポートファイルのカラム定義
-    private final String[] columns = DocumentCsvBean.columns;
+    private final String[] columns =  {"id", "status", "statusLabel", "documentNumber", "title", "versionNumber", "docCategory1", "docCategoryValue1", "docCategory2", "docCategoryValue2", "docService1", "docServiceValue1", "docService2", "docServiceValue2", "docService3", "docServiceValue3", "publishedDate", "lastRevisedDate", "invalidationDate", "announceDate", "chargePersonForCreation", "chargePersonForPublish", "responsiblePersonForPublish", "departmentForCreation", "departmentForPublish", "remark", "reasonForChange", "filesLabel", "pdfFilesLabel", "fileMemo", "useStage", "useStageLabel", "publicScope", "publicScopeLabel", "customerPublic", "customerPublicLabel", "body", "lastModifiedDate", "lastModifiedBy", "lastModifiedByLabel"};
 
     @Autowired
     SmartValidator smartValidator;

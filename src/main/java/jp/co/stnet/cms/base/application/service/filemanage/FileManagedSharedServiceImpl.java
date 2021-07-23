@@ -6,9 +6,10 @@ import jp.co.stnet.cms.base.domain.model.filemanage.FileStatus;
 import jp.co.stnet.cms.common.auditing.CustomDateFactory;
 import jp.co.stnet.cms.common.message.MessageKeys;
 import jp.co.stnet.cms.common.util.MimeTypes;
-import jp.co.stnet.cms.common.util.StringUtils;
+import jp.co.stnet.cms.common.util.StStringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.tika.Tika;
 import org.apache.tika.exception.TikaException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,22 +95,15 @@ public class FileManagedSharedServiceImpl implements FileManagedSharedService {
 
         String storeFilePath = storeDir + File.separator + uuid;
 
-        mkdirs(storeDir);
+//        mkdirs(storeDir);
+        Files.createDirectories(Path.of(storeDir));
 
         File storeFile = new File(storeFilePath);
         String mimeType = "";
         mimeType = MimeTypes.getMimeType(FilenameUtils.getExtension(file.getOriginalFilename()));
 
-        try {
-            byte[] bytes = file.getBytes();
-            BufferedOutputStream fileStream =
-                    new BufferedOutputStream(new FileOutputStream(storeFile));
-            fileStream.write(bytes);
-            fileStream.close();
-
-        } catch (IOException e) {
-            // 異常終了時の処理
-            throw e;
+        try (BufferedOutputStream fileStream = new BufferedOutputStream(new FileOutputStream(storeFile))) {
+            fileStream.write(file.getBytes());
         }
 
         FileManaged fileManaged = FileManaged.builder()
@@ -133,70 +127,70 @@ public class FileManagedSharedServiceImpl implements FileManagedSharedService {
 
     }
 
-    @Override
-    public FileManaged store(File file, String fileType) throws IOException {
-
-        if (file == null) {
-            throw new IllegalArgumentException("file must not be null");
-        }
-
-        if (StringUtils.isEmpty(fileType)) {
-            fileType = DEFAULT_FILE_TYPE;
-        }
-
-        String uuid = UUID.randomUUID().toString();
-
-        String storeDir = STORE_BASEDIR
-                + File.separator + fileType
-                + File.separator + uuid.charAt(0);
-
-        String storeFilePath = storeDir + File.separator + uuid;
-
-        mkdirs(storeDir);
-
-        File storeFile = new File(storeFilePath);
-        String mimeType = "";
-        mimeType = MimeTypes.getMimeType(FilenameUtils.getExtension(file.getName()));
-
-        try {
-            //file.renameTo(storeFile);
-            FileInputStream fileStreamIN = new FileInputStream(file);
-            BufferedOutputStream fileStream =
-                    new BufferedOutputStream(new FileOutputStream(storeFile));
-            byte[] bytes = new byte[256];
-            int len;
-            while ((len = fileStreamIN.read(bytes)) != -1) {
-                fileStream.write(bytes);
-            }
-
-            fileStream.close();
-
-
-            FileManaged fileManaged = FileManaged.builder()
-                    .uuid(uuid)
-                    .fileType(fileType)
-                    .originalFilename(file.getName())
-                    .fileMime(mimeType)
-                    .fileSize(file.length())
-                    .status(FileStatus.TEMPORARY.getCodeValue())
-                    .uri(storeFilePath.substring(STORE_BASEDIR.length()).replace('\\', '/'))
-                    .build();
-
-            // コマンドランチャーから実行した場合に、セットされない問題を回避する
-            // Webからの登録の場合は、@EntityListeners(AuditingEntityListener.class) により自動設定される
-            fileManaged.setCreatedBy("JOB_USER");
-            fileManaged.setLastModifiedBy("JOB_USER");
-            fileManaged.setCreatedDate(dateFactory.newLocalDateTime());
-            fileManaged.setLastModifiedDate(dateFactory.newLocalDateTime());
-
-            return fileManagedRepository.save(fileManaged);
-
-        } catch (IOException e) {
-            // 異常終了時の処理
-            throw e;
-        }
-
-    }
+//    @Override
+//    public FileManaged store(File file, String fileType) throws IOException {
+//
+//        if (file == null) {
+//            throw new IllegalArgumentException("file must not be null");
+//        }
+//
+//        if (StringUtils.isEmpty(fileType)) {
+//            fileType = DEFAULT_FILE_TYPE;
+//        }
+//
+//        String uuid = UUID.randomUUID().toString();
+//
+//        String storeDir = STORE_BASEDIR
+//                + File.separator + fileType
+//                + File.separator + uuid.charAt(0);
+//
+//        String storeFilePath = storeDir + File.separator + uuid;
+//
+//        mkdirs(storeDir);
+//
+//        File storeFile = new File(storeFilePath);
+//        String mimeType = "";
+//        mimeType = MimeTypes.getMimeType(FilenameUtils.getExtension(file.getName()));
+//
+//        try {
+//            //file.renameTo(storeFile);
+//            FileInputStream fileStreamIN = new FileInputStream(file);
+//            BufferedOutputStream fileStream =
+//                    new BufferedOutputStream(new FileOutputStream(storeFile));
+//            byte[] bytes = new byte[256];
+//            int len;
+//            while ((len = fileStreamIN.read(bytes)) != -1) {
+//                fileStream.write(bytes);
+//            }
+//
+//            fileStreamIN.close();
+//            fileStream.close();
+//
+//            FileManaged fileManaged = FileManaged.builder()
+//                    .uuid(uuid)
+//                    .fileType(fileType)
+//                    .originalFilename(file.getName())
+//                    .fileMime(mimeType)
+//                    .fileSize(file.length())
+//                    .status(FileStatus.TEMPORARY.getCodeValue())
+//                    .uri(storeFilePath.substring(STORE_BASEDIR.length()).replace('\\', '/'))
+//                    .build();
+//
+//            // コマンドランチャーから実行した場合に、セットされない問題を回避する
+//            // Webからの登録の場合は、@EntityListeners(AuditingEntityListener.class) により自動設定される
+//            fileManaged.setCreatedBy("JOB_USER");
+//            fileManaged.setLastModifiedBy("JOB_USER");
+//            fileManaged.setCreatedDate(dateFactory.newLocalDateTime());
+//            fileManaged.setLastModifiedDate(dateFactory.newLocalDateTime());
+//
+//            return fileManagedRepository.save(fileManaged);
+//
+//        } catch (IOException e) {
+//            // 異常終了時の処理
+//            throw e;
+//        }
+//
+//    }
 
     @Override
     public void permanent(String uuid) {
@@ -259,14 +253,15 @@ public class FileManagedSharedServiceImpl implements FileManagedSharedService {
         }
 
         String uuid = UUID.randomUUID().toString();
-
         String storeDir = STORE_BASEDIR
                 + File.separator + fileManaged.getFileType()
                 + File.separator + uuid.charAt(0);
 
         String storeFilePath = storeDir + File.separator + uuid;
 
-        mkdirs(storeDir);
+
+//        mkdirs(storeDir);
+        Files.createDirectories(Path.of(storeDir));
 
         String sourceDir = STORE_BASEDIR
                 + File.separator + fileManaged.getFileType()
@@ -304,14 +299,7 @@ public class FileManagedSharedServiceImpl implements FileManagedSharedService {
         }
     }
 
-    private File mkdirs(String filePath) {
-        File uploadDir = new File(filePath);
-        if (!uploadDir.exists()) {
-            uploadDir.mkdirs();
-        }
-        return uploadDir;
-    }
-
+    @Override
     public String escapeContent(String rawContent) {
         rawContent = rawContent.replaceAll("[　]+", " ")
                 .replaceAll("[ ]+", " ")

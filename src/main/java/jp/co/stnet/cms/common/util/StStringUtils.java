@@ -2,10 +2,12 @@ package jp.co.stnet.cms.common.util;
 
 import com.google.common.base.CaseFormat;
 
+import java.util.Objects;
+
 /**
  * 文字列操作のユーティリティ
  */
-public class StringUtils extends org.apache.commons.lang3.StringUtils {
+public class StStringUtils {
 
     /**
      * キャメルケースをスネークケース(小文字)に変換
@@ -66,11 +68,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
      * @return 文字列に変換したもの
      */
     public static String nvl(String s) {
-        if (s == null) {
-            return "";
-        } else {
-            return s;
-        }
+        return Objects.requireNonNullElse(s, "");
     }
 
 }

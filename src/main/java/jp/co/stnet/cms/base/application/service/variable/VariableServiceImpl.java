@@ -5,14 +5,14 @@ import jp.co.stnet.cms.base.application.repository.variable.VariableRepository;
 import jp.co.stnet.cms.base.application.service.AbstractNodeService;
 import jp.co.stnet.cms.base.domain.model.variable.Variable;
 import jp.co.stnet.cms.base.domain.model.variable.VariableType;
-import jp.co.stnet.cms.common.util.StringUtils;
+
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -70,10 +70,6 @@ public class VariableServiceImpl extends AbstractNodeService<Variable, Long> imp
     @Override
     public List<Variable> findAllByTypeAndValueX(String type, int i, String value) {
 
-        if (i < 1 && 10 < i) {
-            throw new IllegalArgumentException("i must 1 - 10.");
-        }
-
         switch (i) {
             case 1:
                 return variableRepository.findAllByTypeAndValue1(type, value);
@@ -105,9 +101,9 @@ public class VariableServiceImpl extends AbstractNodeService<Variable, Long> imp
             case 10:
                 return variableRepository.findAllByTypeAndValue10(type, value);
 
+            default:
+                throw new IllegalArgumentException("i must 1 - 10.");
         }
-
-        return new ArrayList<Variable>();
     }
 
     @Override

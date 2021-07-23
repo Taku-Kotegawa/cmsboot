@@ -28,13 +28,13 @@ public class StateMap {
 
     private final Map<String, Boolean> authMap = new HashMap<>();
 
-    private final String DISABLED = "disabled";
-    private final String READONLY = "readonly";
-    private final String HIDDEN = "hidden";
-    private final String INPUT = "input";
-    private final String VIEW = "view";
-    private final String LABEL = "label";
-    private final String[] attributes = {DISABLED, READONLY, HIDDEN, VIEW, INPUT, LABEL};
+    private static final String DISABLED = "disabled";
+    private static final String READONLY = "readonly";
+    private static final String HIDDEN = "hidden";
+    private static final String INPUT = "input";
+    private static final String VIEW = "view";
+    private static final String LABEL = "label";
+    private static final String[] attributes = {DISABLED, READONLY, HIDDEN, VIEW, INPUT, LABEL};
 
     /**
      * 初期化

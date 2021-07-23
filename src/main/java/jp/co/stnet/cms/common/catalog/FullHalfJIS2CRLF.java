@@ -6,7 +6,7 @@ import org.terasoluna.gfw.common.codepoints.catalog.CRLF;
 /**
  * コードポイント集合体・半角英数字記号(JIS第１，２水準、改行を含む)
  *
- * @See TERASOLUNA開発ガイドの「文字列操作」
+ * TERASOLUNA開発ガイドの「文字列操作」
  */
 public class FullHalfJIS2CRLF extends CodePoints {
 

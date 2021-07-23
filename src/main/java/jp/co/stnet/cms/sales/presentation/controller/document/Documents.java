@@ -1,11 +1,10 @@
 package jp.co.stnet.cms.sales.presentation.controller.document;
 
 import com.github.dozermapper.core.Mapper;
-import jp.co.stnet.cms.base.application.service.authentication.AccountService;
 import jp.co.stnet.cms.base.domain.model.common.Status;
 import jp.co.stnet.cms.common.datatables.OperationsUtil;
-import jp.co.stnet.cms.common.util.StringUtils;
 import jp.co.stnet.cms.sales.domain.model.document.*;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.terasoluna.gfw.common.codelist.CodeList;
@@ -13,6 +12,7 @@ import org.terasoluna.gfw.common.codelist.CodeList;
 import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import static jp.co.stnet.cms.sales.presentation.controller.document.DocumentConstant.BASE_PATH;
@@ -20,28 +20,19 @@ import static jp.co.stnet.cms.sales.presentation.controller.document.DocumentCon
 @Component
 public class Documents {
 
-    @Autowired
-    AccountService accountService;
+    private static final String CSV_DELIMITER = ",";
+    private static final String BRAKE_LINE = "<br>";
 
     @Autowired
     @Named("CL_DOC_STAGE")
-    private CodeList useStageCodeList;
-
-    @Autowired
-    @Named("CL_DOC_TYPE")
-    private CodeList docTypeCodeList;
+    CodeList useStageCodeList;
 
     @Autowired
     @Named("CL_ACCOUNT_FULLNAME")
-    private CodeList accountFullNameCodeList;
+    CodeList accountFullNameCodeList;
 
     @Autowired
-    private Mapper beanMapper;
-
-    private static final String CSV_DELIMITER = ",";
-
-    private static final String BRAKE_LINE = "<br>";
-
+    Mapper beanMapper;
 
     /**
      * DataTables用のリストを取得
@@ -55,7 +46,7 @@ public class Documents {
             DocumentListBean documentListBean = beanMapper.map(document, DocumentListBean.class);
 
             // id
-            documentListBean.setDT_RowId(document.getId().toString());
+            documentListBean.setDT_RowId(Objects.requireNonNull(document.getId()).toString());
 
             // ボタン
             documentListBean.setOperations(getToggleButton(document.getId().toString()));
@@ -99,7 +90,8 @@ public class Documents {
     /**
      * CSVダウンロード用のリストを取得
      *
-     * @return
+     * @param documents 元ネタ
+     * @return ダウンロードするデータのリスト
      */
     public List<DocumentCsvBean> getDocumentCsvDlBean(List<Document> documents) {
         List<DocumentCsvBean> list = new ArrayList<>();
@@ -171,7 +163,7 @@ public class Documents {
      */
     protected String getPublicScopeLabel(String value) {
         if (value != null && DocPublicScope.getByValue(value) != null) {
-            return DocPublicScope.getByValue(value).getCodeLabel();
+            return Objects.requireNonNull(DocPublicScope.getByValue(value)).getCodeLabel();
         }
         return "";
     }
@@ -253,7 +245,7 @@ public class Documents {
      */
     protected String getStatusLabel(String value) {
         if (StringUtils.isNotBlank(value)) {
-            return Status.getByValue(value).getCodeLabel();
+            return Objects.requireNonNull(Status.getByValue(value)).getCodeLabel();
         }
         return null;
     }
@@ -266,7 +258,7 @@ public class Documents {
      */
     protected String getCustomerPublicLabel(String value) {
         if (StringUtils.isNotBlank(value)) {
-            return CustomerPublic.getByValue(value).getCodeLabel();
+            return Objects.requireNonNull(CustomerPublic.getByValue(value)).getCodeLabel();
         }
         return null;
     }
@@ -288,10 +280,12 @@ public class Documents {
      * @return 編集ボタンを表示するHTML
      */
     protected String getToggleButton(String id) {
-        OperationsUtil op = new OperationsUtil(null);
-        StringBuffer link = new StringBuffer();
-        link.append("<a href=\"" + op.getEditUrl(id) + "\" class=\"btn btn-button btn-sm\" style=\"white-space: nowrap\">" + op.getLABEL_EDIT() + "</a>");
-        return link.toString();
+        var op = new OperationsUtil(null);
+        return "<a href=\"" +
+                op.getEditUrl(id) +
+                "\" class=\"btn btn-button btn-sm\" style=\"white-space: nowrap\">" +
+                op.getLABEL_EDIT() +
+                "</a>";
     }
 
 }

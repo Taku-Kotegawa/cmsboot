@@ -10,11 +10,11 @@ import java.util.*;
 /**
  * Apache Commons BeanUtils の拡張
  */
-public class BeanUtils extends org.apache.commons.beanutils.BeanUtils {
+public class BeanUtils {
 
     private static final String SEPARATOR = "_";
 
-    private static final Set<String> PRIMITIVE = Set.of(
+    private static final Set<String> PRIMITIVE_SET = Set.of(
             "java.lang.String",
             "java.lang.Integer",
             "java.lang.Long",
@@ -27,7 +27,7 @@ public class BeanUtils extends org.apache.commons.beanutils.BeanUtils {
             "java.lang.Enum"
     );
 
-    private static final Set<String> COLLECTION = Set.of(
+    private static final Set<String> COLLECTION_SET = Set.of(
             "java.util.Map",
             "java.util.List",
             "java.util.Set",
@@ -60,13 +60,14 @@ public class BeanUtils extends org.apache.commons.beanutils.BeanUtils {
                 Class fieldClass = m.getParameterTypes()[0];
                 String fieldName = Introspector.decapitalize(m.getName().substring(3));
 
-                if (PRIMITIVE.contains(fieldClass.getName())) {
+                if (PRIMITIVE_SET.contains(fieldClass.getName())) {
                     // 何もしない
 
-                } else if (COLLECTION.contains(fieldClass.getName())) {
+                } else if (COLLECTION_SET.contains(fieldClass.getName())) {
                     String c = getClassFromSig(getSignature(m));
 
-                    if (PRIMITIVE.contains(c)) {
+                    if (PRIMITIVE_SET.contains(c)) {
+                        // 何もしない
 
                     } else {
                         try {
@@ -96,12 +97,7 @@ public class BeanUtils extends org.apache.commons.beanutils.BeanUtils {
      */
     private static List<String> getFieldList(Class clazz, String parentClassName) {
         Map<String, String> fields = getFields(clazz, parentClassName);
-        List<String> fieldList = new ArrayList<>();
-
-        for (String fieldName : fields.keySet()) {
-            fieldList.add(fieldName);
-        }
-        return fieldList;
+        return new ArrayList<>(fields.keySet());
     }
 
     /**
@@ -131,10 +127,10 @@ public class BeanUtils extends org.apache.commons.beanutils.BeanUtils {
 
         Map<String, Annotation> annotationMap = new LinkedHashMap<>();
 
-        String prefix = "";
-        if (parentClassName != null && !parentClassName.isEmpty()) {
-            prefix = parentClassName + SEPARATOR;
-        }
+//        String prefix = "";
+//        if (parentClassName != null && !parentClassName.isEmpty()) {
+//            prefix = parentClassName + SEPARATOR;
+//        }
 
         Map<String, String> fields = getFields(clazz, parentClassName);
 
