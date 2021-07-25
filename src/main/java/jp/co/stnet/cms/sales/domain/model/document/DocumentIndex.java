@@ -304,7 +304,7 @@ public class DocumentIndex implements Serializable, StatusInterface {
     private String fileMemo;
 
     @FullTextField(analyzer = "japanese")
-    @Column(columnDefinition = "LONGTEXT")
+    @Column(columnDefinition = "TEXT")
     private String content;
 
     /**

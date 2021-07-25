@@ -24,7 +24,6 @@ import javax.persistence.PersistenceContext;
 import static jp.co.stnet.cms.sales.presentation.controller.document.DocumentConstant.BASE_PATH;
 import static jp.co.stnet.cms.sales.presentation.controller.document.DocumentConstant.TEMPLATE_FORM;
 
-
 @Controller
 @RequestMapping(BASE_PATH)
 public class DocumentController {
@@ -61,7 +60,6 @@ public class DocumentController {
 
         authority.hasAuthority(Constants.OPERATION.VIEW, loggedInUser, document);
 
-
         PolicyFactory sanitizer = new HtmlPolicyBuilder()
                 .allowElements("a")
                 .allowUrlProtocols("http", "https")
@@ -72,7 +70,7 @@ public class DocumentController {
                 .and(Sanitizers.BLOCKS)
                 .and(Sanitizers.TABLES)
                 .and(Sanitizers.STYLES);
-//                .and(Sanitizers.LINKS);
+
         document.setBody(sanitizer.sanitize(document.getBody()));
 
         model.addAttribute("document", document);

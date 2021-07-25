@@ -1,17 +1,15 @@
 version: '3'
 services:
   db:
-    image: mariadb:10.5
+    image: postgres:11-alpine
     restart: always
-    ports: 
-      - 3306:3306
+    ports:
+      - 5432:5432
     environment:
-      MARIADB_ROOT_PASSWORD: rootroot
-      MARIADB_DATABASE: cmsboot
-      MARIADB_USER: cmsuser
-      MARIADB_PASSWORD: cmspassword
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      LANG: ja_JP.utf8
     volumes:
-      - cmsboot-mariadb-data:/var/lib/mysql
-
+      - database:/var/lib/postgresql/data
 volumes:
-  cmsboot-mariadb-data:
+  database:

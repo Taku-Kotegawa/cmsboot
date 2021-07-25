@@ -138,6 +138,9 @@ public class DocumentCreateController {
         return "redirect:" + op.getEditUrl(document.getId().toString());
     }
 
+    /**
+     * 行追加
+     */
     @PostMapping(value = "create", params = "addlineitem")
     @TransactionTokenCheck
     public String createAddLineItem(DocumentForm form,
@@ -149,35 +152,42 @@ public class DocumentCreateController {
 
         addFilesItem(form);
         return createForm(form, model, loggedInUser, null);
-
     }
 
-
+    /**
+     * 区分２の選択肢取得(区分１に依存するもの）
+     */
     @ResponseBody
     @GetMapping(value = "doc_category2/json", params = "selected_value")
-    public List<SelectItem> docCategory2Json(@RequestParam(value = "selected_value", required = false) String selected_value) {
+    public List<SelectItem> docCategory2Json(@RequestParam(value = "selected_value", required = false) String selectedValue) {
         List<SelectItem> list = new ArrayList<>();
-        for (Variable variable : variableService.findAllByTypeAndValueX(VariableType.DOC_CATEGORY2.name(), 2, selected_value)) {
+        for (Variable variable : variableService.findAllByTypeAndValueX(VariableType.DOC_CATEGORY2.name(), 2, selectedValue)) {
             list.add(new SelectItem(variable.getCode(), variable.getValue1()));
         }
         return list;
     }
 
+    /**
+     * サービス種別の選択肢取得(事業領域に依存するもの)
+     */
     @ResponseBody
     @GetMapping(value = "doc_service2/json", params = "selected_value")
-    public List<SelectItem> docService2Json(@RequestParam(value = "selected_value", required = false) String selected_value) {
+    public List<SelectItem> docService2Json(@RequestParam(value = "selected_value", required = false) String selectedValue) {
         List<SelectItem> list = new ArrayList<>();
-        for (Variable variable : variableService.findAllByTypeAndValueX(VariableType.DOC_SERVICE2.name(), 2, selected_value)) {
+        for (Variable variable : variableService.findAllByTypeAndValueX(VariableType.DOC_SERVICE2.name(), 2, selectedValue)) {
             list.add(new SelectItem(variable.getCode(), variable.getValue1()));
         }
         return list;
     }
 
+    /**
+     * サービスの選択肢取得(サービス種別に依存するもの)
+     */
     @ResponseBody
     @GetMapping(value = "doc_service3/json", params = "selected_value")
-    public List<SelectItem> docService3Json(@RequestParam(value = "selected_value", required = false) String selected_value) {
+    public List<SelectItem> docService3Json(@RequestParam(value = "selected_value", required = false) String selectedValue) {
         List<SelectItem> list = new ArrayList<>();
-        for (Variable variable : variableService.findAllByTypeAndValueX(VariableType.DOC_SERVICE3.name(), 2, selected_value)) {
+        for (Variable variable : variableService.findAllByTypeAndValueX(VariableType.DOC_SERVICE3.name(), 2, selectedValue)) {
             list.add(new SelectItem(variable.getCode(), variable.getValue1()));
         }
         return list;
