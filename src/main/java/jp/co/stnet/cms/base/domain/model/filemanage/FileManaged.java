@@ -3,6 +3,7 @@ package jp.co.stnet.cms.base.domain.model.filemanage;
 
 import jp.co.stnet.cms.base.domain.model.AbstractEntity;
 import lombok.*;
+import org.hibernate.search.engine.backend.types.Sortable;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.KeywordField;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.http.ContentDisposition;
@@ -46,7 +47,7 @@ public class FileManaged extends AbstractEntity<Long> implements Serializable {
     /**
      * ファイル名
      */
-    @KeywordField
+    @KeywordField(sortable = Sortable.YES)
     private String originalFilename;
 
     /**

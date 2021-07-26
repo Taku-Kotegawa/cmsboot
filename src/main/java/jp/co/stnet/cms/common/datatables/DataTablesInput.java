@@ -99,6 +99,10 @@ public class DataTablesInput {
         return null;
     }
 
+    public Column getColumnByNumber(Integer columnNumber) {
+        return this.getColumns().get(columnNumber);
+    }
+
     /**
      * Add a new column
      *

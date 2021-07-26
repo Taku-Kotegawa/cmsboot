@@ -12,6 +12,7 @@ import jp.co.stnet.cms.common.constant.Constants;
 import jp.co.stnet.cms.common.datatables.OperationsUtil;
 import jp.co.stnet.cms.common.message.MessageKeys;
 import jp.co.stnet.cms.sales.application.service.document.DocumentService;
+import jp.co.stnet.cms.sales.domain.model.document.CustomerPublic;
 import jp.co.stnet.cms.sales.domain.model.document.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -63,6 +64,7 @@ public class DocumentCreateController {
         DocumentForm form = new DocumentForm();
         form.getFiles().add(new FileForm());
         form.setSaveRevision(true);
+        form.setCustomerPublic(CustomerPublic.CLOSE.getValue());
         form.setReasonForChange("新規作成");
         return form;
     }

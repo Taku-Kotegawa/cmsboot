@@ -28,7 +28,6 @@ public class IndexServiceImpl implements IndexService {
             Class<?> clazz = Class.forName(entityName);
             SearchSession searchSession = Search.session(entityManager);
             MassIndexer indexer = searchSession.massIndexer(clazz)
-                    .idFetchSize(Integer.MIN_VALUE)
                     .batchSizeToLoadObjects(BATCH_SIZE_TO_LOAD_OBJECTS)
                     .threadsToLoadObjects(THREADS_TO_LOAD_OBJECTS);
 
@@ -47,7 +46,6 @@ public class IndexServiceImpl implements IndexService {
             Class<?> clazz = Class.forName(entityName);
             SearchSession searchSession = Search.session(entityManager);
             MassIndexer indexer = searchSession.massIndexer(clazz)
-                    .idFetchSize(Integer.MIN_VALUE)
                     .batchSizeToLoadObjects(BATCH_SIZE_TO_LOAD_OBJECTS)
                     .threadsToLoadObjects(THREADS_TO_LOAD_OBJECTS);
             indexer.startAndWait();

@@ -36,6 +36,7 @@ public class DocumentForm implements Serializable {
     /**
      * 本文
      */
+    @NotNull
     private String body;
 
     /**

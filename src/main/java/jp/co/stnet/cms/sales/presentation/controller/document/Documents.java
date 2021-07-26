@@ -149,6 +149,65 @@ public class Documents {
         return list;
     }
 
+    /**
+     * DataTables用のリストを取得
+     *
+     * @return DocumentListBeanのリスト
+     */
+    public List<DocumentListBean> getDocumentListBeansFromDocumentIndex(List<DocumentIndex> documentIndexes) {
+        List<DocumentListBean> list = new ArrayList<>();
+
+        for (DocumentIndex documentIndex : documentIndexes) {
+            DocumentListBean documentListBean = beanMapper.map(documentIndex, DocumentListBean.class);
+
+            // id
+            documentListBean.setDT_RowId(documentIndex.getPk().getId().toString());
+            documentListBean.setId(documentIndex.getPk().getId());
+
+            // ボタン
+            documentListBean.setOperations(getToggleButton(documentIndex.getPk().getId().toString()));
+
+            // タイトル(リンク)
+            documentListBean.setTitle(getTitleLink(documentIndex.getPk().getId(), documentIndex.getTitle()));
+
+            // ステータスラベル
+            documentListBean.setStatusLabel(getStatusLabel(documentIndex.getStatus()));
+
+            // 活用シーン
+            documentListBean.setUseStageLabel(getUseStageLabel(documentIndex.getUseStage(), CSV_DELIMITER));
+
+            // ファイル名のリスト
+            if (documentIndex.getFileManaged() != null) {
+                documentListBean.setFilesLabel(Objects.requireNonNull(documentIndex.getFileManaged().getOriginalFilename()));
+            }
+
+            // ファイル名(PDF)のリスト
+            if (documentIndex.getPdfManaged() != null) {
+                documentListBean.setPdfFilesLabel(Objects.requireNonNull(documentIndex.getPdfManaged().getOriginalFilename()));
+            }
+
+            // 公開区分のラベル
+            documentListBean.setPublicScopeLabel(getPublicScopeLabel(documentIndex.getPublicScope()));
+
+            // ファイルメモ
+            documentListBean.setFileMemo(documentIndex.getFileMemo());
+
+            // 顧客公開区分のラベル
+            documentListBean.setCustomerPublicLabel(getCustomerPublicLabel(documentIndex.getCustomerPublic()));
+
+            // 最終更新者の氏名
+            documentListBean.setLastModifiedByLabel(getLastModifiedByLabel(documentIndex.getLastModifiedBy()));
+
+            // 不要な情報をクリア
+            documentListBean.setFiles(new ArrayList<>());
+
+            list.add(documentListBean);
+        }
+
+        return list;
+    }
+
+
     protected String getTitleLink(Long id, String value) {
         OperationsUtil op = new OperationsUtil(BASE_PATH);
         return "<a href=\"" + op.getViewUrl(id.toString()) + "\">" + value + "</a>";

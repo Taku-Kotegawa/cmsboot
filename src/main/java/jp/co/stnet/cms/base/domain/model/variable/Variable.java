@@ -4,6 +4,7 @@ import jp.co.stnet.cms.base.domain.model.AbstractEntity;
 import jp.co.stnet.cms.base.domain.model.StatusInterface;
 import jp.co.stnet.cms.base.domain.model.filemanage.FileManaged;
 import lombok.*;
+import org.hibernate.search.engine.backend.types.Sortable;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.KeywordField;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -54,37 +55,32 @@ public class Variable extends AbstractEntity<Long> implements Serializable, Stat
     /**
      * 値1
      */
-    @KeywordField
+    @KeywordField(sortable = Sortable.YES)
     private String value1;
 
     /**
      * 値2
      */
-    @KeywordField
     private String value2;
 
     /**
      * 値3
      */
-    @KeywordField
     private String value3;
 
     /**
      * 値4
      */
-    @KeywordField
     private String value4;
 
     /**
      * 値5
      */
-    @KeywordField
     private String value5;
 
     /**
      * 値6
      */
-    @KeywordField
     private String value6;
 
     /**
