@@ -16,6 +16,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import static jp.co.stnet.cms.sales.presentation.controller.document.DocumentConstant.BASE_PATH;
+import static org.apache.commons.text.StringEscapeUtils.escapeHtml4;
 
 @Component
 public class Documents {
@@ -150,7 +151,7 @@ public class Documents {
     }
 
     /**
-     * DataTables用のリストを取得
+     * ドキュメント検索一覧 - DataTables用のリストを取得
      *
      * @return DocumentListBeanのリスト
      */
@@ -176,12 +177,12 @@ public class Documents {
             // 活用シーン
             documentListBean.setUseStageLabel(getUseStageLabel(documentIndex.getUseStage(), CSV_DELIMITER));
 
-            // ファイル名のリスト
+            // ファイル名
             if (documentIndex.getFileManaged() != null) {
-                documentListBean.setFilesLabel(Objects.requireNonNull(documentIndex.getFileManaged().getOriginalFilename()));
+                documentListBean.setFilesLabel(getFileDownloadLink(documentIndex));
             }
 
-            // ファイル名(PDF)のリスト
+            // ファイル名(PDF)
             if (documentIndex.getPdfManaged() != null) {
                 documentListBean.setPdfFilesLabel(Objects.requireNonNull(documentIndex.getPdfManaged().getOriginalFilename()));
             }
@@ -207,6 +208,10 @@ public class Documents {
         return list;
     }
 
+    protected String getFileDownloadLink(DocumentIndex documentIndex) {
+       OperationsUtil op = new OperationsUtil(BASE_PATH);
+       return "<a href=\"" + op.getViewUrl(documentIndex.getPk().getId().toString()) + "/file/files_file/" + documentIndex.getPk().getNo() + "\">" + documentIndex.getFileManaged().getOriginalFilename() + "</a>";
+    }
 
     protected String getTitleLink(Long id, String value) {
         OperationsUtil op = new OperationsUtil(BASE_PATH);
@@ -238,7 +243,7 @@ public class Documents {
         List<String> memo = new ArrayList<>();
         for (File file : files) {
             if (file.getFileMemo() != null) {
-                memo.add(file.getFileMemo());
+                memo.add(escapeHtml4(file.getFileMemo()));
             }
         }
         return String.join(delimiter, memo);
