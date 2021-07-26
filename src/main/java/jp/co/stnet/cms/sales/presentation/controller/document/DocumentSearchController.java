@@ -5,12 +5,7 @@ import jp.co.stnet.cms.common.constant.Constants;
 import jp.co.stnet.cms.common.datatables.DataTablesInput;
 import jp.co.stnet.cms.common.datatables.DataTablesOutput;
 import jp.co.stnet.cms.sales.application.service.document.DocumentSearchService;
-import jp.co.stnet.cms.sales.application.service.document.DocumentService;
-import jp.co.stnet.cms.sales.domain.model.document.Document;
-import jp.co.stnet.cms.sales.domain.model.document.DocumentIndex;
-import org.hibernate.search.engine.search.query.SearchResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import static jp.co.stnet.cms.sales.presentation.controller.document.DocumentConstant.BASE_PATH;
-import static jp.co.stnet.cms.sales.presentation.controller.document.DocumentConstant.TEMPLATE_LIST;
 
 @Controller
 @RequestMapping(BASE_PATH)
@@ -59,9 +53,9 @@ public class DocumentSearchController {
 
         authority.hasAuthority("SEARCH_LIST", loggedInUser);
 
-        SearchResult<DocumentIndex> documentIndexSearchResult = documentSearchService.searchByInput(input);
+        var documentIndexSearchResult = documentSearchService.searchByInput(input);
 
-        DataTablesOutput<DocumentListBean> output = new DataTablesOutput<>();
+        var output = new DataTablesOutput<DocumentListBean>();
         output.setData(documents.getDocumentListBeansFromDocumentIndex(documentIndexSearchResult.hits()));
         output.setDraw(input.getDraw());
         output.setRecordsTotal(0);
