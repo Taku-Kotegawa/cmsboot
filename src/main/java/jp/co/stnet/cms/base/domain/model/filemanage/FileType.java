@@ -18,8 +18,10 @@ public enum FileType implements EnumCodeList.CodeListItem {
     PERSON("person", "txt;csv;", "2"),
     SIMPLE_ENTITY("simpleentity", "png;jpg;gif;", "5"),
     FILE_UPLOAD("fileupload", "png;jpg;gif;", "10"),
-    DOCUMENT("document", "pdf;", "100"),
+    DOCUMENT_FILE("document_file", "", "50"),
+    DOCUMENT_PDF("document_pdf", "pdf;", "50"),
     VARIABLE("variable", "png;jpg;gif;", "10"),
+
     DEFAULT("default", "", "10");
 
     /**

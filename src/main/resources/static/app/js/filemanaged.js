@@ -34,8 +34,8 @@ function file_attach(element) {
     return;
   }
 
-  if ($upload_file.files[0].size > 10 * 1024 * 1024) {
-    alert("ファイルが大きすぎます。(10MBまで)");
+  if ($upload_file.files[0].size > 100 * 1024 * 1024) {
+    alert("ファイルが大きすぎます。(100MBまで)");
     $upload_file.value = "";
     return;
   }
