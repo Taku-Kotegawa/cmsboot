@@ -138,10 +138,10 @@
                         <thead>
                         <tr>
                             <td class="row">
-                                <div class="col-14">ファイル</div>
-                                <div class="col-14">ファイル(PDF)</div>
-                                <div class="col-6">メモ</div>
-                                <div class="col-2"></div>
+                                <div class="col-13">ファイル</div>
+                                <div class="col-13">ファイル(PDF)</div>
+                                <div class="col-9">メモ</div>
+                                <div class="col-1"></div>
                             </td>
                         </tr>
                         </thead>
@@ -149,7 +149,7 @@
                         <!-- 編集 -->
                         <tr th:each="item, status : *{files}">
                             <td class="row">
-                                <div class="col-14">
+                                <div class="col-13">
                                     <input class="form-control form-control-file file-managed"
                                            data-file-type="document_file"
                                            th:disabled="${fieldState.files_fileUuid__disabled}"
@@ -177,7 +177,7 @@
                                         </div>
                                     </th:block>
                                 </div>
-                                <div class="col-14">
+                                <div class="col-13">
                                     <input class="form-control form-control-file file-managed"
                                            data-file-type="document_file"
                                            th:disabled="${fieldState.files_pdfUuid__disabled}"
@@ -205,7 +205,7 @@
                                         </div>
                                     </th:block>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-9">
                                     <input class="form-control" th:disabled="${fieldState.files_fileMemo__disabled}"
                                            th:errorclass="is-invalid"
                                            th:field="*{files[__${status.index}__].fileMemo}"
@@ -214,10 +214,9 @@
                                           th:errors="*{files[__${status.index}__].fileMemo}"
                                           th:id="files.type-error"></span>
                                 </div>
-                                <div class="col-2 text-center">
+                                <div class="col-1 text-center">
                                     <button class="btn-button" onclick="lineDelete(this)"
-                                            type="button">削除
-                                    </button>
+                                            type="button"><i class="far fa-trash-alt"></i></button>
                                 </div>
                             </td>
                         </tr>
@@ -226,13 +225,13 @@
                         <th:block th:if="${fieldState.files_fileUuid__view}">
                             <tr th:each="item, status : ${document.files}">
                                 <td class="row">
-                                    <div class="col-14">
+                                    <div class="col-13">
                                         <div th:replace="~{fragments/view-file-document::m('files_file', '', 'item.fileManaged', '')}"></div>
                                     </div>
-                                    <div class="col-14">
+                                    <div class="col-13">
                                         <div th:replace="~{fragments/view-file-document::m('files_pdf', '', 'item.pdfManaged', '')}"></div>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-10">
                                         <div th:replace="~{fragments/view::m('files_fileMemo', '', 'item.fileMemo', '')}"></div>
                                     </div>
                                 </td>
@@ -256,7 +255,7 @@
             <!-- 本文 -->
             <div class="row mt-3">
                 <div class="col-3">
-                    <div th:replace="~{fragments/label::m('body', '本文')}"></div>
+                    <div th:replace="~{fragments/label::m('body', '本文 *')}"></div>
                 </div>
                 <div class="col-33">
                     <div th:replace="~{fragments/field::summernote('body', '', 'document.body', '', '8')}"></div>

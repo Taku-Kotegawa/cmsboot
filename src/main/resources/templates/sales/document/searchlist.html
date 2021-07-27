@@ -74,7 +74,7 @@ div#list_filter {
                 <th></th><!-- ファイル -->
                 <th></th><!-- ファイルメモ -->
                 <th data-filter="disable"><!-- 活用シーン -->
-                    <select id="col_filter_11" data-column="9" class="dataTables_column_filter form-control multiple-select" multiple="multiple" data-container=".content">
+                    <select id="col_filter_22" data-column="22" class="dataTables_column_filter form-control multiple-select" multiple="multiple" data-container=".content">
 <!--                        <option value="">&nbsp;</option>-->
                         <th:block th:each="obj : ${@CL_DOC_STAGE.asMap()}">
                             <option th:value="${obj.key}">[[${obj.value}]]</option>
@@ -82,7 +82,7 @@ div#list_filter {
                     </select>
                 </th>
                 <th data-filter="disable">
-                    <select id="col_filter_25" data-column="23" class="dataTables_column_filter form-control multiple-select" multiple="multiple" data-container=".content">
+                    <select id="col_filter_23" data-column="23" class="dataTables_column_filter form-control multiple-select" multiple="multiple" data-container=".content">
 <!--                        <option value="">&nbsp;</option>-->
                         <th:block th:each="obj : ${@CL_DOC_PUBLIC_SCOPE.asMap()}">
                             <option th:value="${obj.key}">[[${obj.value}]]</option>
@@ -90,7 +90,7 @@ div#list_filter {
                     </select>
                 </th><!-- 公開区分 -->
                 <th data-filter="disable"><!-- 顧客公開 -->
-                    <select id="col_filter_26" data-column="24" class="dataTables_column_filter form-control multiple-select" multiple="multiple" data-container=".content">
+                    <select id="col_filter_24" data-column="24" class="dataTables_column_filter form-control multiple-select" multiple="multiple" data-container=".content">
 <!--                        <option value="">&nbsp;</option>-->
                         <th:block th:each="obj : ${@CL_CUSTOMER_PUBLIC.asMap()}">
                             <option th:value="${obj.key}">[[${obj.value}]]</option>
@@ -98,7 +98,7 @@ div#list_filter {
                     </select>
                 </th>
                 <th data-filter="disable">
-                    <select id="col_filter_28" data-column="26" class="dataTables_column_filter form-control multiple-select" multiple="multiple" data-container=".content">
+                    <select id="col_filter_26" data-column="26" class="dataTables_column_filter form-control multiple-select" multiple="multiple" data-container=".content">
                         <th:block th:each="obj : ${@CL_ACCOUNT_FULLNAME.asMap()}">
                             <option th:value="${obj.key}">[[${obj.value}]]</option>
                         </th:block>

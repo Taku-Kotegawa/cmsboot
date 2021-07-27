@@ -107,7 +107,7 @@ function fnRecoverFieldSearch(table) {
 
                 $('#col_filter_' + idx).val(array);
 
-                if (element.className.split(' ').indexOf("multipleSelect") !== -1) {
+                if (element.className.split(' ').indexOf("multiple-select") !== -1) {
                     $('#col_filter_' + idx).multipleSelect('setSelects', array)
                 }
 

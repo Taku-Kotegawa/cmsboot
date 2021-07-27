@@ -1,10 +1,13 @@
 package jp.co.stnet.cms.sales.presentation.controller.document;
 
+import jp.co.stnet.cms.base.domain.model.authentication.LoggedInUser;
 import jp.co.stnet.cms.base.domain.model.common.Status;
 import jp.co.stnet.cms.common.constant.Constants;
 import jp.co.stnet.cms.common.util.StateMap;
 import jp.co.stnet.cms.sales.domain.model.document.Document;
 import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import javax.validation.groups.Default;
@@ -14,6 +17,9 @@ import java.util.Set;
 
 @Component
 public class DocumentHelper {
+
+    @Autowired
+    DocumentAuthority authority;
 
     // 許可されたOperation
     private static final Set<String> allowedOperation = Set.of(
@@ -62,6 +68,8 @@ public class DocumentHelper {
      * @return StateMap
      */
     StateMap getButtonStateMap(@NonNull String operation, Document record, DocumentForm form) {
+
+        LoggedInUser loggedInUser = (LoggedInUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         // 入力チェック
         validate(operation);
@@ -120,7 +128,9 @@ public class DocumentHelper {
 
         // 参照
         else if (Constants.OPERATION.VIEW.equals(operation)) {
-            buttonState.setViewTrue(Constants.BUTTON.GOTOUPDATE);
+            if (authority.hasAuthorityWOException(operation, loggedInUser, record)) {
+                buttonState.setViewTrue(Constants.BUTTON.GOTOUPDATE);
+            }
         }
 
         return buttonState;

@@ -39,6 +39,8 @@ public class OperationsUtil {
     private String LABEL_DOWNLOAD = "ダウンロード";
     // 13
     private String LABEL_SWITCH_USER = "スイッチ";
+    // 14
+    private String LABEL_SAVE = "保存・有効化";
 
     // 1
     private String URL_CREATE = "create?form";
@@ -65,6 +67,8 @@ public class OperationsUtil {
     private String URL_DOWNLOAD = "{id}/download";
     // 13
     private String URL_SWITCH_USER = "/admin/impersonate?username={id}";
+    // 14
+    // なし
 
     // ------ コンストラクタ -----------------------------------------
 
@@ -426,15 +430,6 @@ public class OperationsUtil {
         return link(getDownloadUrl(id), LABEL_DOWNLOAD, BUTTON_CLASS);
     }
 
-    /**
-     * 「スイッチ」ボタンのHTMLを返す。
-     *
-     * @param id データを一位に特定する内部ID番号
-     * @return ボタンのHTML
-     */
-//    public String getSwitchUserButton(String id) {
-//        return link(getSwitchUserUrl(id), LABEL_SWITCH_USER, BUTTON_CLASS);
-//    }
 
     // ------ private function --------------------------------------
     private String convId(String template, String id) {

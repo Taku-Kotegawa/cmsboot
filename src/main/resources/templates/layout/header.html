@@ -34,21 +34,37 @@
 <!--                                    class="fas fa-bars"></i></a>-->
 <!--                        </li>-->
                         <li class="nav-item">
-                            <a class="nav-link" th:href="@{/}"><i class="fas fa-home"></i> Home</a>
+                            <a class="nav-link" th:href="@{/}"><i class="fas fa-home"></i> ホーム</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/sales/document/list}"><i class="fas fa-folder-open"></i> ドキュメント一覧</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/sales/document/list}"><i class="fas fa-search"></i> 検索</a>
+                        </li>
+                        <th:block sec:authorize="hasAuthority('DOC_MAN_LIST')">
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{/sales/document/list}"><i class="fas fa-tasks"></i> 管理</a>
+                            </li>
+                        </th:block>
+                        <th:block sec:authorize="hasAuthority('DOC_MAN_CREATE')">
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{/sales/document/create?form}"><i class="fas fa-file"></i> 新規登録</a>
+                            </li>
+                        </th:block>
 <!--                        <li class="nav-item">-->
 <!--                            <a class="nav-link" th:href="@{/example/document/create?form}"><i class="fas fa-file"></i> 新規登録</a>-->
 <!--                        </li>-->
-                        <li class="nav-item dropdown">
-                            <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle"
-                               data-toggle="dropdown"
-                               href="#" id="dropdownSubMenu1"><i class="fas fa-folder-open"></i> ドキュメント</a>
-                            <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-                                <li><a class="dropdown-item" th:href="@{/sales/document/list}">一覧 </a></li>
-                                <li><a class="dropdown-item" href="#">全文検索</a></li>
-                                <li class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" th:href="@{/sales/document/list}">管理</a></li>
-                                <li><a class="dropdown-item" th:href="@{/sales/document/create?form}">新規登録</a></li>
+<!--                        <li class="nav-item dropdown">-->
+<!--                            <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle"-->
+<!--                               data-toggle="dropdown"-->
+<!--                               th:href="@{/sales/document/list}" id="dropdownSubMenu1"><i class="fas fa-folder-open"></i> ドキュメント一覧</a>-->
+<!--                            <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">-->
+<!--                                <li><a class="dropdown-item" >一覧 </a></li>-->
+<!--                                <li><a class="dropdown-item" href="#">全文検索</a></li>-->
+<!--                                <li class="dropdown-divider"></li>-->
+<!--                                <li><a class="dropdown-item" th:href="@{/sales/document/list}">管理</a></li>-->
+<!--                                <li><a class="dropdown-item" th:href="@{/sales/document/create?form}">新規登録</a></li>-->
 
 <!--                                <li class="dropdown-divider"></li>-->
 
@@ -82,22 +98,22 @@
 <!--                                    </ul>-->
 <!--                                </li>-->
                                 <!-- End Level two -->
-                            </ul>
-                        </li>
+<!--                            </ul>-->
+<!--                        </li>-->
                     </ul>
 
                     <!-- SEARCH FORM -->
-                    <form class="form-inline ml-0 ml-md-3">
-                        <div class="input-group input-group-sm">
-                            <input aria-label="Search" class="form-control form-control-navbar" placeholder="Search"
-                                   type="search">
-                            <div class="input-group-append">
-                                <button class="btn btn-navbar" type="submit">
-                                    <i class="fas fa-search"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+<!--                    <form class="form-inline ml-0 ml-md-3">-->
+<!--                        <div class="input-group input-group-sm">-->
+<!--                            <input aria-label="Search" class="form-control form-control-navbar" placeholder="Search"-->
+<!--                                   type="search">-->
+<!--                            <div class="input-group-append">-->
+<!--                                <button class="btn btn-navbar" type="submit">-->
+<!--                                    <i class="fas fa-search"></i>-->
+<!--                                </button>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </form>-->
                 </div>
 
                 <!-- Right navbar links -->

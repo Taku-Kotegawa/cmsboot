@@ -52212,6 +52212,10 @@ fieldset legend {
   margin-bottom: unset;
 }
 
+.is-invalid .note-editor.note-airframe, .is-invalid .note-editor.note-frame {
+  border-color: #dc3545;
+}
+
 /**
  * @file
  * Seven styles for Tables.

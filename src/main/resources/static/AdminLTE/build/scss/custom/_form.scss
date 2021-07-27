@@ -75,3 +75,10 @@ fieldset legend {
 .note-editor.note-frame.card {
   margin-bottom: unset;
 }
+
+.is-invalid {
+  .note-editor.note-airframe, .note-editor.note-frame {
+    border-color: #dc3545;
+  }
+}
+

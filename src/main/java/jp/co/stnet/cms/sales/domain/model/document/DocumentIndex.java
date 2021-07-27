@@ -70,16 +70,6 @@ public class DocumentIndex implements Serializable, StatusInterface {
     private DocumentIndexPK pk;
 
     /**
-     * 内部ID
-     */
-//    private Long id;
-
-    /**
-     *
-     */
-//    private Integer no;
-
-    /**
      * ステータス
      */
     private String status;

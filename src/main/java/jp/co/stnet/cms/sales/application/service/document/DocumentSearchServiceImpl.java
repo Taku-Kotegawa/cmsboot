@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.Set;
 
 @Service
 @Transactional(readOnly = true)
@@ -28,6 +29,12 @@ public class DocumentSearchServiceImpl implements DocumentSearchService {
     @Override
     public SearchResult<DocumentIndex> searchByInput(DataTablesInput input) {
 
+        Set<String> multiSelectFields = Set.of(
+                "lastModifiedBy",
+                "useStage",
+                "publicScope",
+                "customerPublic"
+        );
 
         SearchSession searchSession = Search.session(entityManager);
 
@@ -47,7 +54,16 @@ public class DocumentSearchServiceImpl implements DocumentSearchService {
                                 String convertedName = convertColumnName(fieldName);
                                 String value = input.getColumn(fieldName).getSearch().getValue();
                                 if (value != null) {
-                                    b = b.must(f.wildcard().fields(convertedName).matching("*" + value + "*"));
+                                    if (multiSelectFields.contains(convertedName)) {
+                                        BooleanPredicateClausesStep<?> c = f.bool();
+                                        for(String v : value.split(",")) {
+                                           c = c.should(f.match().field(convertedName).matching(v.trim()));
+                                        }
+                                        b = b.must(c);
+                                    } else {
+                                        b = b.must(f.wildcard().fields(convertedName).matching("*" + value + "*"));
+
+                                    }
                                     filterFieldNum++;
                                 }
                             }
