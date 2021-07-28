@@ -3,7 +3,10 @@
 
 <head>
     <!-- ページタイトルを記入 -->
-    <title>ドキュメント</title>
+    <title>
+        <th:block th:if="${fieldState.title__view}">[[${document.title}]]</th:block>
+        <th:block th:if="!${fieldState.title__view}">ドキュメント登録</th:block>
+    </title>
 </head>
 
 <body>
@@ -15,7 +18,10 @@
         <div class="row">
             <div class="col-18 mb-3">
                 <!-- ページタイトルを記入 -->
-                <h4>ドキュメント</h4>
+                <h4>
+                    <th:block th:if="${fieldState.title__view}">[[${document.title}]]</th:block>
+                    <th:block th:if="!${fieldState.title__view}">ドキュメント登録</th:block>
+                </h4>
             </div>
             <div class="col-18 text-right">
                 <!-- ページタイトル右の余白 -->

@@ -33,19 +33,6 @@ div#list_filter {
         <div th:replace="~{fragments/message-panel :: message-panel}"></div>
         <!-- ここより下にメインコンテンツを記入 -->
 
-        <div class="row mb-3">
-<!--            <div class="form-check-inline">-->
-<!--                <input id="draft" name="draft" type="checkbox" checked="checked">-->
-<!--                <label for="draft">下書きを含む</label>-->
-<!--            </div>-->
-            <div class="dt-buttons btn-group flex-wrap ml-2">
-                <button class="btn btn-button" id="filter1">区分別</button>
-                <button class="btn btn-button" id="filter2">サービス別</button>
-                <button class="btn btn-button" id="filter3">日付・部門</button>
-                <button class="btn btn-button" id="filter9">全項目</button>
-            </div>
-        </div>
-
         <table id="list" class="table-sm table-striped nowrap">
             <thead>
             <tr class="filter">
@@ -117,35 +104,35 @@ div#list_filter {
             </tr>
             <tr class="title">
 <!--                <th class="text-center px-0"></th>-->
-                <th class="text-center">#</th>
-                <th class="text-center">操作</th>
-                <th class="text-center">ステータス</th>
-                <th class="text-center">文書番号</th>
-                <th class="text-center">タイトル</th>
-                <th class="text-center">版数</th>
-                <th class="text-center">区分1</th>
-                <th class="text-center">区分2</th>
-                <th class="text-center">事業</th>
-                <th class="text-center">サービス種別</th>
-                <th class="text-center">サービス</th>
-                <th class="text-center">発行日</th>
-                <th class="text-center">改訂日</th>
-                <th class="text-center">廃止日</th>
-                <th class="text-center">周知日</th>
-                <th class="text-center">作成担当者</th>
-                <th class="text-center">発行担当者</th>
-                <th class="text-center">発行責任者</th>
-                <th class="text-center">作成部門</th>
-                <th class="text-center">発行部門</th>
-                <th class="text-center">備考</th>
-                <th class="text-center">変更理由</th>
-                <th class="text-center">ファイル</th>
-                <th class="text-center">ファイルメモ</th>
-                <th class="text-center">活用シーン</th>
-                <th class="text-center">公開区分</th>
-                <th class="text-center">顧客公開</th>
-                <th class="text-center">最終更新者</th>
-                <th class="text-center">最終更新日時</th>
+                <th class="text-center">#</th><!-- 0 -->
+                <th class="text-center">操作</th><!-- 1 -->
+                <th class="text-center">ステータス</th><!-- 2 -->
+                <th class="text-center">文書番号</th><!-- 3 -->
+                <th class="text-center">タイトル</th><!-- 4 -->
+                <th class="text-center">版数</th><!-- 5 -->
+                <th class="text-center">区分1</th><!-- 6 -->
+                <th class="text-center">区分2</th><!-- 7 -->
+                <th class="text-center">事業</th><!-- 8 -->
+                <th class="text-center">サービス種別</th><!-- 9 -->
+                <th class="text-center">サービス</th><!-- 10 -->
+                <th class="text-center">発行日</th><!-- 11 -->
+                <th class="text-center">改訂日</th><!-- 12 -->
+                <th class="text-center">廃止日</th><!-- 13 -->
+                <th class="text-center">周知日</th><!-- 14 -->
+                <th class="text-center">作成担当者</th><!-- 15 -->
+                <th class="text-center">発行担当者</th><!-- 16 -->
+                <th class="text-center">発行責任者</th><!-- 17 -->
+                <th class="text-center">作成部門</th><!-- 18 -->
+                <th class="text-center">発行部門</th><!-- 19 -->
+                <th class="text-center">備考</th><!-- 20 -->
+                <th class="text-center">変更理由</th><!-- 21 -->
+                <th class="text-center">ファイル</th><!-- 22 -->
+                <th class="text-center">ファイルメモ</th><!-- 23 -->
+                <th class="text-center">活用シーン</th><!-- 24 -->
+                <th class="text-center">公開区分</th><!-- 25 -->
+                <th class="text-center">顧客公開</th><!-- 26 -->
+                <th class="text-center">最終更新者</th><!-- 27 -->
+                <th class="text-center">最終更新日時</th><!-- 28 -->
             </tr>
             </thead>
             <tbody></tbody>
@@ -161,6 +148,113 @@ div#list_filter {
 <script>
 
 var pagechange = false;
+
+// 全項目
+var all_column = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28];
+
+// 改訂日
+var visible_false_01 = [23, 20, 26, 11, 14, 15, 18, 16, 17, 19, 25];
+var column_order_01 = [0, 1, 12, 3, 4, 22, 23, 21, 20, 5, 26, 6, 7, 8, 9, 10, 24, 2, 11, 13, 14, 15, 18, 16, 17, 19, 25, 27, 28];
+
+// 文書種類
+var visible_false_02 = [23, 20, 26, 11, 14, 15, 18, 16, 17, 19, 25];
+var column_order_02 = [0, 1, 6, 7, 3, 4, 22, 23, 21, 20, 5, 26, 8, 9, 10, 24, 2, 11, 12, 13, 14, 15, 18, 16, 17, 19, 25, 27, 28];
+
+// サービス区分
+var visible_false_03 = [23, 20, 26, 11, 14, 15, 18, 16, 17, 19, 25];
+var column_order_03 = [0, 1, 8, 9, 10, 3, 4, 22, 23, 21, 20, 5, 26, 6, 7, 24, 2, 11, 12, 13, 14, 15, 18, 16, 17, 19, 25, 27, 28];
+
+// 活用シーン
+var visible_false_04 = [23, 20, 26, 11, 14, 15, 18, 16, 17, 19, 25];
+var column_order_04 = [0, 1, 24, 3, 4, 22, 23, 21, 20, 5, 26, 6, 7, 8, 9, 10, 2, 11, 12, 13, 14, 15, 18, 16, 17, 19, 25, 27, 28];
+
+// 発行部門
+var visible_false_05 = [23, 20, 26, 11, 14, 25, 27, 28];
+var column_order_05 = [0, 1, 19, 17, 16, 3, 4, 22, 23, 21, 20, 5, 26, 6, 7, 8, 9, 10, 24, 2, 11, 12, 13, 14, 15, 18, 25, 27, 28];
+
+/**
+ * 改訂日ボタン
+ */
+$.fn.dataTable.ext.buttons.colOrder01 = {
+    text: '<i class="fas fa-table"></i> 改訂日',
+    titleAttr: '改訂日',
+    action: function (e, dt, node, config) {
+        reset(dt);
+        dt.columns( visible_false_01 ).visible( false );
+        dt.colReorder.order( column_order_01, true );
+    }
+};
+
+/**
+ * 文書種類ボタン
+ */
+$.fn.dataTable.ext.buttons.colOrder02 = {
+    text: '<i class="fas fa-table"></i> 文書種類',
+    titleAttr: '文書種類',
+    action: function (e, dt, node, config) {
+        reset(dt);
+        dt.columns( visible_false_02 ).visible( false );
+        dt.colReorder.order( column_order_02, true );
+    }
+};
+
+/**
+ * サービス区分ボタン
+ */
+$.fn.dataTable.ext.buttons.colOrder03 = {
+    text: '<i class="fas fa-table"></i> 文書区分',
+    titleAttr: '文書区分',
+    action: function (e, dt, node, config) {
+        reset(dt);
+        dt.columns( visible_false_03 ).visible( false );
+        dt.colReorder.order( column_order_03, true );
+    }
+};
+
+/**
+ * 活用シーンボタン
+ */
+$.fn.dataTable.ext.buttons.colOrder04 = {
+    text: '<i class="fas fa-table"></i> 活用シーン',
+    titleAttr: '活用シーン',
+    action: function (e, dt, node, config) {
+        reset(dt);
+        dt.columns( visible_false_04 ).visible( false );
+        dt.colReorder.order( column_order_04, true );
+    }
+};
+
+/**
+ * 発行部門ボタン
+ */
+$.fn.dataTable.ext.buttons.colOrder05 = {
+    text: '<i class="fas fa-table"></i> 発行部門',
+    titleAttr: '発行部門',
+    action: function (e, dt, node, config) {
+        reset(dt);
+        dt.columns( visible_false_05 ).visible( false );
+        dt.colReorder.order( column_order_05, true );
+    }
+};
+
+/**
+ * 全項目ボタン
+ */
+$.fn.dataTable.ext.buttons.colOrder06 = {
+    text: '<i class="fas fa-table"></i> 全項目',
+    titleAttr: '全項目',
+    action: function (e, dt, node, config) {
+        reset(dt);
+    }
+};
+
+/**
+ * 全項目リセット
+ */
+function reset(table) {
+    table.columns( all_column ).visible( true );
+    table.colReorder.order( all_column, true );
+}
 
   $(document)
     .ready(
@@ -337,17 +431,17 @@ var pagechange = false;
 
           // 初期列非表示
           "columnDefs": [
-            { "visible": false, "targets": [5, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 27, 28] }
+            { "visible": false, "targets": visible_false_01 }
           ],
 
           // 初期列並び順
           colReorder: {
-            order: [0, 1, 2, 6, 7, 3, 4, 5, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28]
+            order: column_order_01,
+            originalIndexes: true
           },
 
           // ボタンの表示
-          // 'buttons': ['bulkdelete', 'bulkinvalid', 'bulkvalid',' colvis', 'stateClear', 'csvdownload', 'tsvdownload', 'exceldownload', 'upload', 'createnew'],
-          'buttons': ['colvis', 'stateClear', 'csvdownload', 'tsvdownload', 'upload', 'createnew'],
+          'buttons': ['stateClear', 'colvis', 'colOrder01', 'colOrder02', 'colOrder03', 'colOrder04', 'colOrder05', 'colOrder06', 'csvdownload', 'tsvdownload', 'upload', 'createnew'],
 
           // データロード後処理
           'initComplete': function (settings, json) {
@@ -391,39 +485,7 @@ var pagechange = false;
 <!--          table.draw();-->
 <!--        }-->
 
-        // 区分別
-        $('#filter1').click( function (e) {
-            reset(table);
-            table.columns( [5, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 27, 28] ).visible( false );
-            table.colReorder.order( [0, 1, 2, 6, 7, 3, 4, 5, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], true );
-        });
-
-        // サービス別
-        $('#filter2').click( function (e) {
-            reset(table);
-            table.columns( [5, 6, 7, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 27, 28] ).visible( false );
-            table.colReorder.order( [0, 1, 2, 8, 9, 10, 3, 4, 5, 6, 7, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], true );
-        });
-
-        // 日付・部門
-        $('#filter3').click( function (e) {
-            reset(table);
-            table.columns( [6, 7, 8, 9, 10, 11, 24, 25, 26, 27, 28] ).visible( false );
-            table.colReorder.order( [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], true );
-        });
-
-        // リセット
-        $('#filter9').click( function (e) {
-            reset(table);
-        });
-
       });
-
-  function reset(table) {
-            table.columns( [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28] ).visible( true );
-            table.colReorder.order( [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28], true );
-  }
-
 
   function myflatten(params, settings) {
     params = flatten(params, settings);

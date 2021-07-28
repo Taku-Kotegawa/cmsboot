@@ -25,36 +25,7 @@ public class VariableServiceImpl extends AbstractNodeService<Variable, Long> imp
 
     @Override
     protected void beforeSave(Variable entity, Variable current) {
-
-        // 文書区分
-        if (VariableType.DOC_CATEGORY.name().equals(entity.getType())) {
-            entity.setValue10(
-                    entity.getValue1()
-                            + separateValue(entity.getValue2())
-                            + separateValue(entity.getValue3())
-                            + separateValue(entity.getValue4())
-                            + separateValue(entity.getValue5())
-                            + separateValue(entity.getValue6())
-            );
-        } else if (VariableType.DOC_SERVICE.name().equals(entity.getType())) {
-            entity.setValue10(
-                    entity.getValue1()
-                            + separateValue(entity.getValue2())
-                            + separateValue(entity.getValue3())
-                            + separateValue(entity.getValue4())
-                            + separateValue(entity.getValue5())
-                            + separateValue(entity.getValue6())
-            );
-        }
-
         super.beforeSave(entity, current);
-    }
-
-    private String separateValue(String value) {
-        if (StringUtils.isNotBlank(value)) {
-            return " / " + value;
-        }
-        return "";
     }
 
     @Override

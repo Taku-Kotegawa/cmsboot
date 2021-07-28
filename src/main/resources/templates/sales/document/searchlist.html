@@ -2,7 +2,7 @@
 <html th:replace="~{layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
 <head>
     <!-- ページタイトルを記入 -->
-    <title>ドキュメント検索一覧</title>
+    <title>ドキュメント一覧</title>
 </head>
 <body>
 <div th:replace="~{layout/libraries :: datatables}"></div>
@@ -13,7 +13,7 @@
         <div class="row px-5">
             <div class="col-18 mb-3">
                 <!-- ページタイトルを記入 -->
-                <h4>ドキュメント検索一覧</h4>
+                <h4>ドキュメント一覧</h4>
             </div>
             <div class="col-18 text-right">
                 <!-- ページタイトル右の余白 -->
@@ -32,19 +32,6 @@ div#list_filter {
     <div class="container-fluid"><!-- -fluidを外すと横幅が狭くなる-->
         <div th:replace="~{fragments/message-panel :: message-panel}"></div>
         <!-- ここより下にメインコンテンツを記入 -->
-
-        <div class="row mb-3">
-<!--            <div class="form-check-inline">-->
-<!--                <input id="draft" name="draft" type="checkbox" checked="checked">-->
-<!--                <label for="draft">下書きを含む</label>-->
-<!--            </div>-->
-            <div class="dt-buttons btn-group flex-wrap ml-2">
-                <button class="btn btn-button" id="filter1">区分別</button>
-                <button class="btn btn-button" id="filter2">サービス別</button>
-                <button class="btn btn-button" id="filter3">日付・部門</button>
-                <button class="btn btn-button" id="filter9">全項目</button>
-            </div>
-        </div>
 
         <table id="list" class="table-sm table-striped nowrap">
             <thead>
@@ -150,6 +137,113 @@ div#list_filter {
 <script>
 
 var pagechange = false;
+
+// 全項目
+var all_column = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26];
+
+// 改訂日
+var visible_false_01 = [21, 18, 24, 9, 12, 13, 16, 14, 15, 17, 23];
+var column_order_01 = [0, 10, 1, 2, 20, 21, 19, 18, 3, 24, 4, 5, 6, 7, 8, 22, 9, 11, 12, 13, 16, 14, 15, 17, 23, 25, 26];
+
+// 文書種類
+var visible_false_02 = [21, 18, 24, 9, 12, 13, 16, 14, 15, 17, 23];
+var column_order_02 = [0, 4, 5, 1, 2, 20, 21, 19, 18, 3, 24, 6, 7, 8, 22, 9, 10, 11, 12, 13, 16, 14, 15, 17, 23, 25, 26];
+
+// サービス区分
+var visible_false_03 = [21, 18, 24, 9, 12, 13, 16, 14, 15, 17, 23];
+var column_order_03 = [0, 6, 7, 8, 1, 2, 20, 21, 19, 18, 3, 24, 4, 5, 22, 9, 10, 11, 12, 13, 16, 14, 15, 17, 23, 25, 26];
+
+// 活用シーン
+var visible_false_04 = [21, 18, 24, 9, 12, 13, 16, 14, 15, 17, 23];
+var column_order_04 = [0, 22, 1, 2, 20, 21, 19, 18, 3, 24, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 16, 14, 15, 17, 23, 25, 26];
+
+// 発行部門
+var visible_false_05 = [21, 18, 24, 9, 12, 23, 25, 26];
+var column_order_05 = [0, 17, 15, 14, 1, 2, 20, 21, 19, 18, 3, 24, 4, 5, 6, 7, 8, 22, 9, 10, 11, 12, 13, 16, 23, 25, 26];
+
+/**
+ * 改訂日ボタン
+ */
+$.fn.dataTable.ext.buttons.colOrder01 = {
+    text: '<i class="fas fa-table"></i> 改訂日',
+    titleAttr: '改訂日',
+    action: function (e, dt, node, config) {
+        reset(dt);
+        dt.columns( visible_false_01 ).visible( false );
+        dt.colReorder.order( column_order_01, true );
+    }
+};
+
+/**
+ * 文書種類ボタン
+ */
+$.fn.dataTable.ext.buttons.colOrder02 = {
+    text: '<i class="fas fa-table"></i> 文書種類',
+    titleAttr: '文書種類',
+    action: function (e, dt, node, config) {
+        reset(dt);
+        dt.columns( visible_false_02 ).visible( false );
+        dt.colReorder.order( column_order_02, true );
+    }
+};
+
+/**
+ * サービス区分ボタン
+ */
+$.fn.dataTable.ext.buttons.colOrder03 = {
+    text: '<i class="fas fa-table"></i> 文書区分',
+    titleAttr: '文書区分',
+    action: function (e, dt, node, config) {
+        reset(dt);
+        dt.columns( visible_false_03 ).visible( false );
+        dt.colReorder.order( column_order_03, true );
+    }
+};
+
+/**
+ * 活用シーンボタン
+ */
+$.fn.dataTable.ext.buttons.colOrder04 = {
+    text: '<i class="fas fa-table"></i> 活用シーン',
+    titleAttr: '活用シーン',
+    action: function (e, dt, node, config) {
+        reset(dt);
+        dt.columns( visible_false_04 ).visible( false );
+        dt.colReorder.order( column_order_04, true );
+    }
+};
+
+/**
+ * 発行部門ボタン
+ */
+$.fn.dataTable.ext.buttons.colOrder05 = {
+    text: '<i class="fas fa-table"></i> 発行部門',
+    titleAttr: '発行部門',
+    action: function (e, dt, node, config) {
+        reset(dt);
+        dt.columns( visible_false_05 ).visible( false );
+        dt.colReorder.order( column_order_05, true );
+    }
+};
+
+/**
+ * 全項目ボタン
+ */
+$.fn.dataTable.ext.buttons.colOrder06 = {
+    text: '<i class="fas fa-table"></i> 全項目',
+    titleAttr: '全項目',
+    action: function (e, dt, node, config) {
+        reset(dt);
+    }
+};
+
+/**
+ * 全項目リセット
+ */
+function reset(table) {
+    table.columns( all_column ).visible( true );
+    table.colReorder.order( all_column, true );
+}
 
   $(document)
     .ready(
@@ -311,9 +405,19 @@ var pagechange = false;
             [0, 'asc']
           ],
 
+          // 初期列非表示
+          "columnDefs": [
+            { "visible": false, "targets": visible_false_01 }
+          ],
+
+          // 初期列並び順
+          colReorder: {
+            order: column_order_01,
+            originalIndexes: true
+          },
+
           // ボタンの表示
-          // 'buttons': ['bulkdelete', 'bulkinvalid', 'bulkvalid',' colvis', 'stateClear', 'csvdownload', 'tsvdownload', 'exceldownload', 'upload', 'createnew'],
-          'buttons': ['colvis', 'stateClear', 'csvdownload', 'tsvdownload', 'upload', 'createnew'],
+          'buttons': ['stateClear', 'colvis', 'colOrder01', 'colOrder02', 'colOrder03', 'colOrder04', 'colOrder05', 'colOrder06', 'csvdownload', 'tsvdownload', 'upload', 'createnew'],
 
           // データロード後処理
           'initComplete': function (settings, json) {
@@ -341,54 +445,7 @@ var pagechange = false;
           }
         } );
 
-        // 下書きチェックボックス押下時の操作
-<!--        $('#draft').change().on('change', function (e, s) {-->
-<!--          localStorage.dataTables_Draft = e.target.checked;-->
-<!--          table.draw();-->
-<!--          // fnColumns(table);-->
-<!--        });-->
-
-        // 画面表示時の下書きチェックボックスの復元
-<!--        if (localStorage.dataTables_Draft == 'false') {-->
-<!--          $('#draft')[0].checked = false;-->
-<!--          table.draw();-->
-<!--        } else if (localStorage.dataTables_Draft != 'false' && $('#draft')[0].checked == false) {-->
-<!--          $('#draft')[0].checked = true;-->
-<!--          table.draw();-->
-<!--        }-->
-
-        // 区分別
-        $('#filter1').click( function (e) {
-            reset(table);
-            table.columns( [5, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21] ).visible( false );
-            table.colReorder.order( [0, 1, 2, 6, 7, 3, 4, 5, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26], true );
-        });
-
-        // サービス別
-        $('#filter2').click( function (e) {
-            reset(table);
-            table.columns( [5, 6, 7, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21] ).visible( false );
-            table.colReorder.order( [0, 1, 2, 8, 9, 10, 3, 4, 5, 6, 7, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26], true );
-        });
-
-        // 日付・部門
-        $('#filter3').click( function (e) {
-            reset(table);
-            table.columns( [6, 7, 8, 9, 10, 11, 24, 25, 26] ).visible( false );
-            table.colReorder.order( [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26], true );
-        });
-
-        // リセット
-        $('#filter9').click( function (e) {
-            reset(table);
-        });
-
       });
-
-  function reset(table) {
-            table.columns( [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26] ).visible( true );
-            table.colReorder.order( [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26], true );
-  }
 
 
   function myflatten(params, settings) {

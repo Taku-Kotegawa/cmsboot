@@ -2,7 +2,7 @@
 <html th:replace="~{layout/template :: layout(~{::title}, ~{::body})}" xmlns:th="http://www.thymeleaf.org">
 <head>
     <!-- ページタイトルを記入 -->
-    <title>Admin Menu</title>
+    <title>管理メニュー</title>
 </head>
 <body>
 
@@ -11,7 +11,7 @@
         <div class="row">
             <div class="col-18 mb-3">
                 <!-- ページタイトルを記入 -->
-                <h4>Admin Menu</h4>
+                <h4>管理メニュー</h4>
             </div>
             <div class="col-18 text-right">
                 <!-- ページタイトル右の余白 -->
@@ -64,21 +64,6 @@
                 </div>
 
                 <div class="admin-panel">
-                    <h5>ジョブ</h5>
-                    <hr>
-                    <ul class="list-unstyled mb-0">
-                        <li class="mb-2">
-                            <i class="fas fa-angle-right"></i>
-                            <a th:href="@{/job/summary}">ジョブサマリ(最終実行結果)</a>
-                        </li>
-                        <li class="mb-2">
-                            <i class="fas fa-angle-right"></i>
-                            <a th:href="@{/job/result}">ジョブ処理結果</a>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="admin-panel">
                     <h5>マスタ(Variable)</h5>
                     <hr>
                     <ul class="list-unstyled mb-0" th:each="variableType : ${@CL_VARIABLETYPE.asMap()}">
@@ -95,6 +80,21 @@
             <div class="col-18 pr-3">
 
                 <div class="admin-panel">
+                    <h5>ジョブ</h5>
+                    <hr>
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-2">
+                            <i class="fas fa-angle-right"></i>
+                            <a th:href="@{/job/summary}">ジョブサマリ(最終実行結果)</a>
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-angle-right"></i>
+                            <a th:href="@{/job/result}">ジョブ処理結果</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="admin-panel">
                     <h5>Hibernate Search</h5>
                     <hr>
                     <ul class="list-unstyled mb-0">
@@ -105,30 +105,6 @@
                     </ul>
                 </div>
 
-                <div class="admin-panel">
-                    <h5>帳票管理</h5>
-                    <hr>
-                    <ul class="list-unstyled mb-0">
-                        <li class="mb-2">
-                            <i class="fas fa-angle-right"></i>
-                            <a th:href="@{/admin/shop/list}">店所マスタ</a>
-                        </li>
-                    </ul>
-
-                    <ul class="list-unstyled mb-0">
-                        <li class="mb-2">
-                            <i class="fas fa-angle-right"></i>
-                            <a th:href="@{/admin/document/list}">ドキュメント管理</a>
-                        </li>
-                    </ul>
-
-                    <ul class="list-unstyled mb-0">
-                        <li class="mb-2">
-                            <i class="fas fa-angle-right"></i>
-                            <a th:href="@{/admin/pageidx/list}">ページ番号管理</a>
-                        </li>
-                    </ul>
-                </div>
             </div>
         </div>
 
