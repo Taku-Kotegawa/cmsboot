@@ -22,6 +22,7 @@ import static org.apache.commons.text.StringEscapeUtils.escapeHtml4;
 public class Documents {
 
     private static final String CSV_DELIMITER = ",";
+
     private static final String BRAKE_LINE = "<br>";
 
     @Autowired

@@ -76,7 +76,7 @@ public class DocumentController {
         model.addAttribute("document", document);
         model.addAttribute("buttonState", helper.getButtonStateMap(Constants.OPERATION.VIEW, document, null).asMap());
         model.addAttribute("fieldState", helper.getFiledStateMap(Constants.OPERATION.VIEW, document, null).asMap());
-        model.addAttribute("op", new OperationsUtil(BASE_PATH));
+        model.addAttribute("op", new DocumentOperationUtil(BASE_PATH));
 
         documentAccessService.save(id, loggedInUser.getUsername());
 

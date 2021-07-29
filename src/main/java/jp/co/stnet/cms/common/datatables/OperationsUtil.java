@@ -40,7 +40,7 @@ public class OperationsUtil {
     // 13
     private String LABEL_SWITCH_USER = "スイッチ";
     // 14
-    private String LABEL_SAVE = "保存・有効化";
+    private String LABEL_SAVE = "保存";
 
     // 1
     private String URL_CREATE = "create?form";

@@ -37,8 +37,6 @@ import static jp.co.stnet.cms.sales.presentation.controller.document.DocumentCon
 @TransactionTokenCheck(BASE_PATH)
 public class DocumentUpdateController {
 
-    private final OperationsUtil op = new OperationsUtil(BASE_PATH);
-
     @Autowired
     DocumentAuthority authority;
 
@@ -117,7 +115,7 @@ public class DocumentUpdateController {
         model.addAttribute("document", document);
         model.addAttribute("buttonState", helper.getButtonStateMap(Constants.OPERATION.UPDATE, document, form).asMap());
         model.addAttribute("fieldState", helper.getFiledStateMap(Constants.OPERATION.UPDATE, document, form).asMap());
-        model.addAttribute("op", op);
+        model.addAttribute("op", new DocumentOperationUtil(BASE_PATH));
 
         return TEMPLATE_FORM;
     }
@@ -163,7 +161,7 @@ public class DocumentUpdateController {
         ResultMessages messages = ResultMessages.info().add(MessageKeys.I_CM_FW_0004);
         redirect.addFlashAttribute(messages);
 
-        return "redirect:" + op.getEditUrl(id.toString());
+        return "redirect:" + new DocumentOperationUtil(BASE_PATH).getEditUrl(id.toString());
     }
 
     /**
@@ -181,12 +179,12 @@ public class DocumentUpdateController {
             documentService.invalid(id);
         } catch (BusinessException e) {
             redirect.addFlashAttribute(e.getResultMessages());
-            return "redirect:" + op.getEditUrl(id.toString());
+            return "redirect:" + new DocumentOperationUtil(BASE_PATH).getEditUrl(id.toString());
         }
 
         redirect.addFlashAttribute(ResultMessages.info().add(MessageKeys.I_CM_FW_0002));
 
-        return "redirect:" + op.getViewUrl(id.toString());
+        return "redirect:" + new DocumentOperationUtil(BASE_PATH).getViewUrl(id.toString());
     }
 
     /**
@@ -206,12 +204,12 @@ public class DocumentUpdateController {
             documentService.valid(id);
         } catch (BusinessException e) {
             redirect.addFlashAttribute(e.getResultMessages());
-            return "redirect:" + op.getViewUrl(id.toString());
+            return "redirect:" + new DocumentOperationUtil(BASE_PATH).getViewUrl(id.toString());
         }
 
         redirect.addFlashAttribute(ResultMessages.info().add(MessageKeys.I_CM_FW_0002));
 
-        return "redirect:" + op.getEditUrl(id.toString());
+        return "redirect:" + new DocumentOperationUtil(BASE_PATH).getEditUrl(id.toString());
     }
 
     /**
@@ -231,15 +229,15 @@ public class DocumentUpdateController {
             documentService.cancelDraft(id);
         } catch (BusinessException e) {
             redirect.addFlashAttribute(e.getResultMessages());
-            return "redirect:" + op.getEditUrl(id.toString());
+            return "redirect:" + new DocumentOperationUtil(BASE_PATH).getEditUrl(id.toString());
         }
 
         redirect.addFlashAttribute(ResultMessages.info().add(MessageKeys.I_CM_FW_0002));
 
         if (document != null) {
-            return "redirect:" + op.getEditUrl(id.toString());
+            return "redirect:" + new DocumentOperationUtil(BASE_PATH).getEditUrl(id.toString());
         } else {
-            return "redirect:" + op.getListUrl();
+            return "redirect:" + new DocumentOperationUtil(BASE_PATH).getListUrl();
         }
     }
 

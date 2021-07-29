@@ -96,7 +96,7 @@ public class DocumentCreateController {
 
         model.addAttribute("buttonState", helper.getButtonStateMap(Constants.OPERATION.CREATE, null, form).asMap());
         model.addAttribute("fieldState", helper.getFiledStateMap(Constants.OPERATION.CREATE, null, form).asMap());
-        model.addAttribute("op", new OperationsUtil(BASE_PATH));
+        model.addAttribute("op", new DocumentOperationUtil(BASE_PATH));
 
         return TEMPLATE_FORM;
     }
@@ -136,7 +136,7 @@ public class DocumentCreateController {
         ResultMessages messages = ResultMessages.info().add(MessageKeys.I_CM_FW_0001);
         redirect.addFlashAttribute(messages);
 
-        OperationsUtil op = new OperationsUtil(BASE_PATH);
+        DocumentOperationUtil op = new DocumentOperationUtil(BASE_PATH);
         return "redirect:" + op.getEditUrl(document.getId().toString());
     }
 
