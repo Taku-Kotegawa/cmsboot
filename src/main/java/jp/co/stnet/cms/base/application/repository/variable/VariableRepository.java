@@ -14,12 +14,9 @@ import java.util.List;
 @Repository
 public interface VariableRepository extends JpaRepository<Variable, Long> {
 
-
     List<Variable> findAllByType(String type);
 
-
     List<Variable> findAllByTypeAndCode(String type, String code);
-
 
     List<Variable> findAllByTypeAndValue1(String type, String value1);
 

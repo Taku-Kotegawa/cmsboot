@@ -23,8 +23,20 @@
                     <th:block th:if="!${fieldState.title__view}">ドキュメント登録</th:block>
                 </h4>
             </div>
-            <div class="col-18 text-right">
+            <div class="col-18 text-right nav-tabs-wrapper">
                 <!-- ページタイトル右の余白 -->
+                <th:block th:if="${id}">
+                    <ul class="nav nav-tabs justify-content-end">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">ドキュメント詳細</a>
+                        </li>
+                        <th:block th:if="${document.id} != null">
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{'/sales/document/history/' + ${document.id}}">変更履歴</a>
+                            </li>
+                        </th:block>
+                    </ul>
+                </th:block>
             </div>
         </div>
     </div>

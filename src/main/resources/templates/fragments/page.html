@@ -1,0 +1,42 @@
+<!--/* ... */-->
+
+<!--/* (1), (2) */-->
+<div th:fragment="pagination (page)" th:object="${page}" th:remove="tag" xmlns:th="http://www.thymeleaf.org">
+
+    <!--/* (3), (4) */-->
+    <ul class="pagination" th:if="*{totalElements} != 0"
+        th:with="pageLinkMaxDispNum = 10, disabledHref = 'javascript:void(0)', currentUrl = ${#request.requestURI}">
+
+        <!--/* (5) */-->
+        <li th:class="*{isFirst()} ? 'disabled'">
+            <!--/* (6) */-->
+            <a th:href="*{isFirst()} ? ${disabledHref} : @{{currentUrl}(currentUrl=${currentUrl},page=0,size=*{size})}">&lt;&lt;</a>
+        </li>
+
+        <!--/* (7) */-->
+        <li th:class="*{isFirst()} ? 'disabled'">
+            <a th:href="*{isFirst()} ? ${disabledHref} : @{{currentUrl}(currentUrl=${currentUrl},page=*{number - 1},size=*{size})}">&lt;</a>
+        </li>
+
+        <!--/* (8) */-->
+        <li th:class="${isActive} ? 'active'"
+            th:each="i : ${#pageInfo.sequence(page, pageLinkMaxDispNum)}" th:with="isActive=${i} == *{number + 1}">
+            <a th:href="${isActive} ? ${disabledHref} : @{{currentUrl}(currentUrl=${currentUrl},q='',page=${i - 1},size=*{size})}"
+               th:text="${i}"></a>
+        </li>
+
+        <!--/* (9) */-->
+        <li th:class="*{isLast()} ? 'disabled'">
+            <a th:href="*{isLast()} ? ${disabledHref} : @{{currentUrl}(currentUrl=${currentUrl},page=*{number + 1},size=*{size})}">&gt;</a>
+        </li>
+
+        <!--/* (10) */-->
+        <li th:class="*{isLast()} ? 'disabled'">
+            <a th:href="*{isLast()} ? ${disabledHref} : @{{currentUrl}(currentUrl=${currentUrl},page=*{totalPages - 1},size=*{size})}">&gt;&gt;</a>
+        </li>
+
+    </ul>
+
+</div>
+
+<!--/* ... */-->

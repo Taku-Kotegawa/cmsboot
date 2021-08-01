@@ -60,7 +60,15 @@ public class DocumentIndex implements Serializable, StatusInterface {
      */
     @Column(nullable = false)
     @KeywordField(sortable = Sortable.YES)
-    private String lastModifiedDate;
+    private String lastModifiedDateStr;
+
+    /**
+     * 最終更新日時(localDateTime)
+     */
+    @Column(nullable = false)
+    @GenericField(sortable = Sortable.YES)
+    private LocalDateTime lastModifiedDate;
+
 
     @EmbeddedId
     @DocumentId(
@@ -88,6 +96,7 @@ public class DocumentIndex implements Serializable, StatusInterface {
     /**
      * 本文
      */
+    @Column(columnDefinition = "TEXT")
     private String body;
 
     /**

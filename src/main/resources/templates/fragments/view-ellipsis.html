@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>入力フィールドの部品(view)</title>
+</head>
+<body>
+
+<th:block th:fragment="m(value, size)">
+
+    <th:block th:if="${size < #strings.length(__${value}__)}">
+        <div th:text="|${#strings.substring(__${value}__, 1, size)}...|"></div>
+    </th:block>
+    <th:block th:if="${size >= #strings.length(__${value}__)}">
+        <div th:text="${__${value}__}"></div>
+    </th:block>
+
+</th:block>
+</body>
+</html>

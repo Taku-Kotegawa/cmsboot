@@ -15,7 +15,7 @@ public interface VariableService extends NodeIService<Variable, Long> {
      * タイプで検索する。
      *
      * @param type タイプ
-     * @return ヒットしたデータのリスト
+     * @return ヒットしたデータのリスト、コードの昇順
      */
     List<Variable> findAllByType(String type);
 

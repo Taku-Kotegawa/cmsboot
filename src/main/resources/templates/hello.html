@@ -23,35 +23,112 @@
     <div class="container">
         <!-- ここより下にメインコンテンツを記入 -->
 
-        <div class="row pt-5">
-            <div class="col-36 border">
-                <br>
-                <br>
-                <p class="text-center">トップ画面に表示するコンテンツの配置予定</p>
-                <br>
-            </div>
-        </div>
+<!--        <div class="row pt-5">-->
+<!--            <div class="col-35 border">-->
+<!--                <br>-->
+<!--                <br>-->
+<!--                <p class="text-center">トップ画面に表示するコンテンツの配置予定</p>-->
+<!--                <br>-->
+<!--            </div>-->
+<!--        </div>-->
         <br>
         <br>
+            <div class="row">
+                <div class="col-17 border card-header">
+                    <h4>お知らせ</h4>
+                    <hr>
+                    <ul th:each="val : ${variableList}">
+                        <li>
+                            <a th:href="${'sales/news/'+val.id}" th:text="${val.value1}"></a>
+                            <div th:text="${#temporals.format(val.lastModifiedDate, 'yyyy/MM/dd')}"></div>
+                            <div th:text="${val.value2}"></div>
+                        </li>
 
-        <div class="row">
-            <div class="col-17">
-                <h4>お知らせ</h4>
-                <hr>
-                <ul>
-                    <li>xxxxxx</li>
-                    <li>xxxxxx</li>
-                    <li>xxxxxx</li>
-                </ul>
+                    </ul>
+                </div>
+                <div class="col-17 offset-1">
+                    <div class="row border card-header">
+                        <div class="col-15">
+                            <h5>キーワードを入力</h5>
+                        </div>
+                        <div class="col-15">
+                           <input type="text" class="form-control">
+                        </div>
+                        <div class="col-6">
+                            <a class="btn btn-button py-2" href="***"> 検索</a>
+                        </div>
+                    </div>
+                    <div class="card-header border mt-2">
+                        <h4>最近見た文書一覧</h4>
+                        <hr>
+                        <ul>
+                            <li> YYYY/MM/DD <a href="sales/document/1/latest"> 件名1(タイトル)</a> [サービス区分/文書区分]
+                        </ul>
+                        <ul>
+                            <li> YYYY/MM/DD <a href="sales/document/2/latest"> 件名2(タイトル)</a> [サービス区分/文書区分]
+                        </ul>
+                        <ul>
+                            <li> YYYY/MM/DD <a href="***"> 件名(タイトル)</a> [サービス区分/文書区分]
+                        </ul>
+                        <ul>
+                            <li> YYYY/MM/DD <a href="***"> 件名(タイトル)</a> [サービス区分/文書区分]
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <div class="col-17 offset-1">
-                <h4>新着情報</h4>
-                <hr>
-                <ul>
-                    <li>xxxxxx</li>
-                    <li>xxxxxx</li>
-                    <li>xxxxxx</li>
-                </ul>
+            <br>
+            <br>
+            <div class="row">
+                <div class="col-17 card-header border">
+                    <h4>アクセスランキング</h4>
+                    <hr>
+                    <ul>
+                        <li> YYYY/MM/DD <a href="sales/document/1/latest"> 件名1(タイトル)</a> [サービス区分/文書区分]
+                    </ul>
+                    <ul>
+                        <li> YYYY/MM/DD <a href="sales/document/2/latest"> 件名2(タイトル)</a> [サービス区分/文書区分]
+                    </ul>
+                    <ul>
+                        <li> YYYY/MM/DD <a href="***"> 件名(タイトル)</a> [サービス区分/文書区分]
+                    </ul>
+                    <ul>
+                        <li> YYYY/MM/DD <a href="***"> 件名(タイトル)</a> [サービス区分/文書区分]
+                    </ul>
+                </div>
+                <div class="col-17 offset-1 card-header border">
+                    <h4>新着情報（新規登録／更新文書一覧）</h4>
+                    <hr>
+                    <ul>
+                        <li> YYYY/MM/DD <a href="sales/document/1/latest"> 件名1(タイトル)</a> [サービス区分/文書区分]
+                    </ul>
+                    <ul>
+                        <li> YYYY/MM/DD <a href="sales/document/2/latest"> 件名2(タイトル)</a> [サービス区分/文書区分]
+                    </ul>
+                    <ul>
+                        <li> YYYY/MM/DD <a href="***"> 件名(タイトル)</a> [サービス区分/文書区分]
+                    </ul>
+                    <ul>
+                        <li> YYYY/MM/DD <a href="***"> 件名(タイトル)</a> [サービス区分/文書区分]
+                    </ul>
+                    <ul>
+                        <li> YYYY/MM/DD <a href="***"> 件名(タイトル)</a> [サービス区分/文書区分]
+                    </ul>
+                    <ul>
+                        <li> YYYY/MM/DD <a href="***"> 件名(タイトル)</a> [サービス区分/文書区分]
+                    </ul>
+                    <ul>
+                        <li> YYYY/MM/DD <a href="***"> 件名(タイトル)</a> [サービス区分/文書区分]
+                    </ul>
+                    <ul>
+                        <li> YYYY/MM/DD <a href="***"> 件名(タイトル)</a> [サービス区分/文書区分]
+                    </ul>
+                    <ul>
+                        <li> YYYY/MM/DD <a href="***"> 件名(タイトル)</a> [サービス区分/文書区分]
+                    </ul>
+                    <ul>
+                        <li> YYYY/MM/DD <a href="***"> 件名(タイトル)</a> [サービス区分/文書区分]
+                    </ul>
+                </div>
             </div>
         </div>
         <br>
@@ -68,6 +145,6 @@
         <!-- ここより上にメインコンテンツを記入 -->
     </div>
 </section>
-
+<br>
 </body>
 </html>

@@ -395,7 +395,7 @@ function reset(table) {
               render: $.fn.dataTable.render.text(),
             },
             {
-              data: 'lastModifiedDate',
+              data: 'lastModifiedDateStr',
               className: 'text-center',
             },
           ],
@@ -417,7 +417,7 @@ function reset(table) {
           },
 
           // ボタンの表示
-          'buttons': ['stateClear', 'colvis', 'colOrder01', 'colOrder02', 'colOrder03', 'colOrder04', 'colOrder05', 'colOrder06', 'csvdownload', 'tsvdownload', 'upload', 'createnew'],
+          'buttons': ['stateClear', 'colvis', 'colOrder01', 'colOrder02', 'colOrder03', 'colOrder04', 'colOrder05', 'colOrder06', 'csvdownload', 'tsvdownload'],
 
           // データロード後処理
           'initComplete': function (settings, json) {

@@ -4,19 +4,37 @@ import jp.co.stnet.cms.base.domain.model.authentication.LoggedInUser;
 import jp.co.stnet.cms.base.domain.model.common.Status;
 import jp.co.stnet.cms.common.constant.Constants;
 import jp.co.stnet.cms.common.util.StateMap;
+import jp.co.stnet.cms.sales.application.service.document.DocumentHistoryService;
 import jp.co.stnet.cms.sales.domain.model.document.Document;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import javax.validation.groups.Default;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Component
 public class DocumentHelper {
+
+    //　管理画面
+    static final String TEMPLATE_LIST = "sales/document/list";
+
+    //　全文検索画面
+    static final String TEMPLATE_SEARCH = "sales/document/search";
+
+    // 一覧画面
+    static final String TEMPLATE_SEARCH_LIST = "sales/document/searchlist";
+
+    // 変更履歴
+    static final String TEMPLATE_HISTORY= "sales/document/history";
+
+    //セッションとして情報を格納するURLの配列
+    private final String[] urlList = {TEMPLATE_LIST, TEMPLATE_SEARCH, TEMPLATE_SEARCH_LIST, TEMPLATE_HISTORY};
+
+    @Autowired
+    DocumentHistoryService documentHistoryService;
 
     @Autowired
     DocumentAuthority authority;
@@ -184,4 +202,63 @@ public class DocumentHelper {
         return fieldState;
     }
 
+    /**
+     * ユーザIDからユーザ名を返す
+     * ユーザ名: 姓+名
+     *
+     * @param userId ユーザID
+     * @return ユーザ名
+     */
+    String getUserName(String userId) {
+        return documentHistoryService.nameSearch((userId)).getFirstName() + " " + documentHistoryService.nameSearch((userId)).getLastName();
+    }
+
+    /**
+     * ユーザ情報から対応した公開区分を定義する
+     * 99:社員 20:派遣 10:外部委託
+     *
+     * @param loggedInUser ユーザ情報
+     * @return 公開区分
+     */
+    Set<String> getPublicScopeSet(LoggedInUser loggedInUser) {
+        Set<String> setScope = new HashSet<>();
+        if (loggedInUser.getAuthorities().contains(new SimpleGrantedAuthority("DOC_VIEW_ALL"))) {
+            Collections.addAll(setScope, "10", "20", "99");
+        } else if ((loggedInUser.getAuthorities().contains(new SimpleGrantedAuthority("DOC_VIEW_DISPATCHED_LABOR")))) {
+            Collections.addAll(setScope, "10", "20");
+        } else if ((loggedInUser.getAuthorities().contains(new SimpleGrantedAuthority("DOC_VIEW_OUTSOURCING")))) {
+            Collections.addAll(setScope, "10");
+        }
+
+        return setScope;
+    }
+
+    /**
+     * 指定したURLに該当するかチェックする
+     * 該当した場合: TRUE
+     * 該当しない場合: FALSE
+     *
+     * @param url 検索対象URL
+     * @return TRUE or FALSE
+     */
+    Boolean isReferer(String url) {
+        for (String arrayList : urlList) {
+            if (url.indexOf(arrayList) >= 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    StateMap getButtonStateMap(@NonNull String operation, Document record, DocumentForm form, LoggedInUser loggedInUser) {
+        StateMap buttonState = getButtonStateMap(operation, record, form);
+        if (operation.equals(Constants.OPERATION.VIEW)) {
+//            if (!authority.hasAuthorityNotException(operation, loggedInUser, record)) {
+//                buttonState.setViewFalse(Constants.BUTTON.GOTOUPDATE);
+//            }
+        }
+
+
+        return buttonState;
+    }
 }

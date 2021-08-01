@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/template :: layout(~{::title},~{::body})}" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- ページタイトルを記入 -->
+    <title>全文検索</title>
+</head>
+
+<body>
+<script th:src="@{/plugins/hummingbird-treeview/hummingbird-treeview-custom.js}"></script>
+
+<section class="content">
+    <div class="container mt-5">
+
+        <div th:replace="~{fragments/message-panel :: message-panel}"></div>
+
+        <!-- ここより下にメインコンテンツを記入 -->
+        <form autocomplete="off" enctype="multipart/form-data" method="get" th:action
+              th:object="${documentFullSearchForm}">
+
+            <div class="row">
+                <!-- 左サイド -->
+                <div class="col-10">
+
+                    <div class="card card-outline card-info">
+                        <div class="card-header py-3 px-4">区分</div>
+                        <div class="card-body p-4">
+
+                            <div class="hummingbird-treeview" id="treeview_container">
+                                <ul class="hummingbird-base" id="treeview">
+                                    <th:block th:each="lv1, s1 : ${variableCategoryBeanList}">
+                                        <li data-id="0">
+                                            <i class="fa fa-plus"></i>
+                                            <label class="form-check-label">
+                                                <input th:data-id="|custom-${s1.index}|" th:id="|${lv1.code}|"
+                                                       type="checkbox"/> [[${lv1.codeName}]]
+                                            </label>
+                                            <label class="form-check-label float-right" th:text="${lv1.counts}"></label>
+                                            <ul>
+                                                <th:block th:each="lv2, s2 : ${lv1.child}">
+                                                    <li data-id="1">
+                                                        <label class="form-check-label">
+                                                            <input class="hummingbird-end-node"
+                                                                   th:data-id="|custom-${s1.index}-${s2.index}|"
+                                                                   th:field="*{facetsDoc2}"
+                                                                   th:id="|${lv1.code}-${lv2.code}|"
+                                                                   th:value="${lv2.code}"
+                                                                   type="checkbox"/> [[${lv2.codeName}]]
+                                                        </label>
+                                                        <label class="form-check-label float-right"
+                                                               th:text="${lv2.counts}"></label>
+                                                    </li>
+                                                </th:block>
+                                            </ul>
+                                        </li>
+                                    </th:block>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="card card-outline card-info">
+                        <div class="card-header py-3 px-4">サービス</div>
+                        <div class="card-body p-4">
+
+                            <div class="hummingbird-treeview" id="treeview_container2">
+                                <ul class="hummingbird-base" id="treeview2">
+                                    <th:block th:each="lv1, s1 : ${variableServiceBeanList}">
+                                        <li data-id="0">
+                                            <i class="fa fa-plus"></i>
+                                            <label class="form-check-label">
+                                                <input th:data-id="|custom-${s1.index}|" th:id="|${lv1.code}|"
+                                                       type="checkbox"/> [[${lv1.codeName}]]
+                                            </label>
+                                            <label class="form-check-label float-right" th:text="${lv1.counts}"></label>
+                                            <ul>
+                                                <th:block th:each="lv2, s2 : ${lv1.child}">
+                                                    <li data-id="1">
+                                                        <label class="form-check-label">
+                                                            <input class="hummingbird-end-node"
+                                                                   th:data-id="|custom-${s1.index}-${s2.index}|"
+                                                                   th:field="*{facetsService2}"
+                                                                   th:id="|${lv1.code}-${lv2.code}|"
+                                                                   th:value="${lv2.code}"
+                                                                   type="checkbox"/> [[${lv2.codeName}]]
+                                                        </label>
+                                                        <label class="form-check-label float-right" th:text="${lv2.counts}"></label>
+                                                    </li>
+                                                </th:block>
+                                            </ul>
+                                        </li>
+                                    </th:block>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 右サイド -->
+                <div class="col-25 offset-1">
+
+                    <!-- 検索条件 -->
+                    <div class="row">
+                        <div class="col-24">
+                            <div class="input-group">
+                                <input class="form-control" name="q" th:value="*{q}" type="text"/>
+                                <div class="input-group-append">
+                                    <button class="btn btn-button py-0">検索</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <select class="form-control" name="sort" th:placeholder="${placeholder}">
+                                <option th:selected="${form.sort == 'lastModifiedDate'}" value="lastModifiedDate">
+                                    最終更新日(降)
+                                </option>
+                                <option th:selected="${form.sort == 'score'}" value="score">スコア順</option>
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <select class="form-control" name="period" th:placeholder="${placeholder}">
+                                <option th:selected="${form.period == 'not'}" value="not">期間指定なし</option>
+                                <option th:selected="${form.period == 'week'}" value="week">1週間</option>
+                                <option th:selected="${form.period == 'month'}" value="month">1ヶ月</option>
+                                <option th:selected="${form.period == 'year'}" value="year">1年</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mt-2 ml-2">
+                        <div class="form-check-inline">
+                            <th:block th:each="item : ${@CL_KEYWORD_SEARCH_TARGET.asMap()}">
+                                <input th:field="*{keywordSearchTarget}" th:value="${item.key}" type="checkbox" />
+                                <label th:for="${#ids.prev('keywordSearchTarget')}" th:text="${item.value}"></label>
+                            </th:block>
+                        </div>
+                    </div>
+
+                    <!-- 件数 -->
+                    <block th:if="${totalHitCount != null}">
+                        <div class="mt-5 mb-3" th:text="|${totalHitCount} 件が検索にヒットしました。|"></div>
+                        <hr>
+                    </block>
+
+                    <!-- 検索結果 -->
+                    <div th:each="item, status : ${hits}">
+                        <!-- 区分 / サービス -->
+                        <div class="mb-2">
+                            [[|${item.docCategory1Name}>${item.docCategory2Name}|]] |
+                            [[|${item.docService1Name}>${item.docService2Name}|]]
+                            <span th:if="${!#strings.isEmpty(item.docService3Name)}">[[|>${item.docService3Name}|]]</span>
+                        </div>
+                        <!-- タイトル -->
+                        <h5><a th:href="${item.pk.id + '/latest'}" th:utext="${item.titleHighlight}"></a></h5>
+
+                        <!-- 本文 -->
+                        <div th:utext="${item.bodyHighlight}"></div>
+
+                        <!-- 添付アイル -->
+                        <div class="ml-5 mt-2" th:if="${item.fileManaged}">
+                            <!-- ファイル名リンク -->
+                            <a class="link-attached" target="_blank"
+                               th:href="|${op.getDownloadFileUrl(item.pk.id, item.pk.no, 'files_file', 'latest')}|">
+                                <i class="far fa-file"></i> [(${item.fileNameHighlight})]
+                                <th:block th:if="${item.fileMemo}" th:text="|(${item.fileMemo})|"></th:block>
+                            </a>
+
+                            <!-- PDFファイルのリンク -->
+                            <th:block th:if="${item.pdfManaged}">
+                                <a class="link-attached" target="_blank"
+                                   th:href="|${op.getDownloadFileUrl(item.pk.id, item.pk.no, 'files_pdf', 'latest')}|">
+                                    <i class="far fa-file-pdf"></i></a>
+                            </th:block>
+                            <br>
+                            <!-- ファイルコンテンツ -->
+                            <div th:if="${!#strings.isEmpty(item.contentHighlight)}"
+                                 th:utext="${item.contentHighlight}"></div>
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <div class="text-center">
+        <block th:if="${page} != null">
+            <div th:replace="~{fragments/page :: pagination(${page})}"></div>
+        </block>
+    </div>
+
+</section>
+<script>
+$(document).ready(function() {
+    $.fn.hummingbird.defaults.collapseAll = false;
+
+    var List = {"id" : [], "dataid" : [], "text" : []};
+    $("#treeview_container").hummingbird();
+    $("#treeview").hummingbird("getChecked",{list:List,onlyEndNodes:true,onlyParents:false,fromThis:false});
+    $("#treeview").hummingbird('checkNode',{sel:"id", vals: List.id});
+
+    var List2 = {"id" : [], "dataid" : [], "text" : []};
+    $("#treeview_container2").hummingbird();
+    $("#treeview2").hummingbird("getChecked",{list:List2,onlyEndNodes:true,onlyParents:false,fromThis:false});
+    $("#treeview2").hummingbird('checkNode',{sel:"id", vals: List2.id});
+})
+
+</script>
+</body>

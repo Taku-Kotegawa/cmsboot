@@ -7,11 +7,16 @@ import jp.co.stnet.cms.base.domain.model.authentication.Account;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.terasoluna.gfw.common.codelist.ReloadableCodeList;
 
 import javax.inject.Named;
+import javax.mail.internet.MimeMessage;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,6 +30,9 @@ public class AccountServiceImpl extends AbstractNodeService<Account, String> imp
 
     @Autowired
     AccountRepository accountRepository;
+
+    @Autowired
+    JavaMailSender mailSender;
 
     @Autowired
     @Named("CL_ACCOUNT_FULLNAME")

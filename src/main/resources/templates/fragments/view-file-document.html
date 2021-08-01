@@ -17,7 +17,8 @@
                 <i class="far fa-file ml-2"></i>
                 <a class="link-attached"
                    target="_blank"
-                   th:href="|${op.getViewUrl(id)}/file/${field_id}/${status.index}|">[[${__${value}__.originalFilename}]]</a>
+                   th:href="|${op.getDownloadFileUrl(id, status.index, 'files_file', 'latest')}|">
+                   [[${__${value}__.originalFilename}]]</a>
               </span>
             </div>
 

@@ -2,6 +2,7 @@ package jp.co.stnet.cms.sales.config;
 
 import jp.co.stnet.cms.sales.domain.model.document.CustomerPublic;
 import jp.co.stnet.cms.sales.domain.model.document.DocPublicScope;
+import jp.co.stnet.cms.sales.domain.model.document.KeywordSearchTarget;
 import jp.co.stnet.cms.sales.domain.model.document.SaveRevision;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -42,6 +43,11 @@ public class SalesCodeListConfig {
     @Bean("CL_SAVE_REVISION")
     public EnumCodeList clSaveRevision() {
         return new EnumCodeList(SaveRevision.class);
+    }
+
+    @Bean("CL_KEYWORD_SEARCH_TARGET")
+    public EnumCodeList clKeywordSearchTarget() {
+        return new EnumCodeList(KeywordSearchTarget.class);
     }
 
     @Bean("CL_DOC_TYPE")

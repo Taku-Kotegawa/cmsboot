@@ -11,5 +11,7 @@ services:
       LANG: ja_JP.utf8
     volumes:
       - database:/var/lib/postgresql/data
+      - ./initdb:/docker-entrypoint-initdb.d
+
 volumes:
   database:

@@ -37,6 +37,8 @@ public class DocumentListBean extends Document {
 
     private String lastModifiedByLabel;
 
+    private String lastModifiedDateStr;
+
     @JsonProperty("DT_RowId")
     public String getDT_RowId() {
         return DT_RowId;

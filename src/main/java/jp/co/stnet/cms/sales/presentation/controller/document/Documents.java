@@ -170,7 +170,7 @@ public class Documents {
             documentListBean.setOperations(getToggleButton(documentIndex.getPk().getId().toString()));
 
             // タイトル(リンク)
-            documentListBean.setTitle(getTitleLink(documentIndex.getPk().getId(), documentIndex.getTitle()));
+            documentListBean.setTitle(getTitleLink(documentIndex.getPk().getId(), documentIndex.getTitle(), "latest"));
 
             // ステータスラベル
             documentListBean.setStatusLabel(getStatusLabel(documentIndex.getStatus()));
@@ -180,7 +180,7 @@ public class Documents {
 
             // ファイル名
             if (documentIndex.getFileManaged() != null) {
-                documentListBean.setFilesLabel(getFileDownloadLink(documentIndex));
+                documentListBean.setFilesLabel(getFileDownloadLink(documentIndex, "latest"));
             }
 
             // ファイル名(PDF)
@@ -200,6 +200,8 @@ public class Documents {
             // 最終更新者の氏名
             documentListBean.setLastModifiedByLabel(getLastModifiedByLabel(documentIndex.getLastModifiedBy()));
 
+
+
             // 不要な情報をクリア
             documentListBean.setFiles(new ArrayList<>());
 
@@ -210,14 +212,39 @@ public class Documents {
     }
 
     protected String getFileDownloadLink(DocumentIndex documentIndex) {
-       OperationsUtil op = new OperationsUtil(BASE_PATH);
-       return "<a href=\"" + op.getViewUrl(documentIndex.getPk().getId().toString()) + "/file/files_file/" + documentIndex.getPk().getNo() + "\">" + documentIndex.getFileManaged().getOriginalFilename() + "</a>";
+        return getFileDownloadLink(documentIndex, null);
+    }
+
+    protected String getFileDownloadLink(DocumentIndex documentIndex, String version) {
+        OperationsUtil op = new OperationsUtil(BASE_PATH);
+
+        if (version == null) {
+            return "<a href=\"" + op.getViewUrl(documentIndex.getPk().getId().toString()) + "/file/files_file/" + documentIndex.getPk().getNo() + "\">" + documentIndex.getFileManaged().getOriginalFilename() + "</a>";
+        } else if ("latest".equals(version)) {
+            return "<a href=\"" + op.getViewUrl(documentIndex.getPk().getId().toString()) + "/latest/file/files_file/" + documentIndex.getPk().getNo() + "\">" + documentIndex.getFileManaged().getOriginalFilename() + "</a>";
+        } else {
+            return "<a href=\"" + op.getViewUrl(documentIndex.getPk().getId().toString()) + "/latest/file/files_file/" + documentIndex.getPk().getNo() + "?version=" + version + "\">" + documentIndex.getFileManaged().getOriginalFilename() + "</a>";
+        }
     }
 
     protected String getTitleLink(Long id, String value) {
-        OperationsUtil op = new OperationsUtil(BASE_PATH);
-        return "<a href=\"" + op.getViewUrl(id.toString()) + "\">" + value + "</a>";
+        return getTitleLink(id, value, null);
     }
+
+    protected String getTitleLink(Long id, String value, String version) {
+        OperationsUtil op = new OperationsUtil(BASE_PATH);
+
+        if (version == null) {
+            return "<a href=\"" + op.getViewUrl(id.toString()) + "\">" + value + "</a>";
+        } else if ("latest".equals(version)) {
+            return "<a href=\"" + op.getViewUrl(id.toString()) + "/latest/\">" + value + "</a>";
+        } else {
+            return "<a href=\"" + op.getViewUrl(id.toString()) + "?version=" + version + "\">" + value + "</a>";
+        }
+
+    }
+
+
 
 
     /**

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -176,6 +177,7 @@ public class DocumentServiceImpl extends AbstractNodeRevService<Document, Docume
 
         if (document.getFiles().isEmpty()) {
             DocumentIndex documentIndex = beanMapper.map(document, DocumentIndex.class);
+            documentIndex.setLastModifiedDateStr(document.getLastModifiedDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd hh:mm:ss")));
             documentIndex.setBodyPlain(getBodyPlane(document.getBody()));
             documentIndex.setPk(new DocumentIndexPK(document.getId(), NO_CASE_NOFILE));
             documentIndices.add(documentIndex);
@@ -183,6 +185,7 @@ public class DocumentServiceImpl extends AbstractNodeRevService<Document, Docume
             for (int i = 0; i < document.getFiles().size(); i++) {
                 File file = document.getFiles().get(i);
                 DocumentIndex documentIndex = beanMapper.map(document, DocumentIndex.class);
+                documentIndex.setLastModifiedDateStr(document.getLastModifiedDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd hh:mm:ss")));
                 documentIndex.setBodyPlain(getBodyPlane(document.getBody()));
                 beanMapper.map(file, documentIndex);
                 documentIndex.setPk(new DocumentIndexPK(document.getId(), i));

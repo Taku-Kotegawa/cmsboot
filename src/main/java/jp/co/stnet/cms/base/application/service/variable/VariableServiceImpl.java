@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -79,6 +80,7 @@ public class VariableServiceImpl extends AbstractNodeService<Variable, Long> imp
 
     @Override
     public List<Variable> findAllByType(String type) {
-        return variableRepository.findAllByType(type);
+        return variableRepository.findAllByType(type)
+                .stream().sorted((o1, o2) -> o1.getCode().compareTo(o2.getCode())).collect(Collectors.toList());
     }
 }
