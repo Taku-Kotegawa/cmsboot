@@ -1,0 +1,2057 @@
+databaseChangeLog:
+- changeSet:
+    id: 1628246974739-1
+    author: taku (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: document_index_pkey
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: document_index_pkey
+            name: 'no'
+            type: INTEGER
+        - column:
+            name: announce_date
+            type: VARCHAR(255)
+        - column:
+            name: body
+            type: TEXT
+        - column:
+            name: body_plain
+            type: TEXT
+        - column:
+            name: charge_person_for_creation
+            type: VARCHAR(255)
+        - column:
+            name: charge_person_for_publish
+            type: VARCHAR(255)
+        - column:
+            name: content
+            type: TEXT
+        - column:
+            constraints:
+              nullable: false
+            name: created_by
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: created_date
+            type: VARCHAR(255)
+        - column:
+            name: customer_public
+            type: VARCHAR(255)
+        - column:
+            name: department_for_creation
+            type: VARCHAR(255)
+        - column:
+            name: department_for_publish
+            type: VARCHAR(255)
+        - column:
+            name: doc_category1
+            type: VARCHAR(255)
+        - column:
+            name: doc_category2
+            type: VARCHAR(255)
+        - column:
+            name: doc_service1
+            type: VARCHAR(255)
+        - column:
+            name: doc_service2
+            type: VARCHAR(255)
+        - column:
+            name: doc_service3
+            type: VARCHAR(255)
+        - column:
+            name: document_number
+            type: VARCHAR(255)
+        - column:
+            name: file_memo
+            type: VARCHAR(255)
+        - column:
+            name: file_uuid
+            type: VARCHAR(255)
+        - column:
+            name: invalidation_date
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: last_modified_by
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: last_modified_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: last_modified_date_str
+            type: VARCHAR(255)
+        - column:
+            name: last_revised_date
+            type: VARCHAR(255)
+        - column:
+            name: pdf_uuid
+            type: VARCHAR(255)
+        - column:
+            name: public_scope
+            type: VARCHAR(255)
+        - column:
+            name: published_date
+            type: VARCHAR(255)
+        - column:
+            name: reason_for_change
+            type: VARCHAR(255)
+        - column:
+            name: remark
+            type: VARCHAR(255)
+        - column:
+            name: responsible_person_for_publish
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: save_revision
+            type: BOOLEAN
+        - column:
+            name: status
+            type: VARCHAR(255)
+        - column:
+            name: title
+            type: VARCHAR(255)
+        - column:
+            name: type
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: version
+            type: BIGINT
+        - column:
+            name: version_number
+            type: VARCHAR(255)
+        tableName: document_index
+- changeSet:
+    id: 1628246974739-2
+    author: taku (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: document_revision_rid
+            type: BIGINT
+        - column:
+            name: use_stage
+            type: VARCHAR(255)
+        tableName: document_revision_use_stage
+- changeSet:
+    id: 1628246974739-3
+    author: taku (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: file_managed_pkey
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: created_by
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: created_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: last_modified_by
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: last_modified_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: version
+            type: BIGINT
+        - column:
+            name: file_mime
+            type: VARCHAR(255)
+        - column:
+            name: file_size
+            type: BIGINT
+        - column:
+            name: file_type
+            type: VARCHAR(255)
+        - column:
+            name: original_filename
+            type: VARCHAR(255)
+        - column:
+            defaultValue: '0'
+            name: status
+            type: VARCHAR(255)
+        - column:
+            name: uri
+            type: VARCHAR(255)
+        - column:
+            name: uuid
+            type: VARCHAR(255)
+        tableName: file_managed
+- changeSet:
+    id: 1628246974739-4
+    author: taku (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: simple_entity_revision_rid
+            type: BIGINT
+        - column:
+            name: combobox03
+            type: VARCHAR(255)
+        tableName: simple_entity_revision_combobox03
+- changeSet:
+    id: 1628246974739-5
+    author: taku (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: select_table_pkey
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: created_by
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: created_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: last_modified_by
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: last_modified_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: version
+            type: BIGINT
+        - column:
+            name: select01
+            type: VARCHAR(255)
+        - column:
+            name: select02
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: status
+            type: VARCHAR(255)
+        tableName: select_table
+- changeSet:
+    id: 1628246974739-6
+    author: taku (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: email_change_request_pkey
+            name: token
+            type: VARCHAR(255)
+        - column:
+            name: expiry_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: new_mail
+            type: VARCHAR(255)
+        - column:
+            name: secret
+            type: VARCHAR(255)
+        - column:
+            name: username
+            type: VARCHAR(255)
+        tableName: email_change_request
+- changeSet:
+    id: 1628246974739-7
+    author: taku (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: mail_send_history_pkey
+            name: id
+            type: BIGINT
+        - column:
+            name: body
+            type: VARCHAR(255)
+        - column:
+            name: created_by
+            type: VARCHAR(255)
+        - column:
+            name: email
+            type: VARCHAR(255)
+        - column:
+            name: username
+            type: VARCHAR(255)
+        - column:
+            name: send_time
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: subject
+            type: VARCHAR(255)
+        tableName: mail_send_history
+- changeSet:
+    id: 1628246974739-8
+    author: taku (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: failed_email_change_request_pkey
+            name: attempt_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: failed_email_change_request_pkey
+            name: token
+            type: VARCHAR(255)
+        tableName: failed_email_change_request
+- changeSet:
+    id: 1628246974739-9
+    author: taku (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: person_pkey
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: created_by
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: created_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: last_modified_by
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: last_modified_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: version
+            type: BIGINT
+        - column:
+            name: age
+            type: INTEGER
+        - column:
+            name: attached_file01uuid
+            type: VARCHAR(255)
+        - column:
+            name: code
+            type: VARCHAR(255)
+        - column:
+            name: content
+            type: TEXT
+        - column:
+            name: name
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: status
+            type: VARCHAR(255)
+        - column:
+            name: memo
+            type: VARCHAR(255)
+        tableName: person
+- changeSet:
+    id: 1628246974739-10
+    author: taku (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: select_max_rev_pkey
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: rid
+            type: BIGINT
+        tableName: select_max_rev
+- changeSet:
+    id: 1628246974739-11
+    author: taku (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: simple_entity_id
+            type: BIGINT
+        - column:
+            name: combobox03
+            type: VARCHAR(255)
+        tableName: simple_entity_combobox03
+- changeSet:
+    id: 1628246974739-12
+    author: taku (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: simple_entity_max_rev_pkey
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: rid
+            type: BIGINT
+        tableName: simple_entity_max_rev
+- changeSet:
+    id: 1628246974739-13
+    author: taku (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: simple_entity_revision_pkey
+            name: rid
+            type: BIGINT
+        - column:
+            name: created_by
+            type: VARCHAR(255)
+        - column:
+            name: created_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: last_modified_by
+            type: VARCHAR(255)
+        - column:
+            name: last_modified_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: rev_type
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: version
+            type: BIGINT
+        - column:
+            name: attached_file01uuid
+            type: VARCHAR(255)
+        - column:
+            name: checkbox01
+            type: VARCHAR(255)
+        - column:
+            name: combobox01
+            type: VARCHAR(255)
+        - column:
+            name: combobox02
+            type: VARCHAR(255)
+        - column:
+            name: date01
+            type: date
+        - column:
+            name: datetime01
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: id
+            type: BIGINT
+        - column:
+            name: radio01
+            type: BOOLEAN
+        - column:
+            name: radio02
+            type: VARCHAR(255)
+        - column:
+            name: select01
+            type: VARCHAR(255)
+        - column:
+            name: select03
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: status
+            type: VARCHAR(255)
+        - column:
+            name: text01
+            type: VARCHAR(255)
+        - column:
+            name: text02
+            type: INTEGER
+        - column:
+            name: text03
+            type: FLOAT4
+        - column:
+            name: text04
+            type: BOOLEAN
+        - column:
+            name: textarea01
+            type: VARCHAR(255)
+        tableName: simple_entity_revision
+- changeSet:
+    id: 1628246974739-14
+    author: taku (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: simple_entity_pkey
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: created_by
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: created_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: last_modified_by
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: last_modified_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: version
+            type: BIGINT
+        - column:
+            name: attached_file01uuid
+            type: VARCHAR(255)
+        - column:
+            name: checkbox01
+            type: VARCHAR(255)
+        - column:
+            name: combobox01
+            type: VARCHAR(255)
+        - column:
+            name: combobox02
+            type: VARCHAR(255)
+        - column:
+            name: date01
+            type: date
+        - column:
+            name: datetime01
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: radio01
+            type: BOOLEAN
+        - column:
+            name: radio02
+            type: VARCHAR(255)
+        - column:
+            name: select01
+            type: VARCHAR(255)
+        - column:
+            name: select03
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: status
+            type: VARCHAR(255)
+        - column:
+            name: text01
+            type: VARCHAR(255)
+        - column:
+            name: text02
+            type: INTEGER
+        - column:
+            name: text03
+            type: FLOAT4
+        - column:
+            name: text04
+            type: SMALLINT
+        - column:
+            name: textarea01
+            type: VARCHAR(255)
+        tableName: simple_entity
+- changeSet:
+    id: 1628246974739-15
+    author: taku (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: account_pkey
+            name: username
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: created_by
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: created_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: last_modified_by
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: last_modified_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: version
+            type: BIGINT
+        - column:
+            name: allowed_ip
+            type: VARCHAR(255)
+        - column:
+            name: api_key
+            type: VARCHAR(255)
+        - column:
+            name: department
+            type: VARCHAR(255)
+        - column:
+            name: email
+            type: VARCHAR(255)
+        - column:
+            name: first_name
+            type: VARCHAR(255)
+        - column:
+            name: image_uuid
+            type: VARCHAR(255)
+        - column:
+            name: last_name
+            type: VARCHAR(255)
+        - column:
+            name: password
+            type: VARCHAR(255)
+        - column:
+            name: profile
+            type: VARCHAR(1000)
+        - column:
+            name: status
+            type: VARCHAR(255)
+        - column:
+            name: url
+            type: VARCHAR(255)
+        tableName: account
+- changeSet:
+    id: 1628246974739-16
+    author: taku (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: password_reissue_info_pkey
+            name: token
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: created_by
+            type: VARCHAR(255)
+        - column:
+            name: expiry_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: secret
+            type: VARCHAR(255)
+        - column:
+            name: username
+            type: VARCHAR(255)
+        tableName: password_reissue_info
+- changeSet:
+    id: 1628246974739-17
+    author: taku (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: simple_entity_id
+            type: BIGINT
+        - column:
+            name: checkbox02
+            type: VARCHAR(255)
+        tableName: simple_entity_checkbox02
+- changeSet:
+    id: 1628246974739-18
+    author: taku (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: simple_entity_revision_rid
+            type: BIGINT
+        - column:
+            name: text05
+            type: VARCHAR(255)
+        tableName: simple_entity_revision_text05
+- changeSet:
+    id: 1628246974739-19
+    author: taku (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: password_history_pkey
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: created_by
+            type: VARCHAR(255)
+        - column:
+            name: password
+            type: VARCHAR(255)
+        - column:
+            name: use_from
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: username
+            type: VARCHAR(255)
+        tableName: password_history
+- changeSet:
+    id: 1628246974739-20
+    author: taku (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: document_index_id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: document_index_no
+            type: INTEGER
+        - column:
+            name: use_stage
+            type: VARCHAR(255)
+        tableName: document_index_use_stage
+- changeSet:
+    id: 1628246974739-21
+    author: taku (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: temp_file_pkey
+            name: id
+            type: VARCHAR(255)
+        - column:
+            name: body
+            type: OID
+        - column:
+            name: original_name
+            type: VARCHAR(255)
+        - column:
+            name: uploaded_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        tableName: temp_file
+- changeSet:
+    id: 1628246974739-22
+    author: taku (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: simple_entity_id
+            type: BIGINT
+        - column:
+            name: text05
+            type: VARCHAR(255)
+        tableName: simple_entity_text05
+- changeSet:
+    id: 1628246974739-23
+    author: taku (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: document_access_pkey
+            name: id
+            type: BIGINT
+        - column:
+            name: access_date
+            type: date
+        - column:
+            name: document_id
+            type: BIGINT
+        - column:
+            name: username
+            type: VARCHAR(255)
+        tableName: document_access
+- changeSet:
+    id: 1628246974739-24
+    author: taku (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: document_max_rev_pkey
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: rid
+            type: BIGINT
+        tableName: document_max_rev
+- changeSet:
+    id: 1628246974739-25
+    author: taku (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: account_username
+            type: VARCHAR(255)
+        - column:
+            name: roles
+            type: VARCHAR(255)
+        tableName: account_roles
+- changeSet:
+    id: 1628246974739-26
+    author: taku (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: document_id
+            type: BIGINT
+        - column:
+            name: use_stage
+            type: VARCHAR(255)
+        tableName: document_use_stage
+- changeSet:
+    id: 1628246974739-27
+    author: taku (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: simple_entity_revision_rid
+            type: BIGINT
+        - column:
+            name: select02
+            type: VARCHAR(255)
+        tableName: simple_entity_revision_select02
+- changeSet:
+    id: 1628246974739-28
+    author: taku (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: simple_entity_revision_rid
+            type: BIGINT
+        - column:
+            name: select04
+            type: VARCHAR(255)
+        tableName: simple_entity_revision_select04
+- changeSet:
+    id: 1628246974739-29
+    author: taku (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: document_revision_rid
+            type: BIGINT
+        - column:
+            name: file_uuid
+            type: VARCHAR(255)
+        - column:
+            name: file_memo
+            type: VARCHAR(255)
+        - column:
+            name: pdf_uuid
+            type: VARCHAR(255)
+        - column:
+            name: type
+            type: VARCHAR(255)
+        tableName: document_revision_files
+- changeSet:
+    id: 1628246974739-30
+    author: taku (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: document_pkey
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: created_by
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: created_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: last_modified_by
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: last_modified_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: version
+            type: BIGINT
+        - column:
+            name: announce_date
+            type: date
+        - column:
+            name: body
+            type: TEXT
+        - column:
+            name: charge_person_for_creation
+            type: VARCHAR(255)
+        - column:
+            name: charge_person_for_publish
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: customer_public
+            type: VARCHAR(255)
+        - column:
+            name: department_for_creation
+            type: VARCHAR(255)
+        - column:
+            name: department_for_publish
+            type: VARCHAR(255)
+        - column:
+            name: doc_category1
+            type: VARCHAR(255)
+        - column:
+            name: doc_category2
+            type: VARCHAR(255)
+        - column:
+            name: doc_service1
+            type: VARCHAR(255)
+        - column:
+            name: doc_service2
+            type: VARCHAR(255)
+        - column:
+            name: doc_service3
+            type: VARCHAR(255)
+        - column:
+            name: document_number
+            type: VARCHAR(255)
+        - column:
+            name: intended_reader
+            type: VARCHAR(255)
+        - column:
+            name: invalidation_date
+            type: date
+        - column:
+            name: last_revised_date
+            type: date
+        - column:
+            constraints:
+              nullable: false
+            name: public_scope
+            type: VARCHAR(255)
+        - column:
+            name: published_date
+            type: date
+        - column:
+            name: reason_for_change
+            type: VARCHAR(255)
+        - column:
+            name: remark
+            type: VARCHAR(255)
+        - column:
+            name: responsible_person_for_publish
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: save_revision
+            type: BOOLEAN
+        - column:
+            constraints:
+              nullable: false
+            name: status
+            type: VARCHAR(255)
+        - column:
+            name: title
+            type: VARCHAR(255)
+        - column:
+            name: version_number
+            type: VARCHAR(255)
+        tableName: document
+- changeSet:
+    id: 1628246974739-31
+    author: taku (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: simple_entity_id
+            type: BIGINT
+        - column:
+            name: item_name
+            type: VARCHAR(255)
+        - column:
+            name: item_no
+            type: BIGINT
+        - column:
+            name: item_number
+            type: INTEGER
+        - column:
+            name: unit_prise
+            type: INTEGER
+        tableName: simple_entity_line_items
+- changeSet:
+    id: 1628246974739-32
+    author: taku (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: access_counter_pkey
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: created_by
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: created_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: last_modified_by
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: last_modified_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: version
+            type: BIGINT
+        - column:
+            name: count
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: status
+            type: VARCHAR(255)
+        - column:
+            name: url
+            type: VARCHAR(1000)
+        tableName: access_counter
+- changeSet:
+    id: 1628246974739-33
+    author: taku (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: select_revision_pkey
+            name: rid
+            type: BIGINT
+        - column:
+            name: created_by
+            type: VARCHAR(255)
+        - column:
+            name: created_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: last_modified_by
+            type: VARCHAR(255)
+        - column:
+            name: last_modified_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: rev_type
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: version
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: select01
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: select02
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: status
+            type: VARCHAR(255)
+        tableName: select_revision
+- changeSet:
+    id: 1628246974739-34
+    author: taku (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: simple_entity_revision_rid
+            type: BIGINT
+        - column:
+            name: checkbox02
+            type: VARCHAR(255)
+        tableName: simple_entity_revision_checkbox02
+- changeSet:
+    id: 1628246974739-35
+    author: taku (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: failed_authentication_pkey
+            name: id
+            type: BIGINT
+        - column:
+            name: authentication_timestamp
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: username
+            type: VARCHAR(255)
+        tableName: failed_authentication
+- changeSet:
+    id: 1628246974739-36
+    author: taku (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: variable_pkey
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: created_by
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: created_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: last_modified_by
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: last_modified_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: version
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: code
+            type: VARCHAR(255)
+        - column:
+            name: date1
+            type: date
+        - column:
+            name: date2
+            type: date
+        - column:
+            name: date3
+            type: date
+        - column:
+            name: date4
+            type: date
+        - column:
+            name: date5
+            type: date
+        - column:
+            name: file1uuid
+            type: VARCHAR(255)
+        - column:
+            name: remark
+            type: VARCHAR(255)
+        - column:
+            name: status
+            type: VARCHAR(255)
+        - column:
+            name: textarea
+            type: TEXT
+        - column:
+            constraints:
+              nullable: false
+            name: type
+            type: VARCHAR(255)
+        - column:
+            name: valint1
+            type: INTEGER
+        - column:
+            name: valint2
+            type: INTEGER
+        - column:
+            name: valint3
+            type: INTEGER
+        - column:
+            name: valint4
+            type: INTEGER
+        - column:
+            name: valint5
+            type: INTEGER
+        - column:
+            name: value1
+            type: VARCHAR(255)
+        - column:
+            name: value10
+            type: VARCHAR(255)
+        - column:
+            name: value2
+            type: VARCHAR(255)
+        - column:
+            name: value3
+            type: VARCHAR(255)
+        - column:
+            name: value4
+            type: VARCHAR(255)
+        - column:
+            name: value5
+            type: VARCHAR(255)
+        - column:
+            name: value6
+            type: VARCHAR(255)
+        - column:
+            name: value7
+            type: VARCHAR(255)
+        - column:
+            name: value8
+            type: VARCHAR(255)
+        - column:
+            name: value9
+            type: VARCHAR(255)
+        tableName: variable
+- changeSet:
+    id: 1628246974739-37
+    author: taku (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: simple_entity_id
+            type: BIGINT
+        - column:
+            name: select04
+            type: VARCHAR(255)
+        tableName: simple_entity_select04
+- changeSet:
+    id: 1628246974739-38
+    author: taku (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: successful_authentication_pkey
+            name: id
+            type: BIGINT
+        - column:
+            name: authentication_timestamp
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: created_by
+            type: VARCHAR(255)
+        - column:
+            name: username
+            type: VARCHAR(255)
+        tableName: successful_authentication
+- changeSet:
+    id: 1628246974739-39
+    author: taku (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: simple_entity_id
+            type: BIGINT
+        - column:
+            name: select02
+            type: VARCHAR(255)
+        tableName: simple_entity_select02
+- changeSet:
+    id: 1628246974739-40
+    author: taku (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: simple_entity_revision_rid
+            type: BIGINT
+        - column:
+            name: item_name
+            type: VARCHAR(255)
+        - column:
+            name: item_no
+            type: BIGINT
+        - column:
+            name: item_number
+            type: INTEGER
+        - column:
+            name: unit_prise
+            type: INTEGER
+        tableName: simple_entity_revision_line_items
+- changeSet:
+    id: 1628246974739-41
+    author: taku (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: permission_role_pkey
+            name: permission
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: permission_role_pkey
+            name: role
+            type: VARCHAR(255)
+        tableName: permission_role
+- changeSet:
+    id: 1628246974739-42
+    author: taku (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: document_files_pkey
+            name: document_id
+            type: BIGINT
+        - column:
+            name: file_uuid
+            type: VARCHAR(255)
+        - column:
+            name: file_memo
+            type: VARCHAR(255)
+        - column:
+            name: pdf_uuid
+            type: VARCHAR(255)
+        - column:
+            name: type
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: document_files_pkey
+            name: files_order
+            type: INTEGER
+        tableName: document_files
+- changeSet:
+    id: 1628246974739-43
+    author: taku (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: failed_password_reissue_pkey
+            name: attempt_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: failed_password_reissue_pkey
+            name: token
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: created_by
+            type: VARCHAR(255)
+        tableName: failed_password_reissue
+- changeSet:
+    id: 1628246974739-44
+    author: taku (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: document_revision_pkey
+            name: rid
+            type: BIGINT
+        - column:
+            name: created_by
+            type: VARCHAR(255)
+        - column:
+            name: created_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: last_modified_by
+            type: VARCHAR(255)
+        - column:
+            name: last_modified_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: rev_type
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: version
+            type: BIGINT
+        - column:
+            name: announce_date
+            type: date
+        - column:
+            name: body
+            type: TEXT
+        - column:
+            name: charge_person_for_creation
+            type: VARCHAR(255)
+        - column:
+            name: charge_person_for_publish
+            type: VARCHAR(255)
+        - column:
+            name: customer_public
+            type: VARCHAR(255)
+        - column:
+            name: department_for_creation
+            type: VARCHAR(255)
+        - column:
+            name: department_for_publish
+            type: VARCHAR(255)
+        - column:
+            name: doc_category1
+            type: VARCHAR(255)
+        - column:
+            name: doc_category2
+            type: VARCHAR(255)
+        - column:
+            name: doc_service1
+            type: VARCHAR(255)
+        - column:
+            name: doc_service2
+            type: VARCHAR(255)
+        - column:
+            name: doc_service3
+            type: VARCHAR(255)
+        - column:
+            name: document_number
+            type: VARCHAR(255)
+        - column:
+            name: id
+            type: BIGINT
+        - column:
+            name: intended_reader
+            type: VARCHAR(255)
+        - column:
+            name: invalidation_date
+            type: date
+        - column:
+            name: last_revised_date
+            type: date
+        - column:
+            name: public_scope
+            type: VARCHAR(255)
+        - column:
+            name: published_date
+            type: date
+        - column:
+            name: reason_for_change
+            type: VARCHAR(255)
+        - column:
+            name: remark
+            type: VARCHAR(255)
+        - column:
+            name: responsible_person_for_publish
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: save_revision
+            type: BOOLEAN
+        - column:
+            name: status
+            type: VARCHAR(255)
+        - column:
+            name: title
+            type: VARCHAR(255)
+        - column:
+            name: version_number
+            type: VARCHAR(255)
+        tableName: document_revision
+- changeSet:
+    id: 1628246974739-45
+    author: taku (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: workflow_pkey
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: created_by
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: created_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: last_modified_by
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: last_modified_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            constraints:
+              nullable: false
+            name: version
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: employee_id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: entity_id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: entity_type
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: step_no
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: step_status
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            defaultValueNumeric: 0
+            name: weight
+            type: INTEGER
+        tableName: workflow
+- changeSet:
+    id: 1628246974739-46
+    author: taku (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: document_index_id,document_index_no
+        baseTableName: document_index_use_stage
+        constraintName: fkleu7m83uqab8mmh7ed4odv9qj
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id,no
+        referencedTableName: document_index
+        validate: true
+- changeSet:
+    id: 1628246974739-47
+    author: taku (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: uri
+        constraintName: idx_02
+        tableName: file_managed
+- changeSet:
+    id: 1628246974739-48
+    author: taku (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: account_username
+        baseTableName: account_roles
+        constraintName: fksa8fblleof2c8aqce4x3n0yy5
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: username
+        referencedTableName: account
+        validate: true
+- changeSet:
+    id: 1628246974739-49
+    author: taku (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: simple_entity_id
+        baseTableName: simple_entity_checkbox02
+        constraintName: fkrmv44v1sgjx7l30nrw3erf0re
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: simple_entity
+        validate: true
+- changeSet:
+    id: 1628246974739-50
+    author: taku (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: simple_entity_revision_rid
+        baseTableName: simple_entity_revision_text05
+        constraintName: fkkmxcf81bd8vgmasf649wlg1ux
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: rid
+        referencedTableName: simple_entity_revision
+        validate: true
+- changeSet:
+    id: 1628246974739-51
+    author: taku (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: simple_entity_id
+        baseTableName: simple_entity_text05
+        constraintName: fkeaiyyh79glf138bqsneolhd9k
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: simple_entity
+        validate: true
+- changeSet:
+    id: 1628246974739-52
+    author: taku (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: simple_entity_revision_rid
+        baseTableName: simple_entity_revision_select02
+        constraintName: fks6pq89gb97b3v5bdebnkp2dda
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: rid
+        referencedTableName: simple_entity_revision
+        validate: true
+- changeSet:
+    id: 1628246974739-53
+    author: taku (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: simple_entity_revision_rid
+        baseTableName: simple_entity_revision_select04
+        constraintName: fkoxks4uuxq3yxse7iydlvfvd5w
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: rid
+        referencedTableName: simple_entity_revision
+        validate: true
+- changeSet:
+    id: 1628246974739-54
+    author: taku (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: document_id
+        baseTableName: document_files
+        constraintName: fk1b767qp1gkma8nuq8en8oygen
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: document
+        validate: true
+- changeSet:
+    id: 1628246974739-55
+    author: taku (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: document_id
+        baseTableName: document_use_stage
+        constraintName: fk6e2wqg1fhhig392vq9edjr0g7
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: document
+        validate: true
+- changeSet:
+    id: 1628246974739-56
+    author: taku (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: simple_entity_id
+        baseTableName: simple_entity_line_items
+        constraintName: fk9p2ff74vnn6dpq4gu0edaw9iw
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: simple_entity
+        validate: true
+- changeSet:
+    id: 1628246974739-57
+    author: taku (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: url
+        constraintName: idx_01
+        tableName: access_counter
+- changeSet:
+    id: 1628246974739-58
+    author: taku (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: simple_entity_revision_rid
+        baseTableName: simple_entity_revision_checkbox02
+        constraintName: fkjj2hm7b5c3xv6foi51n20wy06
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: rid
+        referencedTableName: simple_entity_revision
+        validate: true
+- changeSet:
+    id: 1628246974739-59
+    author: taku (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: simple_entity_id
+        baseTableName: simple_entity_select04
+        constraintName: fkg0f3xp1brlfmr8etthrvaq2el
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: simple_entity
+        validate: true
+- changeSet:
+    id: 1628246974739-60
+    author: taku (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: simple_entity_id
+        baseTableName: simple_entity_select02
+        constraintName: fk221mpw54qo7ostpnqtecb4jv5
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: simple_entity
+        validate: true
+- changeSet:
+    id: 1628246974739-61
+    author: taku (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: simple_entity_revision_rid
+        baseTableName: simple_entity_revision_line_items
+        constraintName: fkm74nkmtffqq3pnaffiwumrk5h
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: rid
+        referencedTableName: simple_entity_revision
+        validate: true
+- changeSet:
+    id: 1628246974739-62
+    author: taku (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: document_revision_rid
+        baseTableName: document_revision_use_stage
+        constraintName: fkeadlw1pajfi4lne0evc3edewq
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: rid
+        referencedTableName: document_revision
+        validate: true
+- changeSet:
+    id: 1628246974739-63
+    author: taku (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: document_revision_rid
+        baseTableName: document_revision_files
+        constraintName: fkfb6pqvb7xwca2c56ubwpjmt8i
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: rid
+        referencedTableName: document_revision
+        validate: true
+- changeSet:
+    id: 1628246974739-64
+    author: taku (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: simple_entity_revision_rid
+        baseTableName: simple_entity_revision_combobox03
+        constraintName: fkos8picdxl023m189uqeyut1yr
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: rid
+        referencedTableName: simple_entity_revision
+        validate: true
+- changeSet:
+    id: 1628246974739-65
+    author: taku (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: simple_entity_id
+        baseTableName: simple_entity_combobox03
+        constraintName: fkilbmxju7vidne5iwurrto4fn2
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: simple_entity
+        validate: true
+

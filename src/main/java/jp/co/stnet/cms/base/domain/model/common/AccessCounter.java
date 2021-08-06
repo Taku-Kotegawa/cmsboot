@@ -20,7 +20,7 @@ import java.io.Serializable;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = false)
 @EntityListeners(AuditingEntityListener.class)
-@Table(indexes = {@Index(columnList = "URL", unique = true)})
+@Table(indexes = {@Index(columnList = "URL", unique = true, name = "idx_01")})
 public class AccessCounter extends AbstractEntity<Long> implements Serializable, StatusInterface {
 
     /**

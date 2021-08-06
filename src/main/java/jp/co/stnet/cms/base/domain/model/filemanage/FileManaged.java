@@ -29,7 +29,10 @@ import java.nio.charset.StandardCharsets;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = false)
 @EntityListeners(AuditingEntityListener.class)
-@Table(indexes = {@Index(columnList = "uuid", unique = true)})
+@Table(indexes = {
+        @Index(columnList = "uuid", unique = true, name = "idx_01"),
+        @Index(columnList = "uri", unique = true, name = "idx_02")
+})
 public class FileManaged extends AbstractEntity<Long> implements Serializable {
 
     /**
@@ -53,7 +56,6 @@ public class FileManaged extends AbstractEntity<Long> implements Serializable {
     /**
      * uri
      */
-    @Column(unique = true)
     private String uri;
 
     /**

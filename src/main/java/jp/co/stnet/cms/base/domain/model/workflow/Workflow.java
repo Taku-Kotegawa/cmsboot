@@ -16,7 +16,7 @@ import java.io.Serializable;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = false)
 @EntityListeners(AuditingEntityListener.class)
-@Table(indexes = {@Index(columnList = "entityType, entityId, stepNo, employeeId", unique = true)})
+@Table(indexes = {@Index(columnList = "entityType, entityId, stepNo, employeeId", unique = true, name = "idx_01")})
 public class Workflow extends AbstractEntity<Long> implements Serializable {
     @Override
     public Long getId() {

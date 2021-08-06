@@ -23,7 +23,7 @@ import java.util.List;
 @AllArgsConstructor
 @ToString(callSuper = true)
 @EntityListeners(AuditingEntityListener.class)
-@Table(indexes = {@Index(columnList = "apiKey", unique = true)})
+@Table(indexes = {@Index(columnList = "apiKey", unique = true, name = "idx_01")})
 public class Account extends AbstractEntity<String> implements Serializable, StatusInterface {
 
     /**
@@ -95,7 +95,6 @@ public class Account extends AbstractEntity<String> implements Serializable, Sta
     /**
      * API KEY
      */
-    @Column(unique = true)
     private String apiKey;
 
     /**
