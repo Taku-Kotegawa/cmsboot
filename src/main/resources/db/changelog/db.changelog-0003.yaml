@@ -1,4 +1,5 @@
 databaseChangeLog:
+- logicalFilePath: db.changelog-0003.yaml
 - changeSet:
     id: 1628259508021-1
     author: taku (generated)
