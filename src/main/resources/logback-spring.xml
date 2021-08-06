@@ -9,22 +9,23 @@
 
     <!-- Application.propertiesから設定読み込み -->
     <springProperty scope="context" name="jobLogDir" source="job.log.dir"
-                    defaultValue="../log/job"/>
+                    defaultValue="/log/job"/>
 
-
-
-    <appender name="Job"
-              class="ch.qos.logback.classic.sift.SiftingAppender">
+    <appender name="Job" class="ch.qos.logback.classic.sift.SiftingAppender">
         <discriminator>
             <key>jobName_jobExecutionId</key>
             <defaultValue>unknown</defaultValue>
         </discriminator>
         <sift>
             <appender name="FILE-${jobName_jobExecutionId}" class="ch.qos.logback.core.FileAppender">
+                <encoding>UTF-8</encoding>
                 <file>${jobLogDir}/Job_${jobName_jobExecutionId}.log</file>
                 <append>true</append>
                 <layout class="ch.qos.logback.classic.PatternLayout">
-                    <pattern>%date %level %logger{10} [%X{jobName_jobExecutionId}] %msg %n</pattern>
+                    <encoder>
+                        <charset>UTF-8</charset>
+                        <pattern>%date %level %logger{10} [%X{jobName_jobExecutionId}] %msg %n</pattern>
+                    </encoder>
                 </layout>
             </appender>
         </sift>
