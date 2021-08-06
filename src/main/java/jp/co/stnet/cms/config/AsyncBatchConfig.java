@@ -10,10 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.SimpleAsyncTaskExecutor;
+import org.springframework.core.task.TaskExecutor;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import javax.sql.DataSource;
+import java.util.concurrent.Executor;
 
 @EnableBatchProcessing
+@EnableAsync
 @Configuration
 public class AsyncBatchConfig {
 
@@ -23,25 +28,6 @@ public class AsyncBatchConfig {
     @Autowired
     JobRepository jobRepository;
 
-//    @Bean
-//    public Executor taskExecutor1() {
-//        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-//        executor.setCorePoolSize(3);
-//        executor.setQueueCapacity(10);
-//        executor.setThreadNamePrefix("Thread1--");
-//        executor.initialize();
-//        return executor;
-//    }
-
-//    @Bean
-//    public JobLauncher jobLauncher() throws Exception {
-//        SimpleJobLauncher jobLauncher = new SimpleJobLauncher();
-//        jobLauncher.setJobRepository(jobRepository);
-//        jobLauncher.setTaskExecutor(new SimpleAsyncTaskExecutor());
-//        jobLauncher.afterPropertiesSet();
-//        return jobLauncher;
-//    }
-
     @Bean
     public BatchConfigurer batchConfigurer(DataSource dataSource) {
         return new DefaultBatchConfigurer(dataSource) {
@@ -49,7 +35,9 @@ public class AsyncBatchConfig {
             protected JobLauncher createJobLauncher() throws Exception {
                 SimpleJobLauncher jobLauncher = new SimpleJobLauncher();
                 jobLauncher.setJobRepository(jobRepository);
-                jobLauncher.setTaskExecutor(new SimpleAsyncTaskExecutor());
+                SimpleAsyncTaskExecutor taskExecutor = new SimpleAsyncTaskExecutor("job-");
+                taskExecutor.setConcurrencyLimit(3);
+                jobLauncher.setTaskExecutor(taskExecutor);
                 jobLauncher.afterPropertiesSet();
                 return jobLauncher;
             }
