@@ -29,19 +29,29 @@ public class AsyncBatchConfig {
     JobRepository jobRepository;
 
     @Bean
-    public BatchConfigurer batchConfigurer(DataSource dataSource) {
-        return new DefaultBatchConfigurer(dataSource) {
-            @Override
-            protected JobLauncher createJobLauncher() throws Exception {
-                SimpleJobLauncher jobLauncher = new SimpleJobLauncher();
-                jobLauncher.setJobRepository(jobRepository);
-                SimpleAsyncTaskExecutor taskExecutor = new SimpleAsyncTaskExecutor("job-");
-                taskExecutor.setConcurrencyLimit(3);
-                jobLauncher.setTaskExecutor(taskExecutor);
-                jobLauncher.afterPropertiesSet();
-                return jobLauncher;
-            }
-        };
+    public JobLauncher jobLauncher() throws Exception {
+        SimpleJobLauncher jobLauncher = new SimpleJobLauncher();
+        jobLauncher.setJobRepository(jobRepository);
+        jobLauncher.setTaskExecutor(new SimpleAsyncTaskExecutor());
+        jobLauncher.afterPropertiesSet();
+        return jobLauncher;
     }
+
+
+//    @Bean
+//    public BatchConfigurer batchConfigurer(DataSource dataSource) {
+//        return new DefaultBatchConfigurer(dataSource) {
+//            @Override
+//            protected JobLauncher createJobLauncher() throws Exception {
+//                SimpleJobLauncher jobLauncher = new SimpleJobLauncher();
+//                jobLauncher.setJobRepository(jobRepository);
+//                SimpleAsyncTaskExecutor taskExecutor = new SimpleAsyncTaskExecutor("job-");
+//                taskExecutor.setConcurrencyLimit(3);
+//                jobLauncher.setTaskExecutor(taskExecutor);
+//                jobLauncher.afterPropertiesSet();
+//                return jobLauncher;
+//            }
+//        };
+//    }
 
 }
