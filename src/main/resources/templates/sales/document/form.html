@@ -234,6 +234,7 @@
                                 </div>
                                 <div class="col-1 text-center">
                                     <button class="btn-button" onclick="lineDelete(this)"
+                                            th:disabled="${fieldState.files_pdfUuid__disabled}"
                                             type="button"><i class="far fa-trash-alt"></i></button>
                                 </div>
                             </td>
@@ -417,6 +418,10 @@
                 note_image_input[0].name = 'summernote-files';
             }
         });
+
+        if ($('.summernote:disabled').length) {
+            $('.summernote').summernote('disable');
+        }
 
         // 階層Selectを発火
         $('#docCategory1').trigger('change');

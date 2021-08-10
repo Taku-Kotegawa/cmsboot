@@ -13,8 +13,9 @@
 
         <div class="dropdown input-group">
             <input th:field="*{__${field_id}__}" class="form-control" th:errorclass="is-invalid"
+                   th:disabled="${fieldState.__${field_id}____disabled}"
                    th:placeholder="${placeholder}" />
-            <div class="input-group-append" data-toggle="dropdown">
+            <div th:if="${!fieldState.__${field_id}____disabled}" class="input-group-append" data-toggle="dropdown">
                 <div class="input-group-text"><i class="fas fa-angle-down"></i></div>
             </div>
             <ul class="dropdown-menu dropdown-menu-right combobox" aria-labelledby="dropdownMenuButton">
