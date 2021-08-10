@@ -85,7 +85,7 @@ div#list_filter {
                     </select>
                 </th>
                 <th data-filter="disable">
-                    <select id="col_filter_26" data-column="26" class="dataTables_column_filter form-control multiple-select" multiple="multiple" data-container=".content">
+                    <select id="col_filter_25" data-column="25" class="dataTables_column_filter form-control multiple-select" multiple="multiple" data-container=".content">
                         <th:block th:each="obj : ${@CL_ACCOUNT_FULLNAME.asMap()}">
                             <option th:value="${obj.key}">[[${obj.value}]]</option>
                         </th:block>
@@ -444,6 +444,16 @@ function reset(table) {
             }, 0);
           }
         } );
+
+
+        $(".multiple-select").multipleSelect(
+            {
+                filter: true,
+                formatSelectAll () {
+                return '全選択'
+                },
+            }
+        );
 
       });
 

@@ -40,7 +40,7 @@ div#list_filter {
                 <th data-filter="disable"></th><!-- # -->
                 <th data-filter="disable"></th><!-- 操作 -->
                 <th data-filter="disable"><!-- ステータス -->
-                    <select id="col_filter_3" data-column="3" class="form-control dataTables_column_filter multiple-select" multiple="multiple" data-container=".content">
+                    <select id="col_filter_2" data-column="2" class="form-control dataTables_column_filter multiple-select" multiple="multiple" data-container=".content">
 <!--                        <option value="">&nbsp;</option>-->
                         <th:block th:each="obj : ${@CL_STATUS.asMap()}">
                             <option th:value="${obj.key}">[[${obj.value}]]</option>
@@ -490,6 +490,16 @@ function reset(table) {
 <!--          $('#draft')[0].checked = true;-->
 <!--          table.draw();-->
 <!--        }-->
+
+
+            $(".multiple-select").multipleSelect(
+                {
+                    filter: true,
+                    formatSelectAll () {
+                    return '全選択'
+                    },
+                }
+            );
 
       });
 

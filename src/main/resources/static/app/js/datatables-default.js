@@ -104,13 +104,7 @@ function fnRecoverFieldSearch(table) {
             // Selectの場合
             if (element != undefined && element.length != undefined) {
                 var array = this.search().split(',');
-
                 $('#col_filter_' + idx).val(array);
-
-                if (element.className.split(' ').indexOf("multiple-select") !== -1) {
-                    $('#col_filter_' + idx).multipleSelect('setSelects', array)
-                }
-
             } else {
                 // Inputの場合
                 $('#col_filter_' + idx).val(str);

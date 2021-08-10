@@ -9,25 +9,6 @@
           th:href="@{/plugins/multiple-select/dist/multiple-select.min.css}">
     <script th:src="@{/plugins/multiple-select/dist/multiple-select.min.js}"></script>
 
-    <script>
-    $(document)
-        .ready(
-            function () {
-
-                $(".multiple-select").multipleSelect(
-                    {
-                        filter: true,
-                        formatSelectAll () {
-                        return '全選択'
-                        },
-                    }
-                );
-
-            });
-
-    </script>
-
-
     <style type="text/css">
     .ms-choice {
         background-color: unset;
@@ -55,7 +36,6 @@
     select.multipleSelect {
         visibility: hidden;
     }
-
 
     </style>
 
