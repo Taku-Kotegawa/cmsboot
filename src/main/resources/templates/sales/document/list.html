@@ -70,7 +70,7 @@ div#list_filter {
                 <th data-filter="disable"></th><!-- ファイル -->
                 <th data-filter="disable"></th><!-- ファイルメモ -->
                 <th data-filter="disable"><!-- 活用シーン -->
-                    <select id="col_filter_11" data-column="11" class="dataTables_column_filter form-control multiple-select" multiple="multiple" data-container=".content">
+                    <select id="col_filter_24" data-column="24" class="dataTables_column_filter form-control multiple-select" multiple="multiple" data-container=".content">
 <!--                        <option value="">&nbsp;</option>-->
                         <th:block th:each="obj : ${@CL_DOC_STAGE.asMap()}">
                             <option th:value="${obj.key}">[[${obj.value}]]</option>
@@ -94,7 +94,7 @@ div#list_filter {
                     </select>
                 </th>
                 <th data-filter="disable">
-                    <select id="col_filter_28" data-column="28" class="dataTables_column_filter form-control multiple-select" multiple="multiple" data-container=".content">
+                    <select id="col_filter_27" data-column="27" class="dataTables_column_filter form-control multiple-select" multiple="multiple" data-container=".content">
                         <th:block th:each="obj : ${@CL_ACCOUNT_FULLNAME.asMap()}">
                             <option th:value="${obj.key}">[[${obj.value}]]</option>
                         </th:block>
@@ -182,19 +182,21 @@ $.fn.dataTable.ext.buttons.colOrder01 = {
         reset(dt);
         dt.columns( visible_false_01 ).visible( false );
         dt.colReorder.order( column_order_01, true );
+        dt.order([2, 'desc']).draw();
     }
 };
 
 /**
- * 文書種類ボタン
+ * 文書区分ボタン
  */
 $.fn.dataTable.ext.buttons.colOrder02 = {
-    text: '<i class="fas fa-table"></i> 文書種類',
-    titleAttr: '文書種類',
+    text: '<i class="fas fa-table"></i> 文書区分',
+    titleAttr: '文書区分',
     action: function (e, dt, node, config) {
         reset(dt);
         dt.columns( visible_false_02 ).visible( false );
         dt.colReorder.order( column_order_02, true );
+        dt.order([2, 'asc'], [3, 'asc'], [12, 'asc'], [13, 'asc'], [14, 'asc']).draw();
     }
 };
 
@@ -202,12 +204,13 @@ $.fn.dataTable.ext.buttons.colOrder02 = {
  * サービス区分ボタン
  */
 $.fn.dataTable.ext.buttons.colOrder03 = {
-    text: '<i class="fas fa-table"></i> 文書区分',
-    titleAttr: '文書区分',
+    text: '<i class="fas fa-table"></i> サービス',
+    titleAttr: 'サービス',
     action: function (e, dt, node, config) {
         reset(dt);
         dt.columns( visible_false_03 ).visible( false );
         dt.colReorder.order( column_order_03, true );
+        dt.order([2, 'asc'], [3, 'asc'], [4, 'asc'], [13, 'asc'], [14, 'asc']).draw();
     }
 };
 
@@ -221,6 +224,7 @@ $.fn.dataTable.ext.buttons.colOrder04 = {
         reset(dt);
         dt.columns( visible_false_04 ).visible( false );
         dt.colReorder.order( column_order_04, true );
+        dt.order([8, 'asc'], [9, 'asc'], [10, 'asc'], [11, 'asc'], [12, 'asc']).draw();
     }
 };
 
@@ -234,6 +238,7 @@ $.fn.dataTable.ext.buttons.colOrder05 = {
         reset(dt);
         dt.columns( visible_false_05 ).visible( false );
         dt.colReorder.order( column_order_05, true );
+        dt.order([2, 'asc'], [3, 'asc']).draw();
     }
 };
 
@@ -254,6 +259,7 @@ $.fn.dataTable.ext.buttons.colOrder06 = {
 function reset(table) {
     table.columns( all_column ).visible( true );
     table.colReorder.order( all_column, true );
+    table.order([0, 'asc']).draw();
 }
 
   $(document)
@@ -426,7 +432,7 @@ function reset(table) {
 
           // 初期ソート
           'order': [
-            [0, 'asc']
+            [12, 'desc']
           ],
 
           // 初期列非表示
