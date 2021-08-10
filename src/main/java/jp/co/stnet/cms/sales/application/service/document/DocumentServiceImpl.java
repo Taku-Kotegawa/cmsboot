@@ -3,6 +3,7 @@ package jp.co.stnet.cms.sales.application.service.document;
 import jp.co.stnet.cms.base.application.repository.NodeRevRepository;
 import jp.co.stnet.cms.base.application.service.AbstractNodeRevService;
 import jp.co.stnet.cms.base.application.service.filemanage.FileManagedService;
+import jp.co.stnet.cms.base.domain.model.common.Status;
 import jp.co.stnet.cms.sales.application.repository.document.DocumentIndexRepository;
 import jp.co.stnet.cms.sales.application.repository.document.DocumentRepository;
 import jp.co.stnet.cms.sales.application.repository.document.DocumentRevisionRepository;
@@ -77,9 +78,7 @@ public class DocumentServiceImpl extends AbstractNodeRevService<Document, Docume
             }
         }
 
-        List<DocumentIndex> documentIndices = mapDocumentIndex(saved);
-        documentIndexRepository.deleteByPkId(saved.getId());
-        documentIndexRepository.saveAll(documentIndices);
+        updateDocumentIndex(saved);
 
         return saved;
     }
@@ -102,16 +101,14 @@ public class DocumentServiceImpl extends AbstractNodeRevService<Document, Docume
     @Override
     public Document invalid(Long id) {
         Document saved = super.invalid(id);
-        documentIndexRepository.deleteByPkId(id);
+        updateDocumentIndex(saved);
         return saved;
     }
 
     @Override
     public Document valid(Long id) {
         Document saved = super.valid(id);
-        List<DocumentIndex> documentIndices = mapDocumentIndex(saved);
-        documentIndexRepository.deleteByPkId(saved.getId());
-        documentIndexRepository.saveAll(documentIndices);
+        updateDocumentIndex(saved);
         return saved;
     }
 
@@ -159,7 +156,17 @@ public class DocumentServiceImpl extends AbstractNodeRevService<Document, Docume
     }
 
     /**
-     * Document -> DocumentIdx にマップ
+     * DocumentIndexを更新する
+     * @param document 元となるDocumentエンティティ
+     */
+    private void updateDocumentIndex(Document document) {
+        List<DocumentIndex> documentIndices = mapDocumentIndex(document);
+        documentIndexRepository.deleteByPkId(document.getId());
+        documentIndexRepository.saveAll(documentIndices);
+    }
+
+    /**
+     * Document -> DocumentIndex にマップ
      *
      * @param document Documentエンティティ
      * @return DocumentIndexエンティティ
@@ -174,14 +181,20 @@ public class DocumentServiceImpl extends AbstractNodeRevService<Document, Docume
 
         List<DocumentIndex> documentIndices = new ArrayList<>();
 
+        // ステータスが有効でない場合、登録しない(空のリストを返す)
+        if (!Status.VALID.getValue().equals(document.getStatus())) {
+            return documentIndices;
+        }
 
         if (document.getFiles().isEmpty()) {
+            // 添付ファイルがない場合
             DocumentIndex documentIndex = beanMapper.map(document, DocumentIndex.class);
             documentIndex.setLastModifiedDateStr(document.getLastModifiedDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd hh:mm:ss")));
             documentIndex.setBodyPlain(getBodyPlane(document.getBody()));
             documentIndex.setPk(new DocumentIndexPK(document.getId(), NO_CASE_NOFILE));
             documentIndices.add(documentIndex);
         } else {
+            // 添付ファイルをがある場合
             for (int i = 0; i < document.getFiles().size(); i++) {
                 File file = document.getFiles().get(i);
                 DocumentIndex documentIndex = beanMapper.map(document, DocumentIndex.class);
