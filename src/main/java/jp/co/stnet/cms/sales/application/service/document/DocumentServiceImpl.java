@@ -160,7 +160,8 @@ public class DocumentServiceImpl extends AbstractNodeRevService<Document, Docume
      * @param document 元となるDocumentエンティティ
      */
     private void updateDocumentIndex(Document document) {
-        List<DocumentIndex> documentIndices = mapDocumentIndex(document);
+        DocumentRevision documentRevision = findByIdLatestRev(document.getId());
+        List<DocumentIndex> documentIndices = mapDocumentIndex(documentRevision);
         documentIndexRepository.deleteByPkId(document.getId());
         documentIndexRepository.saveAll(documentIndices);
     }
@@ -168,40 +169,41 @@ public class DocumentServiceImpl extends AbstractNodeRevService<Document, Docume
     /**
      * Document -> DocumentIndex にマップ
      *
-     * @param document Documentエンティティ
+     * @param documentRevision DocumentRevisionエンティティ
      * @return DocumentIndexエンティティ
      */
-    private List<DocumentIndex> mapDocumentIndex(Document document) {
+    private List<DocumentIndex> mapDocumentIndex(DocumentRevision documentRevision) {
 
         final int NO_CASE_NOFILE = 9999;
 
-        if (document == null) {
-            throw new IllegalArgumentException("document must not be null.");
-        }
-
         List<DocumentIndex> documentIndices = new ArrayList<>();
 
-        // ステータスが有効でない場合、登録しない(空のリストを返す)
-        if (!Status.VALID.getValue().equals(document.getStatus())) {
+        // 引数がnullの場合、登録しない(空のリストを返す)
+        if (documentRevision == null) {
             return documentIndices;
         }
 
-        if (document.getFiles().isEmpty()) {
+        // ステータスが有効でない場合、登録しない(空のリストを返す)
+        if (!Status.VALID.getValue().equals(documentRevision.getStatus())) {
+            return documentIndices;
+        }
+
+        if (documentRevision.getFiles().isEmpty()) {
             // 添付ファイルがない場合
-            DocumentIndex documentIndex = beanMapper.map(document, DocumentIndex.class);
-            documentIndex.setLastModifiedDateStr(document.getLastModifiedDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd hh:mm:ss")));
-            documentIndex.setBodyPlain(getBodyPlane(document.getBody()));
-            documentIndex.setPk(new DocumentIndexPK(document.getId(), NO_CASE_NOFILE));
+            DocumentIndex documentIndex = beanMapper.map(documentRevision, DocumentIndex.class);
+            documentIndex.setLastModifiedDateStr(documentRevision.getLastModifiedDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd hh:mm:ss")));
+            documentIndex.setBodyPlain(getBodyPlane(documentRevision.getBody()));
+            documentIndex.setPk(new DocumentIndexPK(documentRevision.getId(), NO_CASE_NOFILE));
             documentIndices.add(documentIndex);
         } else {
             // 添付ファイルをがある場合
-            for (int i = 0; i < document.getFiles().size(); i++) {
-                File file = document.getFiles().get(i);
-                DocumentIndex documentIndex = beanMapper.map(document, DocumentIndex.class);
-                documentIndex.setLastModifiedDateStr(document.getLastModifiedDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd hh:mm:ss")));
-                documentIndex.setBodyPlain(getBodyPlane(document.getBody()));
+            for (int i = 0; i < documentRevision.getFiles().size(); i++) {
+                File file = documentRevision.getFiles().get(i);
+                DocumentIndex documentIndex = beanMapper.map(documentRevision, DocumentIndex.class);
+                documentIndex.setLastModifiedDateStr(documentRevision.getLastModifiedDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd hh:mm:ss")));
+                documentIndex.setBodyPlain(getBodyPlane(documentRevision.getBody()));
                 beanMapper.map(file, documentIndex);
-                documentIndex.setPk(new DocumentIndexPK(document.getId(), i));
+                documentIndex.setPk(new DocumentIndexPK(documentRevision.getId(), i));
                 documentIndex.setContent(getContent(documentIndex.getFileUuid()));
                 documentIndices.add(documentIndex);
             }
