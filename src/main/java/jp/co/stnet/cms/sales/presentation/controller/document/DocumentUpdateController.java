@@ -107,6 +107,7 @@ public class DocumentUpdateController {
         // 初回表示(入力チェックエラー時の再表示でない場合)
         if (form.getVersion() == null) {
             beanMapper.map(document, form);
+            form.setReasonForChange(null);
             form.setSaveRevision(true);
         }
 
@@ -257,6 +258,5 @@ public class DocumentUpdateController {
         form.getFiles().add(new FileForm());
 
         return updateForm(form, model, loggedInUser, form.getId());
-
     }
 }
