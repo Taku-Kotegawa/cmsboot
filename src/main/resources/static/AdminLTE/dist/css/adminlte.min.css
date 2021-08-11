@@ -52667,7 +52667,6 @@ em {
   line-height: 1.428571429;
   text-decoration: none;
   background-color: #ffffff;
-  border: 1px solid #dddddd;
 }
 
 .pagination > li:first-child > a,
@@ -52697,10 +52696,9 @@ em {
 .pagination > .active > a:focus,
 .pagination > .active > span:focus {
   z-index: 2;
-  color: #ffffff;
+  color: #212529;
   cursor: default;
-  background-color: #428bca;
-  border-color: #428bca;
+  background-color: #e5e5e2;
 }
 
 .pagination > .disabled > span,
@@ -52710,7 +52708,6 @@ em {
   color: #999999;
   cursor: not-allowed;
   background-color: #ffffff;
-  border-color: #dddddd;
 }
 
 .hummingbird-treeview,

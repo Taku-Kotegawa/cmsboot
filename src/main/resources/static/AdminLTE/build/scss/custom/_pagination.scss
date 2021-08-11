@@ -21,7 +21,7 @@
     line-height: 1.428571429;
     text-decoration: none;
     background-color: #ffffff;
-    border: 1px solid #dddddd;
+    // border: 1px solid #dddddd;
   }
   
   .pagination > li:first-child > a,
@@ -51,10 +51,10 @@
   .pagination > .active > a:focus,
   .pagination > .active > span:focus {
     z-index: 2;
-    color: #ffffff;
+    color: #212529;
     cursor: default;
-    background-color: #428bca;
-    border-color: #428bca;
+    background-color: #e5e5e2;
+    // border-color: #428bca;
   }
   
   .pagination > .disabled > span,
@@ -64,6 +64,6 @@
     color: #999999;
     cursor: not-allowed;
     background-color: #ffffff;
-    border-color: #dddddd;
+    // border-color: #dddddd;
   }
   
