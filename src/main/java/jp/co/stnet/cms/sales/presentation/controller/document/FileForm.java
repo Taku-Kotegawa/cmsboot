@@ -1,6 +1,7 @@
 package jp.co.stnet.cms.sales.presentation.controller.document;
 
 import jp.co.stnet.cms.base.domain.model.filemanage.FileManaged;
+import jp.co.stnet.cms.sales.domain.validation.FileFormRequired;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@FileFormRequired
 public class FileForm implements Serializable {
 
     private String fileUuid;
