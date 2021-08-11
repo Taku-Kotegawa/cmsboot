@@ -8,6 +8,7 @@ import jp.co.stnet.cms.sales.application.repository.document.DocumentRepository;
 import jp.co.stnet.cms.sales.application.service.document.DocumentService;
 import jp.co.stnet.cms.sales.domain.model.document.Document;
 import jp.co.stnet.cms.sales.domain.model.document.DocumentCsvBean;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -106,6 +107,11 @@ public class ImportDocumentTasklet implements Tasklet {
                 try {
                     // CSVの値をPOJOに格納する
                     Document input = map(csvLine);
+
+                    // 変更理由に値が設定されている場合は、変更履歴を保存にチェック
+                    if (StringUtils.isNotEmpty(input.getReasonForChange())) {
+                        input.setSaveRevision(true);
+                    }
 
                     // キーでデータベースを検索
                     Document current = findByKey(input.getId());

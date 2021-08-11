@@ -35,7 +35,7 @@
 
         <div class="row mb-3">
             <div class="form-check-inline">
-                <input checked id="showAll" name="showAll" type="checkbox">
+                <input id="showAll" name="showAll" type="checkbox">
                 <label for="showAll">全件表示</label>
             </div>
         </div>
@@ -89,10 +89,9 @@ var pagechange = false;
 
           'ajax': {
             'url': 'json/[[${id}]]?history=false',
-            'data': myflatten
           },
 
-        'serverSide': false,
+          'serverSide': false,
 
           //スクロールバー表示
           // scrollX: true,
@@ -161,30 +160,7 @@ var pagechange = false;
             table.ajax.url(encodeURI('json/[[${id}]]?history=' + e.target.checked)).load();
          });
 
-        // 画面表示時の下書きチェックボックスの復元
-        if (localStorage.dataTables_showAll == 'false') {
-          $('#showAll')[0].checked = false;
-          table.draw();
-        } else if (localStorage.dataTables_showAll != 'false' && $('#showAll')[0].checked == false) {
-          $('#showAll')[0].checked = true;
-          table.draw();
-        }
       });
-
-  function myflatten(params, settings) {
-//    params = flatten(params, settings);
-//    if ($('#showAll')[0] == undefined) {
-//        params.history = true;
-//    } else {
-//        params.history = $('#showAll')[0].checked
-//    }
-//    return params;
-  }
-
-
-
-
-
 
 </script>
 
