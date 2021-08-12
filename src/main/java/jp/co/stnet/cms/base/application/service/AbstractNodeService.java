@@ -84,6 +84,8 @@ public abstract class AbstractNodeService<T extends AbstractEntity<ID> & StatusI
     @Override
     public T save(T entity) {
 
+        entityManager.detach(entity);
+
         T currentCopy = null;
 
         if (!entity.isNew()) {
