@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -51,6 +53,8 @@ public class DocumentServiceImpl extends AbstractNodeRevService<Document, Docume
             return "docServiceVariable2.code";
         } else if ("docServiceVariable3.value1".equals(fieldName)) {
             return "docServiceVariable3.code";
+        } else if ("useStageLabel".equals(fieldName)) {
+            return "useStageFirst";
         }
 
         return super.orderByFieldName(fieldName);
@@ -128,7 +132,12 @@ public class DocumentServiceImpl extends AbstractNodeRevService<Document, Docume
 
     @Override
     public boolean equalsEntity(Document document, Document currentCopy) {
-        return false;
+        Document currentCopy2 = beanMapper.map(currentCopy, Document.class);
+        for(File f : currentCopy2.getFiles()) {
+            f.setFileManaged(null);
+            f.setPdfManaged(null);
+        }
+        return Objects.equals(document, currentCopy2);
     }
 
     /**

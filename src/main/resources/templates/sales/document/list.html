@@ -224,7 +224,7 @@ $.fn.dataTable.ext.buttons.colOrder04 = {
         reset(dt);
         dt.columns( visible_false_04 ).visible( false );
         dt.colReorder.order( column_order_04, true );
-        dt.order([8, 'asc'], [9, 'asc'], [10, 'asc'], [11, 'asc'], [12, 'asc']).draw();
+        dt.order([2, 'asc']).draw();
     }
 };
 
@@ -410,7 +410,6 @@ function reset(table) {
             {
               data: 'useStageLabel',
               render: $.fn.dataTable.render.text(),
-              orderable: false,
             },
             {
               data: 'publicScopeLabel',

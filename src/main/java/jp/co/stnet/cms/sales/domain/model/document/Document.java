@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Data
@@ -133,7 +134,19 @@ public class Document extends AbstractEntity<Long> implements Serializable, Stat
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> useStage = new HashSet<>();
 
-//    /**
+    /**
+     * 活用シーンのカンマ区切り文字列(ソート用)
+     */
+    private String useStageList;
+
+    public void setUseStage(Set<String> useStage) {
+        if (useStage != null) {
+            this.useStageList = String.join(",", useStage);
+        }
+        this.useStage = useStage;
+    }
+
+    //    /**
 //     * 区分
 //     */
 //    private Long docCategory;
@@ -177,7 +190,7 @@ public class Document extends AbstractEntity<Long> implements Serializable, Stat
     @NotFound(action = NotFoundAction.IGNORE)
     @JoinColumnsOrFormulas({
             @JoinColumnOrFormula(formula = @JoinFormula(value = "'DOC_CATEGORY1'", referencedColumnName = "type")),
-            @JoinColumnOrFormula(column = @JoinColumn(name = "docCategory1", referencedColumnName = "code", unique = false, insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT)))
+            @JoinColumnOrFormula(column = @JoinColumn(name = "docCategory1", referencedColumnName = "code", insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT)))
     })
     private Variable docCategoryVariable1;
 
@@ -193,7 +206,7 @@ public class Document extends AbstractEntity<Long> implements Serializable, Stat
     @NotFound(action = NotFoundAction.IGNORE)
     @JoinColumnsOrFormulas({
             @JoinColumnOrFormula(formula = @JoinFormula(value = "'DOC_CATEGORY2'", referencedColumnName = "type")),
-            @JoinColumnOrFormula(column = @JoinColumn(name = "docCategory2", referencedColumnName = "code", unique = false, insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT)))
+            @JoinColumnOrFormula(column = @JoinColumn(name = "docCategory2", referencedColumnName = "code", insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT)))
     })
     private Variable docCategoryVariable2;
 
@@ -209,7 +222,7 @@ public class Document extends AbstractEntity<Long> implements Serializable, Stat
     @NotFound(action = NotFoundAction.IGNORE)
     @JoinColumnsOrFormulas({
             @JoinColumnOrFormula(formula = @JoinFormula(value = "'DOC_SERVICE1'", referencedColumnName = "type")),
-            @JoinColumnOrFormula(column = @JoinColumn(name = "docService1", referencedColumnName = "code", unique = false, insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT)))
+            @JoinColumnOrFormula(column = @JoinColumn(name = "docService1", referencedColumnName = "code", insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT)))
     })
     private Variable docServiceVariable1;
 
@@ -225,7 +238,7 @@ public class Document extends AbstractEntity<Long> implements Serializable, Stat
     @NotFound(action = NotFoundAction.IGNORE)
     @JoinColumnsOrFormulas({
             @JoinColumnOrFormula(formula = @JoinFormula(value = "'DOC_SERVICE2'", referencedColumnName = "type")),
-            @JoinColumnOrFormula(column = @JoinColumn(name = "docService2", referencedColumnName = "code", unique = false, insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT)))
+            @JoinColumnOrFormula(column = @JoinColumn(name = "docService2", referencedColumnName = "code", insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT)))
     })
     private Variable docServiceVariable2;
 
@@ -241,7 +254,7 @@ public class Document extends AbstractEntity<Long> implements Serializable, Stat
     @NotFound(action = NotFoundAction.IGNORE)
     @JoinColumnsOrFormulas({
             @JoinColumnOrFormula(formula = @JoinFormula(value = "'DOC_SERVICE3'", referencedColumnName = "type")),
-            @JoinColumnOrFormula(column = @JoinColumn(name = "docService3", referencedColumnName = "code", unique = false, insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT)))
+            @JoinColumnOrFormula(column = @JoinColumn(name = "docService3", referencedColumnName = "code", insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT)))
     })
     private Variable docServiceVariable3;
 
