@@ -9,6 +9,7 @@ import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -23,7 +24,7 @@ import java.util.List;
 @AllArgsConstructor
 @ToString(callSuper = true)
 @EntityListeners(AuditingEntityListener.class)
-@Table(indexes = {@Index(columnList = "apiKey", unique = true, name = "idx_01")})
+@Table(indexes = {@Index(columnList = "apiKey", unique = true, name = "account_idx1")})
 public class Account extends AbstractEntity<String> implements Serializable, StatusInterface {
 
     /**

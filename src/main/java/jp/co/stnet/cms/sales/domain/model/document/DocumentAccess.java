@@ -19,7 +19,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-@Table(indexes = {@Index(columnList = "accessDate, username, documentId", unique = true, name = "idx_01")})
+@Table(indexes = {@Index(columnList = "accessDate,username,documentId", unique = true, name = "data_access_idx1")})
 public class DocumentAccess implements Serializable {
 
     @Id

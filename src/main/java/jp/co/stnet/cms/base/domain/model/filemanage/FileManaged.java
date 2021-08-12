@@ -30,8 +30,8 @@ import java.nio.charset.StandardCharsets;
 @EqualsAndHashCode(callSuper = false)
 @EntityListeners(AuditingEntityListener.class)
 @Table(indexes = {
-        @Index(columnList = "uuid", unique = true, name = "idx_01"),
-        @Index(columnList = "uri", unique = true, name = "idx_02")
+        @Index(columnList = "uuid", unique = true, name = "file_managed_idx1"),
+        @Index(columnList = "uri", unique = true, name = "file_managed_idx2")
 })
 public class FileManaged extends AbstractEntity<Long> implements Serializable {
 

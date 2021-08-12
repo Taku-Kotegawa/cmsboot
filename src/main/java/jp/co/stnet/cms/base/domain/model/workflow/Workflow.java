@@ -16,17 +16,8 @@ import java.io.Serializable;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = false)
 @EntityListeners(AuditingEntityListener.class)
-@Table(indexes = {@Index(columnList = "entityType, entityId, stepNo, employeeId", unique = true, name = "idx_01")})
+@Table(indexes = {@Index(columnList = "entityType,entityId,stepNo,employeeId", unique = true, name = "workflow_idx1")})
 public class Workflow extends AbstractEntity<Long> implements Serializable {
-    @Override
-    public Long getId() {
-        return this.id;
-    }
-
-    @Override
-    public boolean isNew() {
-        return this.id == null;
-    }
 
     /**
      * 内部ID
@@ -70,5 +61,15 @@ public class Workflow extends AbstractEntity<Long> implements Serializable {
      */
     @Column(nullable = false, columnDefinition = "integer default 0")
     private int weight;
+
+    @Override
+    public Long getId() {
+        return this.id;
+    }
+
+    @Override
+    public boolean isNew() {
+        return this.id == null;
+    }
 
 }

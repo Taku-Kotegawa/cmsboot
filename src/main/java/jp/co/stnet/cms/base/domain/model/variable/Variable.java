@@ -25,7 +25,7 @@ import java.time.LocalDate;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = false)
 @EntityListeners(AuditingEntityListener.class)
-@Table(indexes = {@Index(columnList = "type,code", unique = true, name = "idx_01")})
+@Table(indexes = {@Index(columnList = "type, code", unique = true, name = "variable_idx1")})
 public class Variable extends AbstractEntity<Long> implements Serializable, StatusInterface {
 
     /**
