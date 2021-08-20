@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Objects;
+import java.time.LocalDate;
 
 @Transactional
 @Service
@@ -22,16 +22,21 @@ public class DocumentAccessServiceImpl implements DocumentAccessService {
     @Override
     public DocumentAccess save(Long documentId, String username) {
 
-        DocumentAccess documentAccess = documentAccessRepository
-                .findByAccessDateAndDocumentIdAndUsername(dateFactory.newLocalDate(), documentId, username);
+        LocalDate today = dateFactory.newLocalDate();
 
-        return Objects.requireNonNullElseGet(documentAccess,
-                () -> documentAccessRepository.save(
-                        DocumentAccess.builder()
-                                .accessDate(dateFactory.newLocalDate())
-                                .documentId(documentId)
-                                .username(username)
-                                .build()
-                ));
+        DocumentAccess documentAccess = documentAccessRepository
+                .findByAccessDateAndDocumentIdAndUsername(today, documentId, username);
+
+        if (documentAccess != null) {
+            documentAccess.setLastModifiedDate(dateFactory.newLocalDateTime());
+            return documentAccessRepository.saveAndFlush(documentAccess);
+        } else {
+            return documentAccessRepository.saveAndFlush(
+                    DocumentAccess.builder()
+                            .accessDate(today)
+                            .documentId(documentId)
+                            .username(username)
+                            .build());
+        }
     }
 }
