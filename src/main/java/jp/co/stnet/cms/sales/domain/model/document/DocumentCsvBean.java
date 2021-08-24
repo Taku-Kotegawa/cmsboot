@@ -4,6 +4,9 @@ import com.orangesignal.csv.annotation.CsvColumn;
 import com.orangesignal.csv.annotation.CsvEntity;
 import jp.co.stnet.cms.common.validation.IsDate;
 import jp.co.stnet.cms.common.validation.Parseable;
+import jp.co.stnet.cms.sales.domain.validation.DocumentCsvBeanDocCategory2;
+import jp.co.stnet.cms.sales.domain.validation.DocumentCsvBeanDocService2;
+import jp.co.stnet.cms.sales.domain.validation.DocumentCsvBeanDocService3;
 import lombok.Data;
 import org.terasoluna.gfw.common.codelist.ExistInCodeList;
 
@@ -15,6 +18,9 @@ import static jp.co.stnet.cms.common.validation.ParseableType.TO_LONG;
 
 @Data
 @CsvEntity
+@DocumentCsvBeanDocCategory2
+@DocumentCsvBeanDocService2
+@DocumentCsvBeanDocService3
 public class DocumentCsvBean implements Serializable {
 
     @Parseable(value = TO_LONG)

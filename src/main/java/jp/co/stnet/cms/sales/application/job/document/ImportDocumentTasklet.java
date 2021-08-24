@@ -213,7 +213,9 @@ public class ImportDocumentTasklet implements Tasklet {
         final String jobUser = "job_user";
 
         Document v = beanMapper.map(csv, Document.class);
-        v.setUseStage(new HashSet(Arrays.asList(csv.getUseStage().split(",", 0))));
+        if (csv.getUseStage() != null) {
+            v.setUseStage(new HashSet(Arrays.asList(csv.getUseStage().split(",", 0))));
+        }
         v.setCreatedDate(dateFactory.newLocalDateTime());
         v.setLastModifiedDate(dateFactory.newLocalDateTime());
         v.setCreatedBy(jobUser);
