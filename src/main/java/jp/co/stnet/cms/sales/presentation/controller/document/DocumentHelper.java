@@ -28,24 +28,13 @@ public class DocumentHelper {
     static final String TEMPLATE_SEARCH_LIST = "sales/document/searchlist";
 
     // 変更履歴
-    static final String TEMPLATE_HISTORY= "sales/document/history";
-
-    //セッションとして情報を格納するURLの配列
-    private final String[] urlList = {TEMPLATE_LIST, TEMPLATE_SEARCH, TEMPLATE_SEARCH_LIST, TEMPLATE_HISTORY};
-
-    @Autowired
-    DocumentHistoryService documentHistoryService;
-
-    @Autowired
-    DocumentAuthority authority;
-
+    static final String TEMPLATE_HISTORY = "sales/document/history";
     // 許可されたOperation
     private static final Set<String> allowedOperation = Set.of(
             Constants.OPERATION.CREATE,
             Constants.OPERATION.UPDATE,
             Constants.OPERATION.VIEW
     );
-
     // 表示するボタン
     private static final Set<String> buttons = Set.of(
             Constants.BUTTON.GOTOLIST,
@@ -60,11 +49,15 @@ public class DocumentHelper {
             Constants.BUTTON.COPY,
             Constants.BUTTON.ADD_ITEM
     );
-
     // 対象のフォーム
     private static final Class formClass = DocumentForm.class;
-
     private static final String DOC_CATEGORY2 = "DOC_CATEGORY2";
+    //セッションとして情報を格納するURLの配列
+    private final String[] urlList = {TEMPLATE_LIST, TEMPLATE_SEARCH, TEMPLATE_SEARCH_LIST, TEMPLATE_HISTORY};
+    @Autowired
+    DocumentHistoryService documentHistoryService;
+    @Autowired
+    DocumentAuthority authority;
 
     /**
      * 許可されたOperationか
@@ -106,8 +99,12 @@ public class DocumentHelper {
 
         // 新規作成
         if (Constants.OPERATION.CREATE.equals(operation)) {
-            buttonState.setViewTrue(Constants.BUTTON.SAVE);
-            buttonState.setViewTrue(Constants.BUTTON.SAVE_DRAFT);
+            if (authority.hasAuthorityWOException(Constants.OPERATION.SAVE_DRAFT, loggedInUser, record)) {
+                buttonState.setViewTrue(Constants.BUTTON.SAVE_DRAFT);
+            }
+            if (authority.hasAuthorityWOException(Constants.OPERATION.SAVE, loggedInUser, record)) {
+                buttonState.setViewTrue(Constants.BUTTON.SAVE);
+            }
             buttonState.setViewTrue(Constants.BUTTON.ADD_ITEM);
         }
 
@@ -116,32 +113,56 @@ public class DocumentHelper {
 
             // ステータスが下書き
             if (Status.DRAFT.getCodeValue().equals(record.getStatus())) {
-                buttonState.setViewTrue(Constants.BUTTON.CANCEL_DRAFT);
-                buttonState.setViewTrue(Constants.BUTTON.SAVE_DRAFT);
-                buttonState.setViewTrue(Constants.BUTTON.SAVE);
+                if (authority.hasAuthorityWOException(Constants.OPERATION.SAVE_DRAFT, loggedInUser, record)) {
+                    buttonState.setViewTrue(Constants.BUTTON.SAVE_DRAFT);
+                }
+                if (authority.hasAuthorityWOException(Constants.OPERATION.CANCEL_DRAFT, loggedInUser, record)) {
+                    buttonState.setViewTrue(Constants.BUTTON.CANCEL_DRAFT);
+                }
+                if (authority.hasAuthorityWOException(Constants.OPERATION.SAVE, loggedInUser, record)) {
+                    buttonState.setViewTrue(Constants.BUTTON.SAVE);
+                }
+                if (authority.hasAuthorityWOException(Constants.OPERATION.CREATE, loggedInUser, record)) {
+                    buttonState.setViewTrue(Constants.BUTTON.COPY);
+                }
                 buttonState.setViewTrue(Constants.BUTTON.VIEW);
-                buttonState.setViewTrue(Constants.BUTTON.COPY);
                 buttonState.setViewTrue(Constants.BUTTON.ADD_ITEM);
             }
 
             // ステータス有効
             else if (Status.VALID.getCodeValue().equals(record.getStatus())) {
-                buttonState.setViewTrue(Constants.BUTTON.SAVE_DRAFT);
-                buttonState.setViewTrue(Constants.BUTTON.SAVE);
+                if (authority.hasAuthorityWOException(Constants.OPERATION.SAVE_DRAFT, loggedInUser, record)) {
+                    buttonState.setViewTrue(Constants.BUTTON.SAVE_DRAFT);
+                }
+                if (authority.hasAuthorityWOException(Constants.OPERATION.CANCEL_DRAFT, loggedInUser, record)) {
+                    buttonState.setViewTrue(Constants.BUTTON.CANCEL_DRAFT);
+                }
+                if (authority.hasAuthorityWOException(Constants.OPERATION.SAVE, loggedInUser, record)) {
+                    buttonState.setViewTrue(Constants.BUTTON.SAVE);
+                }
+                if (authority.hasAuthorityWOException(Constants.OPERATION.INVALID, loggedInUser, record)) {
+                    buttonState.setViewTrue(Constants.BUTTON.INVALID);
+                }
+                if (authority.hasAuthorityWOException(Constants.OPERATION.CREATE, loggedInUser, record)) {
+                    buttonState.setViewTrue(Constants.BUTTON.COPY);
+                }
                 buttonState.setViewTrue(Constants.BUTTON.VIEW);
-                buttonState.setViewTrue(Constants.BUTTON.INVALID);
-                buttonState.setViewTrue(Constants.BUTTON.COPY);
                 buttonState.setViewTrue(Constants.BUTTON.ADD_ITEM);
             }
 
             // ステータス無効
             else if (Status.INVALID.getCodeValue().equals(record.getStatus())) {
-                buttonState.setViewTrue(Constants.BUTTON.VIEW);
-                buttonState.setViewTrue(Constants.BUTTON.VALID);
-                buttonState.setViewTrue(Constants.BUTTON.DELETE);
+                if (authority.hasAuthorityWOException(Constants.OPERATION.VALID, loggedInUser, record)) {
+                    buttonState.setViewTrue(Constants.BUTTON.VALID);
+                }
+                if (authority.hasAuthorityWOException(Constants.OPERATION.DELETE, loggedInUser, record)) {
+                    buttonState.setViewTrue(Constants.BUTTON.DELETE);
+                }
+                if (authority.hasAuthorityWOException(Constants.OPERATION.CREATE, loggedInUser, record)) {
                 buttonState.setViewTrue(Constants.BUTTON.COPY);
+                }
+                buttonState.setViewTrue(Constants.BUTTON.VIEW);
             }
-
         }
 
         // 参照

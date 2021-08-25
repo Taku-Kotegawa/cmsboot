@@ -1,6 +1,7 @@
 package jp.co.stnet.cms.sales.presentation.controller.document;
 
 import jp.co.stnet.cms.base.domain.model.authentication.LoggedInUser;
+import jp.co.stnet.cms.common.constant.Constants;
 import jp.co.stnet.cms.common.datatables.DataTablesInput;
 import jp.co.stnet.cms.common.datatables.DataTablesOutput;
 import jp.co.stnet.cms.sales.application.service.document.DocumentService;
@@ -39,6 +40,7 @@ public class DocumentListController {
     @GetMapping(value = "list")
     public String list(Model model, @AuthenticationPrincipal LoggedInUser loggedInUser) {
         authority.hasAuthority(OPERATION.LIST, loggedInUser);
+        model.addAttribute("canUpload", authority.hasAuthorityWOException(OPERATION.UPLOAD, loggedInUser, null));
         return TEMPLATE_LIST;
     }
 

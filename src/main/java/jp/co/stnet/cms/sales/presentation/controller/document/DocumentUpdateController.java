@@ -140,17 +140,16 @@ public class DocumentUpdateController {
 
         Document document = documentService.findById(id);
 
-        // 実行権限が無い場合、AccessDeniedExceptionをスローし、キャッチしないと権限エラー画面に遷移
-        authority.hasAuthority(Constants.OPERATION.UPDATE, loggedInUser, document);
-
         document.setFiles(new ArrayList<>());
         document.setUseStage(new HashSet<>());
         beanMapper.map(form, document);
 
         try {
             if (saveDraft) {
+                authority.hasAuthority(Constants.OPERATION.SAVE_DRAFT, loggedInUser, document);
                 documentService.saveDraft(document);
             } else {
+                authority.hasAuthority(Constants.OPERATION.VALID, loggedInUser, document);
                 document.setStatus(Status.VALID.getCodeValue());
                 documentService.save(document);
             }
