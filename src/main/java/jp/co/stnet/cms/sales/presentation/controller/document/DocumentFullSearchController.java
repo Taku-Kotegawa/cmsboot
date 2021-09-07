@@ -105,10 +105,10 @@ public class DocumentFullSearchController {
 
             String q = form.getQ();
             if (q != null) {
-                if (form.getKeywordSearchTarget().contains(KeywordSearchTarget.CONTENT)) {
+                if (d.getContent() != null && form.getKeywordSearchTarget().contains(KeywordSearchTarget.CONTENT)) {
                     row.setContentHighlight(documentFullSearchService.highlight(d.getContent(), q, "content"));
                 }
-                if (form.getKeywordSearchTarget().contains(KeywordSearchTarget.BODY)) {
+                if (d.getBodyPlain() != null && form.getKeywordSearchTarget().contains(KeywordSearchTarget.BODY)) {
                     row.setBodyHighlight(documentFullSearchService.highlight(d.getBodyPlain(), q, "bodyPlain"));
                 }
 
