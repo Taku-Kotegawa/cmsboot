@@ -42,9 +42,17 @@ import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.annotation.PostConstruct;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Properties;
 
 import static org.passay.EnglishCharacterData.*;
 
@@ -232,8 +240,16 @@ public class SpringSecurityConfig {
         }
 
         @Bean
-        public PasswordValidator characteristicPasswordValidator() {
+        public PasswordValidator characteristicPasswordValidator() throws IOException {
+
+            URL resource = this.getClass().getClassLoader().getResource("messages.properties");
+            Properties props = new Properties();
+            props.load(new InputStreamReader(new FileInputStream(resource.getPath()), Charset.forName("UTF-8")));
+
+            MessageResolver resolver = new PropertiesMessageResolver(props);
+
             return new PasswordValidator(
+                    resolver,
                     lengthRule(),
                     characterCharacteristicsRule(),
                     usernameRule()

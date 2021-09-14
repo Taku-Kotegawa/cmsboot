@@ -5,6 +5,7 @@ import jp.co.stnet.cms.common.validation.StrongPassword;
 import lombok.Data;
 import org.terasoluna.gfw.common.validator.constraints.Compare;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Data
@@ -28,16 +29,19 @@ public class PasswordResetForm implements Serializable {
     /**
      *
      */
+    @NotNull
     private String secret;
 
     /**
      *
      */
+    @NotNull
     private String newPassword;
 
     /**
      *
      */
+    @NotNull
     private String confirmNewPassword;
 
 }
