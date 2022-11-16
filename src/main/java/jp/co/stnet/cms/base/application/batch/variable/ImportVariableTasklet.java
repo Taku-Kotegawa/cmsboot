@@ -18,7 +18,12 @@ import org.springframework.batch.item.ItemStreamReader;
 import org.springframework.batch.item.validator.ValidationException;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.SmartValidator;
@@ -45,8 +50,15 @@ public class ImportVariableTasklet implements Tasklet {
     @Autowired
     CustomDateFactory dateFactory;
 
+    @Autowired
+    PlatformTransactionManager transactionManager;
+
     @Override
     public RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext) throws Exception {
+
+        DefaultTransactionDefinition definition = new DefaultTransactionDefinition();
+        definition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+        TransactionStatus status = null;
 
         Long jobInstanceId = chunkContext.getStepContext().getJobInstanceId();
         Long jobExecutionId = chunkContext.getStepContext().getStepExecution().getJobExecutionId();
@@ -94,6 +106,9 @@ public class ImportVariableTasklet implements Tasklet {
                 countRead++;
 
                 try {
+
+                    status = transactionManager.getTransaction(definition);
+
                     // CSVの値をPOJOに格納する
                     Variable input = map(csvLine);
 
@@ -130,6 +145,8 @@ public class ImportVariableTasklet implements Tasklet {
                             countSkip++;
                         }
                     }
+
+                    transactionManager.commit(status);
 
                 } catch (Exception e) {
                     countError++;
